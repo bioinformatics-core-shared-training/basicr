@@ -13,7 +13,7 @@ toc: yes
     + Classical statistical tests are built-in
     + Statistical modeling functions are built-in
     + Regression analysis is fully supported
-    + Additional mathematical packages are available (MASS, Waves, sparse matrices, etc)
+    + Additional mathematical packages are available (`MASS`, Waves, sparse matrices, etc)
   
 ##Distribution functions  
 - Most commonly used distributions are built-in, functions have stereotypical names, e.g. for normal distribution
@@ -176,9 +176,9 @@ y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
 
-##The linear model object
-- Summary data describing the linear fit is given by;
-```{r}
+##Summary of the linear model object: summary(myModel)
+```{r echo=FALSE}
+options(width=80)
 summary(myModel)
 ```
 
@@ -461,13 +461,13 @@ barplot(colony.means)
 ##A complete script
 
 * We now have a complete script to analyse these data
-
 ```{r eval=FALSE}
 #Load data, order Z and plot
 colony <- read.csv("2.1_colony_trial.csv")
 colony$Z <- factor(colony$Z, c("None","Low",
                                "Medium","High"))
 attach(colony)
+plot(Count ~ Z)
 #Analysis of variance
 colony.aov <- aov(Count~Z)
 print(summary(colony.aov))
@@ -477,7 +477,7 @@ print(colony.means)
 barplot(colony.means)
 detach(colony)
 ```
-* Make sure you can source your commands (or the file 2.1\_colony\_1.R) from RStudio
+* 2.1\_colony\_1.R) 
 
 
 # User functions
@@ -493,7 +493,7 @@ detach(colony)
 
 ##Defining a new function
 
-* A function has a name, arguments, procedural steps, ana a return value
+* A function has a name, arguments, procedural steps, and a return value
 ```{r}
 sqXplusX <- function(x){
   x^2 +x
@@ -505,9 +505,7 @@ sqXplusX <- function(x){
 * everything between the brackets `{}` are procedural steps
 * the last calculated value is the function return value. We can call `return` explictly
 ```{r}
-sqXplsX <- function(x){
-  return(x^2+x)
-}
+sqXplusX(10)
 ```
 
 ## Named and default arguments
@@ -608,6 +606,7 @@ err <- try(powXplusX(10,3.5),silent = TRUE)
 message(err[1])
 ```
 
+
 ## Checking input and reporting errors
 
 * R has a very useful set of functions called the `is` family, which check the type of input values. For example:
@@ -641,6 +640,10 @@ err <- try(sqXplusX("ten"),silent = TRUE)
 
 ```{r echo=FALSE}
 message(err[1])
+```
+The `is.` family consists of; `is.character`, `is.null`,`is.na` `is.data.frame` etc. For full list, type the following and press `TAB`
+```{r eval=FALSE}
+is.
 ```
 
 ## Checking input and reporting errors
@@ -738,7 +741,7 @@ convTemp <- function(t=0, unit="c"){
 * we want to combine all five tables into a single table, with 0 for missing values
 ![gene-tables](images/gene-tables.png)
 
-## Gebe Clustering 
+## Gene Clustering 
 
 * To make the big table we first need to find out all the genes present in at least one of the files
 * Make sure not to use factors in `read.delim()`
@@ -777,7 +780,7 @@ for(fileNum in 1:5){
 
 * Now we can do hierarchical clustering:
 
-```{r eval=FALSE}
+```{r eval=FALSE,fig.height=4}
 heatmap(values, scale="none",col=cm.colors(256))
 ```
 
@@ -838,7 +841,7 @@ heatmap(values[is.experimental,],scale="none"
 
 * We load the five tables twice - first to collect gene names, then to load expression values
 
-* Based on the expression table `values` we construct a clustered heatmap first on the whole set of genes, then on a selected subset
+* Based on the expression table (`values`) we construct a clustered heatmap first on the whole set of genes, then on a selected subset
 * Go through the code, try it out and understand it
 * Try answering the following questions
     + what is `rownames(values)`
@@ -936,6 +939,20 @@ rect(-2.5,0,2.5,-1.5,
      col="white",border="white")
 
 ```
+
+## Plotting arguments we used
+- `xlim`,`ylim`; axis limits
+- `col`; line colour
+- `pch`; plotting character
+- `cex`; character expansion
+- `lty`; line type
+- `lwd`; line width
+
+- See more arguments with
+```{r eval=FALSE}
+?par
+```
+
 
 ## Plotting x, y data - plot(), points(), lines()
 
@@ -1144,7 +1161,7 @@ dev.off()
     + Write the code to produce the six plots, once plotting the data by using the default plotting, one with some customisations
     + To output the plot to screen, jpeg, postscript and pdf you will need to redo the plot multiple times. Create a function to do the plotting and call it by redirecting graphical output to screen, jpeg file, postscript file and pdf file
 
-* An example solution `20_6PanelPlotscript.R1`
+* An example solution `20_6PanelPlotscript.R`
 
 ## Example output
 
@@ -1164,3 +1181,18 @@ dev.off()
     
 * Plenty of textbooks to choose from, comprehensive list + reviews
     + http://www.r-project.org/doc/bib/R-books.html
+
+#End of Course
+
+##Thanks for your attention
+
+- Please fill-in your feedback so we can improve the course
+- The key to learning R is practice, practice, practice!
+    + If you don't have your own data yet, look online
+    + http://vincentarelbundock.github.io/Rdatasets/datasets.html
+- Meet with fellow R users
+    + http://www.meetup.com/Cambridge-R-Users-Group-Meetup/
+    + informal, quarterly talks
+- Look our for an 'Intermediate R' course    
+
+    
