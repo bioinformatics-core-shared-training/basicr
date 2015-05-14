@@ -30,29 +30,29 @@ toc: yes
 ##Distribution functions 
 - 10 random values from the Normal distribution with mean 10 and standard deviation 5
 ```{r}
-rnorm(10,mean=10,sd=5)
+rnorm(10, mean=10, sd=5)
 ```
 - The probability of drawing 10 from this distribution
 ```{r}
-dnorm(10,mean=10,sd=5)
+dnorm(10, mean=10, sd=5)
 ```
 
 ```{r}
-dnorm(100,mean=10,sd=5)
+dnorm(100, mean=10, sd=5)
 ```
 
 ##Distribution functions 
 - The probability of drawing a value smaller than 10
 ```{r}
-pnorm(10,mean=10,sd=5)
+pnorm(10, mean=10, sd=5)
 ```
 - The inverse of `pnorm`
 ```{r}
-qnorm(0.5,mean=10,sd=5)
+qnorm(0.5, mean=10, sd=5)
 ```
 - How many standard deviations for statistical significance?
 ```{r}
-qnorm(0.95,mean=0,sd=1)
+qnorm(0.95, mean=0, sd=1)
 ```
 
 ##Two sample tests: Basic data analysis
@@ -69,7 +69,7 @@ t.test()
 ```{r eval=FALSE}
 wilcox.test()
 ```
-- See also `prop.test()`,`cor.test()`,`chisq.test()`,`fisher.test()`
+- See also `prop.test()`, `cor.test()`, `chisq.test()`, `fisher.test()`
 
 
 ##Comparison of 2 data sets example: Basic data analysis
@@ -86,7 +86,7 @@ wilcox.test()
 
 - Read in the data file into a new object, `heightData`
 ```{r eval=FALSE}
-heightData<-read.csv("1.5_heightData.csv")
+heightData <- read.csv("1.5_heightData.csv")
 ```
 - **attach** the data frame so we don't have to refer to it by name all the time
 ```{r eval=FALSE}
@@ -102,7 +102,7 @@ var.test(Female,Male)
 ```{r echo=FALSE}
 options(width=40)
 setwd("Day_2_scripts/")
-heightData<-read.csv("1.5_heightData.csv")
+heightData <- read.csv("1.5_heightData.csv")
 attach(heightData)
 var.test(Female,Male)
 ```
@@ -110,7 +110,7 @@ var.test(Female,Male)
 ##Comparison of 2 data sets example. Student' t test
 - Student's t test is appropriate for comparing the difference in mean height in our data. We need a one-tailed test
 ```{r}
-t.test(Female,Male, alternative="less")
+t.test(Female, Male, alternative="less")
 ```
 
 ##Comparison of 2 data sets example. Review findings
@@ -136,15 +136,15 @@ boxplot(heightData)
 
  
 ```{r}
-x<-c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
-y<-c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
-plot(y~x, xlim=c(0,10),ylim=c(0,10))
+x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
+y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
+plot(y~x, xlim=c(0,10), ylim=c(0,10))
 ```
 
 ##Typical linear regression analysis: Basic data analysis
 
 ```{r}
-myModel<-lm(y~x)
+myModel < -lm(y~x)
 summary.lm(myModel)
 ```
 
@@ -152,7 +152,7 @@ summary.lm(myModel)
 
 
 ```{r}
-plot(y~x, xlim=c(0,10),ylim=c(0,10))
+plot(y~x, xlim=c(0,10), ylim=c(0,10))
 abline(myModel)
 ```
 
@@ -168,10 +168,10 @@ placing the response variable on the left of the tilde and the explanatory varia
 ##Modelling formulae
 
 ```{r eval=FALSE}
-y~x #If x is continuous this is linear regression
-y~x #If x is categorical, this is ANOVA
-y~x+z #If x and z are continuous, this is multiple regression
-y~x+z #If x and z are categorical, this is two-way ANOVA
+y~x       #If x is continuous this is linear regression
+y~x       #If x is categorical, this is ANOVA
+y~x+z     #If x and z are continuous, this is multiple regression
+y~x+z     #If x and z are categorical, this is two-way ANOVA
 y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
@@ -195,7 +195,7 @@ To learn how the distribution functions work, try simulating tossing a fair coin
 - To simulate a coin toss, give `rbinom` a number of observations, the number of trials for each observation, and a probability of success
 
 ```{r}
-coin.toss<-rbinom(100, 1, 0.5)
+coin.toss <- rbinom(100, 1, 0.5)
 ```
 - Because we only specified one trial per observation, we either have an outcome of 0 or 1 successes. To get the number of successes, use indices or a factor to look up the number of 1s in the coin.toss vector (your numbers will vary)
 ```{r}
@@ -430,7 +430,7 @@ for (z in levels(Z)){
 
 ```{r}
 data <- data.frame(gender = c("M","M","F","F","F"),
-                   height=c(6,6.1,5.8,6,5.95))
+                   height = c(6,6.1,5.8,6,5.95))
 data
 ```
 * How can we get the mean of males and females separately?
@@ -440,7 +440,7 @@ data
 * The `tapply` function lets us do exactly this
 
 ```{r eval=FALSE}
-tapply( data, groups, function)
+tapply(data, groups, function)
 ```
 
 * in our case:
@@ -464,15 +464,14 @@ barplot(colony.means)
 ```{r eval=FALSE}
 #Load data, order Z and plot
 colony <- read.csv("2.1_colony_trial.csv")
-colony$Z <- factor(colony$Z, c("None","Low",
-                               "Medium","High"))
+colony$Z <- factor(colony$Z, c("None", "Low", "Medium", "High"))
 attach(colony)
 plot(Count ~ Z)
 #Analysis of variance
-colony.aov <- aov(Count~Z)
+colony.aov <- aov(Count ~ Z)
 print(summary(colony.aov))
 #Calculate group means
-colony.means <- tapply(Count,Z,mean)
+colony.means <- tapply(Count, Z, mean)
 print(colony.means)
 barplot(colony.means)
 detach(colony)
@@ -520,8 +519,8 @@ powXplusX <- function(x, power=2){
 * The `power` argument has a default value of 2; if we don't supply a power when we call the function, `x` will be squared
 * Arguments without a default value are required, those with default values are optional
 ```{r}
-powXplusX(10,3) #arguments are matched based on position
-powXplusX(x=10,power=3) # arguments matched based on name
+powXplusX(10, 3) #arguments are matched based on position
+powXplusX(x=10, power=3) # arguments matched based on name
 ```
 
 ## Calculation with user functions
@@ -544,7 +543,7 @@ sqXplusX
 
 * Objects created in functions are not available to the global environment unless returned. They are limited to the scope of the function
 ```{r}
-addone <- function(x) {x <- x+1;x}
+addone <- function(x) {x <- x+1; x}
 x <-1
 addone(x)
 x
@@ -569,8 +568,8 @@ x <- addone(x)
 
 * Functions should only do one thing. If a function is doing multiple tasks, try to split it up into multiple functions. This rule of thumb means functions tend to be short, not more than around one or two screens of code
 
-* Look at other functions to get ideas for how to write your own..
-    + Display function code by entering the functions' name without brackets `()`
+* Look at other functions to get ideas for how to write your own.
+    + Display function code by entering the function's name without brackets `()`
     
 ## Checking input and reporting errors
 
@@ -583,23 +582,23 @@ x <- addone(x)
 ```{r}
 powXplusX <- function(x, power=2){
   if(power %% 1 != 0) stop ("Power should be a whole number")
-  x^power+x
+  x^power + x
 }
 ```
 
 ## Checking input and reporting errors
 
 ```{r}
-powXplusX(10,3)
+powXplusX(10, 3)
 ```
 
 ```{r eval=FALSE}
-powXplusX(10,3.5)
+powXplusX(10, 3.5)
 
 ```
 
 ```{r echo=FALSE}
-err <- try(powXplusX(10,3.5),silent = TRUE)
+err <- try(powXplusX(10, 3.5),silent = TRUE)
 ```
 
 ```{r echo=FALSE}
@@ -635,7 +634,7 @@ sqXplusX("ten")
 ```
 
 ```{r echo=FALSE}
-err <- try(sqXplusX("ten"),silent = TRUE)
+err <- try(sqXplusX("ten"), silent = TRUE)
 ```
 
 ```{r echo=FALSE}
@@ -709,12 +708,12 @@ convTemp <- function(t=0, unit="c"){
   }
   converted <- 0
   # conversion for centigrade
-  if(unit =="c"){
-    converted <- 9/5 * t +32
+  if(unit == "c"){
+    converted <- 9/5 * t + 32
   }
   #conversion for Fahrenheit
-  if(unit =="f"){
-    converted <- 5/9 * (t-32)
+  if(unit == "f"){
+    converted <- 5/9 * (t - 32)
   }
   converted
 }
@@ -750,10 +749,10 @@ convTemp <- function(t=0, unit="c"){
 ```{r eval=FALSE}
 genes <- c()
 for(fileNum in 1:5){
-  t <- read.delim(paste("2.3_DiffGenes",fileNum,".tsv"
-                        ,sep="")
-                  ,as.is=TRUE,header=FALSE)
-  names(t) <- c("gene","expression")
+  t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
+                        , sep="")
+                  , as.is=TRUE, header=FALSE)
+  names(t) <- c("gene", "expression")
   genes <- union(genes, t$gene)
 }
 genes <- sort(genes)
@@ -765,11 +764,11 @@ genes
 * Using the complete list of genes, we can create the big table and fill in the values:
 
 ```{r eval=FALSE}
-values <- matrix(0, nrow=length(genes),ncol=5)
+values <- matrix(0, nrow=length(genes), ncol=5)
 rownames(values) <- genes
 for(fileNum in 1:5){
-    t <- read.delim(paste("2.3_DiffGenes",fileNum,".tsv"
-                        ,sep=""),as.is=TRUE,header=FALSE)
+    t <- read.delim(paste("2.3_DiffGenes", fileNum,".tsv"
+                        , sep=""), as.is=TRUE, header=FALSE)
     names(t) <- c("gene","expression")
     index <- match(t$gene, rownames(values))
     values[index,fileNum] <- t$expression
@@ -781,30 +780,30 @@ for(fileNum in 1:5){
 * Now we can do hierarchical clustering:
 
 ```{r eval=FALSE,fig.height=4}
-heatmap(values, scale="none",col=cm.colors(256))
+heatmap(values, scale="none", col=cm.colors(256))
 ```
 
 ```{r echo=FALSE}
 setwd("Day_2_scripts/")
 genes <- c()
 for(fileNum in 1:5){
-  t <- read.delim(paste("2.3_DiffGenes",fileNum,".tsv"
-                        ,sep="")
-                  ,as.is=TRUE,header=FALSE)
-  names(t) <- c("gene","expression")
+  t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
+                        , sep="")
+                  , as.is=TRUE, header=FALSE)
+  names(t) <- c("gene", "expression")
   genes <- union(genes, t$gene)
 }
 genes <- sort(genes)
-values <- matrix(0, nrow=length(genes),ncol=5)
+values <- matrix(0, nrow=length(genes), ncol=5)
 rownames(values) <- genes
 for(fileNum in 1:5){
-    t <- read.delim(paste("2.3_DiffGenes",fileNum,".tsv"
-                        ,sep=""),as.is=TRUE,header=FALSE)
-    names(t) <- c("gene","expression")
+    t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
+                        , sep=""), as.is=TRUE, header=FALSE)
+    names(t) <- c("gene", "expression")
     index <- match(t$gene, rownames(values))
-    values[index,fileNum] <- t$expression
+    values[index, fileNum] <- t$expression
 }
-heatmap(values, scale="none",col=cm.colors(256))
+heatmap(values, scale="none", col=cm.colors(256))
 
 ```
 
@@ -833,8 +832,8 @@ experim.genes <- unlist(strsplit(t.exp$genes, ","))
   
 ```{r eval=FALSE}
 is.experimental <- rownames(values) %in% experim.genes
-heatmap(values[is.experimental,],scale="none"
-        ,col=cm.colors(256))
+heatmap(values[is.experimental,], scale="none"
+        , col=cm.colors(256))
 ```
 
 ## Gene clustering review
@@ -883,7 +882,7 @@ plot(x,y)
 x <- 1:5
 y <- 2:6
 plot(x,y, xlab="X data", ylab="Y data", 
-     xlim=c(0,10),ylim=c(0,10),
+     xlim=c(0,10), ylim=c(0,10),
      main="Our title")
 ```
 
@@ -895,48 +894,48 @@ x <- seq(-2,2,0.1)
 y <- sin(x)
 plot(x,y, ylim=c(-1.5,1.5),
      xlim=c(-2.5,2.5),
-     col="red",pch=16,
+     col="red", pch=16,
      cex=1.4)
 ```
 
 ## R graphics uses a painters' model
 
 ```{r echo=FALSE}
-x <- seq(-2,2,0.1)
+x <- seq(-2, 2, 0.1)
 y <- sin(x)
 plot(x,y, ylim=c(-1.5,1.5),
      xlim=c(-2.5,2.5),
-     col="red",pch=16,
+     col="red", pch=16,
      cex=1.4)
-lines(x,y,ylim=c(-1.5,1.5),
-      xlim=c(-2.5,2.5),col="blue",
-      lty=1,lwd=2)
+lines(x, y, ylim=c(-1.5,1.5),
+      xlim=c(-2.5,2.5), col="blue",
+      lty=1, lwd=2)
 ```
 
 ```{r eval=FALSE}
-lines(x,y,ylim=c(-1.5,1.5),
-      xlim=c(-2.5,2.5),col="blue",
-      lty=1,lwd=2)
+lines(x, y, ylim=c(-1.5,1.5),
+      xlim=c(-2.5,2.5), col="blue",
+      lty=1, lwd=2)
 ```
 
 ## R graphics uses a painters' model
 
 ```{r echo=FALSE}
-x <- seq(-2,2,0.1)
+x <- seq(-2, 2, 0.1)
 y <- sin(x)
-plot(x,y, ylim=c(-1.5,1.5),
+plot(x, y, ylim=c(-1.5,1.5),
      xlim=c(-2.5,2.5),
-     col="red",pch=16,
+     col="red", pch=16,
      cex=1.4)
-lines(x,y,ylim=c(-1.5,1.5),
-      xlim=c(-2.5,2.5),col="blue",
-      lty=1,lwd=2)
-rect(-2.5,0,2.5,-1.5,col="white",border="white")
+lines(x, y, ylim=c(-1.5,1.5),
+      xlim=c(-2.5,2.5), col="blue",
+      lty=1, lwd=2)
+rect(-2.5, 0, 2.5, -1.5, col="white", border="white")
 ```
 
 ```{r eval=FALSE}
-rect(-2.5,0,2.5,-1.5,
-     col="white",border="white")
+rect(-2.5, 0, 2.5, -1.5,
+     col="white", border="white")
 
 ```
 
@@ -1004,7 +1003,7 @@ hist(data)
     + set the outer margins of the figure region (the distance between the edges of the page and the figure region, or between adjacent plots if there are multiple figures per page)
     + set the inner margins of the plot (the distance between the plot axes and the labels and titles)
     + set the styles for the plot (colours, fonts, line styles and weights)
-* Draw the plot `plot(x,y,...)`    
+* Draw the plot `plot(x, y, ...)`    
 
 ## Setting graphics layout and style - par()
 
@@ -1043,7 +1042,7 @@ par(mar=c(5,4,4,2))
 * `cex=`
     + character expansion. Sets the scaling factor of the printing character
 * `las=` 
-    + Axes label style: 1 = normal, 2= rotated 90 degress. 
+    + Axes label style: 1 = normal, 2= rotated 90 degrees. 
     
     
 ## Plotting characters for plot(), size and orientation
@@ -1053,10 +1052,10 @@ par(mar=c(5,4,4,2))
 ## Annotating the plot
 
 * `plot` accepts main title, subtitle, X label, Y label as standard arguments
-    + `plot(x,y, main="...", sub="...",xlab="..",ylab="...")`
+    + `plot(x, y, main="...", sub="...", xlab="...", ylab="...")`
     + `mtext(text = "...", side="")` allows text to be written directly into the margin of a plot
-    + `text(x,y,labels="...")` allows text to be written in the plot at coordinates x,y
-    + `legend(x,y,legend=)` produces a legend for the plot
+    + `text(x, y, labels="...")` allows text to be written in the plot at coordinates x,y
+    + `legend(x, y, legend="...")` produces a legend for the plot
     
   
 ## Use of colour in R
@@ -1101,8 +1100,8 @@ cm.colors(n)
 library(RColorBrewer)
 display.brewer.all()
 #see all available palettes
-myCol <- brewer.pal(n,"..")
-#n = number of colours, ".." is the palette name
+myCol <- brewer.pal(n,"...")
+#n = number of colours, "..." is the palette name
 ```
 
 
@@ -1122,9 +1121,9 @@ display.brewer.all()
 
 ```{r eval=FALSE}
 postscript(file = "a_name.ps",...)
-pdf(file = "a_name.pdf",...)
+pdf(file  = "a_name.pdf",...)
 jpeg(file = "a_name.jpg",...)
-png(file = "a_name.png",...)
+png(file  = "a_name.png",...)
 ```
 
 ## Saving plots to files
@@ -1135,7 +1134,7 @@ png(file = "a_name.png",...)
     + Postscript and pdf work in inches by default, A4 = 8.3" x 11.7"
 * Graphics devices need closing when printing is finished: `dev.off()`
 ```{r eval=FALSE}
-png("tenPoints.png",width=300,height=300)
+png("tenPoints.png", width=300, height=300)
 plot(1:10)
 dev.off()
 ```
@@ -1146,8 +1145,8 @@ dev.off()
     + For high resolution publication-quality images you need postscript. Set up postscript file capture with `postscript("a_file.ps", paper="a4")`
     + Postscript images can be converted to JPEG using ghostscript (free to download) for low resolution lab book photos and talks
     + PDF images will grow too large for Acrobat to render if plots contain many data points (e.g. Affymetrix MA plots)
-    + Automatically send multiple page outputs to separate image files using `file=somename%02d.jpg`
-    + Don't forget to close graphics devices (i.e. the file) by using `dev.off`
+    + Automatically send multiple page outputs to separate image files using `file = somename%02d.jpg`
+    + Don't forget to close graphics devices (i.e. the file) by using `dev.off()`
 
 ## Graphics exercise
 
