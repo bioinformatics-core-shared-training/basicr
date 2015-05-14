@@ -69,7 +69,7 @@ t.test()
 ```{r eval=FALSE}
 wilcox.test()
 ```
-- See also `prop.test()`,`cor.test()`,`chisq.test()`,`fisher.test()`
+- See also `prop.test()`, `cor.test()`, `chisq.test()`, `fisher.test()`
 
 
 ##Comparison of 2 data sets example: Basic data analysis
@@ -464,15 +464,14 @@ barplot(colony.means)
 ```{r eval=FALSE}
 #Load data, order Z and plot
 colony <- read.csv("2.1_colony_trial.csv")
-colony$Z <- factor(colony$Z, c("None","Low",
-                               "Medium","High"))
+colony$Z <- factor(colony$Z, c("None", "Low", "Medium", "High"))
 attach(colony)
 plot(Count ~ Z)
 #Analysis of variance
-colony.aov <- aov(Count~Z)
+colony.aov <- aov(Count ~ Z)
 print(summary(colony.aov))
 #Calculate group means
-colony.means <- tapply(Count,Z,mean)
+colony.means <- tapply(Count, Z, mean)
 print(colony.means)
 barplot(colony.means)
 detach(colony)
@@ -569,8 +568,8 @@ x <- addone(x)
 
 * Functions should only do one thing. If a function is doing multiple tasks, try to split it up into multiple functions. This rule of thumb means functions tend to be short, not more than around one or two screens of code
 
-* Look at other functions to get ideas for how to write your own..
-    + Display function code by entering the functions' name without brackets `()`
+* Look at other functions to get ideas for how to write your own.
+    + Display function code by entering the function's name without brackets `()`
     
 ## Checking input and reporting errors
 
