@@ -602,14 +602,14 @@ We can define the names using character vectors:
 ```{r patients2}
 firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
 "Paul", "Joanna", "Matthew", "David", "Sally")
- secondName <- c("Jones", "Parker", "Evans", "Davis", 
+secondName <- c("Jones", "Parker", "Evans", "Davis", 
 "Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
 ```
 We also have a new type of vector, the *logical* vector, which only 
 contains the values `TRUE` and `FALSE`:
 ```{r patients3}
- consent <- c(TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,
-FALSE,TRUE,FALSE,TRUE)
+ consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
+FALSE, TRUE, FALSE, TRUE)
 ```
 
 ##Character, numeric and logical data types
@@ -638,8 +638,8 @@ recognize this
 - A factor is R's data structure for categorical data
 
 ```{r patients4}
-sex <- c("Male", "Female", "Male", "Female", "Male", "Male", "Female", 
-"Male", "Male", "Female")
+sex <- c("Male", "Female", "Male", "Female", "Male", "Male",
+"Female", "Male", "Male", "Female")
 
 ```
 
@@ -1413,7 +1413,8 @@ for (file in countfiles) {
     if (nrow(colony) < 48 ) {
         t <- read.csv(file)
         colony <- rbind(colony, t)
-} }
+    }
+}
 ```
 
 
