@@ -1,9 +1,9 @@
 ---
 title: "Introduction to Solving Biological Problems Using R - Day 2"
-author: "Mark Dunning. Original material by Robert Stojnić, Laurent Gatto,
-Rob Foy John Davey, Dávid Molnár and Ian Roberts"
+author: Mark Dunning. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
+  John Davey, Dávid Molnár and Ian Roberts
 date: "08/09/2014"
-output: beamer_presentation
+output: slidy_presentation
 toc: yes
 ---
 
@@ -22,14 +22,13 @@ toc: yes
   + `dnorm` - distribution density
   + `rnorm` - random number from normal distribution
   
-##Distribution functions  
 ![distributions](images/distributions.png)  
   
 - available for variety of distributions: `punif` (uniform), `pbinom` (binomial), `pnbinom` (negative binomial), `ppois` (poisson), `pgeom` (geometric), `phyper` (hyper-geometric), `pt` (T distribution), pf (F distribution) 
 
 ##Distribution functions 
 - 10 random values from the Normal distribution with mean 10 and standard deviation 5
-```{r}
+```{r eval=FALSE}
 rnorm(10, mean=10, sd=5)
 ```
 - The probability of drawing 10 from this distribution
@@ -97,8 +96,6 @@ attach(heightData)
 var.test(Female,Male)
 ```
 
-##Comparison of 2 data sets example
-
 ```{r echo=FALSE}
 options(width=40)
 setwd("Day_2_scripts/")
@@ -135,20 +132,18 @@ boxplot(heightData)
 ##Typical linear regression analysis: Basic data analysis
 
  
-```{r}
+```{r fig.height=4}
 x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
 y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
 plot(y~x, xlim=c(0,10), ylim=c(0,10))
 ```
 
+
 ##Typical linear regression analysis: Basic data analysis
 
-```{r}
-myModel < -lm(y~x)
-summary.lm(myModel)
+```{r echo=FALSE}
+myModel <- lm(y~x)
 ```
-
-##Typical linear regression analysis: Basic data analysis
 
 
 ```{r}
@@ -1047,7 +1042,18 @@ par(mar=c(5,4,4,2))
     
 ## Plotting characters for plot(), size and orientation
 
-![pch](images/pch.png)
+```{r echo=FALSE}
+par(mar=c(0.1,0.1,0.1,0.1))
+i <- 0:24
+
+x <- floor(i /5) + 1
+y <- i %%5
+
+plot(1:10, type="n", xlim = c(1,5), ylim=c(-1,5),axes=F,xlab="",ylab="")
+points(x,y,pch=i+1)
+text(x,y-0.3,i+1)
+```
+
 
 ## Annotating the plot
 
