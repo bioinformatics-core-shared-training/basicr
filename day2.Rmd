@@ -7,7 +7,7 @@ output: slidy_presentation
 toc: yes
 ---
 
-#Statistics
+# 1. Statistics
 ##Built-in support for statistics
 - R is a statistical programming language
     + Classical statistical tests are built-in
@@ -281,7 +281,7 @@ lm(formula = brainwt ~ lsize + bodywt)
 - *Interpretation*: brain weight decreases as litter size increases, but brain weight increases proportional to body weight (when bodywt is held constant, the lsize coefficient is positive: 0.00669). This is called 'brain sparing'; although the offspring get smaller as litter size increases, the brain does not shrink as much as the body
 
 
-#Writing custom scripts for data analysis
+# 2. Writing custom scripts for data analysis
 
 ##The R scripting language
 
@@ -471,10 +471,10 @@ print(colony.means)
 barplot(colony.means)
 detach(colony)
 ```
-* 2.1\_colony\_1.R) 
+* 2.1\_colony\_1.R
 
 
-# User functions
+# 3. User functions
 
 ## Introducing user functions
 
@@ -716,7 +716,7 @@ convTemp <- function(t=0, unit="c"){
 
 ```
 
-# Advanced data processing
+# 4. Advanced data processing
 
 ## Combining data from multiple sources
 
@@ -842,7 +842,7 @@ heatmap(values[is.experimental,], scale="none"
     + why is `rownames(values)[index]` and `t$gene` giving the same output?
     + what is the difference between `rownames(values) %in% experim.genes` and `experim.genes %in% rownames(values)`
     
-# Graphics
+# 5. Graphics
 
 ## Starting out with R grapics
 

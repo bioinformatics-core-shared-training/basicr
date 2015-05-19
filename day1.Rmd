@@ -7,7 +7,7 @@ output: slidy_presentation
 toc: yes
 ---
 
-#Introduction to R and its environment
+#1. Introduction to R and its environment
 
 ##What's R?
 
@@ -541,7 +541,7 @@ library(DESeq)   # loads DESeq functions
 library()        # Lists all the packages you've got installed 
 ```
 
-#Data structures
+# 2. Data structures
 
 ##R is designed to handle experimental data
 
@@ -869,7 +869,7 @@ patients[patients$Consent == TRUE,]
 patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
 ```
 
-#R for data analysis
+# 3. R for data analysis
 
 ##3 steps to Basic Data Analysis
 
@@ -999,7 +999,7 @@ write.csv(rawData[norm,], "My_NB_output.csv")
 ```
 
 
-#Programming techniques
+# 4. Programming techniques
 
 ##Basic R 'built-in' functions for working with objects
 
