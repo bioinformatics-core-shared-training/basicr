@@ -2,7 +2,7 @@
 title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
   John Davey, Dávid Molnár and Ian Roberts
-date: "08/09/2014"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: slidy_presentation
 toc: yes
 ---
@@ -55,7 +55,7 @@ user
 There are two ways to launch R:
 
 - From the command line (particularly useful if you're quite
-familiar with Linux)
+familiar with Linux; in the console at the prompt simply type `R`)
 - As an application called RStudio (very good for beginners)
 
 ##Launching R Using RStudio
@@ -107,7 +107,7 @@ position in the output. In this case the output is a 'vector' of length 1
 ##Basic concepts in R - variables
 
 - A variable is a letter or word which takes (or contains) a value. We
-use the assignment 'operator', <-
+use the assignment 'operator', `<-`
 
 ```{r variables1}
 x <- 10
@@ -133,14 +133,14 @@ x <- 21
 x
 ```
 
-- We can set one variable to equal the value of another variable
+- We can set one variable to equal the value of another variable:
 
 ```{r variables5}
 x <- myNumber
 x
 ```
 
-- We can modify the contents of a variable
+- We can modify the contents of a variable:
 
 ```{r variables6}
 myNumber <- myNumber + sqrt(16)
@@ -149,11 +149,12 @@ myNumber
 
 ##Basic concepts in R - functions
 
-- **Functions** in R perform operations on **arguments** (the inputs(s) to the function). We have already used 
+- **Functions** in R perform operations on **arguments** (the inputs(s) to the function). We have already used:
 ```{r eval=FALSE}
 sin(x)
 ```
-this returns the sine of x. In this case the function has one argument, **x**. Arguments are always contained in parentheses., i.e. curved brackets **()**, separated by commas
+this returns the sine of x. In this case the function has one argument: **x**. Arguments are always contained in parentheses -- curved brackets, **()** -- separated by commas.
+
 - Try these:
 
 ```{r functions1}
@@ -167,25 +168,25 @@ min(3,4,5,6)
 - Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the right order)
 
 ```{r functions2}
-seq(from =2, to=10, by=2)
+seq(from = 2, to = 10, by = 2)
 seq(2, 10, 2)
 ```
 
 ##Basic concepts in R - vectors
 
-- The basic data structure in R is a **vector** - an ordered collection of values. R even treats single values as 1-element vectors. The function **c()** *combines* its arguments into a vector:
+- The basic data structure in R is a **vector** -- an ordered collection of values. R treats even single values as 1-element vectors. The function **c()** *combines* its arguments into a vector:
 
 ```{r vectors1}
 x <- c(3,4,5,6)
 x
 ```
-- The square brackets **[]** indicate the position within the vector (the **index**). We can extract individual elements by using the **[]** notation
+- The square brackets **[]** indicate the position within the vector (the ***index***). We can extract individual elements by using the **[]** notation:
 ```{r vectors2}
 x[1]
 x[4]
 ```
 
-- We can even put a vector inside the square brackets (*vector indexing*)
+- We can even put a vector inside the square brackets: (*vector indexing*)
 
 ```{r vectors3}
 y <- c(2,3)
@@ -197,13 +198,12 @@ x[y]
 ```{r vectors4}
 x <- c(3,4,5,6,7,8,9,10,11,12)
 ```
-- we can write
+- we can write:
 ```{r vectors5}
 x <- 3:12
 x
 ```
-
-- or we can use the **seq()** function, which returns a vector
+- or we can use the **seq()** function, which returns a vector:
 ```{r vectors6}
 x <- seq(2, 10, 2)
 x
@@ -216,7 +216,7 @@ x
 
 
 ##Basic concepts in R - vectors
-- or we can use the **rep()** function
+- or we can use the **rep()** function:
 
 ```{r vectors8}
 y <- rep(3, 5)
@@ -242,19 +242,19 @@ x[rep(3, 2)]
 
 
 ##Basic concepts in R - vectors
-- We can add an element to a vector
+- We can add an element to a vector:
 ```{r vectors11}
 y <- c(x, 1)
 y
 ```
-We can glue vectors together
+- We can glue vectors together:
 ```{r vectors12}
 z <- c(x, y)
 z
 ```
 
 ##Basic concepts in R - vectors
-- We can remove element(s) from a vector
+- We can remove element(s) from a vector:
 ```{r vectors13}
 x <- 3:12
 x[-3]
@@ -264,7 +264,7 @@ x[-seq(2, 6, 2)]
 
 ##Basic concepts in R - vectors
 
-- Finally, we can modify the contents of a vector
+- Finally, we can modify the contents of a vector:
 ```{r vectors14}
 x[6] <- 4
 x
@@ -272,8 +272,7 @@ x[3:5] <- 1
 x
 ```
 
-Remember! **Square** brackets for indexing [], **parentheses** for
-function arguments ().
+Remember! **Square** brackets for indexing [], **parentheses** for function arguments ().
 
 ##Basic concepts in R - vector arithmetic
 
@@ -294,11 +293,11 @@ z
 ```{r vector-arithmetic2}
 y + z
 ```
-If vectors are not the same length, the shorter one will be recycled:
+- If vectors are not the same length, the shorter one will be recycled:
 ```{r vector-arithmetic3}
 x + 1:2
 ```
-But be careful if the vector lengths aren't factors of each other:
+- But be careful if the vector lengths aren't factors of each other:
 
 ```{r eval=FALSE}
 x + 1:3
@@ -313,15 +312,13 @@ x + 1:3
 
 ##Basic concepts in R - Character vectors and naming
 
-- All the vectors we have seen so far have contained numbers, but we
-can also store strings in vectors – this is called a **character** vector.
+- All the vectors we have seen so far have contained numbers, but we can also store strings in vectors -- this is called a **character** vector.
 
 ```{r vector-naming1}
 gene.names <- c("Pax6", "Beta-actin", "FoxP2", "Hox9")
 ```
 
-We can name elements of vectors using the `names` function, which
-can be useful to keep track of the meaning of our data:
+- We can name elements of vectors using the `names` function, which can be useful to keep track of the meaning of our data:
 ```{r vector-naming2}
 gene.expression <- c(0, 3.2, 1.2, -2)
 gene.expression
@@ -341,38 +338,25 @@ names(gene.expression)
 ```
 
 ##Exercise: genes and genomes
-- Let's try some vector arithmetic. Here are the genome lengths and
-number of protein coding genes for several model organisms:
+- Let's try some vector arithmetic. Here are the genome lengths and number of protein coding genes for several model organisms:
 
-```{r ex1, echo=FALSE,message=FALSE}
-options(width=80)
+|Species | Genome size (Mb) | Protein coding genes|
+|-------|------------------:|-------------------:|
+|*Homo sapiens*|3,102|20,774|
+|*Mus musculus*|2,731|23,139|
+|*Drosophila melanogaster*|169|13,937|
+|*Caenorhabditis elegans*|100|20,532|
+|*Saccharomyces cerevisiae*|12|6,692|
 
-df <- data.frame(Size = c("3,102", "2,731", "169", "100", "12"), Genes = c("20,774", "23,139", "13,937","20,532", "6,692"))
-rownames(df) <- c("Homo sapiens", "Mus musculus", "Drosophila melanogaster", "Caenorhabditis elegans", "Saccharomyces cerevisiae")
-
-colnames(df) <- c("Genome size (Mb)","Protein coding genes")
-
-df
-```
-
-- Create *genome.size* and *coding.genes* vectors to hold the data in
-each column using the `c` function. Create a *species.name* vector and
-use this vector to name the values in the other two vectors
+- Create *genome.size* and *coding.genes* vectors to hold the data in each column using the `c` function. Create a *species.name* vector and use this vector to name the values in the other two vectors.
 
 ##Exercise: genes and genomes
 
-- Let's assume a coding gene has an average length of 1.5 kilobases.
-On average, how many base pairs of each genome is made of coding
-genes? Create a new vector to record this called *coding.bases*
+- Let's assume a coding gene has an average length of 1.5 kilobases. On average, how many base pairs of each genome is made of coding genes? Create a new vector to record this called **coding.bases**.
 
-- What percentage of each genome is made up of protein coding genes?
-Use your *coding.bases* and *genome.size* vectors to calculate this.
-(See earlier slides for how to do division in R.)
+- What percentage of each genome is made up of protein coding genes? Use your **coding.bases** and **genome.size** vectors to calculate this. (See earlier slides for how to do division in R.)
 
-- How many times more bases are used for coding in the human
-genome compared to the yeast genome? How many times more bases
-are in the human genome in total compared to the yeast genome?
-Look up indices of your vectors to find out.
+- How many times more bases are used for coding in the human genome compared to the yeast genome? How many times more bases are in the human genome in total compared to the yeast genome? Look up indices of your vectors to find out.
 
 ##Answers to genome exercise
 
@@ -385,7 +369,7 @@ species.name <- c("H. sapiens","M. musculus",
 names(genome.size)  <- species.name
 names(coding.genes) <- species.name
 ```
-To calculate the number of coding bases, we need to use the same
+- To calculate the number of coding bases, we need to use the same
 scale as we used for genome size: 1.5 kilobases is 0.0015 Megabases.
 ```{r ex1answers2}
 coding.bases <- coding.genes*0.0015
@@ -404,7 +388,7 @@ coding.pc
 
 ##Answers to genome exercise
 
-To compare human to yeast:
+- To compare human to yeast:
 
 ```{r ex1answers4}
 coding.bases[1]/coding.bases[5]
@@ -416,7 +400,7 @@ genome.size[1]/genome.size[5]
 
 - Note that if a new vector is created using a named vector, the names
 are usually carried across to the new vector. Sometimes this is what
-we want (as for coding.pc) but sometimes it is not (when we are
+we want (as for **coding.pc**) but sometimes it is not (when we are
 comparing human to yeast). We can remove names by setting them
 to the special NULL value:
 
@@ -426,11 +410,11 @@ coding.pc
 ```
 ##Writing scripts with RStudio
 
-- Typing lots of commands directly to R can be tedious. A better way is to
+Typing lots of commands directly to R can be tedious. A better way is to
 write the commands to a file and then load it into R.
 
-- Click on **File** -> **New** in Rstudio
-- Type in some R code, e.g.
+- Click on **File** →  **New** in Rstudio
+- Type in some R code, e.g.:
  
 ```{r writing-scripts, eval=FALSE}
 x <- 2 + 2
@@ -460,7 +444,7 @@ the default order of arguments here. The help page also tells you which
 example(seq)
 ```
 - If you can't remember the exact name type `??` followed by your guess.
-R will return a list of possibilities
+R will return a list of possibilities:
 
 ```{r eval=FALSE}
 ??plot
@@ -468,12 +452,12 @@ R will return a list of possibilities
 
 ##Interacting with the R console
 
-- R console symbols
+- R console symbols:
     + `;` end of line
     (Enables multiple commands to be placed on one line of text)
-    + `\#` comment
+    + `#` comment
     (indicates text is a comment and not executed)
-    + `\+` command line wrap
+    + `+` command line wrap
     (R is waiting for you to complete an expression)
     
 - *Ctrl-c* or *escape* to clear input line and try again
@@ -483,47 +467,58 @@ R will return a list of possibilities
 
 ##R packages
 - R comes ready loaded with various libraries of functions called
-packages. e.g. the function `sum()` is in the base package and
-`sd()`, which calculates the standard deviation of a vector, is in the
-`stats` package
+**packages**. e.g. the function **`sum()`** is in the **base** package and
+**`sd()`**, which calculates the standard deviation of a vector, is in the
+**`stats`** package
 
 - There are 1000s of additional packages provided by third parties,
 and the packages can be found in numerous server locations on the
-web called *repositories*
+web called **repositories**
 
 ##R packages
 
 
 - The two repositories you will come across the most are
-  + The Comprehensive R Archive Network (CRAN)
-  + Bioconductor
+    + **The Comprehensive R Archive Network (CRAN)**
+    + **Bioconductor**
 
 - CRAN packages can be installed using **install.packages**
-- Set the Bioconductor package download tool by typing
+- Set the Bioconductor package download tool by typing:
 ```{r eval=FALSE}
 source("http://bioconductor.org/biocLite.R")
 ```
 
-- Bioconductor packages are then installed with the **biocLite()** function
+- Bioconductor packages are then installed with the **biocLite()** function:
 ```{r eval=FALSE}
 biocLite("PackageName")
 ```
 
+##Exercise: Install packages ggplot2 and DESeq
+- Packages on CRAN:
+    + Use CRAN search to find functionality you need: http://cran.r-project.org/search.html
+    + Or look for packages by theme: http://cran.r-project.org/web/views/
+
+- Packages in Bioconductor -- specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
+
+- Other repositories:
+    + http://r-forge.r-project.org/
+  
+- Bottomline: **always** first look if there is already an R package that does what you want before trying to implement it yourself
 
 
 ##Exercise: Install packages ggplot2 and DESeq
 
 - ggplot2 is a commonly used graphics package
-  + Use install.packages() function to install it
+  + Use `install.packages()` function to install it:
   
 ```{r eval=FALSE}
 install.packages("ggplot2")
 ```
 
-  + or in RStudio goto Tools → Install Packages... and type the
+  + or in RStudio go to **Tools** → **Install Packages**... and type the
 package name
 
-- DESeq is a BioConductor package (www.bioconductor.org)
+- `DESeq` is a Bioconductor package (http://www.bioconductor.org)
 
 ```{r eval=FALSE}
 source("http://www.bioconductor.org/biocLite.R")
@@ -532,8 +527,7 @@ biocLite("DESeq")
 
 ##R packages
 
-- R needs to be told to use the new functions from the installed
-packages
+- R needs to be told to use the new functions from the installed packages. Use `library(...)` function to load the newly installed features:
 
 ```{r eval=FALSE}
 library(ggplot2) # loads ggplot functions
@@ -545,25 +539,27 @@ library()        # Lists all the packages you've got installed
 
 ##R is designed to handle experimental data
 
-- Although the basic unit of R is a vector, we usually handle data in 
-**data frames**
-- A data frame is a set of observations of a set of variables – in other 
-words, the outcome of an experiment.
-- For example, we might want to analyse information about a set of 
-patients. To start with, let's say we have ten patients and for each 
-one we know their name, sex, age, weight and whether they give 
-consent for their data to be made public
+- Although the basic unit of R is a vector, we usually handle data in **data frames**.
+- A data frame is a set of observations of a set of variables -- in other words, the outcome of an experiment.
+- For example, we might want to analyse information about a set of patients. To start with, let's say we have ten patients and for each one we know their name, sex, age, weight and whether they give consent for their data to be made public.
 
 
 ##The patients data frame
-- We are going to create a data frame called 'patients', which will have 
-ten rows (observations) and seven columns (variables). The columns 
-must all be equal lengths. We will explore how to construct these data from scratch.
+- We are going to create a data frame called 'patients', which will have ten rows (observations) and seven columns (variables). The columns must all be equal lengths. 
+- We will explore how to construct these data from scratch.
 
-```{r echo=FALSE}
-options(width=50)
-source("Day_1_scripts/1.2_patients.R")
-```
+|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
+|--|-------|-------|--------------|:----:|--:|------:|:-----:|
+|1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE|
+|2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
+|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
+|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
+|5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
+|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
+|7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
+|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
+|9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
+|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
 
 ##Character, numeric and logical data types
 
@@ -583,24 +579,22 @@ firstName <- c("Adam", "Eve", "John", "Mary", "Peter",
 secondName <- c("Jones", "Parker", "Evans", "Davis", 
 "Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
 ```
-We also have a new type of vector, the *logical* vector, which only 
+We also have a new type of vector, the **logical** vector, which only 
 contains the values `TRUE` and `FALSE`:
 ```{r patients3}
- consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
 FALSE, TRUE, FALSE, TRUE)
 ```
 
 ##Character, numeric and logical data types
 
-- Vectors can only contain one type of data; we cannot mix numbers, 
-characters and logical values in the same vector. If we try this, R 
-will convert everything to characters:
+- Vectors can only contain one type of data; we cannot mix numbers, characters and logical values in the same vector. If we try this, R will convert everything to characters:
 
 ```{r}
 c(20, "a string", TRUE)
 
 ```
-We can see the type of a particular vector using the `class` function:
+We can see the type of a particular vector using the **`class`** function:
 
 ```{r}
  class(firstName)
@@ -610,10 +604,10 @@ We can see the type of a particular vector using the `class` function:
 ```
 
 ##Factors
-- Character vectors are fine for some variables, like names
+- Character vectors are fine for some variables, like names.
 - But sometimes we have categorical data and we want R to 
-recognize this
-- A factor is R's data structure for categorical data
+recognize this.
+- A factor is R's data structure for categorical data.
 
 ```{r patients4}
 sex <- c("Male", "Female", "Male", "Female", "Male", "Male",
@@ -634,34 +628,30 @@ sex
 factor(sex)
 ```
 
-- R has converted the strings of the sex character vector into two 
-**levels**, which are the categories in the data
+- R has converted the strings of the sex character vector into two **levels**, which are the categories in the data
 - Note the values of this factor are not character strings, but levels
 - We can use this factor to compare data for males and females
 
 ##Creating a data frame (first attempt)
 
-- We can construct a data frame from other objects (N.B. The `paste` function joins character vectors together)
+- We can construct a data frame from other objects (N.B. The **`paste`** function joins character vectors together)
 
 ```{r patients5}
 patients <- data.frame(firstName, secondName, 
-    paste(firstName, secondName), sex, age,
-    weight, consent)
+                       paste(firstName, secondName),  
+                       sex, age, weight, consent)
 patients
 ```
 
 
 ##Naming data frame variables
-- We can access particular variables using the *dollar* operator
+- We can access particular variables using the **dollar** operator:
 ```{r patients6}
 patients$age
 ```
 
-- R has inferred the names of our data frame variables from the 
-names of the vectors or the commands (eg the paste command)
-- We can name the variables after we have created a data frame 
-using the `names` function, and we can use the same function to see 
-the names
+- R has inferred the names of our data frame variables from the names of the vectors or the commands (e.g. the `paste` command)
+- We can name the variables after we have created a data frame using the **`names`** function, and we can use the same function to see the names:
 ```{r patients7}
 names(patients) <- c("First_Name", "Second_Name", 
 "Full_Name", "Sex", "Age", "Weight", "Consent")
@@ -685,10 +675,12 @@ names(patients)
 
 ```{r patients8}
 patients <- data.frame(First_Name = firstName, 
-  Second_Name = secondName, 
-  Full_Name = paste(firstName,secondName), 
-  Sex = sex, Age = age, Weight = weight, 
-  Consent = consent)
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName,secondName), 
+                       Sex = sex,
+                       Age = age,
+                       Weight = weight, 
+                       Consent = consent)
 ```
 
 ```{r eval=FALSE}
@@ -713,14 +705,17 @@ patients$First_Name
 ##Factors in data frames
 
 - We can avoid this by asking R not to treat strings as factors, and 
-then explicitly stating when we want a factor by using `factor`
+then explicitly stating when we want a factor by using `factor`:
 
 ```{r patients10}
-patients<-data.frame(First_Name = firstName, 
-      Second_Name = secondName, 
-      Full_Name = paste(firstName, secondName), 
-      Sex = factor(sex), Age = age, Weight = weight,
-      Consent = consent, stringsAsFactors = FALSE)
+patients <- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName, secondName), 
+                       Sex = factor(sex),
+                       Age = age,
+                       Weight = weight,
+                       Consent = consent,
+                       stringsAsFactors = FALSE)
 
 ```
 
@@ -742,13 +737,11 @@ f
 f %*% e
 ```
 
-The `%*%` operator is the matrix multiplication operator, not the standard 
-multiplication operator
+The `%*%` operator is the matrix multiplication operator, not the standard multiplication operator.
 
 ##Lists
 
-- We have seen that vectors can only hold data of one type. How can we store 
-data of multiple types? Or vectors of different lengths in one object?
+- We have seen that vectors can only hold data of one type. How can we store data of multiple types? Or vectors of different lengths in one object?
 -  We can use lists. A list can contain objects of any type
 ```{r lists1}
 one.to.ten <- 1:10
@@ -783,7 +776,7 @@ myList$ls.obj.1
 frames using commas. If you don't provide an index for either rows or 
 columns, all of the rows or columns will be returned.
 
-    + `object[rows, colums]`
+**`object[rows, colums]`**
 
 ```{r index1}
 e[1,2]
@@ -808,7 +801,7 @@ a <- 1:5
 a < 3
 s[a < 3]
 s[a > 1 & a <3]
-s[a==2]
+s[a == 2]
 ```
 
 ##Operators
@@ -819,12 +812,14 @@ s[a==2]
 - logical
 `!, &, |, xor`
 
+The operators for 'comparison' and 'logical' always return logical values! (`TRUE`, `FALSE`)
+
 ##Exercise
 
 - Create a data frame called `my.patients` using the instructions in 
 the slides. Change the data if you like.
 - Check you have created the data frame correctly by loading the 
-original version from this file in the Day_1_scripts folder using 
+original version from this file in the *Day_1_scripts* folder using 
 `source`
 ```{r eval=FALSE}
 source("1.2_patients.R")
@@ -834,38 +829,33 @@ continent, and height. Make up the data. Make country a character
 vector but continent a factor.
 
 ##Exercise
-- Try the `summary` function on your data frame. What does it do? 
+- Try the **`summary`** function on your data frame. What does it do? 
 How does it treat vectors (numeric, character, logical) and factors? 
 (What does it do for matrices?)
 ```{r ex2,eval=FALSE}
 summary(my.patients)
 ```
 - Use logical indexing to select the following patients:
-  + Patients under 40
-  + Patients who give consent to share their data
-  + Men who weigh as much or more than the average European male (70.8 kg)
+    + Patients under 40
+    + Patients who give consent to share their data
+    + Men who weigh as much or more than the average European male (70.8 kg)
 
 ##Logical indexing answers
 
-- Patients under 40
-
+- Patients under 40:
 ```{r ex2ans1, eval=FALSE}
- patients[patients$Age < 40,]
+patients[patients$Age < 40,]
 
 ```
 
-- Patients who give consent to share their data
-
-```{r ex2ans2}
+- Patients who give consent to share their data:
+```{r ex2ans2, eval=FALSE}
 patients[patients$Consent == TRUE,]
 
 ```
 
-##Logical indexing answers
-
 - Men who weigh as much or more than the average European male  (70.8 kg):
-
-```{r ex2ans3}
+```{r ex2ans3, eval=FALSE}
 patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
 ```
 
@@ -910,7 +900,7 @@ rawData <- read.delim("1.3_NBcountData.txt")
 rawData <- read.delim("1.3_NBcountData.txt")
 rawData[1:10,]
 ```
-- If the data has been comma-separated then, `sep=","`
+- If the data has been comma-separated then, `sep=","`:
 ```{r eval=FALSE}
 read.csv("1.3_NBcountData.csv")
 ```
@@ -921,16 +911,16 @@ read.csv("1.3_NBcountData.csv")
 
 ##1. Read in the data
 ```{r analysis1}
-rawData[1:10,]
+rawData[1:10,]  # View the first 10 rows to ensure import is OK
 ```
 
 
 ##Handling missing values
 
-- The data frame contains some *NA* values, which means the values are missing – a common occurrence in real data collection
+- The data frame contains some **`NA`** values, which means the values are missing – a common occurrence in real data collection
 - `NA` is a special value that can be present in objects of any type (logical, character, numeric etc)
-- `NA` is not the same as `NULL`. `NULL` is an empty R object. `NA` is one missing value within an R object (like a data frame or a vector)
-- Often R functions will handle *NA*s gracefully, but sometimes we have to tell the functions what to do with them. R has some built-in functions for dealing with *NA*s, and functions often have their own arguments (like `na.rm`) for handling them
+- `NA` is not the same as **`NULL`**. `NULL` is an empty R object. `NA` is one missing value within an R object (like a data frame or a vector)
+- Often R functions will handle `NA`s gracefully, but sometimes we have to tell the functions what to do with them. R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them
 
 ```{r analysis2}
 x <- c(1,NA,3)
@@ -949,10 +939,12 @@ mean(na.omit(x))
 amplification
 
 ```{r analysis3}
+# create an index of results:
 prop <- rawData$NB_Amp / rawData$Nuclei 
-# create an index of results
+
+# Get sample names of amplified patients:
 amp <- which(prop > 0.33) 
-# Get sample names of amplified patients
+
 
 ```
 
@@ -960,22 +952,22 @@ amp <- which(prop > 0.33)
 
 ```{r analysis4, fig.height=5,fig.width=5}
 plot(prop, ylim=c(0,1))
-
-abline(h=0.33)
+abline(h=0.33) # Add a horizonal line
+# See that two samples are amplified
 
 ```
 - More on plotting later....
 
 ##3. Outputting the results
 
-- We write out a data frame of results (patients > 33% NB amplification) as a 'comma separated values' text file
+- We write out a data frame of results (patients > 33% NB amplification) as a 'comma separated values' text file (CSV):
 
 ```{r analysis5, eval=FALSE}
 write.csv(rawData[amp,], file="selectedSamples.csv")
 ```
 - The output file is directly-readable by Excel
     
-- Its often helpful to double check where the data has been saved
+- It's often helpful to double check where the data has been saved. Use *get working directory* function:
 
 ```{r analysis6, eval=FALSE}
 getwd() # print working directory
@@ -984,8 +976,10 @@ list.files() # list files in working directory
 
 ##Data analysis exercise: Which samples are near normal?
 
-- Patients are near normal if;
-    + `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
+- Patients are near normal if:
+
+    `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
+
 - Modify the condition in our previous code to find these patients
 
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
