@@ -224,7 +224,6 @@ dbinom(0:50, 50, 0.5)
 plot(dbinom(0:50, 50, 0.5))
 ```
 
-
 ##Exercise: Linear modelling example
 Mice have varying numbers of babies in each litter. Does the size of the litter affect the average brain weight of the offspring? We can use linear modelling to find out. (This example is taken from John Maindonald and John Braun's book Data Analysis and Graphics Using R (CUP, 2003), p140-143.)
 
@@ -240,21 +239,34 @@ Mice have varying numbers of babies in each litter. Does the size of the litter 
 
 - To install and load the package and look at `litters`
 
-```{r echo=FALSE}
+```{r echo=FALSE,message=FALSE,warning=FALSE,include=FALSE}
 if(!require(DAAG)) install.packages("DAAG",repos = c("CRAN" = "http://cran.ma.imperial.ac.uk"))
 ```
 
 ```{r eval=FALSE}
 install.packages("DAAG")
+```
+
+
+```{r}
 library(DAAG)
-litters
+attach(litters)
+head(litters)
 summary(litters)
+```
+
+##Linear modelling plotting
+
+```{r}
 plot(litters)
 ```
+
+##Linear modelling answers
+
+
 - To calculate correlations between variables
 
-```{r eval=FALSE}
-attach(litters)
+```{r}
 cor.test(brainwt, lsize)
 cor.test(bodywt, lsize)
 cor.test(brainwt, bodywt)
@@ -263,21 +275,26 @@ cor.test(brainwt, bodywt)
 ##Linear modelling answers
 
 - To calculate the linear models
-
-
-```{r echo=FALSE}
-library(DAAG)
-attach(litters)
-```
-
 ```{r}
 lm(brainwt~lsize)
 ```
+
+```{r}
+plot(lsize,brainwt)
+abline(lm(brainwt~lsize))
+```
+
 
 ##Linear modelling answers
 ```{r}
 lm(brainwt~bodywt)
 ```
+
+```{r}
+plot(bodywt,brainwt)
+abline(lm(brainwt~bodywt))
+```
+
 
 ##Linear modelling answers
 ```{r}
