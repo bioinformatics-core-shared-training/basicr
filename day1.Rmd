@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Solving Biological Problems Using R - Day 1"
-author: Mark Dunning. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
+author: Mark Dunning and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
   John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: slidy_presentation
