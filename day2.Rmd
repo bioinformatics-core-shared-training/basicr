@@ -838,7 +838,6 @@ heatmap(values, scale="none", col=cm.colors(256))
 ## Gene Clustering 
 
 * In a second part of our analysis, we want to produce the same heatmap but only based on a list of experimentally-verified genes
-
 * The problem is that the data are not formatted in the most convenient way:
 
 ![gene-lists](images/gene-lists.png)
