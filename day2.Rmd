@@ -967,10 +967,8 @@ rect(-2.5, 0, 2.5, -1.5,
 - `col`; line colour
 - `pch`; plotting character
 - `cex`; character expansion
-- `lty`; line type
-- `lwd`; line width
-
-- See more arguments with
+- `lty`,lwd; line type and width
+    + See more arguments with
 ```{r eval=FALSE}
 ?par
 ```
