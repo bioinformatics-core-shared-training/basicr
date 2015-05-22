@@ -1152,9 +1152,6 @@ pdf(file  = "a_name.pdf",...)
 jpeg(file = "a_name.jpg",...)
 png(file  = "a_name.png",...)
 ```
-
-## Saving plots to files
-
 * Each graphics device will have a specific set of arguments to dictate characteristics of the outputted file
     + `height=, width=, horizontal=, res=, paper=`
     + Top tip: A4 @ 300 dpi, portrait, size in pixels
