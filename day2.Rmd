@@ -744,7 +744,6 @@ convTemp <- function(t=0, unit="c"){
 ## Combining data from multiple sources
 
 * R has powerful functions to combine heterogeneous data into a single data set
-
 * Gene clustering example data
     + five sets of differentially expressed genes from various experimental conditions
     + file with names of experimentally-verified genes
@@ -762,29 +761,39 @@ convTemp <- function(t=0, unit="c"){
 
 * To make the big table we first need to find out all the genes present in at least one of the files
 * Make sure not to use factors in `read.delim()`
-
+    + when loading in character data, use `as.is=TRUE` to prevent it being converted to factors
+    + `union()` is a set operation which combines two vectors by eliminating duplicates. See also `intersect` and `setdiff`
 
 ```{r eval=FALSE}
+#start with an empty collection of genes
 genes <- c()
 for(fileNum in 1:5){
+  #load in files 2_3.DiffGenes1.tsv...
   t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
                         , sep="")
                   , as.is=TRUE, header=FALSE)
+  #label the input columns to help code readability
   names(t) <- c("gene", "expression")
   genes <- union(genes, t$gene)
 }
+#for tidiness order our genes by name
 genes <- sort(genes)
-genes
+genes #show all genes
 ```
+
 
 ## Gene Clustering
 
 * Using the complete list of genes, we can create the big table and fill in the values:
-
+    + `match()` returns the index of the first argument in the second. i.e. index of input file genes in the big table
+    + we use index to pick the rows in such way that they match the order in the input file
+    
 ```{r eval=FALSE}
+#make the destination table [rows=unique genes,cols=file numbers]
 values <- matrix(0, nrow=length(genes), ncol=5)
 rownames(values) <- genes
 for(fileNum in 1:5){
+  #read in the file again
     t <- read.delim(paste("2.3_DiffGenes", fileNum,".tsv"
                         , sep=""), as.is=TRUE, header=FALSE)
     names(t) <- c("gene","expression")
@@ -796,6 +805,7 @@ for(fileNum in 1:5){
 ## Gene Clustering
 
 * Now we can do hierarchical clustering:
+    + Values from the matrix are colour-coded. Rows and columns are re-arranged according to similarity
 
 ```{r eval=FALSE,fig.height=4}
 heatmap(values, scale="none", col=cm.colors(256))
@@ -834,10 +844,9 @@ heatmap(values, scale="none", col=cm.colors(256))
 ![gene-lists](images/gene-lists.png)
 
 
-## Gene clustering
+## Gene Clustering
 
 * We load in this table, and only extract the gene names, then we use them to select a subset of the `values` matrix
-
 ```{r eval=FALSE}
 t.exp <- read.delim("2.3_ExperimentalGenes.tsv",
                     as.is=TRUE)
@@ -845,26 +854,23 @@ experim.genes <- unlist(strsplit(t.exp$genes, ","))
 ```
 * `unlist` flattens out a nested list into a single vector
 * `strsplit` splits a vector of strings by a custom split character (`,`). The result is a list of split values for each element of the input vector
-    
-  
-  
+* Now, redo the heatmap by using just the genes in the experimentally verified set  
 ```{r eval=FALSE}
 is.experimental <- rownames(values) %in% experim.genes
 heatmap(values[is.experimental,], scale="none"
         , col=cm.colors(256))
 ```
 
-## Gene clustering review
+## Gene Clustering Review
 
 * We load the five tables twice - first to collect gene names, then to load expression values
-
 * Based on the expression table (`values`) we construct a clustered heatmap first on the whole set of genes, then on a selected subset
 * Go through the code, try it out and understand it
 * Try answering the following questions
     + what is `rownames(values)`
     + why is `rownames(values)[index]` and `t$gene` giving the same output?
     + what is the difference between `rownames(values) %in% experim.genes` and `experim.genes %in% rownames(values)`
-    
+  
 # 5. Graphics
 
 ## Starting out with R grapics
