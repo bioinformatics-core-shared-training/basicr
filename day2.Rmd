@@ -979,7 +979,6 @@ rect(-2.5, 0, 2.5, -1.5,
 ## Plotting x, y data - plot(), points(), lines()
 
 * `plot` is used to start a new plot, accepts x,y data, but also data from some objects (like linear regression), Use the parameter `type` to draw points, lines etc (see `?plot`)
-
 * `points()` is used to add points to an existing plot
 * `lines()` is used to add lines to an existing plot
 
@@ -1061,7 +1060,6 @@ par(mar=c(5,4,4,2))
 
 * `pch=`
     + sets on of the 26 standard plotting characters used. Can also use characters, such as `"."`
-
 * `cex=`
     + character expansion. Sets the scaling factor of the printing character
 * `las=` 
@@ -1096,7 +1094,6 @@ text(x,y-0.3,i+1)
 
 * Colour is usually expressed as a hexadecimal code of Red, Green and Blue counterparts
     + no good for humans
-    
 * R supports numerous colour palettes which are available through several colour functions
     + `colours()` get inbuilt names of known colours
     + `rgb()` converts red, green, blue intensities to colours
@@ -1112,7 +1109,6 @@ plot(1:10, col="magenta")
 ## Colour ramps and palettes
 
 * Heatmaps use colour depth to convey data values. Cold colours are typically low values, and light colours are high-state values. This is a colour ramp
-
 * R supports numerous graded colour charts. Specify `n` to set the number of gradations required in the palette
 
 ```{r eval=FALSE}
@@ -1127,7 +1123,6 @@ cm.colors(n)
 ## Colour packages: RColorBrewer
 
 * This add-on package provides a series of well-defined colour palettes. The colours in these palettes are selected to permit maximum visual discrimination
-
 * To access the `RColorBrewer` packages
 
 ```{r eval=FALSE}
