@@ -105,7 +105,9 @@ var.test(Female,Male)
 ```
 
 ##Comparison of 2 data sets example. Student' t test
-- Student's t test is appropriate for comparing the difference in mean height in our data. We need a one-tailed test
+- Student's t test is appropriate for comparing the difference in mean height in our data. 
+      + We need a one-tailed test
+      + Choose value of `var.equal` argument based on results of previous slide
 ```{r}
 t.test(Female, Male, alternative="less",var.equal=TRUE)
 ```
