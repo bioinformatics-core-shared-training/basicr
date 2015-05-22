@@ -152,6 +152,13 @@ myModel <- lm(y~x)
 plot(y~x, xlim=c(0,10), ylim=c(0,10))
 abline(myModel)
 ```
+##Summary of the linear model object: summary(myModel)
+```{r}
+summary(myModel)
+coef(myModel)
+resid(myModel)
+fitted(myModel)
+```
 
 ##Modelling formulae
 - R has a very powerful formula syntax for describing statistical models
@@ -161,9 +168,6 @@ variable `y`
 placing the response variable on the left of the tilde and the explanatory variables on the right:
     + `y~x`
 - It is very easy to extend this syntax to do multiple regressions, ANOVAs, to include interactions, and to do many other common modelling tasks. For example
-
-##Modelling formulae
-
 ```{r eval=FALSE}
 y~x       #If x is continuous this is linear regression
 y~x       #If x is categorical, this is ANOVA
@@ -173,11 +177,7 @@ y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
 
-##Summary of the linear model object: summary(myModel)
-```{r echo=FALSE}
-options(width=80)
-summary(myModel)
-```
+
 
 ##Exercise: The coin toss
 
