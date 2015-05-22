@@ -202,18 +202,18 @@ summary(factor(coin.toss))
 
 ##Coin toss answers
 - The probability of getting exactly 25 heads from 50 observations of a fair coin
-```{r eval=FALSE}
+```{r}
 dbinom(25, 50, 0.5)
 ```
 - The probability of getting 25 heads or less from 50 observations of a fair coin
-```{r eval=FALSE}
+```{r}
 pbinom(25, 50, 0.5)
 ```
 
 
 ##Coin toss answers
 - The probabilities for getting all numbers of coin tosses from 0 to 50 in fifty trials
-```{r eval=FALSE}
+```{r}
 dbinom(0:50, 50, 0.5)
 ```
 
