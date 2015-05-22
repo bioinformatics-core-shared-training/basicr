@@ -240,6 +240,10 @@ Mice have varying numbers of babies in each litter. Does the size of the litter 
 
 - To install and load the package and look at `litters`
 
+```{r echo=FALSE}
+if(!require(DAAG)) install.packages("DAAG",repos = c("CRAN" = "http://cran.ma.imperial.ac.uk"))
+```
+
 ```{r eval=FALSE}
 install.packages("DAAG")
 library(DAAG)
