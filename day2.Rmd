@@ -2,7 +2,7 @@
 title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
   John Davey, Dávid Molnár and Ian Roberts
-date: "08/09/2014"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: slidy_presentation
 toc: yes
 ---
@@ -152,6 +152,7 @@ myModel <- lm(y~x)
 plot(y~x, xlim=c(0,10), ylim=c(0,10))
 abline(myModel)
 ```
+
 ##Summary of the linear model object: summary(myModel)
 ```{r}
 summary(myModel)
