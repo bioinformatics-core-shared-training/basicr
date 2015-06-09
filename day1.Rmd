@@ -7,6 +7,13 @@ output: slidy_presentation
 toc: yes
 ---
 
+## Day 1 Schedule
+
+1. Introduction to R and its environment
+2. Data Structures
+3. Data Analysis Example
+4. Programming Techniques
+
 #1. Introduction to R and its environment
 
 ##What's R?
@@ -22,7 +29,9 @@ toc: yes
 
 
 ## The R-project page
+
 http://www.r-project.org/
+
 ![R screenshot](images/R-project.png)
 
 ##R in the New York Times
@@ -38,7 +47,7 @@ http://goo.gl/pww4ZO
 
 - Release 3.2.0 (April 2015)
     + Base package and Contributed packages (general purpose extras)
-    + `r length(XML:::readHTMLTable("http://cran.r-project.org/web/packages/available_packages_by_date.html")[[1]][[2]])` available packages
+    + `r length(XML:::readHTMLTable("http://cran.r-project.org/web/packages/available_packages_by_date.html")[[1]][[2]])` available packages as of `r date()`
 - Download from http://mirrors.ebi.ac.uk/CRAN/
 - Windows, Mac and Linux versions available
 - Executed using command line, or a graphical user interface (GUI)
@@ -48,15 +57,14 @@ http://goo.gl/pww4ZO
 
 ##Getting started
 
-R is a program which, once installed on your system, can be
+- R is a program which, once installed on your system, can be
 launched and is immediately ready to take input directly from the
 user
 
-There are two ways to launch R:
-
-- From the command line (particularly useful if you're quite
+- There are two ways to launch R:
+    + From the command line (particularly useful if you're quite
 familiar with Linux; in the console at the prompt simply type `R`)
-- As an application called RStudio (very good for beginners)
+    + As an application called RStudio (very good for beginners)
 
 ##Launching R Using RStudio
 
@@ -384,12 +392,7 @@ coding.bases
 coding.pc <- coding.bases/genome.size*100
 coding.pc
 ```
-
-
-##Answers to genome exercise
-
 - To compare human to yeast:
-
 ```{r ex1answers4}
 coding.bases[1]/coding.bases[5]
 ```
@@ -467,15 +470,13 @@ R will return a list of possibilities:
 **packages**. e.g. the function **`sum()`** is in the **base** package and
 **`sd()`**, which calculates the standard deviation of a vector, is in the
 **`stats`** package
-
 - There are 1000s of additional packages provided by third parties,
 and the packages can be found in numerous server locations on the
 web called **repositories**
 - The two repositories you will come across the most are
     + **The Comprehensive R Archive Network (CRAN)**
     + **Bioconductor**
-
-- CRAN packages can be installed using **install.packages**
+- CRAN packages can be installed using `install.packages`
 - Set the Bioconductor package download tool by typing:
 ```{r eval=FALSE}
 source("http://bioconductor.org/biocLite.R")
@@ -512,8 +513,6 @@ install.packages("ggplot2")
 source("http://www.bioconductor.org/biocLite.R")
 biocLite("DESeq")
 ```
-
-##R packages
 
 - R needs to be told to use the new functions from the installed packages. Use `library(...)` function to load the newly installed features:
 
@@ -1152,7 +1151,7 @@ save.image("phd.chapter.1.R")
 load("phd.chapter.1.R")
 ```
 
-##Packages in The R workspace
+##Packages in the R workspace
 - You can see which packages are loaded into your workspace with `search`
 ```{r}
 search()
@@ -1191,7 +1190,7 @@ colony <- rbind(colony1, colony2, colony3, ..., colony10)
 - But this will be boring to type, difficult to change, and prone to error
 - As we are doing the same thing 10 times, but with a different file name each time, we can use a **loop** instead
 
-##Example `for` loop
+##Loops: Commands and flow control
 - R has two basic types of loop
     + a `for` loop: run some code on every value in a vector
     + a `while` loop: run some code while some condition is true
@@ -1211,7 +1210,7 @@ while ( i <= 10 ) {
 }
 ```
 
-##Loops Commands and flow control
+##Loops: Commands and flow control
 
 - Here's how we might use a `for` loop to load in our CSV files
 - If the data files are in your current working directory, we can look up files
