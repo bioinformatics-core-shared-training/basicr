@@ -7,6 +7,14 @@ output: slidy_presentation
 toc: yes
 ---
 
+## Day 2 Schedule
+
+1. Statistics
+2. Writing Scripts
+3. Writing Functions
+4. Data Analysis Example
+5. Graphics
+
 # 1. Statistics
 ##Built-in support for statistics
 - R is a statistical programming language
@@ -17,10 +25,10 @@ toc: yes
   
 ##Distribution functions  
 - Most commonly used distributions are built-in, functions have stereotypical names, e.g. for normal distribution
-  + `pnorm` - cumulative distribution for x
-  + `qnorm` - inverse of pnorm (from probability gives x)
-  + `dnorm` - distribution density
-  + `rnorm` - random number from normal distribution
+    + `pnorm` - cumulative distribution for x
+    + `qnorm` - inverse of pnorm (from probability gives x)
+    + `dnorm` - distribution density
+    + `rnorm` - random number from normal distribution
   
 ![distributions](images/distributions.png)  
   
@@ -39,8 +47,6 @@ dnorm(10, mean=10, sd=5)
 ```{r}
 dnorm(100, mean=10, sd=5)
 ```
-
-##Distribution functions 
 - The probability of drawing a value smaller than 10
 ```{r}
 pnorm(10, mean=10, sd=5)
@@ -57,31 +63,51 @@ qnorm(0.95, mean=0, sd=1)
 ##Two sample tests: Basic data analysis
 
 - Comparing 2 variances
+    + Fisher's F test
 ```{r eval=FALSE}
 var.test()
 ```
 - Comparing 2 sample means with normal errors
+    + Student's t test
 ```{r eval=FALSE}
 t.test()
 ```
 - Comparing 2 means with non-normal errors
+    + Wilcoxon's rank test
 ```{r eval=FALSE}
 wilcox.test()
 ```
-- See also `prop.test()`, `cor.test()`, `chisq.test()`, `fisher.test()`
+
+##Two sample tests: Basic data analysis
+- Comparing 2 proportions
+    + Binomial test
+```{r eval=FALSE}
+prop.test()
+```
+- Correlating 2 variables
+    + Pearson's / Spearman's rank correlation
+```{r eval=FALSE}
+cor.test()
+```
+- Testing for independence of 2 variables in a contingency table
+    + Chi-squared / Fisher's exact test
+```{r eval=FALSE}
+chisq.test();fisher.test()
+```
 
 
 ##Comparison of 2 data sets example: Basic data analysis
 
 - Men, on average, are taller than women.
+- The steps involved in test such a claim;
   1. Determine whether variances in each data series are different. 
     + Variance is a measure of sampling dispersion, a first estimate in determining the degree of difference
-    + e.g. Fishers' F test
+        + e.g. Fishers' F test
   2. Comparison of the mean heights. e.g. Student's t test, Wilcoxon's rank sum test
     + Determine probability that mean heights are really drawn from different sample populations
-    + e.g. Student's t-test, Wilcoxon's rank sum test
+        + e.g. Student's t-test, Wilcoxon's rank sum test
   
-##Comparison of 2 data sets example .Fishers F test
+##Comparison of 2 data sets example: Fisher's F test
 
 - Read in the data file into a new object, `heightData`
 ```{r eval=FALSE}
@@ -104,7 +130,7 @@ attach(heightData)
 var.test(Female,Male)
 ```
 
-##Comparison of 2 data sets example. Student' t test
+##Comparison of 2 data sets example: Student's t test
 - Student's t test is appropriate for comparing the difference in mean height in our data. 
       + We need a one-tailed test
       + Choose value of `var.equal` argument based on results of previous slide
@@ -112,7 +138,7 @@ var.test(Female,Male)
 t.test(Female, Male, alternative="less",var.equal=TRUE)
 ```
 
-##Comparison of 2 data sets example. Review findings
+##Comparison of 2 data sets example: Review findings
 
 ```{r}
 boxplot(heightData)
@@ -140,25 +166,32 @@ y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
 plot(y~x, xlim=c(0,10), ylim=c(0,10))
 ```
 
+* The ~ is used to define a formula; i.e. "y is given by x"*
 
 ##Typical linear regression analysis: Basic data analysis
 
-```{r echo=FALSE}
-myModel <- lm(y~x)
-```
-
-
+* The ~ is used to define a formula; i.e. "y is given by x"*
 ```{r}
 plot(y~x, xlim=c(0,10), ylim=c(0,10))
+myModel <- lm(y~x)
 abline(myModel)
 ```
 
-##Summary of the linear model object: summary(myModel)
-```{r}
-summary(myModel)
+##Typical linear regression analysis: Basic data analysis
+- Get the coefficients of the fit from:
+```{r eval=FALSE}
+summary.lm(myModel)
 coef(myModel)
 resid(myModel)
 fitted(myModel)
+```
+- Get QC of fit from
+```{r eval=FALSE}
+plot(myModel)
+```
+- Find out about the fit data from
+```{r eval=FALSE}
+names(myModel)
 ```
 
 ##Modelling formulae
@@ -178,6 +211,11 @@ y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
 
+##The linear model object. Basic data analysis
+- Summary data describing the linear fit is given by
+```{r}
+summary(myModel)
+```
 
 
 ##Exercise: The coin toss
@@ -203,25 +241,19 @@ summary(factor(coin.toss))
 
 ##Coin toss answers
 - The probability of getting exactly 25 heads from 50 observations of a fair coin
-```{r}
+```{r eval=FALSE}
 dbinom(25, 50, 0.5)
 ```
 - The probability of getting 25 heads or less from 50 observations of a fair coin
-```{r}
+```{r eval=FALSE}
 pbinom(25, 50, 0.5)
 ```
-
-
-##Coin toss answers
 - The probabilities for getting all numbers of coin tosses from 0 to 50 in fifty trials
-```{r}
+```{r eval=FALSE}
 dbinom(0:50, 50, 0.5)
 ```
-
-##Coin toss answers
-
 - To plot this distribution, which should resemble a normal distribution
-```{r}
+```{r eval=FALSE}
 plot(dbinom(0:50, 50, 0.5))
 ```
 
@@ -230,9 +262,6 @@ Mice have varying numbers of babies in each litter. Does the size of the litter 
 
 - Install and load the `DAAG` package. The `litters` data frame is part of this package. Take a look at it. How many variables and observations does it have? Does `summary` tell you anything useful? What about `plot`?
 - Are any of the variables correlated? Look up the `cor.test` function and use it to test for relationships.
-
-##Exercise: Linear modelling example
-
 - Use `lm` to calculate the regression of brain weight on litter size, brain weight on body weight, and brain weight on litter size and body weight together
 - Look at the coefficients in your models. How is brain weight related to litter size on its own? What about in the multiple regression? How would you interpret this result?
 
@@ -248,58 +277,33 @@ if(!require(DAAG)) install.packages("DAAG",repos = c("CRAN" = "http://cran.ma.im
 install.packages("DAAG")
 ```
 
-
-```{r}
+```{r eval=FALSE}
 library(DAAG)
-attach(litters)
-head(litters)
+litters
 summary(litters)
-```
-
-##Linear modelling plotting
-
-```{r}
 plot(litters)
 ```
-
-##Linear modelling answers
-
-
-- To calculate correlations between variables
-
-```{r}
-cor.test(brainwt, lsize)
-cor.test(bodywt, lsize)
-cor.test(brainwt, bodywt)
+- To calculate the correlations between variables
+```{r eval=FALSE}
+attach(litters)
+cor.test(brainwt,lsize)
+cor.test(bodywt,lsize)
+cor.test(brainwt,bodywt)
 ```
 
+
 ##Linear modelling answers
+
+```{r echo=FALSE}
+library(DAAG)
+attach(litters)
+```
 
 - To calculate the linear models
 ```{r}
 lm(brainwt~lsize)
-```
-
-```{r}
-plot(lsize,brainwt)
-abline(lm(brainwt~lsize))
-```
-
-
-##Linear modelling answers
-```{r}
 lm(brainwt~bodywt)
-```
-
-```{r}
-plot(bodywt,brainwt)
-abline(lm(brainwt~bodywt))
-```
-
-
-##Linear modelling answers
-```{r}
-lm(formula = brainwt ~ lsize + bodywt)
+lm(brainwt~lsize+bodywt)
 ```
 
 - *Interpretation*: brain weight decreases as litter size increases, but brain weight increases proportional to body weight (when bodywt is held constant, the lsize coefficient is positive: 0.00669). This is called 'brain sparing'; although the offspring get smaller as litter size increases, the brain does not shrink as much as the body
@@ -317,15 +321,11 @@ lm(formula = brainwt ~ lsize + bodywt)
     + expressing the steps as concisely as possible
     + making use of error checking
     + including descriptive comments
-  
-##The R scripting language
-
 * R is a powerful scripting language, and embodies aspects found in most standard programming environments
     + procedrual statements
     + loops
     + functions
     + conditional branching
-  
 * Scripts may be written in any standard text editor, e.g. notepad, gedit, kate
     + we will use RStudio
 
@@ -351,11 +351,17 @@ lm(formula = brainwt ~ lsize + bodywt)
 ##Initial trial exercise
 
 * The trial data are in the file '2.1\_colony\_trial.csv'. Load this file into R using the command we learnt yesterday
-* Plot the data using a formula, to see how Z affects colony Count. Recall how we did this earlier with linear modelling, with independant variable x and dependent variable y: `plot(y~x)`
+* Plot the data using a formula, to see how Z affects colony Count. Recall how we did this earlier with linear modelling, with independant variable x and dependent variable y: 
+```{r eval=FALSE}
+plot(y~x)
+```
 * Calculate an analysis of variance for the data. The R function for ANOVA is `aov`, which works like `lm()` from earlier
+```{r eval=FALSE}
+summary(lm(y~x))
+```
 * There are four concentrations of Z, and each concentration has been replicated three times. What is the mean colony count for each concentration? See if you can figure out a way to calculate this with what we learnt yesterday. You will need to use logical indexing and you may want to use a loop
 
-##Walkthrough - Importing the data
+##Importing data
 
 * Use `read.csv` to load the data
 
@@ -374,7 +380,7 @@ colony
 ```
 
 
-##Walkthrough - Importing the data
+##Importing data
 
 ```{r echo=FALSE}
 colony[1:4,]
@@ -387,17 +393,20 @@ colony[1:4,]
 ```{r}
 attach(colony)
 ```
+* (We will also `detach` colony from the workspace at the end of our script)
 
-##Walkthrough - Plotting
+##Plotting
 
-* We want to plot the colony growth in response to changing Z concentration.
-* Z is the explanatory variable and Count is the response variable
+- We want to plot the colony growth in response to changing Z concentration.
+- Z is the explanatory variable and Count is the response variable
+- We don't want to plot replicates separately here, but get R to summarise each Z over all replicates
+- We can call plot using the same *formula syntax* we learnt earlier
 
 ```{r fig.height=4}
 plot(Count ~ Z)
 ```
 
-##Walkthrough - Plotting
+##Plotting
 
 * We can improve on this. Firstly, we want to order the Z categories. Z is a factor, so we need to supply new levels to this factor in the colony data frame
 
@@ -407,7 +416,7 @@ Z  <- factor(Z, levels=c("None", "Low",
 plot(Count ~ Z)
 ```
 
-##Walkthrough - Analysis of Variance
+##Analysis of Variance
 
 * We can use the same formula syntax to calculate an analysis of variance:
 
@@ -416,7 +425,8 @@ colony.aov <- aov(Count~Z)
 summary(colony.aov)
 ```
 
-This tells us what we can already see from the plot, that there is a highly significant relationship between Z concentration and colony growth
+* This tells us what we can already see from the plot, that there is a highly significant relationship between Z concentration and colony growth
+* We would like to investigate this relationship. For example, we might want to calculate the mean colony count for each concentration of Z.
 
 ##Calculating group means
 
@@ -441,10 +451,9 @@ for (z in levels(Z)){
 ```
 * But there is a better way
 
-##The tapply function
+##The tapply function: a brief digression
 
-* The apply family of functions allow us to group data by variable and calculate something for each group
-
+* The `apply` family of functions allow us to group data by variable and calculate something for each group
 * Assume we have the following data for heights of 5 males and females
 
 ```{r}
@@ -453,15 +462,11 @@ data <- data.frame(gender = c("M","M","F","F","F"),
 data
 ```
 * How can we get the mean of males and females separately?
-
-##The tapply function
-
 * The `tapply` function lets us do exactly this
 
 ```{r eval=FALSE}
 tapply(data, groups, function)
 ```
-
 * in our case:
 ```{r}
 tapply(data$height, data$gender, mean)
@@ -495,7 +500,7 @@ print(colony.means)
 barplot(colony.means)
 detach(colony)
 ```
-* 2.1\_colony\_1.R
+* Make sure you can source your commands (or the file 2.1_colony_1.R) from Rstudio and generate the results and plot.
 
 
 # 3. User functions
@@ -522,6 +527,7 @@ sqXplusX <- function(x){
 * `x` is the single argument to this function and it exists only within the function
 * everything between the brackets `{}` are procedural steps
 * the last calculated value is the function return value. We can call `return` explictly
+* after defining the function, we can use it:
 ```{r}
 sqXplusX(10)
 ```
@@ -538,6 +544,7 @@ powXplusX <- function(x, power=2){
 * The `power` argument has a default value of 2; if we don't supply a power when we call the function, `x` will be squared
 * Arguments without a default value are required, those with default values are optional
 ```{r}
+powXplusX(10) #arguments are matched based on position
 powXplusX(10, 3) #arguments are matched based on position
 powXplusX(x=10, power=3) # arguments matched based on name
 ```
@@ -568,14 +575,11 @@ addone(x)
 x
 ```
 
-## Variable scope
-
 * The `x` in the global environment has nothing to do with the `x` declared in the function, and is unchanged by the call to the function. To update the global `x`, we would need to assign the return value of the function
 
 ```{r}
 x <- addone(x)
 ```
-
 * A function can only return one object, but that object can be a list, so if you have many objects to return, package them up into a list first
 
 
@@ -594,7 +598,9 @@ x <- addone(x)
 
 * A function should fail gracefully if it does not receive valid input when it is called. We can use `if` statements to check for appropriate input
 
-* R has two useful commands to tell the user something is wrong. `warning` prints a message and continues to run the function. `stop` ends the function after printing the message.
+* R has two useful commands to tell the user something is wrong. 
+    + `warning` prints a message and continues to run the function. 
+    + `stop` ends the function after printing the message.
 
 * For example, we might rewrite our `powXplusX` function to check that the power argument is a whole number:
 
@@ -604,8 +610,6 @@ powXplusX <- function(x, power=2){
   x^power + x
 }
 ```
-
-## Checking input and reporting errors
 
 ```{r}
 powXplusX(10, 3)
@@ -643,10 +647,6 @@ sqXplusX <- function(x){
 sqXplusX(10)
 ```
 
-
-## Checking input and reporting errors
-
-
 ```{r eval=FALSE}
 sqXplusX("ten")
 
@@ -678,9 +678,6 @@ sqXplusX <- function(x){
 * This is not only shorter, but it also gets all the error checking out of the way before the main processing stesp
 
 * You may also find the `%in%` command useful, which checks to see if the elements of one vector are present in another
-
-## Checking input and reporting errors
-
 ```{r}
 levels(colony$Z)
 "Low" %in% colony$Z
@@ -691,9 +688,7 @@ c("None", "Low") %in% colony$Z
 ## Temperature conversion exercise
 
 * Centigrade to Fahrenheit conversion is given by F = 9/5 *C +32
-
 * Write a function that converts between temperatures
-
 * The function should take two named arguments
     + temperature `t` is numeric
     + units `unit` is character
@@ -716,10 +711,11 @@ c("None", "Low") %in% colony$Z
     + write a set of test calls to confirm that your function handles correct and incorrect input
 * If you get stuck, call us for help
 
-##Temperature conversion exercise
+##Temperature conversion exercise script
 
 ```{r}
 convTemp <- function(t=0, unit="c"){
+# convTemp is defined as a new user function requiring two arguments, t and unit, the default values are 0 and "c", respectively. 
     if(!is.numeric(t)) stop("Non numeric 
                             temperature entered")
     if(!unit %in% c("c","f")){
@@ -742,7 +738,7 @@ convTemp <- function(t=0, unit="c"){
 
 # 4. Advanced data processing
 
-## Combining data from multiple sources
+## Combining data from multiple sources: *Gene Clustering Example*
 
 * R has powerful functions to combine heterogeneous data into a single data set
 * Gene clustering example data
@@ -758,7 +754,7 @@ convTemp <- function(t=0, unit="c"){
 * we want to combine all five tables into a single table, with 0 for missing values
 ![gene-tables](images/gene-tables.png)
 
-## Gene Clustering 
+## Gene Clustering: Script Walkthrough 1
 
 * To make the big table we first need to find out all the genes present in at least one of the files
 * Make sure not to use factors in `read.delim()`
@@ -781,9 +777,9 @@ for(fileNum in 1:5){
 genes <- sort(genes)
 genes #show all genes
 ```
+- *Example code: 2.3_geneClustering.R*
 
-
-## Gene Clustering
+## Gene Clustering: Script Walkthrough 2
 
 * Using the complete list of genes, we can create the big table and fill in the values:
     + `match()` returns the index of the first argument in the second. i.e. index of input file genes in the big table
@@ -803,7 +799,7 @@ for(fileNum in 1:5){
 }
 ```
 
-## Gene Clustering
+## Gene Clustering: Script Walkthrough 3
 
 * Now we can do hierarchical clustering:
     + Values from the matrix are colour-coded. Rows and columns are re-arranged according to similarity
@@ -836,7 +832,7 @@ heatmap(values, scale="none", col=cm.colors(256))
 
 ```
 
-## Gene Clustering 
+## Gene Clustering: Script Walkthrough 4 
 
 * In a second part of our analysis, we want to produce the same heatmap but only based on a list of experimentally-verified genes
 * The problem is that the data are not formatted in the most convenient way:
@@ -844,7 +840,7 @@ heatmap(values, scale="none", col=cm.colors(256))
 ![gene-lists](images/gene-lists.png)
 
 
-## Gene Clustering
+## Gene Clustering: Script Walkthrough 5
 
 * We load in this table, and only extract the gene names, then we use them to select a subset of the `values` matrix
 ```{r eval=FALSE}
@@ -863,7 +859,7 @@ heatmap(values[is.experimental,], scale="none"
 
 ## Gene Clustering Review
 
-* We load the five tables twice - first to collect gene names, then to load expression values
+* We load the five tables twice; first to collect gene names, then to load expression values
 * Based on the expression table (`values`) we construct a clustered heatmap first on the whole set of genes, then on a selected subset
 * Go through the code, try it out and understand it
 * Try answering the following questions
@@ -877,16 +873,17 @@ heatmap(values[is.experimental,], scale="none"
 
 * R provides several mechanisms for producing graphical output
     + Functionality depends on the level at which the user seeks interaction with R
+        + graphics systems, packages, devices & engines
 * High-level graphics
     + Functions compute an appropriate chart based upon the information provided. Optional arguments may tailor the chart as required
-    + Interaction is at traditional graphics system level. The user isn't required to know much about anything
+        + Interaction is at traditional graphics system level. The user isn't required to know much about anything
 * Low-level grpahics
     + The user interacts with the drawing device to build up a picture of the chart piece-by-piece
-    + This fine granular control is only required if you seek to do something exceptional
+        + This fine granular control is only required if you seek to do something exceptional
 * R graphics produces plots using a painters' model
     + Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels. Lower levels are obscured by higher levels, allowing for blending, masking and overlaying of objects.
     
-## Essential plotting - plot
+## Essential plotting - plot()
 
 * `plot()` is the main function for plotting, it takes x, y values to plot and also lots of graphical parameters (see `?par` for all of them)
 
@@ -911,7 +908,7 @@ plot(x,y, xlab="X data", ylab="Y data",
 ```
 
 
-## R graphics uses a painters' model
+## R graphics uses a painter's model
 
 ```{r fig.height=4}
 x <- seq(-2,2,0.1)
@@ -922,7 +919,7 @@ plot(x,y, ylim=c(-1.5,1.5),
      cex=1.4)
 ```
 
-## R graphics uses a painters' model
+## R graphics uses a painter's model
 
 ```{r echo=FALSE}
 x <- seq(-2, 2, 0.1)
@@ -942,7 +939,7 @@ lines(x, y, ylim=c(-1.5,1.5),
       lty=1, lwd=2)
 ```
 
-## R graphics uses a painters' model
+## R graphics uses a painter's model
 
 ```{r echo=FALSE}
 x <- seq(-2, 2, 0.1)
@@ -966,13 +963,10 @@ rect(-2.5, 0, 2.5, -1.5,
 ## Plotting arguments we used
 - `xlim`,`ylim`; axis limits
 - `col`; line colour
-- `pch`; plotting character
-- `cex`; character expansion
-- `lty`,lwd; line type and width
-    + See more arguments with
-```{r eval=FALSE}
-?par
-```
+- `pch`; plotting character[`example(points)]
+- `cex`; character expansion [scaling factor]
+- `lty`,`lwd`; line type and width
+- `rect`; rectangle
 
 
 ## Plotting x, y data - plot(), points(), lines()
@@ -989,7 +983,7 @@ points(1,3)
 ```
 
 
-## Making bar plots barplot()
+## Making bar plots: barplot()
 
 * Visualizing a vector of data can be done with bar plots, using the function `barplot()`
 
@@ -998,7 +992,7 @@ data <- c("2000"=0, "2001"=20, "2002"=50,"2003"=100)
 barplot(data, main="Number of R developes")
 ```
 
-## Making box plots - boxplot()
+## Making box plots: boxplot()
 
 * When a spread of data needs to be visualised, we can use boxplots with the function `boxplot()`
 
@@ -1008,7 +1002,7 @@ data2 <- rnorm(1000, mean=1)
 boxplot(data1,data2)
 ```
 
-##Making histograms - hist()
+##Making histograms: hist()
 
 * When we need to look at the distribution of data, we can visualise it using histograms with the function `hist()`
 
@@ -1021,18 +1015,22 @@ hist(data)
 
 * Set the plot layout and stlye - `par()`
     + set the number of plots you want per page
-    + set the outer margins of the figure region (the distance between the edges of the page and the figure region, or between adjacent plots if there are multiple figures per page)
-    + set the inner margins of the plot (the distance between the plot axes and the labels and titles)
-    + set the styles for the plot (colours, fonts, line styles and weights)
+    + set the outer margins of the figure region 
+        + the distance between the edges of the page and the figure region, or between adjacent plots if there are multiple figures per page
+    + set the inner margins of the plot
+        + the distance between the plot axes and the labels and titles
+    + set the styles for the plot 
+        + colours, fonts, line styles and weights
 * Draw the plot `plot(x, y, ...)`    
 
 ## Setting graphics layout and style - par()
 
 * `par()` top-level graphics function
     + parameter specifies various page settings. These are inherited by subordinate functions, if no other styles are set
-    + specific colours and styles may be set globally with `par`, but change ad-hoc in plotting commands
-    + the global setting will remain unchanged, and reused in future plotting calls
-    + `par` sets the size of page and figure margins (margin spacing is in lines)
+        + specific colours and styles may be set globally with `par`, but change ad-hoc in plotting commands
+        + the global setting will remain unchanged, and reused in future plotting calls
+    + `par` sets the size of page and figure margins
+        + margin spacing is in "lines"
     + `par` is responsible for controlling the number of figures that are plotted on a page
     + `par` may set global colouring of axes, text, background, foreground, line styles (solid/dashed), if figures should be boxed or open etc, etc...
 * type `par()` to get a list of top-down settings that may be set globally
@@ -1049,11 +1047,11 @@ par(oma=c(2,2,2,2))
 ## Page settings with par
 ```{r eval=FALSE}
 par(mar=c(5,4,4,2))
+#Sets space for x & y labels, a main title, and a thin margin on the right
 ```
-* Sets space for x and y labels, a main title, and a thin margin on the right
-    + Numbering: bottom, left, top, right
 ![layout1](images/layout2.png)
 
+N.B. Numbering: *bottom*, *left*, *top*, *right*
 
 ## Plotting characters for plot(), size and orientation
 
@@ -1084,9 +1082,12 @@ text(x,y-0.3,i+1)
 
 * `plot` accepts main title, subtitle, X label, Y label as standard arguments
     + `plot(x, y, main="...", sub="...", xlab="...", ylab="...")`
-    + `mtext(text = "...", side="")` allows text to be written directly into the margin of a plot
-    + `text(x, y, labels="...")` allows text to be written in the plot at coordinates x,y
-    + `legend(x, y, legend="...")` produces a legend for the plot
+    + `mtext(text = "...", side="")` 
+        + allows text to be written directly into the margin of a plot
+    + `text(x, y, labels="...")` 
+        + allows text to be written in the plot at coordinates x,y
+    + `legend(x, y, legend="...")` 
+        + produces a legend for the plot
     
   
 ## Use of colour in R
@@ -1097,15 +1098,20 @@ text(x,y-0.3,i+1)
     + `colours()` get inbuilt names of known colours
     + `rgb()` converts red, green, blue intensities to colours
     
-```{r eval=FALSE}
+
+```{r}
 rgb(1,1,1)
+```
+
+```{r eval=FALSE}
+
 par(mfrow=c(2,2))
 plot(1:10, col="#FF00FF")
 plot(1:10, col=rgb(1,0,1))
 plot(1:10, col="magenta")
 ```
 
-## Colour ramps and palettes
+## Colour Ramps and Palettes
 
 * Heatmaps use colour depth to convey data values. Cold colours are typically low values, and light colours are high-state values. This is a colour ramp
 * R supports numerous graded colour charts. Specify `n` to set the number of gradations required in the palette
@@ -1116,7 +1122,11 @@ heat.colors(n)
 terrain.colors(n)
 topo.colors(n)
 cm.colors(n)
-
+```
+* You can specify a user-defined palette of indexed colours
+```{r eval=FALSE}
+palette(rainbow(7))
+#creates 7 indexed colours (1:7) based on the rainbow palette R O Y G B I V
 ```
 
 ## Colour packages: RColorBrewer
@@ -1134,7 +1144,7 @@ myCol <- brewer.pal(n,"...")
 
 
 
-## Colour packages: RColorBrewer
+## RColorBrewer named palettes
 ```{r echo=FALSE}
 library(RColorBrewer)
 display.brewer.all()
@@ -1156,8 +1166,9 @@ png(file  = "a_name.png",...)
 * Each graphics device will have a specific set of arguments to dictate characteristics of the outputted file
     + `height=, width=, horizontal=, res=, paper=`
     + Top tip: A4 @ 300 dpi, portrait, size in pixels
+    + `jpg(file="my_Figure.jpg", height=3510, width=2490, res=300)`
     + Postscript and pdf work in inches by default, A4 = 8.3" x 11.7"
-* Graphics devices need closing when printing is finished: `dev.off()`
+* Graphics devices need closing when printing is finished: `dev.off()`. For example:
 ```{r eval=FALSE}
 png("tenPoints.png", width=300, height=300)
 plot(1:10)
@@ -1168,12 +1179,12 @@ dev.off()
 
 * Its very tempting to send all graphical output to a pdf file. Caution
     + For high resolution publication-quality images you need postscript. Set up postscript file capture with `postscript("a_file.ps", paper="a4")`
-    + Postscript images can be converted to JPEG using ghostscript (free to download) for low resolution lab book photos and talks
+        + Postscript images can be converted to JPEG using ghostscript (free to download) for low resolution lab book photos and talks
     + PDF images will grow too large for Acrobat to render if plots contain many data points (e.g. Affymetrix MA plots)
     + Automatically send multiple page outputs to separate image files using `file = somename%02d.jpg`
     + Don't forget to close graphics devices (i.e. the file) by using `dev.off()`
 
-## Graphics exercise
+## Plotting exercise
 
 * Exercise
     + Make a full A4 page figure comprising of 6 plots: 2 each of XY plot (`plot()`), barchart (`barplot()`) and box plots (`boxplot()`)
@@ -1187,7 +1198,7 @@ dev.off()
 
 * An example solution `20_6PanelPlotscript.R`
 
-## Example output
+## 6 Panel plots exercise
 
 ![eg](images/graph-exercise.png)
 
@@ -1217,6 +1228,6 @@ dev.off()
 - Meet with fellow R users
     + http://www.meetup.com/Cambridge-R-Users-Group-Meetup/
     + informal, quarterly talks
-- Look our for an 'Intermediate R' course    
+- Look out for an 'Intermediate R' course    
 
     
