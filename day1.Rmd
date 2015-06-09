@@ -119,7 +119,7 @@ myNumber
 ```{r variables2}
 sqrt(myNumber)
 ```
-We can add variables together:
+- We can add variables together:
 ```{r variables3}
 x + myNumber
 ```
@@ -427,16 +427,13 @@ Sourcing can also be performed manually with `source("myScript.R")`
 
 ##Getting help
 
-- To get help on any R function, type `?` followed by the function name.
-For example:
-
+- To get help on any R function, type `?` followed by the function name. For example:
 ```{r eval=FALSE}
 ?seq
 ```
 - This retrieves the syntax and arguments for the function. You can see
 the default order of arguments here. The help page also tells you which
 **package** it belongs to.
-
 - There will typically be example usage, which you can test using the
 `example` function:
 
@@ -474,10 +471,6 @@ R will return a list of possibilities:
 - There are 1000s of additional packages provided by third parties,
 and the packages can be found in numerous server locations on the
 web called **repositories**
-
-##R packages
-
-
 - The two repositories you will come across the most are
     + **The Comprehensive R Archive Network (CRAN)**
     + **Bioconductor**
@@ -497,28 +490,23 @@ biocLite("PackageName")
 - Packages on CRAN:
     + Use CRAN search to find functionality you need: http://cran.r-project.org/search.html
     + Or look for packages by theme: http://cran.r-project.org/web/views/
-
 - Packages in Bioconductor -- specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
-
 - Other repositories:
     + http://r-forge.r-project.org/
-  
-- Bottomline: **always** first look if there is already an R package that does what you want before trying to implement it yourself
+  - Bottomline: **always** first look if there is already an R package that does what you want before trying to implement it yourself
 
 
 ##Exercise: Install packages ggplot2 and DESeq
 
 - ggplot2 is a commonly used graphics package
-  + Use `install.packages()` function to install it:
+    + in RStudio, go to **Tools** → **Install Packages**... and type the package name
+    + or use `install.packages()` function to install it:
   
 ```{r eval=FALSE}
 install.packages("ggplot2")
 ```
-
-  + or in RStudio go to **Tools** → **Install Packages**... and type the
-package name
-
-- `DESeq` is a Bioconductor package (http://www.bioconductor.org)
+   
+- `DESeq` is a Bioconductor package (http://www.bioconductor.org) for the analysis of RNA-seq data
 
 ```{r eval=FALSE}
 source("http://www.bioconductor.org/biocLite.R")
@@ -572,14 +560,14 @@ weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5,
 71.5, 73.2, 64.8)
 
 ```
-We can define the names using character vectors:
+- We can define the names using character vectors:
 ```{r patients2}
 firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
 "Paul", "Joanna", "Matthew", "David", "Sally")
 secondName <- c("Jones", "Parker", "Evans", "Davis", 
 "Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
 ```
-We also have a new type of vector, the **logical** vector, which only 
+- We also have a new type of vector, the **logical** vector, which only 
 contains the values `TRUE` and `FALSE`:
 ```{r patients3}
 consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
@@ -594,7 +582,7 @@ FALSE, TRUE, FALSE, TRUE)
 c(20, "a string", TRUE)
 
 ```
-We can see the type of a particular vector using the **`class`** function:
+- We can see the type of a particular vector using the **`class`** function:
 
 ```{r}
  class(firstName)
@@ -793,10 +781,6 @@ numeric or logical:
  s <- letters[1:5]
  s[c(1,3)]
  s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
-```
-
-##Advanced indexing
-```{r index4}
 a <- 1:5
 a < 3
 s[a < 3]
@@ -811,8 +795,7 @@ s[a == 2]
 `<, >, <=, >=, ==, !=`
 - logical
 `!, &, |, xor`
-
-The operators for 'comparison' and 'logical' always return logical values! (`TRUE`, `FALSE`)
+    + The operators for 'comparison' and 'logical' always return logical values! i.e.  (`TRUE`, `FALSE`)
 
 ##Exercise
 
@@ -827,14 +810,9 @@ source("1.2_patients.R")
 -  Remake your data frame with three new variables: country, 
 continent, and height. Make up the data. Make country a character 
 vector but continent a factor.
-
-##Exercise
 - Try the **`summary`** function on your data frame. What does it do? 
 How does it treat vectors (numeric, character, logical) and factors? 
 (What does it do for matrices?)
-```{r ex2,eval=FALSE}
-summary(my.patients)
-```
 - Use logical indexing to select the following patients:
     + Patients under 40
     + Patients who give consent to share their data
@@ -880,6 +858,7 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
       + Amplification of NMYC correlates with worse prognosis
       + We have count data
       + Numbers of cells per patient assayed
+          + For each we have NMYC copy number relative to base ploidy
 - We need to determine which patients have amplifications
     + (i.e > 33% of cells show NMYC amplification)
   
@@ -887,7 +866,6 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
 ##1. Read in the data
 
 - The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
-
 - We need to read in the results and assign it to an object (`rawdata`)
 
 ```{r echo=FALSE}
@@ -941,33 +919,28 @@ amplification
 ```{r analysis3}
 # create an index of results:
 prop <- rawData$NB_Amp / rawData$Nuclei 
-
 # Get sample names of amplified patients:
 amp <- which(prop > 0.33) 
-
-
 ```
 
 - We can plot a simple chart of the % NB amplification
+    + note that two samples are amplified
+    + plotting will be covered in detail tomorrow
 
-```{r analysis4, fig.height=5,fig.width=5}
+```{r analysis4, fig.height=5,fig.width=10}
 plot(prop, ylim=c(0,1))
 abline(h=0.33) # Add a horizonal line
-# See that two samples are amplified
-
 ```
-- More on plotting later....
 
 ##3. Outputting the results
 
 - We write out a data frame of results (patients > 33% NB amplification) as a 'comma separated values' text file (CSV):
-
 ```{r analysis5, eval=FALSE}
 write.csv(rawData[amp,], file="selectedSamples.csv")
 ```
 - The output file is directly-readable by Excel
-    
-- It's often helpful to double check where the data has been saved. Use *get working directory* function:
+- It's often helpful to double check where the data has been saved. 
+    + Use the *get working directory* function:
 
 ```{r analysis6, eval=FALSE}
 getwd() # print working directory
@@ -1016,30 +989,45 @@ min(x); max(x)
 ```{r eval=FALSE}
 sum(x)
 ```
-- Summary statistics
+- Average estimates (mean / median)
   
 ```{r eval=FALSE}
 mean(x); median(x)
 ```
-  + Range of values in a series
+- Range of values in a series
   
 ```{r eval=FALSE}
 range(x)
 ```
+- Variance  
+```{r eval=FALSE}
+var(x)
+```
 
-##Arithmetic with vectors
+##Basic R 'Built-in' functions for working with objects
 
 - Rank ordering
 ```{r programming3, eval=FALSE}
 rank(x)
 ```
-
 - Quantiles
 ```{r programming4,eval=FALSE}
-quantile(x)
+quantile(x);boxplot(x)
+```
+- Square Root
+```{r eval=FALSE}
+sqrt(x)
+```
+- Standard deviation
+```{r eval=FALSE}
+sd(x)
+```
+- Trigonometry functions
+```{r eval=FALSE}
+tan(x);cos(x);sin(x)
 ```
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 - We have seen before how we can get the names of our variables, but for data frames and matrices we can also get these names with colnames, and the names of the rows with rownames
 
@@ -1049,7 +1037,7 @@ colnames(patients)
 rownames(patients)
 ```
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 - We can get the numbers of rows or columns with `nrow` and `ncol`
 
 ```{r programming6}
@@ -1058,7 +1046,7 @@ ncol(patients)
 dim(patients)
 ```
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 - We can also find the length of a vector or a list with `length`, although this may give confusing results for some structures, like data frames:
 
@@ -1071,7 +1059,7 @@ length(patients$Age)
 
 *Remember, a data frame is a list of variables, so its length is the number of variables. The length of one of the variable vectors (like Age) is the number of observations*
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 - We can add rows or columns to a data frame using rbind and cbind
 ```{r echo=FALSE}
@@ -1083,21 +1071,21 @@ newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
 rbind(patients,newpatient)
 ```
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 ```{r data-frames2}
 cbind(patients,10:1)
 
 ```
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 - We can also remove rows and columns
 ```{r}
-patients[-1, ] # remove first row patients[,-1] 
+patients[-1, ] # remove first row
 ```
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 - We can also remove rows and columns
 ```{r}
@@ -1105,7 +1093,7 @@ patients[ ,-1] # remove first column
 ```
 
 
-##Working with data frames
+##Basic R 'Built-in' functions for working with data frames
 
 - Sorting a vector with `sort`
 
@@ -1117,11 +1105,6 @@ sort(patients$Second_Name)
 
 ```{r data-frames4}
 order(patients$Second_Name)
-```
-
-##Working with data frames
-
-```{r data-frames5}
 patients[order(patients$Second_Name),]
 ```
 
@@ -1148,6 +1131,12 @@ Full_Name
 x <- 1:5
 rm(x)
 ```
+- `Error: object 'x' not found`
+- You can remove everything by giving `rm` a list of all the objects returned by `ls`
+```{r eval=FALSE}
+rm(list=ls())
+```
+
 
 ##The R workspace
 - Your workspace is like an unsaved Word document
@@ -1171,10 +1160,7 @@ search()
 - `.GlobalEnv` is where all the objects you create are stored
 - Most of the core functions are in `stats`, `utils`, `methods` and `base`
 - We will cover `graphics` and `grDevices` tomorrow afternoon
-
-##Packages in The R workspace
 - `search` shows the search path R runs through whenever you use an object or function name. It will first look in your global environment, then in the Rstudio tools (if using Rstudio), then in the stats package and so on
-
 - When loading packages, you will often see warnings about some objects or functions being 'masked'. This means that the newly loaded package contains an object with the same name as some object in a package that is already loaded. R will use the object in the new package whenever it comes across the name, because the new package will be earlier in the search path
 
 ##Introducing loops
@@ -1182,8 +1168,13 @@ search()
 - Many programming languages have ways of doing the same thing many times, perhaps changing some variable each time. This is called *looping*
 - Loops are not used in R so often, because we can usually achieve the same thing using vector calculations
 - For example, to add two vectors together, we do not need to add each pair of elements one by one, we can just add the vectors
+```{r eval=FALSE}
+x<- 1:10
+y <- 11:20
+x+y
+```
 - But there are some situations where R functions can not take vectors as input. For example, `read.csv` will only load one file at a time
-- What if we had ten files to load in, all ending in the same extension (like `.csv`)
+- What if we had ten files to load in, all ending in the same extension (like `.csv`)?
 
 ##Introducing loops
 - We could do this:
@@ -1201,19 +1192,17 @@ colony <- rbind(colony1, colony2, colony3, ..., colony10)
 - As we are doing the same thing 10 times, but with a different file name each time, we can use a **loop** instead
 
 ##Example `for` loop
-
-- A `for` loop: run some code on every value in a vector
-
+- R has two basic types of loop
+    + a `for` loop: run some code on every value in a vector
+    + a `while` loop: run some code while some condition is true
+    
+`for` 
 ```{r loops1, eval=FALSE}
 for(i in 1:10){
   print(i)
 }
 ```
-
-
-##Example `while` loop
-- `while` loop: run some code while some condition is true
-
+`while`
 ```{r  eval=FALSE}
 i <- 1
 while ( i <= 10 ) {
@@ -1228,13 +1217,15 @@ while ( i <= 10 ) {
 - If the data files are in your current working directory, we can look up files
 containing a particular substring in their name using the `dir` function
 
-```{r echo=FALSE}
-setwd("Day_1_scripts/")
-```
 
 
 ```{r eval=FALSE}
 dir(pattern="Counts.csv")
+```
+
+```{r echo=FALSE}
+dir("Day_1_scripts/",pattern="Counts.csv")
+
 ```
 
 - So we can load all the files using a `for` loop as follows
@@ -1248,7 +1239,7 @@ for (file in countfiles) {
 }
 ```
 
-- Here, we use a temporary variable `t` to store the data in each file, and then add that data to the main colony data frame.
+- Here, we use a temporary variable `t` to store the data in each file, and then add that data to the main `colony` data frame.
 
 ##Conditional branching: Commands and flow control
 
@@ -1264,10 +1255,11 @@ if (condition) {
 
 ```
 
-- `condition` is any logical value, and can contain multiple conditions. e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
+- `condition` is any logical value, and can contain multiple conditions. 
+    + e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
 
 ##Conditional branching: Commands and flow control
-- For example, if we were writing a script to load an unknown set of files, using the for loop we wrote before, we might want to warn the user if we can't find any files with the pattern we are searching for. Here's how we can use an if statement to test for this
+- For example, if we were writing a script to load an unknown set of files, using the `for` loop we wrote before, we might want to warn the user if we can't find any files with the pattern we are searching for. Here's how we can use an `if` statement to test for this
 
 ```{r flow-control,eval=FALSE}
 colony <- data.frame()
@@ -1309,9 +1301,9 @@ while( f != 0 ){
 ##Exercise
 
 - Output the patients data frame, with the patients sorted in order of age, oldest first. (You may need the `rev` function)
-- Load in the `colony` data frame using a `for` loop. Three of the data files are in the `Day_1_scripts` folder. Load all three files into colony using the for loop in the slides
-- How many observations do you have in the colony data frame? Find out by counting the number of rows in colony using the `nrow` function
-- Suppose a power analysis of your data shows that you only need 48 observations to robustly test your hypothesis. This means we can stop loading files when we have loaded at least 48 observations. Modify your for loop so it will only load files if the colony data frame has less than 48 observations in it
+- Load in the `colony` data frame using a `for` loop. Three of the data files are in the `Day_1_scripts` folder. Load all three files into `colony` using the for loop in the slides
+- How many observations do you have in the colony data frame? Find out by counting the number of rows in `colony` using the `nrow` function
+- Suppose a power analysis of your data shows that you only need 48 observations to robustly test your hypothesis. This means we can stop loading files when we have loaded at least 48 observations. Modify your `for` loop so it will only load files if the `colony` data frame has less than 48 observations in it
 
 ##Answers to Exercise
 
