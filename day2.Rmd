@@ -9,13 +9,13 @@ toc: yes
 
 ## Day 2 Schedule
 
-1. Statistics
-2. Writing Scripts
-3. Writing Functions
-4. Data Analysis Example
-5. Graphics
+1. Customising a plot
+2. Statistics
+3. Report-writing
+4. Programming Techniques
+5. Data analysis report
 
-# 1. Statistics
+# 2. Statistics
 ##Built-in support for statistics
 - R is a statistical programming language
     + Classical statistical tests are built-in
@@ -309,7 +309,7 @@ lm(brainwt~lsize+bodywt)
 - *Interpretation*: brain weight decreases as litter size increases, but brain weight increases proportional to body weight (when bodywt is held constant, the lsize coefficient is positive: 0.00669). This is called 'brain sparing'; although the offspring get smaller as litter size increases, the brain does not shrink as much as the body
 
 
-# 2. Writing custom scripts for data analysis
+# 3. Report Writing
 
 ##The R scripting language
 
@@ -503,240 +503,294 @@ detach(colony)
 * Make sure you can source your commands (or the file 2.1_colony_1.R) from Rstudio and generate the results and plot.
 
 
-# 3. User functions
 
-## Introducing user functions
+# Programming Techniques
 
-* All R commands are function calls
-* Functions take some input, perform calculations on that input, and return some output
-* e.g. `sqrt` is a function that takes a value, calculates the square root of the value, and returns the square root
-* `aov` takes a formula referring to some data, calculate the analysis of variance for that data, and returns the model it calculated
-* We can define our own functions. User functions extend the capabilities of R by adapting or creating new tasks that are tailored to your specific requirements
-*  User functions are objects, just like vectors and data frames. This has a few useful implications
+##Basic R 'built-in' functions for working with objects
 
-##Defining a new function
+- R has many built-in functions for doing simple calculations on objects. Start with a random sample of 15 numbers from 1 to 100 and try the functions below
 
-* A function has a name, arguments, procedural steps, and a return value
-```{r}
-sqXplusX <- function(x){
-  x^2 +x
-}
+```{r programming1}
+x <- sample(100,15)
 ```
 
-* `sqXplusX` is the function name
-* `x` is the single argument to this function and it exists only within the function
-* everything between the brackets `{}` are procedural steps
-* the last calculated value is the function return value. We can call `return` explictly
-* after defining the function, we can use it:
-```{r}
-sqXplusX(10)
+Arithmetic with vectors
+
+- Min / Max value number in a series
+  
+```{r eval=FALSE}
+min(x); max(x)
 ```
 
-## Named and default arguments
+- Sum of values in a series
+  
+```{r eval=FALSE}
+sum(x)
+```
+- Average estimates (mean / median)
+  
+```{r eval=FALSE}
+mean(x); median(x)
+```
+- Range of values in a series
+  
+```{r eval=FALSE}
+range(x)
+```
+- Variance  
+```{r eval=FALSE}
+var(x)
+```
 
-* We can generalise our function by adding a second argument
+##Basic R 'Built-in' functions for working with objects
+
+- Rank ordering
+```{r programming3, eval=FALSE}
+rank(x)
+```
+- Quantiles
+```{r programming4,eval=FALSE}
+quantile(x);boxplot(x)
+```
+- Square Root
+```{r eval=FALSE}
+sqrt(x)
+```
+- Standard deviation
+```{r eval=FALSE}
+sd(x)
+```
+- Trigonometry functions
+```{r eval=FALSE}
+tan(x);cos(x);sin(x)
+```
+
+
+
+##The R workspace
+
+- The objects we have been making are created in the R workspace
+- When we load a package, we are loading that package's functions and data sets
+into our workspace
+- You can see what is in your workspace with `ls`
+```{r eval=FALSE}
+ls()
+```
+
+- You can attach data frames to your workspace and then refer to the variables directly
 
 ```{r}
-powXplusX <- function(x, power=2){
-  x^power + x
-}
+attach(patients)
+Full_Name
 ```
-* The `power` argument has a default value of 2; if we don't supply a power when we call the function, `x` will be squared
-* Arguments without a default value are required, those with default values are optional
+
+- You can remove objects from the workspace with `rm`
+
 ```{r}
-powXplusX(10) #arguments are matched based on position
-powXplusX(10, 3) #arguments are matched based on position
-powXplusX(x=10, power=3) # arguments matched based on name
+x <- 1:5
+rm(x)
+```
+- `Error: object 'x' not found`
+- You can remove everything by giving `rm` a list of all the objects returned by `ls`
+```{r eval=FALSE}
+rm(list=ls())
 ```
 
-## Calculation with user functions
 
-* User functions can be used wherever a built-in function can be used:
+##The R workspace
+- Your workspace is like an unsaved Word document
+- When you quit R, it will usually save your workspace to a hidden file called `'.Rdata'` in your current directory. This workspace will be loaded again if you open R in the same directory
+- This file is a binary, computer-readable file, not a human-readable file, which you have to open with R (like a Word document in Office)
+- It is safer to explicitly save your workspace using `save.image`
+```{r eval=FALSE}
+save.image("phd.chapter.1.R")
+```
+- This way, if you are working on several different projects, you can make sure the objects for each project are saved to named files, rather than trying to remember which directory you were working in, or risking overwriting some objects you forgot about and need later.
+- To load a particular image, use `load`
+```{r eval=FALSE}
+load("phd.chapter.1.R")
+```
+
+##Packages in the R workspace
+- You can see which packages are loaded into your workspace with `search`
+```{r}
+search()
+```
+- `.GlobalEnv` is where all the objects you create are stored
+- Most of the core functions are in `stats`, `utils`, `methods` and `base`
+- We will cover `graphics` and `grDevices` tomorrow afternoon
+- `search` shows the search path R runs through whenever you use an object or function name. It will first look in your global environment, then in the Rstudio tools (if using Rstudio), then in the stats package and so on
+- When loading packages, you will often see warnings about some objects or functions being 'masked'. This means that the newly loaded package contains an object with the same name as some object in a package that is already loaded. R will use the object in the new package whenever it comes across the name, because the new package will be earlier in the search path
+
+##Introducing loops
+
+- Many programming languages have ways of doing the same thing many times, perhaps changing some variable each time. This is called *looping*
+- Loops are not used in R so often, because we can usually achieve the same thing using vector calculations
+- For example, to add two vectors together, we do not need to add each pair of elements one by one, we can just add the vectors
+```{r eval=FALSE}
+x<- 1:10
+y <- 11:20
+x+y
+```
+- But there are some situations where R functions can not take vectors as input. For example, `read.csv` will only load one file at a time
+- What if we had ten files to load in, all ending in the same extension (like `.csv`)?
+
+##Introducing loops
+- We could do this:
 
 ```{r eval=FALSE}
-#make some example data
-a <- matrix(1:100, ncol=10, byrow=TRUE) 
-sqXplusX(a)
+colony  <-data.frame() # Start with empty data frame
+colony1 <- read.csv("11_CFA_Run1Counts.csv")
+colony2 <- read.csv("11_CFA_Run2Counts.csv")
+colony3 <- read.csv("11_CFA_Run3Counts.csv")
+  ...
+colony10 <- read.csv("11_CFA_Run10Counts.csv")
+colony <- rbind(colony1, colony2, colony3, ..., colony10)
 ```
+- But this will be boring to type, difficult to change, and prone to error
+- As we are doing the same thing 10 times, but with a different file name each time, we can use a **loop** instead
 
-* Functions are R objects, just like a vector or a data frame, and exist in our workspace
-
-```{r}
-sqXplusX
-```
-
-## Variable scope
-
-* Objects created in functions are not available to the global environment unless returned. They are limited to the scope of the function
-```{r}
-addone <- function(x) {x <- x+1; x}
-x <-1
-addone(x)
-x
-```
-
-* The `x` in the global environment has nothing to do with the `x` declared in the function, and is unchanged by the call to the function. To update the global `x`, we would need to assign the return value of the function
-
-```{r}
-x <- addone(x)
-```
-* A function can only return one object, but that object can be a list, so if you have many objects to return, package them up into a list first
-
-
-## Script / function tips
-
-* If your script repeats the same command with different values more than twice, you should consider writing a function to generalise that command
-
-* Writing functions makes your code more easily understandable because they encapuslate a procedure into a well-defined boundary with consistent input/output
-
-* Functions should only do one thing. If a function is doing multiple tasks, try to split it up into multiple functions. This rule of thumb means functions tend to be short, not more than around one or two screens of code
-
-* Look at other functions to get ideas for how to write your own.
-    + Display function code by entering the function's name without brackets `()`
+##Loops: Commands and flow control
+- R has two basic types of loop
+    + a `for` loop: run some code on every value in a vector
+    + a `while` loop: run some code while some condition is true
     
-## Checking input and reporting errors
-
-* A function should fail gracefully if it does not receive valid input when it is called. We can use `if` statements to check for appropriate input
-
-* R has two useful commands to tell the user something is wrong. 
-    + `warning` prints a message and continues to run the function. 
-    + `stop` ends the function after printing the message.
-
-* For example, we might rewrite our `powXplusX` function to check that the power argument is a whole number:
-
-```{r}
-powXplusX <- function(x, power=2){
-  if(power %% 1 != 0) stop ("Power should be a whole number")
-  x^power + x
+`for` 
+```{r loops1, eval=FALSE}
+for(i in 1:10){
+  print(i)
+}
+```
+`while`
+```{r  eval=FALSE}
+i <- 1
+while ( i <= 10 ) {
+   print(i)
+   i <- i + 1
 }
 ```
 
-```{r}
-powXplusX(10, 3)
-```
+##Loops: Commands and flow control
+
+- Here's how we might use a `for` loop to load in our CSV files
+- If the data files are in your current working directory, we can look up files
+containing a particular substring in their name using the `dir` function
+
+
 
 ```{r eval=FALSE}
-powXplusX(10, 3.5)
-
+dir(pattern="Counts.csv")
 ```
 
 ```{r echo=FALSE}
-err <- try(powXplusX(10, 3.5),silent = TRUE)
+dir("Day_1_scripts/",pattern="Counts.csv")
+
 ```
 
-```{r echo=FALSE}
-message(err[1])
-```
+- So we can load all the files using a `for` loop as follows
 
-
-## Checking input and reporting errors
-
-* R has a very useful set of functions called the `is` family, which check the type of input values. For example:
-
-```{r}
-sqXplusX <- function(x){
-  if (is.numeric(x)){
-    x^2 + x
-  } else {
-    stop("Input should be numeric")
-  }
+```{r loops2, eval=FALSE}
+colony <- data.frame()
+countfiles <- dir(pattern="Counts.csv")
+for (file in countfiles) {
+   t <- read.csv(file)
+   colony <- rbind(colony, t)
 }
 ```
 
-```{r}
-sqXplusX(10)
+- Here, we use a temporary variable `t` to store the data in each file, and then add that data to the main `colony` data frame.
+
+##Conditional branching: Commands and flow control
+
+- Use an `if` statement for any kind of condition testing
+- Different outcomes can be selected based on a condition within brackets
+
+```{r if, eval=FALSE}
+if (condition) {
+... do this ...
+} else {
+... do something else ...
+}
+
 ```
 
+- `condition` is any logical value, and can contain multiple conditions. 
+    + e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
+
+##Conditional branching: Commands and flow control
+- For example, if we were writing a script to load an unknown set of files, using the `for` loop we wrote before, we might want to warn the user if we can't find any files with the pattern we are searching for. Here's how we can use an `if` statement to test for this
+
+```{r flow-control,eval=FALSE}
+colony <- data.frame()
+countfiles <- dir(pattern="Counts.csv")
+if (length(countfiles) == 0) {
+    stop("No Counts.csv files found!")
+} else {
+    for (file in countfiles) {
+        t <- read.csv(file)
+        colony <- rbind(colony, t)
+    }
+}
+
+```
+
+- The `stop` function outputs the error message and quits
+
+
+##Code formatting avoids bugs!
+Compare:
 ```{r eval=FALSE}
-sqXplusX("ten")
-
+f -26
+while(f!=0){
+print(letters[f])
+f <- f-1}
 ```
-
-```{r echo=FALSE}
-err <- try(sqXplusX("ten"), silent = TRUE)
-```
-
-```{r echo=FALSE}
-message(err[1])
-```
-The `is.` family consists of; `is.character`, `is.null`,`is.na` `is.data.frame` etc. For full list, type the following and press `TAB`
+to:
 ```{r eval=FALSE}
-is.
+f <- 26
+while( f != 0 ){
+   print(letters[f])
+   f <- f-1
+}
+```
+- The code between brackets `{}` *always* is *indented*, this clearly separates what is executed once, and what is run multiple times
+- Trailing bracket `}` always alone on the line at the same indentation level as the initial bracket `{`
+- Use white spaces to divide the horizontal space between units of your code, e.g. around assignments, comparisons
+
+##Exercise
+
+
+- Load in the `colony` data frame using a `for` loop. Three of the data files are in the `Day_1_scripts` folder. Load all three files into `colony` using the for loop in the slides
+- How many observations do you have in the colony data frame? Find out by counting the number of rows in `colony` using the `nrow` function
+- Suppose a power analysis of your data shows that you only need 48 observations to robustly test your hypothesis. This means we can stop loading files when we have loaded at least 48 observations. Modify your `for` loop so it will only load files if the `colony` data frame has less than 48 observations in it
+
+##Answers to Exercise
+
+- To order the patients by decreasing age
+```{r ex3ans1,eval=FALSE}
+patients[rev(order(patients$Age)),]
+```
+- To find the number of rows in the colony data frame
+```{r ex3ans2,eval=FALSE}
+nrow(colony)
 ```
 
-## Checking input and reporting errors
+- To stop loading files after at least 48 observations have been found, use the code from the first `for` loop slide with a new `if` statement
 
-* Here's another, more concise way to do the same thing:
-
-```{r}
-sqXplusX <- function(x){
-  if(!is.numeric(x)) stop("Input should be numeric")
-  x^2 + x
+```{r ex3ans4, eval=FALSE}
+colony <- data.frame()
+countfiles <- dir(pattern="Counts.csv")
+for (file in countfiles) {
+    if (nrow(colony) < 48 ) {
+        t <- read.csv(file)
+        colony <- rbind(colony, t)
+    }
 }
 ```
 
-* This is not only shorter, but it also gets all the error checking out of the way before the main processing stesp
-
-* You may also find the `%in%` command useful, which checks to see if the elements of one vector are present in another
-```{r}
-levels(colony$Z)
-"Low" %in% colony$Z
-"Zero" %in% colony$Z
-c("None", "Low") %in% colony$Z
-```
-
-## Temperature conversion exercise
-
-* Centigrade to Fahrenheit conversion is given by F = 9/5 *C +32
-* Write a function that converts between temperatures
-* The function should take two named arguments
-    + temperature `t` is numeric
-    + units `unit` is character
-* Both arguments should have appropriate default values
-* The function should report an appropriate error if inappropriate values are given
-    + `if(!is.numeric(t)) { ...}`
-    + `if(!(unit %in% c("c","f"))) {...}`
-* The function should print out the temperature in Fahrenheit if given in Centigrade, and vice-versa    
 
 
-## Building the solution
-
-* It is difficult to write large chunks of code. Instead, start with something that works and build upon it
-* e.g. to solve the temperature conversion exercise:
-    + write a skeleton function definition (e.g. just a name and brackets)
-    + add appropriate argument names and defaults
-    + write code to convert Centigrade to Fahrenheit and check it works
-    + write code to convert Fahrenheit to Centigrade and check it works
-    + add error-checking code, including the checks from the previous slide, and any others you can think of
-    + write a set of test calls to confirm that your function handles correct and incorrect input
-* If you get stuck, call us for help
-
-##Temperature conversion exercise script
-
-```{r}
-convTemp <- function(t=0, unit="c"){
-# convTemp is defined as a new user function requiring two arguments, t and unit, the default values are 0 and "c", respectively. 
-    if(!is.numeric(t)) stop("Non numeric 
-                            temperature entered")
-    if(!unit %in% c("c","f")){
-    stop("Unrecognised temperature unit")
-  }
-  converted <- 0
-  # conversion for centigrade
-  if(unit == "c"){
-    converted <- 9/5 * t + 32
-  }
-  #conversion for Fahrenheit
-  if(unit == "f"){
-    converted <- 5/9 * (t - 32)
-  }
-  converted
-}
-
-
-```
-
-# 4. Advanced data processing
+# 5. Data analysis report example
 
 ## Combining data from multiple sources: *Gene Clustering Example*
 
@@ -867,340 +921,6 @@ heatmap(values[is.experimental,], scale="none"
     + why is `rownames(values)[index]` and `t$gene` giving the same output?
     + what is the difference between `rownames(values) %in% experim.genes` and `experim.genes %in% rownames(values)`
   
-# 5. Graphics
-
-## Starting out with R grapics
-
-* R provides several mechanisms for producing graphical output
-    + Functionality depends on the level at which the user seeks interaction with R
-        + graphics systems, packages, devices & engines
-* High-level graphics
-    + Functions compute an appropriate chart based upon the information provided. Optional arguments may tailor the chart as required
-        + Interaction is at traditional graphics system level. The user isn't required to know much about anything
-* Low-level grpahics
-    + The user interacts with the drawing device to build up a picture of the chart piece-by-piece
-        + This fine granular control is only required if you seek to do something exceptional
-* R graphics produces plots using a painters' model
-    + Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels. Lower levels are obscured by higher levels, allowing for blending, masking and overlaying of objects.
-    
-## Essential plotting - plot()
-
-* `plot()` is the main function for plotting, it takes x, y values to plot and also lots of graphical parameters (see `?par` for all of them)
-
-* Default plotting
-
-```{r fig.height=4}
-x <- 1:5
-y <- 2:6
-plot(x,y)
-```
-
-## Essential plotting - plot
-
-* Custom plotting
-
-```{r fig.height=4}
-x <- 1:5
-y <- 2:6
-plot(x,y, xlab="X data", ylab="Y data", 
-     xlim=c(0,10), ylim=c(0,10),
-     main="Our title")
-```
-
-
-## R graphics uses a painter's model
-
-```{r fig.height=4}
-x <- seq(-2,2,0.1)
-y <- sin(x)
-plot(x,y, ylim=c(-1.5,1.5),
-     xlim=c(-2.5,2.5),
-     col="red", pch=16,
-     cex=1.4)
-```
-
-## R graphics uses a painter's model
-
-```{r echo=FALSE}
-x <- seq(-2, 2, 0.1)
-y <- sin(x)
-plot(x,y, ylim=c(-1.5,1.5),
-     xlim=c(-2.5,2.5),
-     col="red", pch=16,
-     cex=1.4)
-lines(x, y, ylim=c(-1.5,1.5),
-      xlim=c(-2.5,2.5), col="blue",
-      lty=1, lwd=2)
-```
-
-```{r eval=FALSE}
-lines(x, y, ylim=c(-1.5,1.5),
-      xlim=c(-2.5,2.5), col="blue",
-      lty=1, lwd=2)
-```
-
-## R graphics uses a painter's model
-
-```{r echo=FALSE}
-x <- seq(-2, 2, 0.1)
-y <- sin(x)
-plot(x, y, ylim=c(-1.5,1.5),
-     xlim=c(-2.5,2.5),
-     col="red", pch=16,
-     cex=1.4)
-lines(x, y, ylim=c(-1.5,1.5),
-      xlim=c(-2.5,2.5), col="blue",
-      lty=1, lwd=2)
-rect(-2.5, 0, 2.5, -1.5, col="white", border="white")
-```
-
-```{r eval=FALSE}
-rect(-2.5, 0, 2.5, -1.5,
-     col="white", border="white")
-
-```
-
-## Plotting arguments we used
-- `xlim`,`ylim`; axis limits
-- `col`; line colour
-- `pch`; plotting character[`example(points)]
-- `cex`; character expansion [scaling factor]
-- `lty`,`lwd`; line type and width
-- `rect`; rectangle
-
-
-## Plotting x, y data - plot(), points(), lines()
-
-* `plot` is used to start a new plot, accepts x,y data, but also data from some objects (like linear regression), Use the parameter `type` to draw points, lines etc (see `?plot`)
-* `points()` is used to add points to an existing plot
-* `lines()` is used to add lines to an existing plot
-
-```{r fig.height=4}
-# draw as line from (0,0) to (5,5)
-plot(c(0,5), c(0,5), type="l")
-# add a point at 1,3
-points(1,3)
-```
-
-
-## Making bar plots: barplot()
-
-* Visualizing a vector of data can be done with bar plots, using the function `barplot()`
-
-```{r fig.height=4}
-data <- c("2000"=0, "2001"=20, "2002"=50,"2003"=100)
-barplot(data, main="Number of R developes")
-```
-
-## Making box plots: boxplot()
-
-* When a spread of data needs to be visualised, we can use boxplots with the function `boxplot()`
-
-```{r fig.height=4}
-data1 <- rnorm(1000,mean=0)
-data2 <- rnorm(1000, mean=1)
-boxplot(data1,data2)
-```
-
-##Making histograms: hist()
-
-* When we need to look at the distribution of data, we can visualise it using histograms with the function `hist()`
-
-```{r fig.height=4}
-data <- rnorm(1000)
-hist(data)
-```
-
-## Typical plotting workflow
-
-* Set the plot layout and stlye - `par()`
-    + set the number of plots you want per page
-    + set the outer margins of the figure region 
-        + the distance between the edges of the page and the figure region, or between adjacent plots if there are multiple figures per page
-    + set the inner margins of the plot
-        + the distance between the plot axes and the labels and titles
-    + set the styles for the plot 
-        + colours, fonts, line styles and weights
-* Draw the plot `plot(x, y, ...)`    
-
-## Setting graphics layout and style - par()
-
-* `par()` top-level graphics function
-    + parameter specifies various page settings. These are inherited by subordinate functions, if no other styles are set
-        + specific colours and styles may be set globally with `par`, but change ad-hoc in plotting commands
-        + the global setting will remain unchanged, and reused in future plotting calls
-    + `par` sets the size of page and figure margins
-        + margin spacing is in "lines"
-    + `par` is responsible for controlling the number of figures that are plotted on a page
-    + `par` may set global colouring of axes, text, background, foreground, line styles (solid/dashed), if figures should be boxed or open etc, etc...
-* type `par()` to get a list of top-down settings that may be set globally
-
-## Page settings with par
-```{r eval=FALSE}
-#one figure on page
-par(mfrow=c(1,1))
-#equal outer margins
-par(oma=c(2,2,2,2))
-```
-![layout1](images/layout1.png)
-
-## Page settings with par
-```{r eval=FALSE}
-par(mar=c(5,4,4,2))
-#Sets space for x & y labels, a main title, and a thin margin on the right
-```
-![layout1](images/layout2.png)
-
-N.B. Numbering: *bottom*, *left*, *top*, *right*
-
-## Plotting characters for plot(), size and orientation
-
-* `pch=`
-    + sets on of the 26 standard plotting characters used. Can also use characters, such as `"."`
-* `cex=`
-    + character expansion. Sets the scaling factor of the printing character
-* `las=` 
-    + Axes label style: 1 = normal, 2= rotated 90 degrees. 
-    
-    
-## Plotting characters for plot(), size and orientation
-
-```{r echo=FALSE}
-par(mar=c(0.1,0.1,0.1,0.1))
-i <- 0:24
-
-x <- floor(i /5) + 1
-y <- i %%5
-
-plot(1:10, type="n", xlim = c(1,5), ylim=c(-1,5),axes=F,xlab="",ylab="")
-points(x,y,pch=i+1)
-text(x,y-0.3,i+1)
-```
-
-
-## Annotating the plot
-
-* `plot` accepts main title, subtitle, X label, Y label as standard arguments
-    + `plot(x, y, main="...", sub="...", xlab="...", ylab="...")`
-    + `mtext(text = "...", side="")` 
-        + allows text to be written directly into the margin of a plot
-    + `text(x, y, labels="...")` 
-        + allows text to be written in the plot at coordinates x,y
-    + `legend(x, y, legend="...")` 
-        + produces a legend for the plot
-    
-  
-## Use of colour in R
-
-* Colour is usually expressed as a hexadecimal code of Red, Green and Blue counterparts
-    + no good for humans
-* R supports numerous colour palettes which are available through several colour functions
-    + `colours()` get inbuilt names of known colours
-    + `rgb()` converts red, green, blue intensities to colours
-    
-
-```{r}
-rgb(1,1,1)
-```
-
-```{r eval=FALSE}
-
-par(mfrow=c(2,2))
-plot(1:10, col="#FF00FF")
-plot(1:10, col=rgb(1,0,1))
-plot(1:10, col="magenta")
-```
-
-## Colour Ramps and Palettes
-
-* Heatmaps use colour depth to convey data values. Cold colours are typically low values, and light colours are high-state values. This is a colour ramp
-* R supports numerous graded colour charts. Specify `n` to set the number of gradations required in the palette
-
-```{r eval=FALSE}
-rainbow(n)
-heat.colors(n)
-terrain.colors(n)
-topo.colors(n)
-cm.colors(n)
-```
-* You can specify a user-defined palette of indexed colours
-```{r eval=FALSE}
-palette(rainbow(7))
-#creates 7 indexed colours (1:7) based on the rainbow palette R O Y G B I V
-```
-
-## Colour packages: RColorBrewer
-
-* This add-on package provides a series of well-defined colour palettes. The colours in these palettes are selected to permit maximum visual discrimination
-* To access the `RColorBrewer` packages
-
-```{r eval=FALSE}
-library(RColorBrewer)
-display.brewer.all()
-#see all available palettes
-myCol <- brewer.pal(n,"...")
-#n = number of colours, "..." is the palette name
-```
-
-
-
-## RColorBrewer named palettes
-```{r echo=FALSE}
-library(RColorBrewer)
-display.brewer.all()
-
-```
-
-
-## Saving plots to files
-
-* Unless specified, R plots all graphics to the screen
-* To send plots to a file, you need to set up an appropriate graphics device
-
-```{r eval=FALSE}
-postscript(file = "a_name.ps",...)
-pdf(file  = "a_name.pdf",...)
-jpeg(file = "a_name.jpg",...)
-png(file  = "a_name.png",...)
-```
-* Each graphics device will have a specific set of arguments to dictate characteristics of the outputted file
-    + `height=, width=, horizontal=, res=, paper=`
-    + Top tip: A4 @ 300 dpi, portrait, size in pixels
-    + `jpg(file="my_Figure.jpg", height=3510, width=2490, res=300)`
-    + Postscript and pdf work in inches by default, A4 = 8.3" x 11.7"
-* Graphics devices need closing when printing is finished: `dev.off()`. For example:
-```{r eval=FALSE}
-png("tenPoints.png", width=300, height=300)
-plot(1:10)
-dev.off()
-```
-
-## Thoughts when plotting to a file
-
-* Its very tempting to send all graphical output to a pdf file. Caution
-    + For high resolution publication-quality images you need postscript. Set up postscript file capture with `postscript("a_file.ps", paper="a4")`
-        + Postscript images can be converted to JPEG using ghostscript (free to download) for low resolution lab book photos and talks
-    + PDF images will grow too large for Acrobat to render if plots contain many data points (e.g. Affymetrix MA plots)
-    + Automatically send multiple page outputs to separate image files using `file = somename%02d.jpg`
-    + Don't forget to close graphics devices (i.e. the file) by using `dev.off()`
-
-## Plotting exercise
-
-* Exercise
-    + Make a full A4 page figure comprising of 6 plots: 2 each of XY plot (`plot()`), barchart (`barplot()`) and box plots (`boxplot()`)
-    + The two versions of each plot should consist of: the default plot and a customised plot (change for instance colours, range, captions)
-    + Output the completed 6-panel figure to: screen, jpeg, postscript and pdf file
-    
-* Suggested route to solution
-    + Generate some plotting data appropriate to each type of plot
-    + Write the code to produce the six plots, once plotting the data by using the default plotting, one with some customisations
-    + To output the plot to screen, jpeg, postscript and pdf you will need to redo the plot multiple times. Create a function to do the plotting and call it by redirecting graphical output to screen, jpeg file, postscript file and pdf file
-
-* An example solution `20_6PanelPlotscript.R`
-
-## 6 Panel plots exercise
-
-![eg](images/graph-exercise.png)
 
 #References
 

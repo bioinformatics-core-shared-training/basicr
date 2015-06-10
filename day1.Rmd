@@ -12,7 +12,7 @@ toc: yes
 1. Introduction to R and its environment
 2. Data Structures
 3. Data Analysis Example
-4. Programming Techniques
+4. Plotting in R
 
 #1. Introduction to R and its environment
 
@@ -955,8 +955,8 @@ patients[order(patients$Second_Name),]
 - Add a `height` column to the data frame using the `cbind` function and assign the result to a new data frame
     + enter your own height values, or use these 1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5
 - Calculate the *body mass index* for each patient. Order the patients according to their bmi
-    + $bmi = weight/height^2$
-- A person is classified as overweight if they have a bmi > 25. Which patients are overweight using this criteria?
+    + $bmi = \frac{weight}{height^2}$
+- A person is classified as overweight if they have a bmi > 25. Which patients are overweight using this criteria, and have consented to having their data shared?
 
 ##Answers
 - Make sure we have the correct patients data frame
@@ -984,13 +984,15 @@ patients2
 ```{r}
 bmi <- patients2$Weight / (patients2$Height)^2
 bmi
-patients2[bmi > 25,]
+patients2[bmi > 25 & patients2$Consent,]
 ```
 
 
 # 3. R for data analysis
 
 ##3 steps to Basic Data Analysis
+
+- In this short section, we show how the data manipulation steps we have just seen can be used as part of an analysis pipeline
 
 1. Reading in data
     + `read.table()`
@@ -1043,6 +1045,18 @@ read.csv("1.3_NBcountData.csv")
 rawData[1:10,]  # View the first 10 rows to ensure import is OK
 ```
 
+##Word of caution
+
+![tolstoy](images/tolstoy.jpg)
+
+
+
+![hadley](images/hadley.jpg)
+
+> Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham)
+
+http://vimeo.com/33727555
+http://vita.had.co.nz/papers/tidy-data.pdf
 
 ##Handling missing values
 
@@ -1076,7 +1090,7 @@ amp <- which(prop > 0.33)
 
 - We can plot a simple chart of the % NB amplification
     + note that two samples are amplified
-    + plotting will be covered in detail tomorrow
+    + plotting will be covered in detail shortly
 
 ```{r analysis4, fig.height=5,fig.width=10}
 plot(prop, ylim=c(0,1))
@@ -1103,9 +1117,7 @@ list.files() # list files in working directory
 - Patients are near normal if:
 
     `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
-
 - Modify the condition in our previous code to find these patients
-
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
 ##Solution to NB normality test
@@ -1117,289 +1129,270 @@ write.csv(rawData[norm,], "My_NB_output.csv")
 ```
 
 
-# 4. Programming techniques
+# 4. Plotting in R
 
-##Basic R 'built-in' functions for working with objects
+##Plot basics
 
-- R has many built-in functions for doing simple calculations on objects. Start with a random sample of 15 numbers from 1 to 100 and try the functions below
-
-```{r programming1}
-x <- sample(100,15)
-```
-
-Arithmetic with vectors
-
-- Min / Max value number in a series
-  
-```{r eval=FALSE}
-min(x); max(x)
-```
-
-- Sum of values in a series
-  
-```{r eval=FALSE}
-sum(x)
-```
-- Average estimates (mean / median)
-  
-```{r eval=FALSE}
-mean(x); median(x)
-```
-- Range of values in a series
-  
-```{r eval=FALSE}
-range(x)
-```
-- Variance  
-```{r eval=FALSE}
-var(x)
-```
-
-##Basic R 'Built-in' functions for working with objects
-
-- Rank ordering
-```{r programming3, eval=FALSE}
-rank(x)
-```
-- Quantiles
-```{r programming4,eval=FALSE}
-quantile(x);boxplot(x)
-```
-- Square Root
-```{r eval=FALSE}
-sqrt(x)
-```
-- Standard deviation
-```{r eval=FALSE}
-sd(x)
-```
-- Trigonometry functions
-```{r eval=FALSE}
-tan(x);cos(x);sin(x)
-```
-
-
-
-##The R workspace
-
-- The objects we have been making are created in the R workspace
-- When we load a package, we are loading that package's functions and data sets
-into our workspace
-- You can see what is in your workspace with `ls`
-```{r eval=FALSE}
-ls()
-```
-
-- You can attach data frames to your workspace and then refer to the variables directly
-
-```{r}
-attach(patients)
-Full_Name
-```
-
-- You can remove objects from the workspace with `rm`
-
-```{r}
-x <- 1:5
-rm(x)
-```
-- `Error: object 'x' not found`
-- You can remove everything by giving `rm` a list of all the objects returned by `ls`
-```{r eval=FALSE}
-rm(list=ls())
-```
-
-
-##The R workspace
-- Your workspace is like an unsaved Word document
-- When you quit R, it will usually save your workspace to a hidden file called `'.Rdata'` in your current directory. This workspace will be loaded again if you open R in the same directory
-- This file is a binary, computer-readable file, not a human-readable file, which you have to open with R (like a Word document in Office)
-- It is safer to explicitly save your workspace using `save.image`
-```{r eval=FALSE}
-save.image("phd.chapter.1.R")
-```
-- This way, if you are working on several different projects, you can make sure the objects for each project are saved to named files, rather than trying to remember which directory you were working in, or risking overwriting some objects you forgot about and need later.
-- To load a particular image, use `load`
-```{r eval=FALSE}
-load("phd.chapter.1.R")
-```
-
-##Packages in the R workspace
-- You can see which packages are loaded into your workspace with `search`
-```{r}
-search()
-```
-- `.GlobalEnv` is where all the objects you create are stored
-- Most of the core functions are in `stats`, `utils`, `methods` and `base`
-- We will cover `graphics` and `grDevices` tomorrow afternoon
-- `search` shows the search path R runs through whenever you use an object or function name. It will first look in your global environment, then in the Rstudio tools (if using Rstudio), then in the stats package and so on
-- When loading packages, you will often see warnings about some objects or functions being 'masked'. This means that the newly loaded package contains an object with the same name as some object in a package that is already loaded. R will use the object in the new package whenever it comes across the name, because the new package will be earlier in the search path
-
-##Introducing loops
-
-- Many programming languages have ways of doing the same thing many times, perhaps changing some variable each time. This is called *looping*
-- Loops are not used in R so often, because we can usually achieve the same thing using vector calculations
-- For example, to add two vectors together, we do not need to add each pair of elements one by one, we can just add the vectors
-```{r eval=FALSE}
-x<- 1:10
-y <- 11:20
-x+y
-```
-- But there are some situations where R functions can not take vectors as input. For example, `read.csv` will only load one file at a time
-- What if we had ten files to load in, all ending in the same extension (like `.csv`)?
-
-##Introducing loops
-- We could do this:
-
-```{r eval=FALSE}
-colony  <-data.frame() # Start with empty data frame
-colony1 <- read.csv("11_CFA_Run1Counts.csv")
-colony2 <- read.csv("11_CFA_Run2Counts.csv")
-colony3 <- read.csv("11_CFA_Run3Counts.csv")
-  ...
-colony10 <- read.csv("11_CFA_Run10Counts.csv")
-colony <- rbind(colony1, colony2, colony3, ..., colony10)
-```
-- But this will be boring to type, difficult to change, and prone to error
-- As we are doing the same thing 10 times, but with a different file name each time, we can use a **loop** instead
-
-##Loops: Commands and flow control
-- R has two basic types of loop
-    + a `for` loop: run some code on every value in a vector
-    + a `while` loop: run some code while some condition is true
+- As we have heard, R has extensive graphical capabilities
+- but we need to start simple
+- we will describe *base* graphics in R; the plots available with any standard R installation
+    + other alternatives are available but require more R knowledge; e.g. `lattice`, `ggplot2`
+- `plot` is the most basic plotting function in R
+    + it can try and guess the best plot based on the data
     
-`for` 
-```{r loops1, eval=FALSE}
-for(i in 1:10){
-  print(i)
-}
-```
-`while`
-```{r  eval=FALSE}
-i <- 1
-while ( i <= 10 ) {
-   print(i)
-   i <- i + 1
-}
+##Making a Scatter Plot
+
+- If given a single vector as an argument, `plot` will make a scatter plot with the *values* of the vector on the *y* axis, and *indices* in the *x* axis
+    + e.g. it puts a point at 
+        + x=1,y=70.8
+        + x=2,y=67.9 etc...
+```{r}
+patients$Weight
+plot(patients$Weight)
 ```
 
-##Loops: Commands and flow control
+##Making a Scatter Plot
 
-- Here's how we might use a `for` loop to load in our CSV files
-- If the data files are in your current working directory, we can look up files
-containing a particular substring in their name using the `dir` function
+```{r echo=FALSE}
+plot(patients$Weight)
+```
 
+- Axis limits, labels, titles are inferred from the data
+    + we can fix these later on
+
+##Making a Scatter Plot of two variables
+
+- We can give two arguments to `plot`. It will put the values from the *first* argument in the *x* axis, and values from the *second* argument on the *y* axis
+    + for when we want to visualise the relationship between two variables
+```{r}
+patients$Age
+plot(patients$Weight,patients$Age)
+```
+
+##Making a barplot
+
+```{r}
+barplot(patients$Age)
+```
+
+##Making a barplot
+
+- It is more usual to display count data in a barplot
+    + e.g. the counts of the a particular categorical variable
+```{r}
+barplot(summary(patients$Sex))
+```
+
+
+##Plotting a distribution: Histogram
+
+- A histogram is a popular way of visualising a distribution
+
+```{r}
+hist(patients$Weight)
+```
+
+##Plotting a distribution: Histogram
+
+- A histogram is a popular way of visualising a distribution
+
+```{r}
+hist(patients$Age)
+```
+
+##Plotting a distribution: Boxplot
+
+```{r}
+boxplot(patients$Weight)
+```
+
+
+##Plotting a distribution: Boxplot
+
+- Sometimes we want to compare distributions between different groupings in our data
+- For this we need to use the '*formula*' syntax
+    + For now, `y ~ x` means put variable `y` on the *y* axis and `x` on the x axis
+```{r}
+boxplot(patients$Weight~patients$Sex)
+```
+
+## Exercise: Data exploration
+
+- In the Day_1_scripts you will find the file `ozone.csv`
+    + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
+    + Full description here http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
+- Load these data into R
+- What data types are present? Try to think of ways to create the following plots from the data
+    + scatter plot two variables 
+    + a histogram
+    + boxplot of a continuous variable against a categorical variable
+
+
+## Suggestions
+
+```{r include=FALSE}
+weather <- read.csv("Day_1_scripts/ozone.csv")
+```
 
 
 ```{r eval=FALSE}
-dir(pattern="Counts.csv")
+weather <- read.csv("ozone.csv")
+head(weather)
 ```
 
 ```{r echo=FALSE}
-dir("Day_1_scripts/",pattern="Counts.csv")
+head(weather)
+```
+
+## Suggestions
+
+```{r}
+plot(weather$Ozone,weather$Solar.R)
+```
+
+## Suggestions
+
+```{r}
+hist(weather$Temp)
+```
+
+
+## Suggestions
+
+```{r}
+boxplot(weather$Ozone)
+```
+
+## Suggestions
+
+```{r}
+boxplot(weather$Ozone~weather$Month)
+```
+
+## Simple customisations
+
+- `plot` comes with a whole array of arguments that can be set
+    + see `?plot`
+- we can choose to draw lines on the plot rather than points
+
+```{r}
+plot(patients$Weight,type="l")
+```
+
+## Simple customisations
+
+```{r}
+plot(patients$Weight,type="b")
+```
+
+## Simple customisations
+
+- Add an informative title to the plot using the `main` argument
+
+```{r}
+plot(patients$Weight,patients$Age,main="Relationship between Weight and Age")
+```
+
+
+## Simple customisations
+
+- Adding the x-axis label
+```{r}
+plot(patients$Weight,patients$Age,xlab="Weight")
+```
+
+## Simple customisations
+- Adding the y-axis label
+
+```{r}
+plot(patients$Weight,patients$Age,ylab="Age")
+```
+
+## Simple customisations
+- We can specifiy multiple arguments at once
+    + here `ylim` and `xlim` are used to specify axis limits
+```{r}
+plot(patients$Weight,patients$Age,
+     ylab="Age",
+     xlab="Weight",
+     main="Relationship between Weight and Age",
+     ylim=c(10,70),
+     xlim=c(60,80))
 
 ```
 
-- So we can load all the files using a `for` loop as follows
+##Defining a colour
 
-```{r loops2, eval=FALSE}
-colony <- data.frame()
-countfiles <- dir(pattern="Counts.csv")
-for (file in countfiles) {
-   t <- read.csv(file)
-   colony <- rbind(colony, t)
-}
+- R can recognise various strings `"red"`, `"orange"`,`"green"`,`"blue"`,`"yellow"`....
+- Or more exotic ones `r sample(colours(),8)`..... See `colours()`.
+- See http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+- Can also use **R**ed **G**reen **Blue** , hexadecimal, values
+
+##Use of colours
+
+Changing the `col` argument to `plot` changes the colour that the points are plotted in
+
+```{r}
+plot(patients$Weight,patients$Age,col="red")
 ```
 
-- Here, we use a temporary variable `t` to store the data in each file, and then add that data to the main `colony` data frame.
 
-##Conditional branching: Commands and flow control
+##Plotting characters
 
-- Use an `if` statement for any kind of condition testing
-- Different outcomes can be selected based on a condition within brackets
-
-```{r if, eval=FALSE}
-if (condition) {
-... do this ...
-} else {
-... do something else ...
-}
-
+- R can use a variety of *p*lotting *ch*aracters
+- Each of which has a numeric *code* 
+```{r}
+plot(patients$Weight,patients$Age, pch=16)
 ```
 
-- `condition` is any logical value, and can contain multiple conditions. 
-    + e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
+##Plotting characters
 
-##Conditional branching: Commands and flow control
-- For example, if we were writing a script to load an unknown set of files, using the `for` loop we wrote before, we might want to warn the user if we can't find any files with the pattern we are searching for. Here's how we can use an `if` statement to test for this
+```{r echo=FALSE}
+par(mar=c(0.1,0.1,0.1,0.1))
+i <- 0:24
 
-```{r flow-control,eval=FALSE}
-colony <- data.frame()
-countfiles <- dir(pattern="Counts.csv")
-if (length(countfiles) == 0) {
-    stop("No Counts.csv files found!")
-} else {
-    for (file in countfiles) {
-        t <- read.csv(file)
-        colony <- rbind(colony, t)
-    }
-}
+x <- floor(i /5) + 1
+y <- i %%5
 
+plot(1:10, type="n", xlim = c(1,5), ylim=c(-1,5),axes=F,xlab="",ylab="")
+points(x,y,pch=i+1)
+text(x,y-0.3,i+1)
 ```
 
-- The `stop` function outputs the error message and quits
 
+##Plotting characters
+- Or you can specify a character
 
-##Code formatting avoids bugs!
-Compare:
-```{r eval=FALSE}
-f -26
-while(f!=0){
-print(letters[f])
-f <- f-1}
-```
-to:
-```{r eval=FALSE}
-f <- 26
-while( f != 0 ){
-   print(letters[f])
-   f <- f-1
-}
-```
-- The code between brackets `{}` *always* is *indented*, this clearly separates what is executed once, and what is run multiple times
-- Trailing bracket `}` always alone on the line at the same indentation level as the initial bracket `{`
-- Use white spaces to divide the horizontal space between units of your code, e.g. around assignments, comparisons
-
-##Exercise
-
-
-- Load in the `colony` data frame using a `for` loop. Three of the data files are in the `Day_1_scripts` folder. Load all three files into `colony` using the for loop in the slides
-- How many observations do you have in the colony data frame? Find out by counting the number of rows in `colony` using the `nrow` function
-- Suppose a power analysis of your data shows that you only need 48 observations to robustly test your hypothesis. This means we can stop loading files when we have loaded at least 48 observations. Modify your `for` loop so it will only load files if the `colony` data frame has less than 48 observations in it
-
-##Answers to Exercise
-
-- To order the patients by decreasing age
-```{r ex3ans1,eval=FALSE}
-patients[rev(order(patients$Age)),]
-```
-- To find the number of rows in the colony data frame
-```{r ex3ans2,eval=FALSE}
-nrow(colony)
+```{r}
+plot(patients$Weight,patients$Age, pch="X")
 ```
 
-- To stop loading files after at least 48 observations have been found, use the code from the first `for` loop slide with a new `if` statement
 
-```{r ex3ans4, eval=FALSE}
-colony <- data.frame()
-countfiles <- dir(pattern="Counts.csv")
-for (file in countfiles) {
-    if (nrow(colony) < 48 ) {
-        t <- read.csv(file)
-        colony <- rbind(colony, t)
-    }
-}
+##Size of points
+**C**haracter **ex**pansion
+```{r}
+plot(patients$Weight,patients$Age, cex=2)
 ```
+
+##Size of points
+**C**haracter **ex**pansion
+```{r}
+plot(patients$Weight,patients$Age, cex=0.2)
+```
+
+##Colours and characters as vectors
+
+```{r}
+plot(patients$Weight,patients$Age, 
+     pch = 1:10,
+     col=c("red","orange","green","blue"))
+```
+
+
+##Exercise 
+
+- Take one of the plots you produced in the previous section and experiment with adding axes and colours
+
 
 
 #End of Day 1
