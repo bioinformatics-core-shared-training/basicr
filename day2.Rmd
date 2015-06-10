@@ -9,11 +9,150 @@ toc: yes
 
 ## Day 2 Schedule
 
-1. Customising a plot
+1. Further customisation of plots
 2. Statistics
 3. Report-writing
 4. Programming Techniques
 5. Data analysis report
+
+#1. Further customisation of plots
+
+## Recap
+
+- we have seen how to use `plot`, `boxplot` `hist` to make simple plots
+- these come with arguments that can be used to change the appearance of the plot
+    + `col`, `pch`
+    + `main`, `xlab`, `ylab`
+    + etc....
+- we will now look at ways to modify the plot appearance after it has been created
+
+## The painter's model
+
+- R employs a painter's model to construct it's plots
+
+
+##Initial plot
+
+```{r}
+data <- read.csv("Day_1_scripts/ozone.csv")
+plot(data$Ozone, data$Solar.R,pch=16)
+```
+
+##The points function
+
+- `points` can be used to set of points to an *existing* plot
+- it requires a vector of x and y coordinates
+- Note that axis limits of the existing plot are not altered
+
+##Adding points
+
+```{r}
+data <- read.csv("Day_1_scripts/ozone.csv")
+plot(data$Ozone, data$Solar.R,pch=16)
+points(data$Ozone, data$Wind)
+```
+
+##Adding points
+
+`points` can also use the `pch`, `col` arguments. Useful for distinguishing between variables
+
+```{r fig.height=4,fig.width=8}
+plot(data$Ozone, data$Solar.R,pch=16)
+points(data$Ozone, data$Wind,pch=15,col="red")
+```
+
+
+##Adding points
+
+- Each set of points can have a different colour and shape
+- Axis labels and title and limits are defined by the plot
+- You can add points ad-nauseum. Try not to make the plot cluttered!
+- A call to `plot` will start a new graphics window
+
+```{r fig.height=4,fig.width=8}
+plot(data$Ozone, data$Solar.R,pch=16)
+points(data$Ozone, data$Wind,pch=15)
+points(data$Ozone, data$Temp,pch=17)
+```
+
+
+
+##Adding points
+
+- Be careful about the order in which you add points
+
+```{r fig.height=4,fig.width=8}
+plot(data$Ozone, data$Wind,pch=16)
+points(data$Ozone, data$Solar.R,pch=15)
+points(data$Ozone, data$Temp,pch=17)
+```
+
+##Adding points
+
+- Can define suitable axis limits in initial plot
+
+```{r fig.height=4,fig.width=8}
+plot(data$Ozone, data$Wind,pch=16,ylim=c(0,350))
+points(data$Ozone, data$Solar.R,pch=15)
+points(data$Ozone, data$Temp,pch=17)
+```
+
+
+
+
+## Adding a legend
+
+```{r fig.height=4,fig.width=8}
+plot(data$Ozone, data$Wind,pch=16,ylim=c(0,350))
+points(data$Ozone, data$Solar.R,pch=15)
+points(data$Ozone, data$Temp,pch=17)
+legend("topright", legend=c("Solar","Wind","Temp"), 
+       col="black", pch=c(16,15,17))
+```
+
+##Adding text
+
+```{r fig.height=4,fig.width=8}
+mycols <- rep("black", 153)
+mycols[c(117,62,99,121,30)] <- "red"
+
+plot(data[,1], pch=16, col=mycols)
+text(c(117,62,99,121,30), data[c(117,62,99,121,30),1], 
+     labels=LETTERS[1:5])
+```
+
+##Adding lines
+
+```{r fig.height=4,fig.width=8}
+mycols <- rep("black", 153)
+mycols[c(117,62,99,121,30)] <- "red"
+
+plot(data[,1], pch=16, col=mycols)
+abline(h = 115)
+
+```
+
+
+
+##Adding lines
+
+```{r fig.height=4,fig.width=8}
+
+plot(data[,1], pch=16, col=mycols)
+grid(col="steelblue")
+```
+
+##Adding lines
+
+- `abline` can take a gradient and intercept argument
+- for `y = x` use `a=0` and `b=1`
+- Can be used to draw a *line of best fit* in conjunction with a linear model
+
+```{r fig.height=4,fig.width=8}
+plot(1:10, jitter(1:10))
+abline(0,1)
+```
+
 
 # 2. Statistics
 ##Built-in support for statistics
@@ -505,122 +644,6 @@ detach(colony)
 
 
 # Programming Techniques
-
-##Basic R 'built-in' functions for working with objects
-
-- R has many built-in functions for doing simple calculations on objects. Start with a random sample of 15 numbers from 1 to 100 and try the functions below
-
-```{r programming1}
-x <- sample(100,15)
-```
-
-Arithmetic with vectors
-
-- Min / Max value number in a series
-  
-```{r eval=FALSE}
-min(x); max(x)
-```
-
-- Sum of values in a series
-  
-```{r eval=FALSE}
-sum(x)
-```
-- Average estimates (mean / median)
-  
-```{r eval=FALSE}
-mean(x); median(x)
-```
-- Range of values in a series
-  
-```{r eval=FALSE}
-range(x)
-```
-- Variance  
-```{r eval=FALSE}
-var(x)
-```
-
-##Basic R 'Built-in' functions for working with objects
-
-- Rank ordering
-```{r programming3, eval=FALSE}
-rank(x)
-```
-- Quantiles
-```{r programming4,eval=FALSE}
-quantile(x);boxplot(x)
-```
-- Square Root
-```{r eval=FALSE}
-sqrt(x)
-```
-- Standard deviation
-```{r eval=FALSE}
-sd(x)
-```
-- Trigonometry functions
-```{r eval=FALSE}
-tan(x);cos(x);sin(x)
-```
-
-
-
-##The R workspace
-
-- The objects we have been making are created in the R workspace
-- When we load a package, we are loading that package's functions and data sets
-into our workspace
-- You can see what is in your workspace with `ls`
-```{r eval=FALSE}
-ls()
-```
-
-- You can attach data frames to your workspace and then refer to the variables directly
-
-```{r}
-attach(patients)
-Full_Name
-```
-
-- You can remove objects from the workspace with `rm`
-
-```{r}
-x <- 1:5
-rm(x)
-```
-- `Error: object 'x' not found`
-- You can remove everything by giving `rm` a list of all the objects returned by `ls`
-```{r eval=FALSE}
-rm(list=ls())
-```
-
-
-##The R workspace
-- Your workspace is like an unsaved Word document
-- When you quit R, it will usually save your workspace to a hidden file called `'.Rdata'` in your current directory. This workspace will be loaded again if you open R in the same directory
-- This file is a binary, computer-readable file, not a human-readable file, which you have to open with R (like a Word document in Office)
-- It is safer to explicitly save your workspace using `save.image`
-```{r eval=FALSE}
-save.image("phd.chapter.1.R")
-```
-- This way, if you are working on several different projects, you can make sure the objects for each project are saved to named files, rather than trying to remember which directory you were working in, or risking overwriting some objects you forgot about and need later.
-- To load a particular image, use `load`
-```{r eval=FALSE}
-load("phd.chapter.1.R")
-```
-
-##Packages in the R workspace
-- You can see which packages are loaded into your workspace with `search`
-```{r}
-search()
-```
-- `.GlobalEnv` is where all the objects you create are stored
-- Most of the core functions are in `stats`, `utils`, `methods` and `base`
-- We will cover `graphics` and `grDevices` tomorrow afternoon
-- `search` shows the search path R runs through whenever you use an object or function name. It will first look in your global environment, then in the Rstudio tools (if using Rstudio), then in the stats package and so on
-- When loading packages, you will often see warnings about some objects or functions being 'masked'. This means that the newly loaded package contains an object with the same name as some object in a package that is already loaded. R will use the object in the new package whenever it comes across the name, because the new package will be earlier in the search path
 
 ##Introducing loops
 

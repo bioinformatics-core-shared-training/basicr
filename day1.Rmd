@@ -86,8 +86,8 @@ user
 - There are two ways to launch R:
     + From the command line (particularly useful if you're quite
 familiar with Linux; in the console at the prompt simply type `R`)
-    + As an application called RStudio (very good for beginners)
-
+    + As an application called ![rstudio](http://www.rstudio.com/wp-content/uploads/2014/03/blue-125.png) (very good for beginners)
+    
 ##Launching R Using RStudio
 
 To launch RStudio, find the RStudio icon in the menu bar on the left
@@ -517,7 +517,7 @@ biocLite("PackageName")
 - Packages in Bioconductor -- specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
 - Other repositories:
     + http://r-forge.r-project.org/
-    + github can host R can also host R packages
+    + github.com can also host R packages
   - Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
 
 
@@ -1056,6 +1056,7 @@ rawData[1:10,]  # View the first 10 rows to ensure import is OK
 > Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham)
 
 http://vimeo.com/33727555
+
 http://vita.had.co.nz/papers/tidy-data.pdf
 
 ##Handling missing values
@@ -1271,7 +1272,7 @@ boxplot(weather$Ozone~weather$Month)
 
 ## Simple customisations
 
-- `plot` comes with a whole array of arguments that can be set
+- `plot` comes with a whole array of arguments that can be set when we call the function
     + see `?plot`
 - we can choose to draw lines on the plot rather than points
 
@@ -1386,6 +1387,19 @@ plot(patients$Weight,patients$Age, cex=0.2)
 plot(patients$Weight,patients$Age, 
      pch = 1:10,
      col=c("red","orange","green","blue"))
+```
+
+##Other plots use the same arguments
+
+- Other plotting functions use the same arguments as `plot`
+    + technical explanation: the arguments are '*inherited*'
+
+```{r}
+boxplot(patients$Weight~patients$Sex,
+        xlab="Sex",
+        ylab="Weight",
+        main="Relationship between Weight and Gender",
+        col=c("blue","yellow"))
 ```
 
 
