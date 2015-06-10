@@ -42,6 +42,26 @@ http://goo.gl/pww4ZO
 ##R in Nature
 ![R in nature](images/r-in-nature.png)
 
+##R plotting capabilities
+http://spatial.ly/2012/02/great-maps-ggplot2/
+![R cycle journeys](images/cyclejourneys.png)
+
+##R plotting capabilities
+https://www.facebook.com/notes/facebook-engineering/visualizing-friendships/469716398919
+![R facebook](images/facebook-network.png)
+
+##Who uses R? Not just academics!
+http://www.revolutionanalytics.com/companies-using-r
+
+- Facebook
+    + http://blog.revolutionanalytics.com/2010/12/analysis-of-facebook-status-updates.html
+- Google
+    + http://blog.revolutionanalytics.com/2009/05/google-using-r-to-analyze-effectiveness-of-tv-ads.html
+- Microsoft
+    + http://blog.revolutionanalytics.com/2014/05/microsoft-uses-r-for-xbox-matchmaking.html
+- New York Times
+    + http://blog.revolutionanalytics.com/2011/03/how-the-new-york-times-uses-r-for-data-visualization.html
+
 
 ##Various platforms supported
 
@@ -55,12 +75,14 @@ http://goo.gl/pww4ZO
 - Everything you need is installed on the training machines
 - If you are using your own machine, download both R and RStudio
 
+
+
+
 ##Getting started
 
 - R is a program which, once installed on your system, can be
 launched and is immediately ready to take input directly from the
 user
-
 - There are two ways to launch R:
     + From the command line (particularly useful if you're quite
 familiar with Linux; in the console at the prompt simply type `R`)
@@ -176,19 +198,19 @@ min(3,4,5,6)
 - Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the right order)
 
 ```{r functions2}
-seq(from = 2, to = 10, by = 2)
-seq(2, 10, 2)
+seq(from = 2, to = 20, by = 4)
+seq(2, 20, 4)
 ```
 
 ##Basic concepts in R - vectors
 
-- The basic data structure in R is a **vector** -- an ordered collection of values. R treats even single values as 1-element vectors. The function **c()** *combines* its arguments into a vector:
+- The basic data structure in R is a **vector** -- an ordered collection of values. R treats even single values as 1-element vectors. The function `c` *combines* its arguments into a vector:
 
 ```{r vectors1}
 x <- c(3,4,5,6)
 x
 ```
-- The square brackets **[]** indicate the position within the vector (the ***index***). We can extract individual elements by using the **[]** notation:
+- The square brackets `[]` indicate the position within the vector (the ***index***). We can extract individual elements by using the `[]` notation:
 ```{r vectors2}
 x[1]
 x[4]
@@ -211,20 +233,20 @@ x <- c(3,4,5,6,7,8,9,10,11,12)
 x <- 3:12
 x
 ```
-- or we can use the **seq()** function, which returns a vector:
+- or we can use the `seq()` function, which returns a vector:
 ```{r vectors6}
-x <- seq(2, 10, 2)
+x <- seq(2, 20, 4)
 x
 ```
 
 ```{r vectors7}
-x <- seq(2, 10, length.out=7)
+x <- seq(2, 20, length.out=5)
 x
 ```
 
 
 ##Basic concepts in R - vectors
-- or we can use the **rep()** function:
+- or we can use the `rep()` function:
 
 ```{r vectors8}
 y <- rep(3, 5)
@@ -360,10 +382,8 @@ names(gene.expression)
 
 ##Exercise: genes and genomes
 
-- Let's assume a coding gene has an average length of 1.5 kilobases. On average, how many base pairs of each genome is made of coding genes? Create a new vector to record this called **coding.bases**.
-
-- What percentage of each genome is made up of protein coding genes? Use your **coding.bases** and **genome.size** vectors to calculate this. (See earlier slides for how to do division in R.)
-
+- Let's assume a coding gene has an average length of 1.5 kilobases. On average, how many base pairs of each genome is made of coding genes? Create a new vector to record this called `coding.bases`.
+- What percentage of each genome is made up of protein coding genes? Use your `coding.bases` and `genome.size` vectors to calculate this. (See earlier slides for how to do division in R.)
 - How many times more bases are used for coding in the human genome compared to the yeast genome? How many times more bases are in the human genome in total compared to the yeast genome? Look up indices of your vectors to find out.
 
 ##Answers to genome exercise
@@ -403,7 +423,7 @@ genome.size[1]/genome.size[5]
 
 - Note that if a new vector is created using a named vector, the names
 are usually carried across to the new vector. Sometimes this is what
-we want (as for **coding.pc**) but sometimes it is not (when we are
+we want (as for `coding.pc`) but sometimes it is not (when we are
 comparing human to yeast). We can remove names by setting them
 to the special NULL value:
 
@@ -430,13 +450,14 @@ Sourcing can also be performed manually with `source("myScript.R")`
 
 ##Getting help
 
+- **This is possibly the most important slide in the whole course**
 - To get help on any R function, type `?` followed by the function name. For example:
 ```{r eval=FALSE}
 ?seq
 ```
 - This retrieves the syntax and arguments for the function. You can see
 the default order of arguments here. The help page also tells you which
-**package** it belongs to.
+*package* it belongs to.
 - There will typically be example usage, which you can test using the
 `example` function:
 
@@ -449,6 +470,8 @@ R will return a list of possibilities:
 ```{r eval=FALSE}
 ??plot
 ```
+- The **Packages** tab in the lower-right panel of RStudio will help you to locate the help pages for a particular package and its functions
+    + Often there will be a user-guide / '*vignette*' too
 
 ##Interacting with the R console
 
@@ -482,7 +505,7 @@ web called **repositories**
 source("http://bioconductor.org/biocLite.R")
 ```
 
-- Bioconductor packages are then installed with the **biocLite()** function:
+- Bioconductor packages are then installed with the `biocLite()` function:
 ```{r eval=FALSE}
 biocLite("PackageName")
 ```
@@ -494,7 +517,8 @@ biocLite("PackageName")
 - Packages in Bioconductor -- specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
 - Other repositories:
     + http://r-forge.r-project.org/
-  - Bottomline: **always** first look if there is already an R package that does what you want before trying to implement it yourself
+    + github can host R can also host R packages
+  - Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
 
 
 ##Exercise: Install packages ggplot2 and DESeq
@@ -566,7 +590,7 @@ firstName <- c("Adam", "Eve", "John", "Mary", "Peter",
 secondName <- c("Jones", "Parker", "Evans", "Davis", 
 "Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
 ```
-- We also have a new type of vector, the **logical** vector, which only 
+- We also have a new type of vector, the ***logical*** vector, which only 
 contains the values `TRUE` and `FALSE`:
 ```{r patients3}
 consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
@@ -591,7 +615,7 @@ c(20, "a string", TRUE)
 ```
 
 ##Factors
-- Character vectors are fine for some variables, like names.
+- Character vectors are fine for some variables, like names
 - But sometimes we have categorical data and we want R to 
 recognize this.
 - A factor is R's data structure for categorical data.
@@ -619,6 +643,7 @@ factor(sex)
 - Note the values of this factor are not character strings, but levels
 - We can use this factor to compare data for males and females
 
+
 ##Creating a data frame (first attempt)
 
 - We can construct a data frame from other objects (N.B. The **`paste`** function joins character vectors together)
@@ -632,7 +657,7 @@ patients
 
 
 ##Naming data frame variables
-- We can access particular variables using the **dollar** operator:
+- We can access particular variables using the '`$`' *operator*:
 ```{r patients6}
 patients$age
 ```
@@ -685,6 +710,7 @@ names(patients)
 - When creating a data frame, R assumes all character vectors should 
 be categorical variables and converts them to factors. This is not 
 always what we want:
+    + e.g. we are unlikely to be interested in the hypothesis that people called Adam are taller, so it seems a bit silly to represent this as a factor
 ```{r patients9}
 patients$First_Name
 ```
@@ -713,6 +739,8 @@ patients <- data.frame(First_Name = firstName,
 
 ##Matrices
 - Data frames are R's speciality, but R also handles matrices:
+    + all columns are assumed to contain the same data type. e.g. numerical
+    + some calculations are more efficient to do on matrices
 ```{r matrices1}
 e <- matrix(1:10, nrow=5, ncol=2)
 e
@@ -806,9 +834,10 @@ original version from this file in the *Day_1_scripts* folder using
 ```{r eval=FALSE}
 source("1.2_patients.R")
 ```
--  Remake your data frame with three new variables: country, 
-continent, and height. Make up the data. Make country a character 
-vector but continent a factor.
+-  Remake your data frame with three new variables: `country`, 
+`continent`, and `height` 
+    + Make up the data
+    + Make `country` a *character* vector but `continent` a *factor*
 - Try the **`summary`** function on your data frame. What does it do? 
 How does it treat vectors (numeric, character, logical) and factors? 
 (What does it do for matrices?)
@@ -835,6 +864,129 @@ patients[patients$Consent == TRUE,]
 ```{r ex2ans3, eval=FALSE}
 patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
 ```
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We have seen before how we can get the names of our variables, but for data frames and matrices we can also get these names with `colnames`, and the names of the rows with `rownames`
+
+```{r programming5}
+names(patients)
+colnames(patients)
+rownames(patients)
+```
+
+##Basic R 'Built-in' functions for working with data frames
+- We can get the numbers of rows or columns with `nrow` and `ncol`
+
+```{r programming6}
+nrow(patients)
+ncol(patients)
+dim(patients)
+```
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can also find the length of a vector or a list with `length`, although this may give confusing results for some structures, like data frames:
+
+```{r programming7}
+length(c(1,2,3,4,5))
+length(patients)
+length(patients$Age)
+
+```
+
+*Remember, a data frame is a list of variables, so its length is the number of variables. The length of one of the variable vectors (like Age) is the number of observations*
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can add rows or columns to a data frame using rbind and cbind
+```{r echo=FALSE}
+options(width=80)
+```
+
+```{r data-frames1}
+newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
+rbind(patients,newpatient)
+```
+- Note we are not altering the `patients` data frame, just displaying to the screen
+    + we would have to use an assignment `<-` operator to create a new object
+    
+##Basic R 'Built-in' functions for working with data frames
+
+```{r data-frames2}
+cbind(patients,10:1)
+```
+- Note we are not altering the `patients` data frame, just displaying to the screen
+    + we would have to use an assignment `<-` operator to create a new object
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can also remove rows and columns
+```{r}
+patients[-1, ] # remove first row
+```
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can also remove rows and columns
+```{r}
+patients[ ,-1] # remove first column
+```
+
+
+##Basic R 'Built-in' functions for working with data frames
+
+- Sorting a vector with `sort`
+
+```{r data-frames3}
+sort(patients$Second_Name)
+```
+
+- Sorting a data frame by one variable with `order`
+
+```{r data-frames4}
+order(patients$Second_Name)
+patients[order(patients$Second_Name),]
+```
+
+##Exercise
+
+- Output the patients data frame, with the patients sorted in order of age, oldest first. (You may need the `rev` function, or look at the options for the `order` function)
+- Add a `height` column to the data frame using the `cbind` function and assign the result to a new data frame
+    + enter your own height values, or use these 1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5
+- Calculate the *body mass index* for each patient. Order the patients according to their bmi
+    + $bmi = weight/height^2$
+- A person is classified as overweight if they have a bmi > 25. Which patients are overweight using this criteria?
+
+##Answers
+- Make sure we have the correct patients data frame
+
+```{r include=FALSE}
+source("Day_1_scripts/1.2_patients.R")
+```
+
+```{r eval=FALSE}
+source("1.2_patients.R")
+```
+
+
+```{r}
+patients[order(patients$Age,decreasing = TRUE),]
+```
+
+```{r}
+patients2 <- cbind(patients, Height = c(1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5))
+patients2
+```
+
+##Answers
+
+```{r}
+bmi <- patients2$Weight / (patients2$Height)^2
+bmi
+patients2[bmi > 25,]
+```
+
 
 # 3. R for data analysis
 
@@ -1026,86 +1178,7 @@ sd(x)
 tan(x);cos(x);sin(x)
 ```
 
-##Basic R 'Built-in' functions for working with data frames
 
-- We have seen before how we can get the names of our variables, but for data frames and matrices we can also get these names with colnames, and the names of the rows with rownames
-
-```{r programming5}
-names(patients)
-colnames(patients)
-rownames(patients)
-```
-
-##Basic R 'Built-in' functions for working with data frames
-- We can get the numbers of rows or columns with `nrow` and `ncol`
-
-```{r programming6}
-nrow(patients)
-ncol(patients)
-dim(patients)
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also find the length of a vector or a list with `length`, although this may give confusing results for some structures, like data frames:
-
-```{r programming7}
-length(c(1,2,3,4,5))
-length(patients)
-length(patients$Age)
-
-```
-
-*Remember, a data frame is a list of variables, so its length is the number of variables. The length of one of the variable vectors (like Age) is the number of observations*
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can add rows or columns to a data frame using rbind and cbind
-```{r echo=FALSE}
-options(width=80)
-```
-
-```{r data-frames1}
-newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
-rbind(patients,newpatient)
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-```{r data-frames2}
-cbind(patients,10:1)
-
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also remove rows and columns
-```{r}
-patients[-1, ] # remove first row
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also remove rows and columns
-```{r}
-patients[ ,-1] # remove first column
-```
-
-
-##Basic R 'Built-in' functions for working with data frames
-
-- Sorting a vector with `sort`
-
-```{r data-frames3}
-sort(patients$Second_Name)
-```
-
-- Sorting a data frame by one variable with `order`
-
-```{r data-frames4}
-order(patients$Second_Name)
-patients[order(patients$Second_Name),]
-```
 
 ##The R workspace
 
@@ -1299,7 +1372,7 @@ while( f != 0 ){
 
 ##Exercise
 
-- Output the patients data frame, with the patients sorted in order of age, oldest first. (You may need the `rev` function)
+
 - Load in the `colony` data frame using a `for` loop. Three of the data files are in the `Day_1_scripts` folder. Load all three files into `colony` using the for loop in the slides
 - How many observations do you have in the colony data frame? Find out by counting the number of rows in `colony` using the `nrow` function
 - Suppose a power analysis of your data shows that you only need 48 observations to robustly test your hypothesis. This means we can stop loading files when we have loaded at least 48 observations. Modify your `for` loop so it will only load files if the `colony` data frame has less than 48 observations in it
