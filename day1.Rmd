@@ -1116,8 +1116,7 @@ list.files() # list files in working directory
 ##Data analysis exercise: Which samples are near normal?
 
 - Patients are near normal if:
-
-    `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
+`(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
 - Modify the condition in our previous code to find these patients
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
@@ -1153,7 +1152,7 @@ plot(patients$Weight)
 ```
 
 ##Making a Scatter Plot
-
+R tries to guess the most appropriate way to visualise the data
 ```{r echo=FALSE}
 plot(patients$Weight)
 ```
@@ -1203,6 +1202,13 @@ hist(patients$Age)
 
 ##Plotting a distribution: Boxplot
 
+- The boxplot is commonly-used in statistics to visualise a distribution
+    + The black solid line is the *median*
+    + The top and bottom of the box is the 75th and 25th percentiles
+        + Hence, the distance between these is a reflection of the *spread* of the data; the Inter-Quartile Range (IQR)
+    + Whiskers are drawn at 1.5 x IQR and -1.5 x IQR
+    + Any points are outliers
+    
 ```{r}
 boxplot(patients$Weight)
 ```
@@ -1219,7 +1225,7 @@ boxplot(patients$Weight~patients$Sex)
 
 ## Exercise: Data exploration
 
-- In the Day_1_scripts you will find the file `ozone.csv`
+- In the Day_1_scripts folder you will find the file `ozone.csv`
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
     + Full description here http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
 - Load these data into R
@@ -1275,12 +1281,15 @@ boxplot(weather$Ozone~weather$Month)
 - `plot` comes with a whole array of arguments that can be set when we call the function
     + see `?plot`
 - we can choose to draw lines on the plot rather than points
+    + the rest of the plot is the same as before
 
 ```{r}
 plot(patients$Weight,type="l")
 ```
 
 ## Simple customisations
+
+- We can also have both lines and points
 
 ```{r}
 plot(patients$Weight,type="b")
@@ -1383,10 +1392,14 @@ plot(patients$Weight,patients$Age, cex=0.2)
 
 ##Colours and characters as vectors
 
+- Previously we have used a *vector* of length 1 as our value of colour and character
+- we can use a vector of any length
+    + the values will get *recycled* (re-used) so that each point gets assigned a value
 ```{r}
 plot(patients$Weight,patients$Age, 
      pch = 1:10,
-     col=c("red","orange","green","blue"))
+     col=c("red","orange","green","blue"),
+     cex = 1:5)
 ```
 
 ##Other plots use the same arguments

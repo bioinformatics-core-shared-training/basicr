@@ -29,9 +29,11 @@ toc: yes
 ## The painter's model
 
 - R employs a painter's model to construct it's plots
-
+- Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels. Lower levels are obscured by higher levels, allowing for blending, masking and overlaying of objects.
 
 ##Initial plot
+
+- Recall our weather dataset from yesterday
 
 ```{r}
 data <- read.csv("Day_1_scripts/ozone.csv")
@@ -42,7 +44,17 @@ plot(data$Ozone, data$Solar.R,pch=16)
 
 - `points` can be used to set of points to an *existing* plot
 - it requires a vector of x and y coordinates
+    + these do not have to be the same length as the number of points in the initial plot
+        + hence we can use `points` to highlight observations
+        + or add a set of new observations
 - Note that axis limits of the existing plot are not altered
+
+```{r}
+plot(data$Ozone, data$Solar.R,pch=16)
+points(c(100,150),c(50,100))
+
+```
+
 
 ##Adding points
 
