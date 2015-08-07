@@ -17,7 +17,7 @@ rawData <- rawData[,-1] # Drop the patient index column
 ## Getting basics summary data
 nrow(rawData) 			# number of rows
 ncol(rawData)  			# number of columns
-dim(rawData)   			# data frame dimensions (rows X columns)‏
+dim(rawData)   			# data frame dimensions (rows X columns)
 colMeans(rawData) 		# average stats
 
 ## Reorder table by decreasing nuclei count

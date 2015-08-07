@@ -459,6 +459,129 @@ lm(brainwt~lsize+bodywt)
 
 - *Interpretation*: brain weight decreases as litter size increases, but brain weight increases proportional to body weight (when bodywt is held constant, the lsize coefficient is positive: 0.00669). This is called 'brain sparing'; although the offspring get smaller as litter size increases, the brain does not shrink as much as the body
 
+%##Basic R 'Built-in' functions for working with data frames
+
+%- We have seen before how we can get the names of our variables, but for data frames and matrices we can also get these names with `colnames`, and the %names of the rows with `rownames`
+
+%```{r programming5}
+%names(patients)
+%colnames(patients)
+%rownames(patients)
+%```
+
+%##Basic R 'Built-in' functions for working with data frames
+%- We can get the numbers of rows or columns with `nrow` and `ncol`
+
+%```{r programming6}
+%nrow(patients)
+%ncol(patients)
+%dim(patients)
+%```
+
+%##Basic R 'Built-in' functions for working with data frames
+
+%- We can also find the length of a vector or a list with `length`, although this may give confusing results for some structures, like data frames:
+
+%```{r programming7}
+%length(c(1,2,3,4,5))
+%length(patients)
+%length(patients$Age)
+
+%```
+
+%*Remember, a data frame is a list of variables, so its length is the number of variables. The length of one of the variable vectors (like Age) is the %number of observations*
+
+%##Basic R 'Built-in' functions for working with data frames
+
+%- We can add rows or columns to a data frame using rbind and cbind
+%```{r echo=FALSE}
+%options(width=80)
+%```
+
+%```{r data-frames1}
+%newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
+%rbind(patients,newpatient)
+%```
+%- Note we are not altering the `patients` data frame, just displaying to the screen
+%    + we would have to use an assignment `<-` operator to create a new object
+    
+%##Basic R 'Built-in' functions for working with data frames
+
+%```{r data-frames2}
+%cbind(patients,10:1)
+%```
+%- Note we are not altering the `patients` data frame, just displaying to the screen
+%    + we would have to use an assignment `<-` operator to create a new object
+
+%##Basic R 'Built-in' functions for working with data frames
+
+%- We can also remove rows and columns
+%%```{r}
+%patients[-1, ] # remove first row
+%```
+
+%##Basic R 'Built-in' functions for working with data frames
+
+%- We can also remove rows and columns%
+%```{r}
+%patients[ ,-1] # remove first column
+%```
+
+
+%##Basic R 'Built-in' functions for working with data frames
+
+%- Sorting a vector with `sort`
+
+%```{r data-frames3}
+%sort(patients$Second_Name)
+%```
+
+%- Sorting a data frame by one variable with `order`
+
+%```{r data-frames4}
+%order(patients$Second_Name)
+%patients[order(patients$Second_Name),]
+%```
+
+%##Exercise
+
+%- Output the patients data frame, with the patients sorted in order of age, oldest first. (You may need the `rev` function, or look at the options for the %`order` function)
+%- Add a `height` column to the data frame using the `cbind` function and assign the result to a new data frame
+%    + enter your own height values, or use these 1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5
+%- Calculate the *body mass index* for each patient. Order the patients according to their bmi
+%    + $bmi = \frac{weight}{height^2}$
+%- A person is classified as overweight if they have a bmi > 25. Which patients are overweight using this criteria, and have consented to having their data %shared?
+
+%##Answers
+%- Make sure we have the correct patients data frame
+
+%```{r include=FALSE}
+%source("Day_1_scripts/1.2_patients.R")
+%```
+
+%```{r eval=FALSE}
+%source("1.2_patients.R")
+%```
+
+
+%```{r}
+%%patients[order(patients$Age,decreasing = TRUE),]
+%```
+
+%```{r}
+%patients2 <- cbind(patients, Height = c(1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5))
+%patients2
+%```
+
+%##Answers
+
+%```{r}
+%%bmi <- patients2$Weight / (patients2$Height)^2
+%bmi
+%patients2[bmi > 25 & patients2$Consent,]
+%```
+
+
 
 # 3. Report Writing
 
@@ -480,179 +603,356 @@ lm(brainwt~lsize+bodywt)
 * Scripts may be written in any standard text editor, e.g. notepad, gedit, kate
     + we will use RStudio
 
-##Colony forming experiment
+## Principles of Reproducible Research
 
-* We have been asked y some collaborators to analyse some trial data to see if an experiment will work
-* We are interested in the behaviour of a gene, X, which is involved  in a cell proliferation pathway
-* This pathway causes cells to proliferate in the presence of a compound, Z
-* Gene X turns the pathway off, reducing cell proliferation
-* Our collaborators want to test what happens when we knock down X in the presence of Z
-* To do this, they want to grow cell colonies in the presence of Z, with or without X, and count the number of colonies that result
+![step-two](images/SidneyHarris_MiracleWeb.jpg)
 
-##Initial Trial
+Sidney Harris - New York Times
 
-* Our collaborators have sent us a first batch of test data, growing colonies in different concentrations of compound Z, and replicating each Z concentration three times
-* Does increasing concentration of Z have an effect on colony growth?
-* We want to do the following:
-    + Load the data into R
-    + Plot the data to inspect them
-    + Calculate an Analysis of Variance to see if the growth is influenced by Z concentration
-    + Calculate the mean growth for each level of Z concentration, to see the direction of change
+## Why should we do reproducible research?
+
+Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpress.com/2015/07/15/five-selfish-reasons-for-working-reproducibly/) and [slides](http://f1000research.com/slides/4-207)
+
+1. Avoid disaster
+2. Easier to write papers
+3. Easier to talk to reviewers
+4. Continuity of your work in the lab
+5. Reputation
+
+
+##It is a hot topic at the moment
+
+- Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
+    + as reported in the ***New York Times***
     
-##Initial trial exercise
+![nyt-article](images/rep-research-nyt.png)
 
-* The trial data are in the file '2.1\_colony\_trial.csv'. Load this file into R using the command we learnt yesterday
-* Plot the data using a formula, to see how Z affects colony Count. Recall how we did this earlier with linear modelling, with independant variable x and dependent variable y: 
+##Hear the full account
+
+- Very entertaining talk from Keith Baggerly in Cambridge 2010
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
+
+
+##What can we do about it?
+
+- Use scripts / R
+- Use version control
+- Document early
+- Document everything
+- Write comments and explanations
+- Automatically-generate your plots, tables, etc from the data
+    + always ensure that you have the latest version
+
+##Simple example in RStudio
+- Lets take Day_1_scripts/1.3_NBcountData.R
+    + an analysis of a RNA-seq dataset using edgeR
+- Use the Compile Notebook button in RStudio
+- Take an R script and turn into HTML, PDF or even Word
+- All code will be displayed and the outputs printed
+- A compiled report will be generated in your working directory
+
+![compile](images/RStudio-menu.png)
+
+
+
+## What is going on?
+
+- The `knitr` package is being used convert the R script into 'markdown' format, which it then compiles into the output of your choosing
+- `knitr` is distributed with RStudio
+    + `knitr` is the modern-day equivalent of `Sweave`
+- markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
+- the following should create the file `rna-seq.Rmd` in your working directory
+
 ```{r eval=FALSE}
-plot(y~x)
+library(knitr)
+spin(hair="Day_1_scripts/1.3_NBcountData.R",knit=FALSE)
 ```
-* Calculate an analysis of variance for the data. The R function for ANOVA is `aov`, which works like `lm()` from earlier
+
+## Not quite enough for a reproducible document
+
+- Minimally, you should record what version of R, and the packages you used.
+- use the `sessionInfo()` function
+    + e.g. for the version of R I used to make the slides
+```{r}
+sessionInfo()
+```
+
+- Lets add this to the R scripts and see what happens
+
+
+## Defining chunks
+
+- It is not great practice to have one long, continuous R script
+- Better to break-up into smaller pieces; '*chunks*'
+- You can document each chunk separately
+- Easier to catch errors
+- The characteristics of each chunk can be modified
+    + You might not want to print the R code for each chunk
+    + or the output
+    + etc
+
+## Create a markdown file from scratch
+
+File - > New File - > R Markdown
+
+- Choose 'Document' and the default output type (HTML)
+- A new tab is created in RStudio
+- The header also you to specify a Page title, author and output type
 ```{r eval=FALSE}
-summary(lm(y~x))
-```
-* There are four concentrations of Z, and each concentration has been replicated three times. What is the mean colony count for each concentration? See if you can figure out a way to calculate this with what we learnt yesterday. You will need to use logical indexing and you may want to use a loop
-
-##Importing data
-
-* Use `read.csv` to load the data
-
-```{r eval=TRUE,echo=FALSE}
-setwd("Day_2_scripts/")
-colony <- read.csv("2.1_colony_trial.csv")
+---
+title: "Untitled"
+author: "Mark Dunning"
+date: "16/06/2015"
+output: html_document
+---
 ```
 
+## Format of the file
 
-```{r eval=FALSE}
-colony <- read.csv("2.1_colony_trial.csv")
-```
+- **Lines 8 - 10** Plain text description
+- **Lines 12 - 14** An R code 'chunk'
+- **Lines 18 to 20** Another code chunk, this time producing a plot
 
-```{r echo=FALSE}
-colony
-```
+![md-format](images/markdown-format.png)
 
+- Pressing the ***Knit HTML*** button will create the report
+    + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
+    
+##Text formatting
+See ***Markdown Quick Reference*** in RStudio
 
-##Importing data
+- enclose text in \* to format in *italics*
+- enclose text in \*\* to format in **bold**
+- \*\*\* for ***bold italics***
+- \` to format like `code`
+- \$ to include equations: $e =mc^2$
+- \> quoted text: 
 
-```{r echo=FALSE}
-colony[1:4,]
-```
+>To be or not to be
 
+- see Markdown Quick Reference for more 
+    + adding images
+    + adding web links
+    + tables
 
-* The data frame has three columns; Z, Replicate and Count. We want to know how Z affects the number of colonies (Count). To do this, we need to summarise the data over all replicates for each concentration of Z.
-* We will attach the data frame to our workspace, so we can refer to the variables without referring to the data frame all the time
+## Chunk options
 
-```{r}
-attach(colony)
-```
-* (We will also `detach` colony from the workspace at the end of our script)
+- It's a good idea to name each chunk
+    + Easier to track-down errors
+- We can display R code, but not run it
+    + `eval=FALSE`
+- We can run R code, but not display it
+    + `echo=FALSE`
+    + e.g. setting display options
+- Suppress warning messages
+    + `warning=FALSE`
 
-##Plotting
+    
+## Chunk options: eval
 
-- We want to plot the colony growth in response to changing Z concentration.
-- Z is the explanatory variable and Count is the response variable
-- We don't want to plot replicates separately here, but get R to summarise each Z over all replicates
-- We can call plot using the same *formula syntax* we learnt earlier
-
-```{r fig.height=4}
-plot(Count ~ Z)
-```
-
-##Plotting
-
-* We can improve on this. Firstly, we want to order the Z categories. Z is a factor, so we need to supply new levels to this factor in the colony data frame
-
-```{r fig.height=4}
-Z  <- factor(Z, levels=c("None", "Low",
-                         "Medium", "High"))
-plot(Count ~ Z)
-```
-
-##Analysis of Variance
-
-* We can use the same formula syntax to calculate an analysis of variance:
-
-```{r}
-colony.aov <- aov(Count~Z)
-summary(colony.aov)
-```
-
-* This tells us what we can already see from the plot, that there is a highly significant relationship between Z concentration and colony growth
-* We would like to investigate this relationship. For example, we might want to calculate the mean colony count for each concentration of Z.
-
-##Calculating group means
-
-* We can calculate a mean for a particular group like this:
-```{r}
-mean(colony[Z == "None",]$Count)
-mean(colony[Z == "Low",]$Count)
-mean(colony[Z == "Medium",]$Count)
-mean(colony[Z == "High",]$Count)
-
+- Sometimes we want to format code for display, but not execute
+    + we want to show the code for how we read our data, but want our report to compile quickly
 
 ```
+'''{r,eval=FALSE}
+data <- read.delim("path.to.my.file")
+'''
+```
 
-##Calculating group means
 
-* We could generalise this with a for loop:
+## Chunk options: echo
 
-```{r}
-for (z in levels(Z)){
-  print(mean(colony[Z==z,]$Count))
+- might want to load some data from disk
+    + e.g. the R object from reading the data in the previous slide
+- your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+```
+'''{r echo=FALSE}
+load("mydata.rda")
+'''
+```
+
+## Chunk options: results
+
+- Some code or functions might produce lots of output to the screen that we don't need
+```{r results='hide'}
+for(i in 1:100){
+  print(i)
 }
 ```
-* But there is a better way
 
-##The tapply function: a brief digression
+##Chunk options: message and warning
 
-* The `apply` family of functions allow us to group data by variable and calculate something for each group
-* Assume we have the following data for heights of 5 males and females
+- Loading an R package will sometimes print messages and / or warnings to the screen
+    + not always helpful in a report
+```
+'''{r}
+library(DESeq)
+'''
+```
+
+```{r echo=FALSE}
+library(DESeq)
+```
+
+##Chunk options: message and warning
+
+- Using `message=FALSE` and `warning=FALSE`
+```
+'''{r message=FALSE,warning=FALSE}
+library(DESeq)
+'''
+```
+- Could also need `suppressPackageStartupMessages`
+
+##Chunk options: cache
+
+- `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
+- speeds-up the compilation of the document
+    + we don't want to reload our dataset if we've only made a tiny change downstream
+```
+'''{r echo=FALSE,cache=TRUE}
+load("mydata.rda")
+'''
+```
+
+## Including plots
+
+- Use a plotting function (`plot`, `boxplot`, `hist` etc) will include the plot at the relevant point in the document
+```
+'''{r}
+plot(1:10, jitter(1:10))
+'''
+```
+
+```{r echo=FALSE}
+plot(1:10, runif(10))
+```
+
+## Control over plots
+
+```
+'''{r fig.height=2,fig.align='right', fig.height=4,fig.width=9}
+plot(1:10, jitter(1:10))
+'''
+```
+
+```{r echo=FALSE,fig.height=3,fig.align='right', fig.height=4,fig.width=9}
+plot(1:10, runif(10))
+```
+
+
+## Running R code from the main text
+
+- We can add R code to our main text, which gets evaluated
+    + make sure we always have the latest figures, p-values etc
+
+```
+.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+```
+
+```{r echo=FALSE}
+gender <- c(rep("F", 47), rep("M", 50))
+```
+.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
+
+
+
+```
+.....the p-value of the t-test is 'r pval', which indicates that.....
+```
+```{r echo=FALSE}
+pval <- 0.05
+```
+.....the p-value of the t-test is `r pval`, which indicates that.....
+
+## Running R code from the main text
+
+- Like the rest of our report these R statements will get updated each time we compile the report
+
+```
+.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+```
+
+```{r echo=FALSE}
+gender <- c(rep("F", 41), rep("M", 54))
+```
+.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
+
+
+
+```
+.....the p-value of the t-test is 'r pval', which indicates that.....
+```
+```{r echo=FALSE}
+pval <- 0.1
+```
+.....the p-value of the t-test is `r pval`, which indicates that.....
+
+
+
+## Conditional output
 
 ```{r}
-data <- data.frame(gender = c("M","M","F","F","F"),
-                   height = c(6,6.1,5.8,6,5.95))
-data
+pval <- 0.1
 ```
-* How can we get the mean of males and females separately?
-* The `tapply` function lets us do exactly this
 
-```{r eval=FALSE}
-tapply(data, groups, function)
+
 ```
-* in our case:
+.....The statistical test was 'r ifelse(pval < 0.05, "", "not")' significant....
+```
+
+
+
+The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
+
 ```{r}
-tapply(data$height, data$gender, mean)
+pval <- 0.01
 ```
 
-##Using tapply on colony
 
-* We can use tapply to calculate group means on colony like this:
-
-```{r fig.height=4}
-colony.means <- tapply(Count, Z, mean)
-colony.means
-barplot(colony.means)
+```
+.....The statistical test was 'r ifelse(pval < 0.05, "", "not")' significant....
 ```
 
-##A complete script
 
-* We now have a complete script to analyse these data
-```{r eval=FALSE}
-#Load data, order Z and plot
-colony <- read.csv("2.1_colony_trial.csv")
-colony$Z <- factor(colony$Z, c("None", "Low", "Medium", "High"))
-attach(colony)
-plot(Count ~ Z)
-#Analysis of variance
-colony.aov <- aov(Count ~ Z)
-print(summary(colony.aov))
-#Calculate group means
-colony.means <- tapply(Count, Z, mean)
-print(colony.means)
-barplot(colony.means)
-detach(colony)
+The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
+
+
+## Printing vectors
 ```
-* Make sure you can source your commands (or the file 2.1_colony_1.R) from Rstudio and generate the results and plot.
+The months of the year are 'r month.name'
+```
 
+The months of the year are `r month.name`
+
+## References
+
+- Useful reference:
+    +  Reproducible Research in R and RStudio
+        + http://christophergandrud.github.io/RepResR-RStudio/
+        + Useful exercise is to compile the book from the [source code](https://github.com/christophergandrud/Rep-Res-Book)
+    + [Implementing Reproducible Research](https://osf.io/s9tya/wiki/home/)
+
+
+## Exercise
+
+- Create a new markdown file that will report your analysis of the NB count data
+    + File -> New File -> R Markdown
+- Create separate code chunks for each stage of the analysis (copy code from Day_1_scripts/1.3_NBcountData.R if you wish)
+    + Reading the data
+    + Basic Statistics
+    + Reorder table by decreasing nuclei count
+    + Identify patients with >33% NB amplification
+    + Write out results table as comma separated values file
+    
+## Exercise
+
+- Once you have a report that you are happy with
+- Use in-line R code to report how many patients have > 33% amplifications
+- A new dataset is acquired with 100 observations, futhermore we now want to identify patients with 30% amplifications
+    + 'updated-NBcountData.txt'
+- Modify your report so that it can read the new data and use the new criteria
 
 
 # 4. Programming Techniques

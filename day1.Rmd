@@ -754,35 +754,35 @@ f %*% e
 
 The `%*%` operator is the matrix multiplication operator, not the standard multiplication operator.
 
-##Lists
+%%##Lists
 
-- We have seen that vectors can only hold data of one type. How can we store data of multiple types? Or vectors of different lengths in one object?
--  We can use lists. A list can contain objects of any type
-```{r lists1}
-one.to.ten <- 1:10
-uniform.mat <- matrix(runif(100), ncol=10, nrow=10)
-year.to.october <- data.frame(one.to.ten, month.name[1:10])
-myList <- list(ls.obj.1 = one.to.ten, 
-               ls.obj.2 = uniform.mat, 
-               ls.obj.3 = year.to.october)
-names(myList)
+%%- We have seen that vectors can only hold data of one type. How can we store data of multiple types? Or vectors of different lengths in one object?
+%%-  We can use lists. A list can contain objects of any type
+%%```{r lists1}
+%%one.to.ten <- 1:10
+%%uniform.mat <- matrix(runif(100), ncol=10, nrow=10)
+%%year.to.october <- data.frame(one.to.ten, month.name[1:10])
+%%myList <- list(ls.obj.1 = one.to.ten, 
+%%               ls.obj.2 = uniform.mat, 
+%%               ls.obj.3 = year.to.october)
+%%names(myList)
 
-```
+%%```
 
-##Lists
+%%##Lists
 
-- We can use the dollar syntax to access list items (in fact, a data frame is a 
-special type of list):
+%%- We can use the dollar syntax to access list items (in fact, a data frame is a 
+%%special type of list):
 
-```{r lists2} 
-myList$ls.obj.1
-```
+%%```{r lists2} 
+%%myList$ls.obj.1
+%%```
 
-- We can also use `myList[[1]]` to get the first item in the list.
+%%- We can also use `myList[[1]]` to get the first item in the list.
 
-```{r lists3}
- myList[[1]] 
-```
+%%```{r lists3}
+%% myList[[1]] 
+%%```
 
 
 ##Indexing data frames and matrices
@@ -863,128 +863,6 @@ patients[patients$Consent == TRUE,]
 - Men who weigh as much or more than the average European male  (70.8 kg):
 ```{r ex2ans3, eval=FALSE}
 patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We have seen before how we can get the names of our variables, but for data frames and matrices we can also get these names with `colnames`, and the names of the rows with `rownames`
-
-```{r programming5}
-names(patients)
-colnames(patients)
-rownames(patients)
-```
-
-##Basic R 'Built-in' functions for working with data frames
-- We can get the numbers of rows or columns with `nrow` and `ncol`
-
-```{r programming6}
-nrow(patients)
-ncol(patients)
-dim(patients)
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also find the length of a vector or a list with `length`, although this may give confusing results for some structures, like data frames:
-
-```{r programming7}
-length(c(1,2,3,4,5))
-length(patients)
-length(patients$Age)
-
-```
-
-*Remember, a data frame is a list of variables, so its length is the number of variables. The length of one of the variable vectors (like Age) is the number of observations*
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can add rows or columns to a data frame using rbind and cbind
-```{r echo=FALSE}
-options(width=80)
-```
-
-```{r data-frames1}
-newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
-rbind(patients,newpatient)
-```
-- Note we are not altering the `patients` data frame, just displaying to the screen
-    + we would have to use an assignment `<-` operator to create a new object
-    
-##Basic R 'Built-in' functions for working with data frames
-
-```{r data-frames2}
-cbind(patients,10:1)
-```
-- Note we are not altering the `patients` data frame, just displaying to the screen
-    + we would have to use an assignment `<-` operator to create a new object
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also remove rows and columns
-```{r}
-patients[-1, ] # remove first row
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also remove rows and columns
-```{r}
-patients[ ,-1] # remove first column
-```
-
-
-##Basic R 'Built-in' functions for working with data frames
-
-- Sorting a vector with `sort`
-
-```{r data-frames3}
-sort(patients$Second_Name)
-```
-
-- Sorting a data frame by one variable with `order`
-
-```{r data-frames4}
-order(patients$Second_Name)
-patients[order(patients$Second_Name),]
-```
-
-##Exercise
-
-- Output the patients data frame, with the patients sorted in order of age, oldest first. (You may need the `rev` function, or look at the options for the `order` function)
-- Add a `height` column to the data frame using the `cbind` function and assign the result to a new data frame
-    + enter your own height values, or use these 1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5
-- Calculate the *body mass index* for each patient. Order the patients according to their bmi
-    + $bmi = \frac{weight}{height^2}$
-- A person is classified as overweight if they have a bmi > 25. Which patients are overweight using this criteria, and have consented to having their data shared?
-
-##Answers
-- Make sure we have the correct patients data frame
-
-```{r include=FALSE}
-source("Day_1_scripts/1.2_patients.R")
-```
-
-```{r eval=FALSE}
-source("1.2_patients.R")
-```
-
-
-```{r}
-patients[order(patients$Age,decreasing = TRUE),]
-```
-
-```{r}
-patients2 <- cbind(patients, Height = c(1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5))
-patients2
-```
-
-##Answers
-
-```{r}
-bmi <- patients2$Weight / (patients2$Height)^2
-bmi
-patients2[bmi > 25 & patients2$Consent,]
 ```
 
 
@@ -1171,6 +1049,10 @@ plot(patients$Weight,patients$Age)
 
 ##Making a barplot
 
+- Other types of visualisation are available
+    + these are often just special cases of using the `plot` function
+    + one such function is `barplot`
+    
 ```{r}
 barplot(patients$Age)
 ```
@@ -1218,7 +1100,7 @@ boxplot(patients$Weight)
 
 - Sometimes we want to compare distributions between different groupings in our data
 - For this we need to use the '*formula*' syntax
-    + For now, `y ~ x` means put variable `y` on the *y* axis and `x` on the x axis
+    + For now, `y ~ x` means put continuous variable `y` on the *y* axis and categorical `x` on the x axis
 ```{r}
 boxplot(patients$Weight~patients$Sex)
 ```
