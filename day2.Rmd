@@ -12,7 +12,7 @@ toc: yes
 1. Further customisation of plots
 2. Statistics
 3. Report-writing
-4. Programming Techniques
+4. Data Manipulation Techniques
 5. Data analysis report
 
 #1. Further customisation of plots
@@ -34,10 +34,12 @@ toc: yes
 ##Initial plot
 
 - Recall our weather dataset from yesterday
+```{r results='hide'}
+source("Day_1_scripts/1.2_patients.R")
+```
 
 ```{r}
-data <- read.csv("Day_1_scripts/ozone.csv")
-plot(data$Ozone, data$Solar.R,pch=16)
+plot(patients$Age, patients$Weight,pch=16)
 ```
 
 ##The points function
@@ -50,27 +52,58 @@ plot(data$Ozone, data$Solar.R,pch=16)
 - Note that axis limits of the existing plot are not altered
 
 ```{r}
-plot(data$Ozone, data$Solar.R,pch=16)
-points(c(100,150),c(50,100))
-
+plot(patients$Age, patients$Weight,pch=16)
+points(40,68,pch="X")
 ```
 
 
-##Adding points
+## Creating a blank plot
+
+- Often it is useful to create a blank 'canvas' with the correct labels and limits
 
 ```{r}
-data <- read.csv("Day_1_scripts/ozone.csv")
-plot(data$Ozone, data$Solar.R,pch=16)
-points(data$Ozone, data$Wind)
+plot(patients$Age, patients$Weight,pch=16,type="n")
 ```
 
-##Adding points
+## Adding points to differentiate gender
 
-`points` can also use the `pch`, `col` arguments. Useful for distinguishing between variables
+- Selecting males using the `==` comparison we saw yesterday
+    + gives a `TRUE` or `FALSE` value
+    + can be used to index the data frame
+    + which means we can get the relevant Age and Weight values
+```{r}
+males <- patients$Sex == "Male"
+males
+patients[males,]
+patients[males,"Age"]
+patients[males,"Weight"]
+```
 
-```{r fig.height=4,fig.width=8}
-plot(data$Ozone, data$Solar.R,pch=16)
-points(data$Ozone, data$Wind,pch=15,col="red")
+## Adding points to differentiate gender
+
+```{r}
+plot(patients$Age, patients$Weight,pch=16,type="n")
+points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+
+```
+
+
+## Adding points to differentiate gender
+
+
+```{r}
+females <- patients$Sex == "Female"
+females
+patients[females,]
+```
+
+## Adding points to differentiate gender
+
+```{r}
+plot(patients$Age, patients$Weight,pch=16,type="n")
+points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
+
 ```
 
 
@@ -81,90 +114,152 @@ points(data$Ozone, data$Wind,pch=15,col="red")
 - You can add points ad-nauseum. Try not to make the plot cluttered!
 - A call to `plot` will start a new graphics window
 
-```{r fig.height=4,fig.width=8}
-plot(data$Ozone, data$Solar.R,pch=16)
-points(data$Ozone, data$Wind,pch=15)
-points(data$Ozone, data$Temp,pch=17)
-```
-
-
-
-##Adding points
-
-- Be careful about the order in which you add points
 
 ```{r fig.height=4,fig.width=8}
-plot(data$Ozone, data$Wind,pch=16)
-points(data$Ozone, data$Solar.R,pch=15)
-points(data$Ozone, data$Temp,pch=17)
+plot(patients$Age, patients$Weight,pch=16,type="n")
+points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
 ```
-
-##Adding points
-
-- Can define suitable axis limits in initial plot
-
-```{r fig.height=4,fig.width=8}
-plot(data$Ozone, data$Wind,pch=16,ylim=c(0,350))
-points(data$Ozone, data$Solar.R,pch=15)
-points(data$Ozone, data$Temp,pch=17)
-```
-
 
 
 
 ## Adding a legend
 
 ```{r fig.height=4,fig.width=8}
-plot(data$Ozone, data$Wind,pch=16,ylim=c(0,350))
-points(data$Ozone, data$Solar.R,pch=15)
-points(data$Ozone, data$Temp,pch=17)
-legend("topright", legend=c("Solar","Wind","Temp"), 
-       col="black", pch=c(16,15,17))
+plot(patients$Age, patients$Weight,pch=16,type="n")
+points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
+legend("topleft", legend=c("M","F"), 
+       col=c("steelblue","orangered1"), pch=c(16,17))
 ```
 
 ##Adding text
 
-```{r fig.height=4,fig.width=8}
-mycols <- rep("black", 153)
-mycols[c(117,62,99,121,30)] <- "red"
 
-plot(data[,1], pch=16, col=mycols)
-text(c(117,62,99,121,30), data[c(117,62,99,121,30),1], 
-     labels=LETTERS[1:5])
+```{r fig.height=4,fig.width=8}
+plot(patients$Age, patients$Weight,pch=16)
+text(patients$Age, patients$Weight,labels=patients$Full_Name)
 ```
 
-##Adding lines
+##Adding text
 
+- text can also be added to a plot in a similar manner
+    + the `labels` argument specifies the text we want to add
+    
 ```{r fig.height=4,fig.width=8}
-mycols <- rep("black", 153)
-mycols[c(117,62,99,121,30)] <- "red"
-
-plot(data[,1], pch=16, col=mycols)
-abline(h = 115)
-
+plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
+text(patients$Age-1, patients$Weight-0.5,labels=patients$Full_Name)
 ```
 
+## Adding lines
 
-
-##Adding lines
-
-```{r fig.height=4,fig.width=8}
-
-plot(data[,1], pch=16, col=mycols)
+- To aid our interpretation, it is often helpful to add guidelines
+    + `grid()` is one easy way of doing this.
+```{r}
+plot(patients$Age, patients$Weight,pch=16)
 grid(col="steelblue")
 ```
 
-##Adding lines
+## Adding lines
 
-- `abline` can take a gradient and intercept argument
-- for `y = x` use `a=0` and `b=1`
-- Can be used to draw a *line of best fit* in conjunction with a linear model
-
-```{r fig.height=4,fig.width=8}
-plot(1:10, jitter(1:10))
-abline(0,1)
+- Can also add lines that intersect the axes
+    + `v =` for vertical lines
+    + `h=` for horizontal
+    + can specify multiple lines in a vector
+```{r}
+plot(patients$Age, patients$Weight,pch=16)
+abline(v=40,col="red")
+abline(h=c(65,70,75),col="blue")
 ```
 
+
+## Plot layouts
+
+- The `par` function can be used specify the appearance of a plot
+- The settings persist until the plot is closed with `dev.off`
+- `?par` and scroll to ***graphical parameters***
+- One example is `mfrow`
+    + multiple figures per row
+    + needs to be a vector of rows and columns
+        + e.g. a plot with one row and two columns `par(mfrow=c(1,2))`
+    
+```{r}
+par(mfrow=c(1,2))
+plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
+boxplot(patients$Weight~patients$Sex)
+
+```
+
+##Exercise
+- Return to the weather data from yesterday
+
+```{r}
+data <- read.csv("Day_1_scripts/ozone.csv")
+```
+
+- Make a scatter plot of all daily observations of Ozone level
+- Highlight any days which had Ozone level > 100
+- Indicate which month the days with high ozone-level belong to
+
+## Target Graph
+
+```{r echo=FALSE}
+plot(data$Ozone,xlab="Day",ylab="Ozone level")
+abline(h=100)
+highO <- which(data$Ozone > 100)
+points(highO, data$Ozone[highO],col="red",pch=16)
+text(highO,data$Ozone[highO]-5, labels=data$Month[highO])
+```
+
+## Solution
+
+```{r}
+plot(data$Ozone)
+abline(h=100)
+highO <- which(data$Ozone > 100)
+points(highO, data$Ozone[highO],col="red",pch=16)
+text(highO,data$Ozone[highO]-5, labels=data$Month[highO])
+```
+
+
+## Exercise
+
+- Using the `par` function, create a layout with three columns
+- Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
+
+```{r echo=FALSE}
+par(mfrow=c(1,3))
+plot(data$Solar.R,data$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
+plot(data$Wind,data$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
+plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Temperature")
+
+```
+
+## Solution
+
+```{r}
+
+par(mfrow=c(1,3))
+plot(data$Solar.R,data$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
+plot(data$Wind,data$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
+plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Temperature")
+
+```
+
+
+    
+## More-Advanced 
+
+- Modification to include month name and date
+
+```{r}
+plot(data$Ozone)
+abline(h=100)
+highO <- which(data$Ozone > 100)
+points(highO, data$Ozone[highO],col="red",pch=16)
+text(highO,data$Ozone[highO]-5, labels=paste(month.abb[data$Month[highO]],data$Day[highO]))
+
+```
 
 # 2. Statistics
 ##Built-in support for statistics
@@ -247,54 +342,54 @@ chisq.test();fisher.test()
 ```
 
 
-##Comparison of 2 data sets example: Basic data analysis
+## Example analysis
 
-- Men, on average, are taller than women.
-- The steps involved in test such a claim;
-  1. Determine whether variances in each data series are different. 
-    + Variance is a measure of sampling dispersion, a first estimate in determining the degree of difference
-        + e.g. Fishers' F test
-  2. Comparison of the mean heights. e.g. Student's t test, Wilcoxon's rank sum test
-    + Determine probability that mean heights are really drawn from different sample populations
-        + e.g. Student's t-test, Wilcoxon's rank sum test
-  
-##Comparison of 2 data sets example: Fisher's F test
-
-- Read in the data file into a new object, `heightData`
-```{r eval=FALSE}
-heightData <- read.csv("1.5_heightData.csv")
-```
-- **attach** the data frame so we don't have to refer to it by name all the time
-```{r eval=FALSE}
-attach(heightData)
-```
-- Do the two sexes have the same variance?
-```{r eval=FALSE}
-var.test(Female,Male)
-```
+- We have already seen that men in our Patients dataset tend to be heavier than women
+    + we can test this formally in R
 
 ```{r echo=FALSE}
-options(width=40)
-setwd("Day_2_scripts/")
-heightData <- read.csv("1.5_heightData.csv")
-attach(heightData)
-var.test(Female,Male)
+par(mfrow=c(1,2))
+plot(patients$Age, patients$Weight,pch=16,type="n")
+points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
+legend("topleft", legend=c("M","F"), 
+       col=c("steelblue","orangered1"), pch=c(16,17))
+boxplot(patients$Weight~patients$Sex)
 ```
 
-##Comparison of 2 data sets example: Student's t test
-- Student's t test is appropriate for comparing the difference in mean height in our data. 
-      + We need a one-tailed test
-      + Choose value of `var.equal` argument based on results of previous slide
-```{r}
-t.test(Female, Male, alternative="less",var.equal=TRUE)
-```
-
-##Comparison of 2 data sets example: Review findings
+  
+## Test variance assumption
 
 ```{r}
-boxplot(heightData)
+var.test(patients$Weight~patients$Sex)
 ```
 
+## Perform the t-test
+
+
+```{r}
+t.test(patients$Weight~patients$Sex,var.equal=TRUE)
+```
+
+## Exercise
+
+- From our weather dataset, it would appear that the ozone level is higher in the summer months (June or July)
+```{r}
+boxplot(data$Ozone~data$Month)
+```
+
+- Is there sufficient statistical evidence to support this claim?
+    + ***Hint**: You need to create a categorical variable to indicate whether a particular measurement was made in the summer or not
+
+## Solution
+
+```{r}
+Summer <- data$Month > 6 & data$Month < 9
+boxplot(data$Ozone ~ Summer)
+t.test(data$Ozone ~ Summer)
+```
+
+  
 ##Linear regression: Basic data analysis
 
 - Linear modeling is supported by the function `lm()`
@@ -310,39 +405,50 @@ boxplot(heightData)
   
 ##Typical linear regression analysis: Basic data analysis
 
+-  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"*
+
  
 ```{r fig.height=4}
 x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
 y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
-plot(y~x, xlim=c(0,10), ylim=c(0,10))
+plot(x,y, xlim=c(0,10), ylim=c(0,10))
 ```
 
-* The ~ is used to define a formula; i.e. "y is given by x"*
 
 ##Typical linear regression analysis: Basic data analysis
 
-* The ~ is used to define a formula; i.e. "y is given by x"*
+ The ~ is used to define a formula; i.e. "y is given by x"
+- Take care about the order of x and y in the plot and lm expressions
+
 ```{r}
-plot(y~x, xlim=c(0,10), ylim=c(0,10))
+plot(x,y, xlim=c(0,10), ylim=c(0,10))
 myModel <- lm(y~x)
 abline(myModel)
 ```
 
+## In-depth summary
+
+```{r}
+summary(myModel)
+```
+
+
 ##Typical linear regression analysis: Basic data analysis
 - Get the coefficients of the fit from:
-```{r eval=FALSE}
-summary.lm(myModel)
+```{r}
+
 coef(myModel)
 resid(myModel)
 fitted(myModel)
-```
-- Get QC of fit from
-```{r eval=FALSE}
-plot(myModel)
-```
-- Find out about the fit data from
-```{r eval=FALSE}
 names(myModel)
+```
+
+## Diagnostic plots of the fit
+
+- Get QC of fit from
+```{r}
+par(mfrow=c(2,2))
+plot(myModel)
 ```
 
 ##Modelling formulae
@@ -362,224 +468,37 @@ y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
 
-##The linear model object. Basic data analysis
-- Summary data describing the linear fit is given by
+
+## Exercise
+
+- There are suggestions that Ozone level could be influenced by Temperature and Wind speed
+
+```{r echo=FALSE,fig.height=4}
+par(mfrow=c(1,2))
+plot(data$Temp, data$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
+plot(data$Wind, data$Ozone,xlab="Wind Speed",ylab="Ozone level",pch=16)
+```
+
+- Perform a linear regression analysis to assess this
+    + fit the linear model and print a summary of the output
+    + plot the two variables and overlay a best-fit line
+
+## Solution
 ```{r}
-summary(myModel)
+plot(data$Temp, data$Ozone,pch=16)
+mod <- lm(data$Ozone~data$Temp)
+summary(mod)
+abline(mod,col="red",lty=2)
 ```
 
-
-##Exercise: The coin toss
-
-To learn how the distribution functions work, try simulating tossing a fair coin 100 times and then show that it is fair
-
-- We can model a coin toss using the binomial distribution. Use the `rbinom` function to generate a sample of 100 coin tosses. Look up the binomial distribution help page to find out what arguments this function needs
-- How many heads or tails were there in your sample? You can do this in two ways; either select the number of successes using indices, or convert your sample to a factor and get a summary of the factor
-- If we toss a coin 50 times, what is the probability that we get exactly 25 heads? What about 25 heads or less? Use `dbinom` and `pbinom` to find out
-- The argument to `dbinom` is a vector, so try calculating the probabilities for getting any number of coin tosses from 0 to 50 in fifty trials using `dbinom`. Plot these probabilities using `plot`. Does this plot remind you of anything?
-
-##Coin toss answers
-- To simulate a coin toss, give `rbinom` a number of observations, the number of trials for each observation, and a probability of success
-
+## Solution
 ```{r}
-coin.toss <- rbinom(100, 1, 0.5)
-```
-- Because we only specified one trial per observation, we either have an outcome of 0 or 1 successes. To get the number of successes, use indices or a factor to look up the number of 1s in the coin.toss vector (your numbers will vary)
-```{r}
-length(coin.toss[coin.toss==1])
-summary(factor(coin.toss))
+plot(data$Wind, data$Ozone,pch=16)
+mod <- lm(data$Ozone~data$Wind)
+summary(mod)
+abline(mod,col="red",lty=2)
 ```
 
-##Coin toss answers
-- The probability of getting exactly 25 heads from 50 observations of a fair coin
-```{r eval=FALSE}
-dbinom(25, 50, 0.5)
-```
-- The probability of getting 25 heads or less from 50 observations of a fair coin
-```{r eval=FALSE}
-pbinom(25, 50, 0.5)
-```
-- The probabilities for getting all numbers of coin tosses from 0 to 50 in fifty trials
-```{r eval=FALSE}
-dbinom(0:50, 50, 0.5)
-```
-- To plot this distribution, which should resemble a normal distribution
-```{r eval=FALSE}
-plot(dbinom(0:50, 50, 0.5))
-```
-
-##Exercise: Linear modelling example
-Mice have varying numbers of babies in each litter. Does the size of the litter affect the average brain weight of the offspring? We can use linear modelling to find out. (This example is taken from John Maindonald and John Braun's book Data Analysis and Graphics Using R (CUP, 2003), p140-143.)
-
-- Install and load the `DAAG` package. The `litters` data frame is part of this package. Take a look at it. How many variables and observations does it have? Does `summary` tell you anything useful? What about `plot`?
-- Are any of the variables correlated? Look up the `cor.test` function and use it to test for relationships.
-- Use `lm` to calculate the regression of brain weight on litter size, brain weight on body weight, and brain weight on litter size and body weight together
-- Look at the coefficients in your models. How is brain weight related to litter size on its own? What about in the multiple regression? How would you interpret this result?
-
-##Linear modelling answers
-
-- To install and load the package and look at `litters`
-
-```{r echo=FALSE,message=FALSE,warning=FALSE,include=FALSE}
-if(!require(DAAG)) install.packages("DAAG",repos = c("CRAN" = "http://cran.ma.imperial.ac.uk"))
-```
-
-```{r eval=FALSE}
-install.packages("DAAG")
-```
-
-```{r eval=FALSE}
-library(DAAG)
-litters
-summary(litters)
-plot(litters)
-```
-- To calculate the correlations between variables
-```{r eval=FALSE}
-attach(litters)
-cor.test(brainwt,lsize)
-cor.test(bodywt,lsize)
-cor.test(brainwt,bodywt)
-```
-
-
-##Linear modelling answers
-
-```{r echo=FALSE}
-library(DAAG)
-attach(litters)
-```
-
-- To calculate the linear models
-```{r}
-lm(brainwt~lsize)
-lm(brainwt~bodywt)
-lm(brainwt~lsize+bodywt)
-```
-
-- *Interpretation*: brain weight decreases as litter size increases, but brain weight increases proportional to body weight (when bodywt is held constant, the lsize coefficient is positive: 0.00669). This is called 'brain sparing'; although the offspring get smaller as litter size increases, the brain does not shrink as much as the body
-
-%##Basic R 'Built-in' functions for working with data frames
-
-%- We have seen before how we can get the names of our variables, but for data frames and matrices we can also get these names with `colnames`, and the %names of the rows with `rownames`
-
-%```{r programming5}
-%names(patients)
-%colnames(patients)
-%rownames(patients)
-%```
-
-%##Basic R 'Built-in' functions for working with data frames
-%- We can get the numbers of rows or columns with `nrow` and `ncol`
-
-%```{r programming6}
-%nrow(patients)
-%ncol(patients)
-%dim(patients)
-%```
-
-%##Basic R 'Built-in' functions for working with data frames
-
-%- We can also find the length of a vector or a list with `length`, although this may give confusing results for some structures, like data frames:
-
-%```{r programming7}
-%length(c(1,2,3,4,5))
-%length(patients)
-%length(patients$Age)
-
-%```
-
-%*Remember, a data frame is a list of variables, so its length is the number of variables. The length of one of the variable vectors (like Age) is the %number of observations*
-
-%##Basic R 'Built-in' functions for working with data frames
-
-%- We can add rows or columns to a data frame using rbind and cbind
-%```{r echo=FALSE}
-%options(width=80)
-%```
-
-%```{r data-frames1}
-%newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
-%rbind(patients,newpatient)
-%```
-%- Note we are not altering the `patients` data frame, just displaying to the screen
-%    + we would have to use an assignment `<-` operator to create a new object
-    
-%##Basic R 'Built-in' functions for working with data frames
-
-%```{r data-frames2}
-%cbind(patients,10:1)
-%```
-%- Note we are not altering the `patients` data frame, just displaying to the screen
-%    + we would have to use an assignment `<-` operator to create a new object
-
-%##Basic R 'Built-in' functions for working with data frames
-
-%- We can also remove rows and columns
-%%```{r}
-%patients[-1, ] # remove first row
-%```
-
-%##Basic R 'Built-in' functions for working with data frames
-
-%- We can also remove rows and columns%
-%```{r}
-%patients[ ,-1] # remove first column
-%```
-
-
-%##Basic R 'Built-in' functions for working with data frames
-
-%- Sorting a vector with `sort`
-
-%```{r data-frames3}
-%sort(patients$Second_Name)
-%```
-
-%- Sorting a data frame by one variable with `order`
-
-%```{r data-frames4}
-%order(patients$Second_Name)
-%patients[order(patients$Second_Name),]
-%```
-
-%##Exercise
-
-%- Output the patients data frame, with the patients sorted in order of age, oldest first. (You may need the `rev` function, or look at the options for the %`order` function)
-%- Add a `height` column to the data frame using the `cbind` function and assign the result to a new data frame
-%    + enter your own height values, or use these 1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5
-%- Calculate the *body mass index* for each patient. Order the patients according to their bmi
-%    + $bmi = \frac{weight}{height^2}$
-%- A person is classified as overweight if they have a bmi > 25. Which patients are overweight using this criteria, and have consented to having their data %shared?
-
-%##Answers
-%- Make sure we have the correct patients data frame
-
-%```{r include=FALSE}
-%source("Day_1_scripts/1.2_patients.R")
-%```
-
-%```{r eval=FALSE}
-%source("1.2_patients.R")
-%```
-
-
-%```{r}
-%%patients[order(patients$Age,decreasing = TRUE),]
-%```
-
-%```{r}
-%patients2 <- cbind(patients, Height = c(1.8, 1.6, 1.9, 1.5, 1.7, 1.5,1.75,1.8,1.6,1.5))
-%patients2
-%```
-
-%##Answers
-
-%```{r}
-%%bmi <- patients2$Weight / (patients2$Height)^2
-%bmi
-%patients2[bmi > 25 & patients2$Consent,]
-%```
 
 
 
@@ -955,7 +874,7 @@ The months of the year are `r month.name`
 - Modify your report so that it can read the new data and use the new criteria
 
 
-# 4. Programming Techniques
+# 4. Data Manipulation Techniques
 
 ##Introducing loops
 
