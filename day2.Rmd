@@ -1169,8 +1169,19 @@ t.test(as.numeric(genevals)~factor(subjects$er))
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
 probes <- genes[match(genelist,genes[,2]),1]
-evals[match(probes,rownames(genes)),1:5]
+subset <- evals[match(probes,rownames(genes)),]
 ```
+
+## 
+
+```{r}
+par(mfrow=c(5,2))
+for(i in 1:length(genelist)){
+  boxplot(as.numeric(subset[i,])~factor(subjects$er))
+  t.test(as.numeric(subset[i,])~factor(subjects$er))
+}
+```
+
 
 ## Making a heatmap
 
@@ -1178,3 +1189,7 @@ evals[match(probes,rownames(genes)),1:5]
 heatmap(as.matrix(evals[match(probes,rownames(genes)),]))
 ```
 
+## Compiling the report
+
+- See the markdown document gene-report.Rmd
+- 
