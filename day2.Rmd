@@ -655,7 +655,7 @@ detach(colony)
 
 
 
-# Programming Techniques
+# 4. Programming Techniques
 
 ##Introducing loops
 
