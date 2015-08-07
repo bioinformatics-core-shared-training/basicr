@@ -374,7 +374,7 @@ t.test(patients$Weight~patients$Sex,var.equal=TRUE)
 ## Exercise
 
 - From our weather dataset, it would appear that the ozone level is higher in the summer months (June or July)
-```{r}
+```{r fig.height=4}
 boxplot(data$Ozone~data$Month)
 ```
 
@@ -383,7 +383,7 @@ boxplot(data$Ozone~data$Month)
 
 ## Solution
 
-```{r}
+```{r fig.height=4}
 Summer <- data$Month > 6 & data$Month < 9
 boxplot(data$Ozone ~ Summer)
 t.test(data$Ozone ~ Summer)
@@ -436,7 +436,6 @@ summary(myModel)
 ##Typical linear regression analysis: Basic data analysis
 - Get the coefficients of the fit from:
 ```{r}
-
 coef(myModel)
 resid(myModel)
 fitted(myModel)
@@ -484,19 +483,27 @@ plot(data$Wind, data$Ozone,xlab="Wind Speed",ylab="Ozone level",pch=16)
     + plot the two variables and overlay a best-fit line
 
 ## Solution
-```{r}
-plot(data$Temp, data$Ozone,pch=16)
-mod <- lm(data$Ozone~data$Temp)
-summary(mod)
-abline(mod,col="red",lty=2)
+```{r fig.show=FALSE}
+mod1 <- lm(data$Ozone~data$Temp)
+summary(mod1)
 ```
 
 ## Solution
+
 ```{r}
+mod2 <- lm(data$Ozone~data$Wind)
+summary(mod2)
+```
+
+
+## Solution
+```{r}
+par(mfrow=c(1,2))
+plot(data$Temp, data$Ozone,pch=16)
+abline(mod1,col="red",lty=2)
 plot(data$Wind, data$Ozone,pch=16)
-mod <- lm(data$Ozone~data$Wind)
-summary(mod)
-abline(mod,col="red",lty=2)
+abline(mod2,col="red",lty=2)
+
 ```
 
 
@@ -869,12 +876,65 @@ The months of the year are `r month.name`
 
 - Once you have a report that you are happy with
 - Use in-line R code to report how many patients have > 33% amplifications
-- A new dataset is acquired with 100 observations, futhermore we now want to identify patients with 30% amplifications
-    + 'updated-NBcountData.txt'
-- Modify your report so that it can read the new data and use the new criteria
-
+- Hide the code chunk used to produce the plot (`echo=FALSE`)
+- Cache the code chunk used to read the raw data (`cache=TRUE`)
 
 # 4. Data Manipulation Techniques
+
+## Motivation
+
+- So far we have been lucky that all our data have been in the same file
+    + This is not usually the case
+    + A dataset may be spread over severall files
+        + This takes longer, and is harder, than many people realise
+    + We need to combine before doing an analysis
+
+
+
+##Basic R 'Built-in' functions for working with data frames
+- We can get the numbers of rows or columns with `nrow` and `ncol`
+
+```{r programming6}
+nrow(patients)
+ncol(patients)
+dim(patients)
+```
+
+
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can add rows or columns to a data frame using rbind and cbind
+```{r echo=FALSE}
+options(width=80)
+```
+
+```{r data-frames1}
+newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
+rbind(patients,newpatient)
+```
+
+##Basic R 'Built-in' functions for working with data frames
+
+```{r data-frames2}
+cbind(patients,10:1)
+
+```
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can also remove rows and columns
+```{r}
+patients[-1, ] # remove first row
+```
+
+##Basic R 'Built-in' functions for working with data frames
+
+- We can also remove rows and columns
+```{r}
+patients[ ,-1] # remove first column
+```
+
 
 ##Introducing loops
 
@@ -892,17 +952,27 @@ x+y
 ##Introducing loops
 - We could do this:
 
+```{r echo=FALSE}
+rawData <- read.delim("Day_1_scripts/1.3_NBcountData.txt")
+splitData <- split(rawData,cut(rawData[,1],breaks=seq(0,nrow(rawData),length.out=5)))
+for(i in 1:length(splitData)){
+  write.csv(splitData[[i]], file=paste0("Day_2_scripts/NBCounts-Batch",i,".csv"),quote=FALSE,row.names=FALSE)
+}
+
+```
+
+
+
 ```{r eval=FALSE}
-colony  <-data.frame() # Start with empty data frame
-colony1 <- read.csv("11_CFA_Run1Counts.csv")
-colony2 <- read.csv("11_CFA_Run2Counts.csv")
-colony3 <- read.csv("11_CFA_Run3Counts.csv")
+rawData  <-data.frame() # Start with empty data frame
+rawData1 <- read.csv("NBCounts-Batch1.csv")
+rawData2 <- read.csv("NBCounts-Batch2.csv")
+rawData3 <- read.csv("NBCounts-Batch3.csv")
   ...
-colony10 <- read.csv("11_CFA_Run10Counts.csv")
-colony <- rbind(colony1, colony2, colony3, ..., colony10)
+rawData <- rbind(rawData1, rawData2, rawData3, ..., )
 ```
 - But this will be boring to type, difficult to change, and prone to error
-- As we are doing the same thing 10 times, but with a different file name each time, we can use a **loop** instead
+- As we are doing the same thing multiple times, but with a different file name each time, we can use a **loop** instead
 
 ##Loops: Commands and flow control
 - R has two basic types of loop
@@ -933,22 +1003,22 @@ containing a particular substring in their name using the `dir` function
 
 
 ```{r eval=FALSE}
-dir(pattern="Counts.csv")
+dir(pattern="NBCounts.csv")
 ```
 
 ```{r echo=FALSE}
-dir("Day_1_scripts/",pattern="Counts.csv")
+dir("Day_2_scripts/",pattern="Counts.csv")
 
 ```
 
 - So we can load all the files using a `for` loop as follows
 
 ```{r loops2, eval=FALSE}
-colony <- data.frame()
-countfiles <- dir(pattern="Counts.csv")
+rawData <- data.frame()
+countfiles <- dir(pattern="NBCounts")
 for (file in countfiles) {
    t <- read.csv(file)
-   colony <- rbind(colony, t)
+   rawData <- rbind(rawData, t)
 }
 ```
 
@@ -975,14 +1045,14 @@ if (condition) {
 - For example, if we were writing a script to load an unknown set of files, using the `for` loop we wrote before, we might want to warn the user if we can't find any files with the pattern we are searching for. Here's how we can use an `if` statement to test for this
 
 ```{r flow-control,eval=FALSE}
-colony <- data.frame()
-countfiles <- dir(pattern="Counts.csv")
+rawData <- data.frame()
+countfiles <- dir(pattern="NBCounts")
 if (length(countfiles) == 0) {
     stop("No Counts.csv files found!")
 } else {
     for (file in countfiles) {
         t <- read.csv(file)
-        colony <- rbind(colony, t)
+        rawData <- rbind(rawData, t)
     }
 }
 
@@ -1013,195 +1083,98 @@ while( f != 0 ){
 
 ##Exercise
 
+- Modify your Markdown file from the previous section to incorporate the new code to read from different files
 
-- Load in the `colony` data frame using a `for` loop. Three of the data files are in the `Day_1_scripts` folder. Load all three files into `colony` using the for loop in the slides
-- How many observations do you have in the colony data frame? Find out by counting the number of rows in `colony` using the `nrow` function
-- Suppose a power analysis of your data shows that you only need 48 observations to robustly test your hypothesis. This means we can stop loading files when we have loaded at least 48 observations. Modify your `for` loop so it will only load files if the `colony` data frame has less than 48 observations in it
-
-##Answers to Exercise
-
-- To order the patients by decreasing age
-```{r ex3ans1,eval=FALSE}
-patients[rev(order(patients$Age)),]
-```
-- To find the number of rows in the colony data frame
-```{r ex3ans2,eval=FALSE}
-nrow(colony)
-```
-
-- To stop loading files after at least 48 observations have been found, use the code from the first `for` loop slide with a new `if` statement
-
-```{r ex3ans4, eval=FALSE}
-colony <- data.frame()
-countfiles <- dir(pattern="Counts.csv")
-for (file in countfiles) {
-    if (nrow(colony) < 48 ) {
-        t <- read.csv(file)
-        colony <- rbind(colony, t)
-    }
-}
-```
 
 
 
 # 5. Data analysis report example
 
-## Combining data from multiple sources: *Gene Clustering Example*
-
-* R has powerful functions to combine heterogeneous data into a single data set
-* Gene clustering example data
-    + five sets of differentially expressed genes from various experimental conditions
-    + file with names of experimentally-verified genes
-* Gene clustering exercise
-    + combine this dataset into a single table and cluster to see which conditions are similar
-    + repeat the clustering but only on a subset of experimentally-verified genes
-    
-## Combining gene tables
-
-* input files have two columns: gene names and fold change
-* we want to combine all five tables into a single table, with 0 for missing values
-![gene-tables](images/gene-tables.png)
-
-## Gene Clustering: Script Walkthrough 1
-
-* To make the big table we first need to find out all the genes present in at least one of the files
-* Make sure not to use factors in `read.delim()`
-    + when loading in character data, use `as.is=TRUE` to prevent it being converted to factors
-    + `union()` is a set operation which combines two vectors by eliminating duplicates. See also `intersect` and `setdiff`
-
-```{r eval=FALSE}
-#start with an empty collection of genes
-genes <- c()
-for(fileNum in 1:5){
-  #load in files 2_3.DiffGenes1.tsv...
-  t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
-                        , sep="")
-                  , as.is=TRUE, header=FALSE)
-  #label the input columns to help code readability
-  names(t) <- c("gene", "expression")
-  genes <- union(genes, t$gene)
-}
-#for tidiness order our genes by name
-genes <- sort(genes)
-genes #show all genes
-```
-- *Example code: 2.3_geneClustering.R*
-
-## Gene Clustering: Script Walkthrough 2
-
-* Using the complete list of genes, we can create the big table and fill in the values:
-    + `match()` returns the index of the first argument in the second. i.e. index of input file genes in the big table
-    + we use index to pick the rows in such way that they match the order in the input file
-    
-```{r eval=FALSE}
-#make the destination table [rows=unique genes,cols=file numbers]
-values <- matrix(0, nrow=length(genes), ncol=5)
-rownames(values) <- genes
-for(fileNum in 1:5){
-  #read in the file again
-    t <- read.delim(paste("2.3_DiffGenes", fileNum,".tsv"
-                        , sep=""), as.is=TRUE, header=FALSE)
-    names(t) <- c("gene","expression")
-    index <- match(t$gene, rownames(values))
-    values[index,fileNum] <- t$expression
-}
-```
-
-## Gene Clustering: Script Walkthrough 3
-
-* Now we can do hierarchical clustering:
-    + Values from the matrix are colour-coded. Rows and columns are re-arranged according to similarity
-
-```{r eval=FALSE,fig.height=4}
-heatmap(values, scale="none", col=cm.colors(256))
-```
-
 ```{r echo=FALSE}
-setwd("Day_2_scripts/")
-genes <- c()
-for(fileNum in 1:5){
-  t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
-                        , sep="")
-                  , as.is=TRUE, header=FALSE)
-  names(t) <- c("gene", "expression")
-  genes <- union(genes, t$gene)
-}
-genes <- sort(genes)
-values <- matrix(0, nrow=length(genes), ncol=5)
-rownames(values) <- genes
-for(fileNum in 1:5){
-    t <- read.delim(paste("2.3_DiffGenes", fileNum, ".tsv"
-                        , sep=""), as.is=TRUE, header=FALSE)
-    names(t) <- c("gene", "expression")
-    index <- match(t$gene, rownames(values))
-    values[index, fileNum] <- t$expression
-}
-heatmap(values, scale="none", col=cm.colors(256))
 
-```
+if(!file.exists("Day_2_scripts/gene.expression.txt")){
 
-## Gene Clustering: Script Walkthrough 4 
-
-* In a second part of our analysis, we want to produce the same heatmap but only based on a list of experimentally-verified genes
-* The problem is that the data are not formatted in the most convenient way:
-
-![gene-lists](images/gene-lists.png)
-
-
-## Gene Clustering: Script Walkthrough 5
-
-* We load in this table, and only extract the gene names, then we use them to select a subset of the `values` matrix
-```{r eval=FALSE}
-t.exp <- read.delim("2.3_ExperimentalGenes.tsv",
-                    as.is=TRUE)
-experim.genes <- unlist(strsplit(t.exp$genes, ","))
-```
-* `unlist` flattens out a nested list into a single vector
-* `strsplit` splits a vector of strings by a custom split character (`,`). The result is a list of split values for each element of the input vector
-* Now, redo the heatmap by using just the genes in the experimentally verified set  
-```{r eval=FALSE}
-is.experimental <- rownames(values) %in% experim.genes
-heatmap(values[is.experimental,], scale="none"
-        , col=cm.colors(256))
-```
-
-## Gene Clustering Review
-
-* We load the five tables twice; first to collect gene names, then to load expression values
-* Based on the expression table (`values`) we construct a clustered heatmap first on the whole set of genes, then on a selected subset
-* Go through the code, try it out and understand it
-* Try answering the following questions
-    + what is `rownames(values)`
-    + why is `rownames(values)[index]` and `t$gene` giving the same output?
-    + what is the difference between `rownames(values) %in% experim.genes` and `experim.genes %in% rownames(values)`
+  if(!require(breastCancerNKI) | require(genefilter)) {
+    source("http://www.bioconductor.org/biocLite.R")
+    biocLite(c("breastCancerNKI","genefilter"))
+  }
+  data("nki")
+  cancer.patients <- pData(nki)[,c("samplename","age","er","grade")]
+  genes <- fData(nki)[,c("probe","HUGO.gene.symbol")]
+  ##get the top50 DE genes, plus 500 random
+  ps <- NULL
+  for(i in 1:nrow(genes)){
+    ps[i] <- t.test(exprs(nki)[i,] ~ factor(cancer.patients$er))$p.value
+  }
+  set.seed(070815)
+  ind <- order(ps, decreasing = FALSE)[1:50]
+  ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
   
+  evalues <- exprs(nki)[ind,]
+  genes <- genes[ind,]
+  
+  write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
+  write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
+  write.table(cancer.patients, file="Day_2_scripts/cancer.patients.txt",quote=FALSE,sep="\t")
+}
+```
 
-#References
+## Combining data from multiple sources: Gene Clustering Example
 
-##References
-* Official documentation on:
-    + http://cran.r-project.org/manuals.html
-* A good repository of R recipes
-    + Quick-R: http://www.statmethods.net/
-* Don't forget that many packages come with tutorials (vignettes)
-* R forums
-    + http://stackoverflow.com/questions/tagged/r
-    + http://news.gmane.org/gmane.comp.lang.r.general
+- R has powerful functions to combine heterogeneous data into a single data set
+- Gene clustering example data
+    + gene expression values in ***Day_2_scripts/gene.expression.txt***
+    + patient information in ***Day_2_scripts/gene.description.txt***
+    + gene information in ***Day_2_scripts/cancer.patients.txt***
     
-* Plenty of textbooks to choose from, comprehensive list + reviews
-    + http://www.r-project.org/doc/bib/R-books.html
+## Peek at the data
 
-#End of Course
+```{r}
+evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
 
-##Thanks for your attention
+```
 
-- Please fill-in your feedback so we can improve the course
-- The key to learning R is practice, practice, practice!
-    + If you don't have your own data yet, look online
-    + http://vincentarelbundock.github.io/Rdatasets/datasets.html
-- Meet with fellow R users
-    + http://www.meetup.com/Cambridge-R-Users-Group-Meetup/
-    + informal, quarterly talks
-- Look out for an 'Intermediate R' course    
+## Peek at the data
+```{r}
+genes <- read.delim("Day_2_scripts/gene.description.txt")
+head(genes)
+```
 
-    
+## Peek at the data
+```{r}
+subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
+head(subjects)
+```
+
+
+## Retrieving data for a particular gene
+
+```{r}
+ind <- match("ESR1", genes[,2])
+probe <- genes[ind,1]
+evals[match(probe,rownames(evals)),1:10]
+genevals <- evals[match(probe,rownames(evals)),]
+```
+
+## Relating to patient characteristics
+
+```{r}
+boxplot(as.numeric(genevals)~factor(subjects$er))
+t.test(as.numeric(genevals)~factor(subjects$er))
+```
+
+## Extracing multiple genes
+
+```{r}
+genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
+probes <- genes[match(genelist,genes[,2]),1]
+evals[match(probes,rownames(genes)),1:5]
+```
+
+## Making a heatmap
+
+```{r}
+heatmap(as.matrix(evals[match(probes,rownames(genes)),]))
+```
+
