@@ -552,12 +552,14 @@ library()        # Lists all the packages you've got installed
 
 - Although the basic unit of R is a vector, we usually handle data in **data frames**.
 - A data frame is a set of observations of a set of variables -- in other words, the outcome of an experiment.
-- For example, we might want to analyse information about a set of patients. To start with, let's say we have ten patients and for each one we know their name, sex, age, weight and whether they give consent for their data to be made public.
+- For example, we might want to analyse information about a set of patients. 
+- To start with, let's say we have ten patients and for each one we know their name, sex, age, weight and whether they give consent for their data to be made public.
 
 
 ##The patients data frame
 - We are going to create a data frame called 'patients', which will have ten rows (observations) and seven columns (variables). The columns must all be equal lengths. 
 - We will explore how to construct these data from scratch.
+    + (in practice, we would usually import such data from a file)
 
 |  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
 |--|-------|-------|--------------|:----:|--:|------:|:-----:|
@@ -599,7 +601,8 @@ FALSE, TRUE, FALSE, TRUE)
 
 ##Character, numeric and logical data types
 
-- Vectors can only contain one type of data; we cannot mix numbers, characters and logical values in the same vector. If we try this, R will convert everything to characters:
+- Vectors can only contain one type of data; we cannot mix numbers, characters and logical values in the same vector. 
+    + If we try this, R will convert everything to characters:
 
 ```{r}
 c(20, "a string", TRUE)
@@ -741,6 +744,8 @@ patients <- data.frame(First_Name = firstName,
 - Data frames are R's speciality, but R also handles matrices:
     + all columns are assumed to contain the same data type. e.g. numerical
     + some calculations are more efficient to do on matrices
+    + matrices can be manipulated in the same fashion as data frame
+        + we can easily convert between the two object types
 ```{r matrices1}
 e <- matrix(1:10, nrow=5, ncol=2)
 e
@@ -754,35 +759,6 @@ f %*% e
 
 The `%*%` operator is the matrix multiplication operator, not the standard multiplication operator.
 
-%%##Lists
-
-%%- We have seen that vectors can only hold data of one type. How can we store data of multiple types? Or vectors of different lengths in one object?
-%%-  We can use lists. A list can contain objects of any type
-%%```{r lists1}
-%%one.to.ten <- 1:10
-%%uniform.mat <- matrix(runif(100), ncol=10, nrow=10)
-%%year.to.october <- data.frame(one.to.ten, month.name[1:10])
-%%myList <- list(ls.obj.1 = one.to.ten, 
-%%               ls.obj.2 = uniform.mat, 
-%%               ls.obj.3 = year.to.october)
-%%names(myList)
-
-%%```
-
-%%##Lists
-
-%%- We can use the dollar syntax to access list items (in fact, a data frame is a 
-%%special type of list):
-
-%%```{r lists2} 
-%%myList$ls.obj.1
-%%```
-
-%%- We can also use `myList[[1]]` to get the first item in the list.
-
-%%```{r lists3}
-%% myList[[1]] 
-%%```
 
 
 ##Indexing data frames and matrices
@@ -802,27 +778,41 @@ patients[1,]
 ```
 
 ##Advanced indexing
-- As values in R are really vectors, so indices are actually vectors, and can be 
-numeric or logical:
+- 'Values' in R are really vectors
+- Indices are actually vectors, and can be ***numeric*** or ***logical***:
 ```{r index3}
  s <- letters[1:5]
  s[c(1,3)]
  s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
+```
+
+##Advanced indexing
+
+- We can do the logical test and indexing in the same line of R code
+    + R will do the test first, and then use the vector of `TRUE` and `FALSE` values to subset the vector
+```{r}
 a <- 1:5
 a < 3
 s[a < 3]
+```
+
+
+##Operators
+
+- Operators allow us to combine multiple logical tests
+- comparison operators
+`<, >, <=, >=, ==, !=`
+- logical operators 
+`!, &, |, xor`
+    + The operators for 'comparison' and 'logical' always return logical values! i.e.  (`TRUE`, `FALSE`)
+
+```{r}
+s
+a
 s[a > 1 & a <3]
 s[a == 2]
 ```
 
-##Operators
-- arithmetic
-`+, -, *, /, ^`
-- comparison
-`<, >, <=, >=, ==, !=`
-- logical
-`!, &, |, xor`
-    + The operators for 'comparison' and 'logical' always return logical values! i.e.  (`TRUE`, `FALSE`)
 
 ##Exercise
 
@@ -923,7 +913,13 @@ read.csv("1.3_NBcountData.csv")
 rawData[1:10,]  # View the first 10 rows to ensure import is OK
 ```
 
+- or use the `View` function to get a display of the data in RStudio
+```{r eval=FALSE}
+View(rawData)
+```
+
 ##Word of caution
+
 
 ![tolstoy](images/tolstoy.jpg)
 
@@ -1015,8 +1011,8 @@ write.csv(rawData[norm,], "My_NB_output.csv")
 - but we need to start simple
 - we will describe *base* graphics in R; the plots available with any standard R installation
     + other alternatives are available but require more R knowledge; e.g. `lattice`, `ggplot2`
-- `plot` is the most basic plotting function in R
-    + it can try and guess the best plot based on the data
+- ***You need to think about how best to represent your data*** 
+    + http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign
     
 ##Making a Scatter Plot
 
@@ -1031,12 +1027,13 @@ plot(patients$Weight)
 
 ##Making a Scatter Plot
 R tries to guess the most appropriate way to visualise the data
+
 ```{r echo=FALSE}
 plot(patients$Weight)
 ```
 
 - Axis limits, labels, titles are inferred from the data
-    + we can fix these later on
+    + we can modify these as we wish
 
 ##Making a Scatter Plot of two variables
 
@@ -1060,7 +1057,7 @@ barplot(patients$Age)
 ##Making a barplot
 
 - It is more usual to display count data in a barplot
-    + e.g. the counts of the a particular categorical variable
+    + e.g. the counts of a particular ***categorical*** variable
 ```{r}
 barplot(summary(patients$Sex))
 ```
@@ -1068,7 +1065,8 @@ barplot(summary(patients$Sex))
 
 ##Plotting a distribution: Histogram
 
-- A histogram is a popular way of visualising a distribution
+- A histogram is a popular way of visualising a distribution of ***continuous*** data
+    + can change the width of bins
 
 ```{r}
 hist(patients$Weight)
@@ -1076,7 +1074,7 @@ hist(patients$Weight)
 
 ##Plotting a distribution: Histogram
 
-- A histogram is a popular way of visualising a distribution
+- A histogram is a popular way of visualising a distribution ***continuous*** data
 
 ```{r}
 hist(patients$Age)
@@ -1098,7 +1096,7 @@ boxplot(patients$Weight)
 
 ##Plotting a distribution: Boxplot
 
-- Sometimes we want to compare distributions between different groupings in our data
+- Sometimes we want to compare distributions between different categories in our data
 - For this we need to use the '*formula*' syntax
     + For now, `y ~ x` means put continuous variable `y` on the *y* axis and categorical `x` on the x axis
 ```{r}
@@ -1110,11 +1108,11 @@ boxplot(patients$Weight~patients$Sex)
 - In the Day_1_scripts folder you will find the file `ozone.csv`
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
     + Full description here http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
-- Load these data into R
+- Import these data into R
 - What data types are present? Try to think of ways to create the following plots from the data
-    + scatter plot two variables 
-    + a histogram
-    + boxplot of a continuous variable against a categorical variable
+    + scatter plot two variables. e.g. Solar Radiation against Ozone
+    + a histogram. e.g. Temperature
+    + boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
 
 
 ## Suggestions
@@ -1126,17 +1124,17 @@ weather <- read.csv("Day_1_scripts/ozone.csv")
 
 ```{r eval=FALSE}
 weather <- read.csv("ozone.csv")
-head(weather)
+View(weather)
 ```
 
-```{r echo=FALSE}
-head(weather)
+```{r echo=FALSE,results='asis'}
+knitr:::kable(head(weather))
 ```
 
 ## Suggestions
 
 ```{r}
-plot(weather$Ozone,weather$Solar.R)
+plot(weather$Solar.R,weather$Ozone)
 ```
 
 ## Suggestions
@@ -1277,6 +1275,7 @@ plot(patients$Weight,patients$Age, cex=0.2)
 - Previously we have used a *vector* of length 1 as our value of colour and character
 - we can use a vector of any length
     + the values will get *recycled* (re-used) so that each point gets assigned a value
+- we can use a pre-defined ***colour palette*** (see later)
 ```{r}
 plot(patients$Weight,patients$Age, 
      pch = 1:10,
@@ -1300,8 +1299,65 @@ boxplot(patients$Weight~patients$Sex,
 
 ##Exercise 
 
-- Take one of the plots you produced in the previous section and experiment with adding axes and colours
+- Can you re-create the following plots?
+- HINT
+    + See the `breaks` argument to hist (`?hist`)
+    + for third plot, see the rainbow function (`?rainbow`)
+    
+```{r echo=FALSE}
+par(mfrow=c(3,1))
+plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
+     ylab="Ozone level",xlab="Solar Radiation", 
+     main="Relationship between ozone level and solar radiation")
+hist(weather$Temp,col="purple",xlab="Temperature",main="Distribution of Temperature",breaks=50:100,freq=FALSE)
+boxplot(weather$Ozone~weather$Month,col=rainbow(5))
+```
 
+## Solutions
+
+```{r}
+plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
+     ylab="Ozone level",xlab="Solar Radiation", 
+     main="Relationship between ozone level and solar radiation")
+```
+
+
+## Solutions
+
+```{r}
+hist(weather$Temp,col="purple",xlab="Temperature",
+     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+```
+
+## Solutions
+
+- The `rainbow` function is used to create a vector of colours for the boxplot
+    + Red, Orange, Yellow, Green, Blue, Indigo, Violet
+
+```{r}
+boxplot(weather$Ozone~weather$Month,col=rainbow(5))
+```
+
+## Solutions
+
+- more aesthetically-pleasing palettes are provided by the `RColorBrewer` package
+
+```{r}
+library(RColorBrewer)
+display.brewer.all()
+```
+
+## Solutions
+
+```{r}
+boxplot(weather$Ozone~weather$Month,col=brewer.pal(5,"Set1"))
+```
 
 
 #End of Day 1
+
+## To come tomorrow......
+- More customisation of plots
+- Statistics
+- Further manipulation of data
+- Report writing

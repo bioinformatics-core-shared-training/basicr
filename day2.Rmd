@@ -13,7 +13,6 @@ toc: yes
 2. Statistics
 3. Report-writing
 4. Data Manipulation Techniques
-5. Data analysis report
 
 #1. Further customisation of plots
 
@@ -25,6 +24,7 @@ toc: yes
     + `main`, `xlab`, `ylab`
     + etc....
 - we will now look at ways to modify the plot appearance after it has been created
+- also, how to export the graphs 
 
 ## The painter's model
 
@@ -190,6 +190,42 @@ boxplot(patients$Weight~patients$Sex)
 
 ```
 
+## Exporting graphs from RStudio
+
+- Easiest option to tuse the Export button from the Plots panel
+- Otherwise, use the `pdf` function
+    + you will see that the plot does not appear in RStudio
+```{r eval=FALSE}
+pdf("ExampleGraph.pdf")
+plot(rnorm(1:10))
+```
+
+- you need to use the `dev.off` to stop printing graphs to the pdf and 'close' the file
+
+```{r eval=FALSE}
+dev.off()
+```
+
+## Exporting graphs from RStudio
+
+- We can specify the dimensions of the plot, other properties of the file `?pdf`
+
+```{r}
+pdf("ExampleGraph.pdf",width=10,height=10)
+plot(rnorm(1:10))
+dev.off()
+```
+
+- Other formats can be created
+    + e.g. ***png***
+    
+    
+```{r}
+png("ExampleGraph.png")
+plot(rnorm(1:10))
+dev.off()
+```
+
 ##Exercise
 - Return to the weather data from yesterday
 
@@ -226,6 +262,7 @@ text(highO,data$Ozone[highO]-5, labels=data$Month[highO])
 
 - Using the `par` function, create a layout with three columns
 - Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
+- Save the plot to a pdf
 
 ```{r echo=FALSE}
 par(mfrow=c(1,3))
@@ -237,13 +274,13 @@ plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Tempe
 
 ## Solution
 
-```{r}
-
+```{r eval=FALSE}
+pdf("ozoneCorrelations.pdf")
 par(mfrow=c(1,3))
 plot(data$Solar.R,data$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
 plot(data$Wind,data$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
 plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Temperature")
-
+dev.off()
 ```
 
 
@@ -379,7 +416,7 @@ boxplot(data$Ozone~data$Month)
 ```
 
 - Is there sufficient statistical evidence to support this claim?
-    + ***Hint**: You need to create a categorical variable to indicate whether a particular measurement was made in the summer or not
+    + ***Hint***: You need to create a categorical variable to indicate whether a particular measurement was made in the summer or not
 
 ## Solution
 
@@ -572,7 +609,6 @@ Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpre
 
 ##Simple example in RStudio
 - Lets take Day_1_scripts/1.3_NBcountData.R
-    + an analysis of a RNA-seq dataset using edgeR
 - Use the Compile Notebook button in RStudio
 - Take an R script and turn into HTML, PDF or even Word
 - All code will be displayed and the outputs printed
@@ -845,12 +881,6 @@ pval <- 0.01
 The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
 
 
-## Printing vectors
-```
-The months of the year are 'r month.name'
-```
-
-The months of the year are `r month.name`
 
 ## References
 
@@ -866,10 +896,9 @@ The months of the year are `r month.name`
 - Create a new markdown file that will report your analysis of the NB count data
     + File -> New File -> R Markdown
 - Create separate code chunks for each stage of the analysis (copy code from Day_1_scripts/1.3_NBcountData.R if you wish)
-    + Reading the data
-    + Basic Statistics
-    + Reorder table by decreasing nuclei count
+    + Reading the data and print the first few rows
     + Identify patients with >33% NB amplification
+    + Plot and identify the outliers
     + Write out results table as comma separated values file
     
 ## Exercise
@@ -878,6 +907,8 @@ The months of the year are `r month.name`
 - Use in-line R code to report how many patients have > 33% amplifications
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
+- Modify the selectioncriteria for amplification to be > 30%
+    + see how the various parts of the report change
 
 # 4. Data Manipulation Techniques
 
@@ -888,6 +919,99 @@ The months of the year are `r month.name`
     + A dataset may be spread over severall files
         + This takes longer, and is harder, than many people realise
     + We need to combine before doing an analysis
+
+
+
+## Combining data from multiple sources: Gene Clustering Example
+
+- R has powerful functions to combine heterogeneous data sources into a single data set
+- Gene clustering example data
+    + gene expression values in ***Day_2_scripts/gene.expression.txt***
+    + patient information in ***Day_2_scripts/gene.description.txt***
+    + gene information in ***Day_2_scripts/cancer.patients.txt***
+- A breast cancer dataset with numerous patient characteristics 
+    + we will concentrate on ***ER status*** (positive / negative)
+    + what genes show a statistically-significant different between ER groups?
+
+
+```{r echo=FALSE}
+
+if(!file.exists("Day_2_scripts/gene.expression.txt")){
+
+  if(!require(breastCancerNKI) | require(genefilter)) {
+    source("http://www.bioconductor.org/biocLite.R")
+    biocLite(c("breastCancerNKI","genefilter"))
+  }
+  data("nki")
+  cancer.patients <- pData(nki)[,c("samplename","age","er","grade")]
+  genes <- fData(nki)[,c("probe","HUGO.gene.symbol")]
+  ##get the top50 DE genes, plus 500 random
+  ps <- NULL
+  for(i in 1:nrow(genes)){
+    ps[i] <- t.test(exprs(nki)[i,] ~ factor(cancer.patients$er))$p.value
+  }
+  set.seed(070815)
+  ind <- order(ps, decreasing = FALSE)[1:50]
+  ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
+  
+  evalues <- exprs(nki)[ind,]
+  genes <- genes[ind,]
+  
+  write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
+  write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
+  write.table(cancer.patients, file="Day_2_scripts/cancer.patients.txt",quote=FALSE,sep="\t")
+}
+```
+
+
+## Analysis sketch
+
+- Read the relevant files
+- Do a sanity check to see if a known gene exhibits a change between groups
+- Use a t-test to rank all genes
+- Make heatmaps of the top hits
+    
+## Peek at the data
+
+```{r}
+evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
+
+```
+
+## Peek at the data
+```{r}
+genes <- read.delim("Day_2_scripts/gene.description.txt")
+head(genes)
+```
+
+## Peek at the data
+```{r}
+subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
+head(subjects)
+```
+
+
+## Retrieving data for a particular gene
+
+ - Gene `ESR` is know to be hugely-different between ER positive and negative patient
+    + let's check that this is evident in our dataset
+    + if not, something has gone wrong!
+    
+```{r}
+ind <- match("ESR1", genes[,2])
+probe <- genes[ind,1]
+evals[match(probe,rownames(evals)),1:10]
+genevals <- evals[match(probe,rownames(evals)),]
+```
+
+## Relating to patient characteristics
+
+```{r}
+boxplot(as.numeric(genevals)~factor(subjects$er))
+t.test(as.numeric(genevals)~factor(subjects$er))
+```
+
 
 
 
@@ -952,12 +1076,9 @@ x+y
 ##Introducing loops
 - We could do this:
 
-```{r echo=FALSE}
-rawData <- read.delim("Day_1_scripts/1.3_NBcountData.txt")
-splitData <- split(rawData,cut(rawData[,1],breaks=seq(0,nrow(rawData),length.out=5)))
-for(i in 1:length(splitData)){
-  write.csv(splitData[[i]], file=paste0("Day_2_scripts/NBCounts-Batch",i,".csv"),quote=FALSE,row.names=FALSE)
-}
+```{r echo=FALSE,eval=FALSE}
+t.test(evals[1,]~factor(subjects$er))
+t.test(evals[2,]~factor(subjects$er))
 
 ```
 
@@ -1003,12 +1124,11 @@ containing a particular substring in their name using the `dir` function
 
 
 ```{r eval=FALSE}
-dir(pattern="NBCounts.csv")
+dir(pattern="NBCounts")
 ```
 
 ```{r echo=FALSE}
-dir("Day_2_scripts/",pattern="Counts.csv")
-
+dir("Day_2_scripts/",pattern="NBCounts")
 ```
 
 - So we can load all the files using a `for` loop as follows
@@ -1081,88 +1201,6 @@ while( f != 0 ){
 - Trailing bracket `}` always alone on the line at the same indentation level as the initial bracket `{`
 - Use white spaces to divide the horizontal space between units of your code, e.g. around assignments, comparisons
 
-##Exercise
-
-- Modify your Markdown file from the previous section to incorporate the new code to read from different files
-
-
-
-
-# 5. Data analysis report example
-
-```{r echo=FALSE}
-
-if(!file.exists("Day_2_scripts/gene.expression.txt")){
-
-  if(!require(breastCancerNKI) | require(genefilter)) {
-    source("http://www.bioconductor.org/biocLite.R")
-    biocLite(c("breastCancerNKI","genefilter"))
-  }
-  data("nki")
-  cancer.patients <- pData(nki)[,c("samplename","age","er","grade")]
-  genes <- fData(nki)[,c("probe","HUGO.gene.symbol")]
-  ##get the top50 DE genes, plus 500 random
-  ps <- NULL
-  for(i in 1:nrow(genes)){
-    ps[i] <- t.test(exprs(nki)[i,] ~ factor(cancer.patients$er))$p.value
-  }
-  set.seed(070815)
-  ind <- order(ps, decreasing = FALSE)[1:50]
-  ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
-  
-  evalues <- exprs(nki)[ind,]
-  genes <- genes[ind,]
-  
-  write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
-  write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
-  write.table(cancer.patients, file="Day_2_scripts/cancer.patients.txt",quote=FALSE,sep="\t")
-}
-```
-
-## Combining data from multiple sources: Gene Clustering Example
-
-- R has powerful functions to combine heterogeneous data into a single data set
-- Gene clustering example data
-    + gene expression values in ***Day_2_scripts/gene.expression.txt***
-    + patient information in ***Day_2_scripts/gene.description.txt***
-    + gene information in ***Day_2_scripts/cancer.patients.txt***
-    
-## Peek at the data
-
-```{r}
-evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
-evals[1:5,1:5]
-
-```
-
-## Peek at the data
-```{r}
-genes <- read.delim("Day_2_scripts/gene.description.txt")
-head(genes)
-```
-
-## Peek at the data
-```{r}
-subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
-head(subjects)
-```
-
-
-## Retrieving data for a particular gene
-
-```{r}
-ind <- match("ESR1", genes[,2])
-probe <- genes[ind,1]
-evals[match(probe,rownames(evals)),1:10]
-genevals <- evals[match(probe,rownames(evals)),]
-```
-
-## Relating to patient characteristics
-
-```{r}
-boxplot(as.numeric(genevals)~factor(subjects$er))
-t.test(as.numeric(genevals)~factor(subjects$er))
-```
 
 ## Extracing multiple genes
 
@@ -1174,7 +1212,7 @@ subset <- evals[match(probes,rownames(genes)),]
 
 ## 
 
-```{r}
+```{r eval=FALSE}
 par(mfrow=c(5,2))
 for(i in 1:length(genelist)){
   boxplot(as.numeric(subset[i,])~factor(subjects$er))
