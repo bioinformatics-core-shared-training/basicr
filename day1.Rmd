@@ -1301,11 +1301,11 @@ boxplot(patients$Weight~patients$Sex,
 
 - Can you re-create the following plots?
 - HINT
-    + See the `breaks` argument to hist (`?hist`)
+    + See the `breaks` and `freq` arguments to hist (`?hist`)
     + for third plot, see the rainbow function (`?rainbow`)
     
 ```{r echo=FALSE}
-par(mfrow=c(3,1))
+par(mfrow=c(2,2))
 plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
      ylab="Ozone level",xlab="Solar Radiation", 
      main="Relationship between ozone level and solar radiation")

@@ -230,7 +230,7 @@ dev.off()
 - Return to the weather data from yesterday
 
 ```{r}
-data <- read.csv("Day_1_scripts/ozone.csv")
+weather <- read.csv("Day_1_scripts/ozone.csv")
 ```
 
 - Make a scatter plot of all daily observations of Ozone level
@@ -240,21 +240,21 @@ data <- read.csv("Day_1_scripts/ozone.csv")
 ## Target Graph
 
 ```{r echo=FALSE}
-plot(data$Ozone,xlab="Day",ylab="Ozone level")
+plot(weather$Ozone,xlab="Day",ylab="Ozone level")
 abline(h=100)
-highO <- which(data$Ozone > 100)
-points(highO, data$Ozone[highO],col="red",pch=16)
-text(highO,data$Ozone[highO]-5, labels=data$Month[highO])
+highO <- which(weather$Ozone > 100)
+points(highO, weather$Ozone[highO],col="red",pch=16)
+text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 ```
 
 ## Solution
 
 ```{r}
-plot(data$Ozone)
+plot(weather$Ozone)
 abline(h=100)
-highO <- which(data$Ozone > 100)
-points(highO, data$Ozone[highO],col="red",pch=16)
-text(highO,data$Ozone[highO]-5, labels=data$Month[highO])
+highO <- which(weather$Ozone > 100)
+points(highO, weather$Ozone[highO],col="red",pch=16)
+text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 ```
 
 
@@ -264,11 +264,11 @@ text(highO,data$Ozone[highO]-5, labels=data$Month[highO])
 - Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
 - Save the plot to a pdf
 
-```{r echo=FALSE}
+```{r echo=FALSE,fig.height=4,fig.width=10}
 par(mfrow=c(1,3))
-plot(data$Solar.R,data$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
-plot(data$Wind,data$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
-plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Temperature")
+plot(weather$Solar.R,weather$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
+plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
+plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
 
 ```
 
@@ -277,26 +277,12 @@ plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Tempe
 ```{r eval=FALSE}
 pdf("ozoneCorrelations.pdf")
 par(mfrow=c(1,3))
-plot(data$Solar.R,data$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
-plot(data$Wind,data$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
-plot(data$Temp,data$Ozone,pch=17,col="mistyrose", ylab="Ozone level",xlab="Temperature")
+plot(weather$Solar.R,weather$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
+plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
+plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
 dev.off()
 ```
 
-
-    
-## More-Advanced 
-
-- Modification to include month name and date
-
-```{r}
-plot(data$Ozone)
-abline(h=100)
-highO <- which(data$Ozone > 100)
-points(highO, data$Ozone[highO],col="red",pch=16)
-text(highO,data$Ozone[highO]-5, labels=paste(month.abb[data$Month[highO]],data$Day[highO]))
-
-```
 
 # 2. Statistics
 ##Built-in support for statistics
@@ -342,6 +328,106 @@ qnorm(0.5, mean=10, sd=5)
 ```{r}
 qnorm(0.95, mean=0, sd=1)
 ```
+
+## Example
+
+Recall our histogram of temperature from yesterday
+
+- the data look to be roughly normally-distributed
+- an assumption we rely on for various statistical tests
+
+```{r fig.height=4}
+hist(weather$Temp,col="purple",xlab="Temperature",
+     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+```
+
+## Create a normal distribution curve
+
+If our data are normally-distributed, we can calculate the probability of drawing particular values.
+
+- e.g. a temperature of 80
+- we can overlay this on the histogram using `points` as we just saw
+
+```{r eval=FALSE}
+dnorm(80, mean=tempMean,sd=tempSD)
+hist(weather$Temp,col="purple",xlab="Temperature",
+     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
+```
+
+
+```{r fig.height=4,echo=FALSE}
+tempMean <- mean(weather$Temp)
+tempSD <- sd(weather$Temp)
+
+dnorm(80, mean=tempMean,sd=tempSD)
+hist(weather$Temp,col="purple",xlab="Temperature",
+     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
+```
+
+
+
+## Create a normal distribution curve
+
+- we can repeat the calculation for a vector of values
+    + remember that functions in R are often ***vectorized***
+    + use `lines` in this case rather than `points`
+    
+    ```{r eval=FALSE}
+xs <- c(50,60,70,80,90,100)
+ys <- dnorm(xs, mean=tempMean,sd=tempSD)
+lines(xs,ys,col="red",pch=16)
+```
+
+```{r fig.height=4,echo=FALSE}
+hist(weather$Temp,col="purple",xlab="Temperature",
+     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+xs <- c(50,60,70,80,90,100)
+ys <- dnorm(xs, mean=tempMean,sd=tempSD)
+lines(xs,ys,col="red",pch=16)
+```
+
+
+
+## Create a normal distribution curve
+
+- For a smoother curve, use a longer vector
+    + we can generate x values using the `seq` function
+
+    ```{r eval=FALSE}
+xs <- seq(50,100,length.out = 10000)
+ys <- dnorm(xs, mean=tempMean,sd=tempSD)
+lines(xs,ys,col="red",pch=16)
+```
+
+
+    
+```{r fig.height=4,echo=FALSE}
+hist(weather$Temp,col="purple",xlab="Temperature",
+     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+xs <- seq(50,100,length.out = 10000)
+ys <- dnorm(xs, mean=tempMean,sd=tempSD)
+lines(xs,ys,col="red",pch=16)
+```
+
+## Simple testing
+
+- If we want to compute the probability of observing a particular temperature, from the same distribution we can use the standard formula to calculate a t statistic:
+
+$$t = \frac{\bar{x} -\mu_0}{s / \sqrt(n)}$$
+
+```{r}
+t <- (tempMean - 50) / (tempSD / sqrt(length(weather$Temp)))
+t
+```
+
+- or use the `t.test` function to compute the statistic and corresponding p-value
+
+```{r}
+t.test(weather$Temp,mu=50)
+```
+
 
 ##Two sample tests: Basic data analysis
 
@@ -408,25 +494,6 @@ var.test(patients$Weight~patients$Sex)
 t.test(patients$Weight~patients$Sex,var.equal=TRUE)
 ```
 
-## Exercise
-
-- From our weather dataset, it would appear that the ozone level is higher in the summer months (June or July)
-```{r fig.height=4}
-boxplot(data$Ozone~data$Month)
-```
-
-- Is there sufficient statistical evidence to support this claim?
-    + ***Hint***: You need to create a categorical variable to indicate whether a particular measurement was made in the summer or not
-
-## Solution
-
-```{r fig.height=4}
-Summer <- data$Month > 6 & data$Month < 9
-boxplot(data$Ozone ~ Summer)
-t.test(data$Ozone ~ Summer)
-```
-
-  
 ##Linear regression: Basic data analysis
 
 - Linear modeling is supported by the function `lm()`
@@ -507,12 +574,10 @@ y~x*z     # * is a shorthand for x+z+x:z
 
 ## Exercise
 
-- There are suggestions that Ozone level could be influenced by Temperature and Wind speed
+- There are suggestions that Ozone level could be influenced by Temperature
 
 ```{r echo=FALSE,fig.height=4}
-par(mfrow=c(1,2))
-plot(data$Temp, data$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
-plot(data$Wind, data$Ozone,xlab="Wind Speed",ylab="Ozone level",pch=16)
+plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
 ```
 
 - Perform a linear regression analysis to assess this
@@ -521,26 +586,14 @@ plot(data$Wind, data$Ozone,xlab="Wind Speed",ylab="Ozone level",pch=16)
 
 ## Solution
 ```{r fig.show=FALSE}
-mod1 <- lm(data$Ozone~data$Temp)
+mod1 <- lm(weather$Ozone~weather$Temp)
 summary(mod1)
 ```
 
 ## Solution
-
 ```{r}
-mod2 <- lm(data$Ozone~data$Wind)
-summary(mod2)
-```
-
-
-## Solution
-```{r}
-par(mfrow=c(1,2))
-plot(data$Temp, data$Ozone,pch=16)
+plot(weather$Temp, weather$Ozone,pch=16)
 abline(mod1,col="red",lty=2)
-plot(data$Wind, data$Ozone,pch=16)
-abline(mod2,col="red",lty=2)
-
 ```
 
 
@@ -955,7 +1008,8 @@ if(!file.exists("Day_2_scripts/gene.expression.txt")){
   ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
   
   evalues <- exprs(nki)[ind,]
-  genes <- genes[ind,]
+  cancer.patients <- cancer.patients[order(cancer.patients$age),]
+  genes <- genes[order(genes[,1]),]
   
   write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
   write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
@@ -976,28 +1030,43 @@ if(!file.exists("Day_2_scripts/gene.expression.txt")){
 ```{r}
 evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
 evals[1:5,1:5]
-
+dim(evals)
 ```
+
+- `r nrow(evals)` rows and `r ncol(evals)` columns
++ One row for each gene
+    + rows are named according to particular technology used to make measurement
++ One column for each patient
 
 ## Peek at the data
 ```{r}
 genes <- read.delim("Day_2_scripts/gene.description.txt")
 head(genes)
+dim(genes)
 ```
+
+- `r nrow(genes)` rows and `r ncol(genes)` columns
+- One for for each gene
+    + more rows than genes we have measurements for
+- Includes mapping between manufacturer ID and Gene name
 
 ## Peek at the data
 ```{r}
 subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
 head(subjects)
+dim(subjects)
 ```
 
+- One for for each patient in the study
+- Each column is a different characteristic of that patient
 
 ## Retrieving data for a particular gene
 
- - Gene `ESR` is know to be hugely-different between ER positive and negative patient
+ - Gene `ESR1` is known to be hugely-different between ER positive and negative patient
     + let's check that this is evident in our dataset
     + if not, something has gone wrong!
-    
+- First step is to locate this gene in our dataset
+
 ```{r}
 ind <- match("ESR1", genes[,2])
 probe <- genes[ind,1]
@@ -1007,56 +1076,36 @@ genevals <- evals[match(probe,rownames(evals)),]
 
 ## Relating to patient characteristics
 
-```{r}
+- oh dear!
+
+```{r fig.height=3}
 boxplot(as.numeric(genevals)~factor(subjects$er))
 t.test(as.numeric(genevals)~factor(subjects$er))
 ```
 
+## The right patients, but not neccessarily in the right order!
 
-
-
-##Basic R 'Built-in' functions for working with data frames
-- We can get the numbers of rows or columns with `nrow` and `ncol`
-
-```{r programming6}
-nrow(patients)
-ncol(patients)
-dim(patients)
-```
-
-
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can add rows or columns to a data frame using rbind and cbind
-```{r echo=FALSE}
-options(width=80)
-```
-
-```{r data-frames1}
-newpatient <- c("Kate", "Lawson", "Kate Lawson", "Female", "35", "62.5","TRUE")
-rbind(patients,newpatient)
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-```{r data-frames2}
-cbind(patients,10:1)
-
-```
-
-##Basic R 'Built-in' functions for working with data frames
-
-- We can also remove rows and columns
 ```{r}
-patients[-1, ] # remove first row
+colnames(evals)[1:10]
+subjects$samplename[1:10]
+colnames(evals)[1:10] == subjects$samplename[1:10]
 ```
 
-##Basic R 'Built-in' functions for working with data frames
 
-- We can also remove rows and columns
+##
+
 ```{r}
-patients[ ,-1] # remove first column
+evals <- evals[,match(subjects$samplename,colnames(evals))]
+genevals <- evals[match(probe,rownames(evals)),]
+colnames(evals)[1:10] == subjects$samplename[1:10]
+all(colnames(evals) == subjects$samplename)
+```
+
+## Try again
+
+```{r fig.height=3}
+boxplot(as.numeric(genevals)~factor(subjects$er))
+t.test(as.numeric(genevals)~factor(subjects$er))
 ```
 
 
@@ -1070,30 +1119,20 @@ x<- 1:10
 y <- 11:20
 x+y
 ```
-- But there are some situations where R functions can not take vectors as input. For example, `read.csv` will only load one file at a time
-- What if we had ten files to load in, all ending in the same extension (like `.csv`)?
+- But there are some situations where R functions can not take vectors as input. For example, `t.test` will only test one gene at a time
+- What if we wanted to test multiple genes?
 
 ##Introducing loops
 - We could do this:
 
-```{r echo=FALSE,eval=FALSE}
+```{r eval=FALSE}
 t.test(evals[1,]~factor(subjects$er))
 t.test(evals[2,]~factor(subjects$er))
 
 ```
 
-
-
-```{r eval=FALSE}
-rawData  <-data.frame() # Start with empty data frame
-rawData1 <- read.csv("NBCounts-Batch1.csv")
-rawData2 <- read.csv("NBCounts-Batch2.csv")
-rawData3 <- read.csv("NBCounts-Batch3.csv")
-  ...
-rawData <- rbind(rawData1, rawData2, rawData3, ..., )
-```
 - But this will be boring to type, difficult to change, and prone to error
-- As we are doing the same thing multiple times, but with a different file name each time, we can use a **loop** instead
+- As we are doing the same thing multiple times, but with a different index each time, we can use a **loop** instead
 
 ##Loops: Commands and flow control
 - R has two basic types of loop
@@ -1117,32 +1156,45 @@ while ( i <= 10 ) {
 
 ##Loops: Commands and flow control
 
-- Here's how we might use a `for` loop to load in our CSV files
-- If the data files are in your current working directory, we can look up files
-containing a particular substring in their name using the `dir` function
-
-
-
-```{r eval=FALSE}
-dir(pattern="NBCounts")
-```
-
-```{r echo=FALSE}
-dir("Day_2_scripts/",pattern="NBCounts")
-```
-
-- So we can load all the files using a `for` loop as follows
+- Here's how we might use a `for` loop to test the first 10 genes
+- However, we are not storing the results of each calculation
 
 ```{r loops2, eval=FALSE}
-rawData <- data.frame()
-countfiles <- dir(pattern="NBCounts")
-for (file in countfiles) {
-   t <- read.csv(file)
-   rawData <- rbind(rawData, t)
+
+for (i in 1:10) {
+   t.test(as.numeric(evals[i,])~factor(subjects$er))
 }
 ```
 
-- Here, we use a temporary variable `t` to store the data in each file, and then add that data to the main `colony` data frame.
+## Looping
+
+```{r}
+for (i in 1:10) {
+   print(t.test(as.numeric(evals[i,])~factor(subjects$er)))
+}
+```
+
+
+## Storing results
+
+```{r}
+t <- t.test(as.numeric(evals[i,])~factor(subjects$er))
+names(t)
+t$statistic
+```
+
+## Storing results
+
+```{r}
+stats <- NULL
+for (i in 1:10) {
+   tmp <- t.test(as.numeric(evals[i,])~factor(subjects$er))
+   stats[i] <- tmp$statistic
+}
+stats
+```
+
+
 
 ##Conditional branching: Commands and flow control
 
@@ -1207,27 +1259,40 @@ while( f != 0 ){
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
 probes <- genes[match(genelist,genes[,2]),1]
-subset <- evals[match(probes,rownames(genes)),]
+subset <- evals[match(probes,rownames(evals)),]
 ```
 
-## 
+## Plotting genes
 
-```{r eval=FALSE}
-par(mfrow=c(5,2))
+```{r}
+pdf("gene-boxplots.pdf")
 for(i in 1:length(genelist)){
-  boxplot(as.numeric(subset[i,])~factor(subjects$er))
-  t.test(as.numeric(subset[i,])~factor(subjects$er))
+  boxplot(as.numeric(subset[i,])~factor(subjects$er),main=genelist[i],xlab="ER Status")
 }
+dev.off()
 ```
 
 
 ## Making a heatmap
 
 ```{r}
-heatmap(as.matrix(evals[match(probes,rownames(genes)),]))
+heatmap(as.matrix(evals[match(probes,rownames(evals)),]))
 ```
 
 ## Compiling the report
 
 - See the markdown document gene-report.Rmd
-- 
+
+# End of Course
+
+## Wrap-up
+
+- Thanks for your attention
+- Practice, practice, practice
+    + ....& persevere
+- Need inspiration?
+    + Read [blogs](http://www.r-bloggers.com/)
+    + Follow the [forums](http://stackoverflow.com/questions/tagged/r)
+    + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
+    + on twitter @rstudio, @Rbloggers, @RLangTip
+    
