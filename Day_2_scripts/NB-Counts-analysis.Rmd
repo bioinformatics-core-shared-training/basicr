@@ -1,0 +1,37 @@
+---
+title: "Analysis of NB Count data"
+author: "Luke Skywalker"
+date: "25 August 2015"
+output: pdf_document
+---
+
+```{r dataImport,cache=TRUE}
+rawData <- read.delim("1.3_NBcountData.txt")
+rawData[1:10,]
+
+```
+
+```{r basicStats}
+nrow(rawData) 			# number of rows
+ncol(rawData)  			# number of columns
+dim(rawData)   			# data frame dimensions (rows X columns)
+```
+
+
+```{r identifyPatients}
+#  Identify patients with >33% NB amplification
+prop <- rawData$NB_Amp / rawData$Nuclei
+cutoff <- 0.2
+amp <- which(prop > cutoff)
+```
+
+The number of patients with amplification (proportion > `r cutoff`) was `r length(amp)`
+
+```{r plot,echo=FALSE}
+plot(prop, ylim=c(0,1.2)) # plot a simple chart of NB amplifications
+abline(h=cutoff, lwd=1.5, lty=2) # Add a dotted line at 33%
+```
+
+```{r dataWrite}
+write.csv(rawData[amp,],file="selectedSamples.csv")
+```
