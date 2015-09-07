@@ -3,8 +3,12 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon, and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
   John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: slidy_presentation
+output: 
+  slidy_presentation:
+    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0"
+css: mystyle.css
 toc: yes
+
 ---
 
 ## Day 2 Schedule
