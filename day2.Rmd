@@ -25,6 +25,8 @@ toc: yes
     + etc....
 - we will now look at ways to modify the plot appearance after it has been created
 - also, how to export the graphs 
+- Set your working directory to ***Day_2_scripts***
+
 
 ## The painter's model
 
@@ -34,8 +36,17 @@ toc: yes
 ##Initial plot
 
 - Recall our weather dataset from yesterday
-```{r results='hide'}
-source("Day_1_scripts/1.2_patients.R")
+    + we might want to display other characteristics on the plot
+        + e.g. gender of individual
+
+```{r echo=FALSE}
+setwd("Day_2_scripts/")
+source("../Day_1_scripts/1.2_patients.R")
+```
+
+        
+```{r eval=FALSE}
+source("../Day_1_scripts/1.2_patients.R")
 ```
 
 ```{r}
@@ -241,8 +252,13 @@ dev.off()
 ##Exercise
 - Return to the weather data from yesterday
 
-```{r}
+```{r echo=FALSE}
 weather <- read.csv("Day_1_scripts/ozone.csv")
+```
+
+
+```{r eval=FALSE}
+weather <- read.csv("../Day_1_scripts/ozone.csv")
 ```
 
 - Make a scatter plot of all daily observations of Ozone level
@@ -693,7 +709,7 @@ Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpre
 
 ```{r eval=FALSE}
 library(knitr)
-spin(hair="Day_1_scripts/1.3_NBcountData.R",knit=FALSE)
+spin(hair="../Day_1_scripts/1.3_NBcountData.R",knit=FALSE)
 ```
 
 ## Not quite enough for a reproducible document
@@ -1041,23 +1057,35 @@ if(!file.exists("Day_2_scripts/gene.expression.txt")){
     
 ## Peek at the data
 
-```{r}
+```{r eval=FALSE}
 evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
 evals[1:5,1:5]
 dim(evals)
 ```
 
+```{r echo=FALSE}
+evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
+dim(evals)
+```
 - `r nrow(evals)` rows and `r ncol(evals)` columns
 + One row for each gene
     + rows are named according to particular technology used to make measurement
 + One column for each patient
 
 ## Peek at the data
-```{r}
+```{r eval=FALSE}
+genes <- read.delim("../Day_2_scripts/gene.description.txt")
+head(genes)
+dim(genes)
+```
+
+```{r echo=FALSE}
 genes <- read.delim("Day_2_scripts/gene.description.txt")
 head(genes)
 dim(genes)
 ```
+
 
 - `r nrow(genes)` rows and `r ncol(genes)` columns
 - One for for each gene
@@ -1065,7 +1093,14 @@ dim(genes)
 - Includes mapping between manufacturer ID and Gene name
 
 ## Peek at the data
-```{r}
+```{r eval=FALSE}
+subjects <- read.delim("../Day_2_scripts/cancer.patients.txt")
+head(subjects)
+dim(subjects)
+```
+
+
+```{r echo=FALSE}
 subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
 head(subjects)
 dim(subjects)
@@ -1272,6 +1307,67 @@ for (i in 1:10) {
 stats
 ```
 
+## Modifying code to work on a gene-list
+
+- What if we want to test and arbitrary gene list
+- Supply gene list as a vector
+- Add extra steps to locate correct row in matrix
+
+```{r eval=FALSE}
+stats <- NULL
+
+for(i in 1:length(genelist)){
+  
+  probe <- genes[match(genelist[i],genes[,2]),1]
+  j <- match(probe,rownames(evals))
+  
+  tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
+  stats[i] <- tmp$statistic
+
+}
+
+```
+
+## Example
+
+```{r}
+stats <- NULL
+genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
+
+for(i in 1:length(genelist)){
+  
+  probe <- genes[match(genelist[i],genes[,2]),1]
+  j <- match(probe,rownames(evals))
+  
+  tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
+  stats[i] <- tmp$statistic
+
+}
+stats
+```
+
+## Introducing error-checking
+
+- what happens when we try and run this?
+- should see an error as ***foo*** and ***bar*** are not defined in our gene table
+    + the error message is often obtuse
+    + we can anticipate this kind of error in advance
+
+```{r eval=FALSE}
+stats <- NULL
+genelist <- c("foo", "bar")
+
+for(i in 1:length(genelist)){
+  
+  probe <- genes[match(genelist[i],genes[,2]),1]
+  j <- match(probe,rownames(evals))
+  
+  tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
+  stats[i] <- tmp$statistic
+
+}
+stats
+```
 
 
 ##Conditional branching: Commands and flow control
@@ -1292,23 +1388,25 @@ if (condition) {
     + e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
 
 ##Conditional branching: Commands and flow control
-- For example, if we were writing a script to load an unknown set of files, using the `for` loop we wrote before, we might want to warn the user if we can't find any files with the pattern we are searching for. Here's how we can use an `if` statement to test for this
-
+- Using the `for` loop we wrote before, we might want to warn the user if we can't find a particular gene with the pattern we are searching for. 
+- Here's how we can use an `if` statement to test for this
+    + only run the t-test if we can successfully map the gene
+    
 ```{r flow-control,eval=FALSE}
-rawData <- data.frame()
-countfiles <- dir(pattern="NBCounts")
-if (length(countfiles) == 0) {
-    stop("No Counts.csv files found!")
-} else {
-    for (file in countfiles) {
-        t <- read.csv(file)
-        rawData <- rbind(rawData, t)
-    }
-}
+stats <- NULL
 
+for(i in 1:length(genelist)){
+  
+  probes <- genes[match(genelist[i],genes[,2]),1]
+  j <- match(probes,rownames(evals))
+  
+  if(length(probes)>0){
+   tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
+   stats[i] <- tmp$statistic
+  }
+  
+  }
 ```
-
-- The `stop` function outputs the error message and quits
 
 
 ##Code formatting avoids bugs!
@@ -1335,27 +1433,47 @@ while( f != 0 ){
 ## Extracing multiple genes
 
 ```{r}
-genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
-probes <- genes[match(genelist,genes[,2]),1]
-subset <- evals[match(probes,rownames(evals)),]
+genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2","foo")
+stats <- NULL
+for(i in 1:length(genelist)){
+  
+  probes <- genes[match(genelist[i],genes[,2]),1]
+  j <- match(probes,rownames(evals))
+  
+  if(!is.na(probes)){
+   tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
+   stats[i] <- tmp$statistic
+   
+  }
+  else message("Could not find gene ", genelist[i])
+  
+}
+stats
 ```
 
 ## Plotting genes
 
 ```{r}
-pdf("gene-boxplots.pdf")
+genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
+stats <- NULL
 for(i in 1:length(genelist)){
-  boxplot(as.numeric(subset[i,])~factor(subjects$er),main=genelist[i],xlab="ER Status")
+  
+  probes <- genes[match(genelist[i],genes[,2]),1]
+  j <- match(probes,rownames(evals))
+  
+  if(length(probes)>0){
+   tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
+   stats[i] <- tmp$statistic
+   boxplot(as.numeric(evals[j,])~factor(subjects$er),main=genelist[i],xlab="ER Status")
+  }
+  
 }
-dev.off()
+stats
+
+
 ```
 
 
-## Making a heatmap
-
-```{r}
-heatmap(as.matrix(evals[match(probes,rownames(evals)),]))
-```
 
 ## Compiling the report
 
