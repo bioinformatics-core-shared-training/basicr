@@ -1159,7 +1159,8 @@ boxplot(weather$Ozone~weather$Month)
 ## Simple customisations
 
 - `plot` comes with a whole array of arguments that can be set when we call the function
-    + see `?plot`
+    + see `?plot` and `?par`
+- Recall that unless specified, arguments have a default value
 - we can choose to draw lines on the plot rather than points
     + the rest of the plot is the same as before
 

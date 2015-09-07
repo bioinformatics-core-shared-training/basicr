@@ -125,6 +125,11 @@ points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
 
 ## Adding a legend
 
+- Should also add a legend to help interpret the plot
+    + use the `legend` function
+    + can give x and y coordinates where legend will appear
+    + also recognises shortcuts such as ***topleft*** and ***bottomright***...
+
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight,pch=16,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
@@ -135,7 +140,9 @@ legend("topleft", legend=c("M","F"),
 
 ##Adding text
 
-
+- text can also be added to a plot in a similar manner
+    + the `labels` argument specifies the text we want to add
+    
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight,pch=16)
 text(patients$Age, patients$Weight,labels=patients$Full_Name)
@@ -143,8 +150,7 @@ text(patients$Age, patients$Weight,labels=patients$Full_Name)
 
 ##Adding text
 
-- text can also be added to a plot in a similar manner
-    + the `labels` argument specifies the text we want to add
+- can alter the positions so they don't interfere with the points of the graph
     
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
@@ -182,6 +188,9 @@ abline(h=c(65,70,75),col="blue")
     + multiple figures per row
     + needs to be a vector of rows and columns
         + e.g. a plot with one row and two columns `par(mfrow=c(1,2))`
+        + don't need the same kind of plot in each cell
+        
+## Plot layouts    
     
 ```{r}
 par(mfrow=c(1,2))
@@ -190,6 +199,9 @@ boxplot(patients$Weight~patients$Sex)
 
 ```
 
+- see also `mar` for setting the margins
+    + `par(mar=c(...))`
+    
 ## Exporting graphs from RStudio
 
 - Easiest option to tuse the Export button from the Plots panel
@@ -395,7 +407,7 @@ lines(xs,ys,col="red",pch=16)
 - For a smoother curve, use a longer vector
     + we can generate x values using the `seq` function
 
-    ```{r eval=FALSE}
+```{r eval=FALSE}
 xs <- seq(50,100,length.out = 10000)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red",pch=16)
@@ -509,7 +521,7 @@ t.test(patients$Weight~patients$Sex,var.equal=TRUE)
   
 ##Typical linear regression analysis: Basic data analysis
 
--  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"*
+-  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
 
  
 ```{r fig.height=4}
@@ -677,7 +689,7 @@ Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpre
 - `knitr` is distributed with RStudio
     + `knitr` is the modern-day equivalent of `Sweave`
 - markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
-- the following should create the file `rna-seq.Rmd` in your working directory
+- the following should create the file `rna-seq.Rmd` in the Day_1_scripts folder
 
 ```{r eval=FALSE}
 library(knitr)
@@ -960,8 +972,10 @@ The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
 - Use in-line R code to report how many patients have > 33% amplifications
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
-- Modify the selectioncriteria for amplification to be > 30%
+- Modify the selection criteria for amplification to be > 30%
     + see how the various parts of the report change
+- Solution: *NBcounts-analysis.Rmd*
+
 
 # 4. Data Manipulation Techniques
 
@@ -984,7 +998,7 @@ The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
     + gene information in ***Day_2_scripts/cancer.patients.txt***
 - A breast cancer dataset with numerous patient characteristics 
     + we will concentrate on ***ER status*** (positive / negative)
-    + what genes show a statistically-significant different between ER groups?
+    + what genes show a statistically-significant different change between ER groups?
 
 
 ```{r echo=FALSE}
@@ -1067,9 +1081,50 @@ dim(subjects)
     + if not, something has gone wrong!
 - First step is to locate this gene in our dataset
 
+## Character matching in R
+
+- we have already seen various ways of comparing numeric values
+    + ==, >, <
+    + each of which returns a vector of logical values
+    + == will also work with text
+    
+```{r}
+LETTERS
+"A" == LETTERS
+```
+
+## Character matching in R
+    
+- `match` and `grep` are often used to find particular matches
+    + CAUTION: by default, match will only return the ***first*** match!
+
+```{r}
+match("D", LETTERS)
+grep("F", rep(LETTERS,2))
+match("F", rep(LETTERS,2))
+```
+
+## Retrieving data for a particular gene
+
+- find the name of the ID that corresponds to gene ***ESR1***
+    + mapping between IDs and genes is in the ***genes*** data frame
+        + ID in first column, gene name in the second
+- save this probe as a variable
+
 ```{r}
 ind <- match("ESR1", genes[,2])
+genes[ind,]
 probe <- genes[ind,1]
+probe
+```
+
+
+## Retrieving data for a particular gene
+
+Now, find which row in our expression matrix is indexed by this ID
+
+```{r}
+match(probe,rownames(evals))
 evals[match(probe,rownames(evals)),1:10]
 genevals <- evals[match(probe,rownames(evals)),]
 ```
@@ -1085,6 +1140,9 @@ t.test(as.numeric(genevals)~factor(subjects$er))
 
 ## The right patients, but not neccessarily in the right order!
 
+- the problem is that our expression values are not in the same order as the clinical data
+    + a common occurence :/
+
 ```{r}
 colnames(evals)[1:10]
 subjects$samplename[1:10]
@@ -1092,16 +1150,36 @@ colnames(evals)[1:10] == subjects$samplename[1:10]
 ```
 
 
-##
+## Re-ordering both matrices
+
+- we can use `match` to re-order
+- the result is a vector
+    + first value is the column in expression matrix that the first row in the clinical data corresponds to
+    + etc
+    
+```{r}
+match(subjects$samplename,colnames(evals))
+
+```
+
+## Re-ordering both matrices
+
+- we can use this vector to index our expression matrix
+    + remembering to omit the row index
+- sanity check to make sure we've done the job
 
 ```{r}
 evals <- evals[,match(subjects$samplename,colnames(evals))]
 genevals <- evals[match(probe,rownames(evals)),]
 colnames(evals)[1:10] == subjects$samplename[1:10]
 all(colnames(evals) == subjects$samplename)
+
 ```
 
+
 ## Try again
+
+- Much better!
 
 ```{r fig.height=3}
 boxplot(as.numeric(genevals)~factor(subjects$er))
