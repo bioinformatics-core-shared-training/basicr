@@ -2,8 +2,9 @@ body {
   padding-left: 11em;
   font-family: Georgia, "Times New Roman",
         Times, serif;
-  color: purple;
-  background-color: #FFFFD4 }
+  color: #003366;
+  background: #99CCFF url(images/CUni2_rsize.jpg) no-repeat top right
+}
 ul.navbar {
   list-style-type: none;
   padding: 0;
