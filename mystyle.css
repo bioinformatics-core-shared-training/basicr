@@ -3,7 +3,7 @@ body {
   font-family: Georgia, "Times New Roman",
         Times, serif;
   color: #003366;
-  background: #99CCFF url(images/CUni2_rsize.jpg) no-repeat top right
+  background: #99CCFF url(images/CUni2_rsize.jpg) no-repeat 99% -65%
 }
 ul.navbar {
   list-style-type: none;
