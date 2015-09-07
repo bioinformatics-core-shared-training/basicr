@@ -1058,7 +1058,7 @@ if(!file.exists("Day_2_scripts/gene.expression.txt")){
 ## Peek at the data
 
 ```{r eval=FALSE}
-evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
 evals[1:5,1:5]
 dim(evals)
 ```
@@ -1075,7 +1075,7 @@ dim(evals)
 
 ## Peek at the data
 ```{r eval=FALSE}
-genes <- read.delim("../Day_2_scripts/gene.description.txt")
+genes <- read.delim("gene.description.txt")
 head(genes)
 dim(genes)
 ```
@@ -1094,7 +1094,7 @@ dim(genes)
 
 ## Peek at the data
 ```{r eval=FALSE}
-subjects <- read.delim("../Day_2_scripts/cancer.patients.txt")
+subjects <- read.delim("cancer.patients.txt")
 head(subjects)
 dim(subjects)
 ```
@@ -1108,6 +1108,12 @@ dim(subjects)
 
 - One for for each patient in the study
 - Each column is a different characteristic of that patient
+    + e.g. whether a patient is ER positive or negative
+
+```{r}
+table(subjects$er)
+```
+
 
 ## Retrieving data for a particular gene
 

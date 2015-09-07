@@ -7,6 +7,15 @@ output: slidy_presentation
 toc: yes
 ---
 
+## Course Aims
+
+- To introduce you to the basics of R
+    + Reading data
+    + Perform simple analyses
+    + Producing graphs
+    + ***How to get help!***
+- Give you all the background you need to ***practice*** by yourselves
+
 ## Day 1 Schedule
 
 1. Introduction to R and its environment
