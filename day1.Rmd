@@ -895,8 +895,27 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
           + For each we have NMYC copy number relative to base ploidy
 - We need to determine which patients have amplifications
     + (i.e > 33% of cells show NMYC amplification)
-  
-  
+
+##0. Locating the data
+
+We first have to locate the data in our hard drive
+
+- The default location for R to look for data is the ***working directory***
+
+```{r eval=FALSE}
+getwd()
+list.files()
+```
+
+- If the file you want to read is listed in the output of `list.files()`, then you will be able to use the filename to read the data
+- Otherwise you will need the path to the file
+- The `file.choose` function will help you to store the location of the file as a variable
+```{r eval=FALSE}
+myfile <- file.choose()
+myfile
+```
+
+
 ##1. Read in the data
 
 - The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
@@ -910,18 +929,33 @@ rawData <- read.delim("1.3_NBcountData.txt")
 
 ```{r  eval=FALSE}
 rawData <- read.delim("1.3_NBcountData.txt")
-rawData[1:10,]
 ```
+
+- Using `file.choose`
+
+```{r eval=FALSE}
+myfile <- file.choose()
+rawData <- read.delim(myfile)
+```
+
 - If the data has been comma-separated then, `sep=","`:
 ```{r eval=FALSE}
 read.csv("1.3_NBcountData.csv")
 ```
+
 - For full list of arguments
 ```{r eval=FALSE}
 ?read.table
 ```
 
-##1. Read in the data
+##1b. Check the data
+
+Always check that the data have been imported correctly
+
+- Check dimensions and first few rows
+- R may not always give an error message!
+- A common cause of problems is choosing an incorrect separator
+
 ```{r analysis1}
 rawData[1:10,]  # View the first 10 rows to ensure import is OK
 ```
@@ -1063,28 +1097,31 @@ plot(patients$Weight,patients$Age)
     + these are often just special cases of using the `plot` function
     + one such function is `barplot`
     
-```{r,fig.height=3,echo=FALSE}
-par(mar=c(1,5,1,5))
-barplot(patients$Age)
-```
-
+    
 ```{r eval=FALSE}
 barplot(patients$Age)
 ```
 
 
+```{r,fig.height=3,echo=FALSE}
+par(mar=c(1,5,1,5))
+barplot(patients$Age)
+```
+
 ##Making a barplot
 
 - It is more usual to display count data in a barplot
     + e.g. the counts of a particular ***categorical*** variable
+
+```{r eval=FALSE}
+barplot(summary(patients$Sex))
+```
+    
 ```{r,fig.height=3,echo=FALSE}
 par(mar=c(1,5,1,5))
 barplot(summary(patients$Sex))
 ```
 
-```{r}
-barplot(summary(patients$Sex))
-```
 
 ##Plotting a distribution: Histogram
 

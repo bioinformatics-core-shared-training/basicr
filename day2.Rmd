@@ -35,7 +35,9 @@ toc: yes
 ## The painter's model
 
 - R employs a painter's model to construct it's plots
-- Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels. Lower levels are obscured by higher levels, allowing for blending, masking and overlaying of objects.
+- Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels.
+- Lower levels are obscured by higher levels, 
+    + allowing for blending, masking and overlaying of objects.
 
 ##Initial plot
 
@@ -176,7 +178,7 @@ text(patients$Age-1, patients$Weight-0.5,labels=patients$Full_Name)
 
 - To aid our interpretation, it is often helpful to add guidelines
     + `grid()` is one easy way of doing this.
-```{r}
+```{r,fig.height=3}
 plot(patients$Age, patients$Weight,pch=16)
 grid(col="steelblue")
 ```
@@ -187,7 +189,7 @@ grid(col="steelblue")
     + `v =` for vertical lines
     + `h=` for horizontal
     + can specify multiple lines in a vector
-```{r}
+```{r,fig.height=3}
 plot(patients$Age, patients$Weight,pch=16)
 abline(v=40,col="red")
 abline(h=c(65,70,75),col="blue")
@@ -207,7 +209,7 @@ abline(h=c(65,70,75),col="blue")
         
 ## Plot layouts    
     
-```{r}
+```{r,fig.height=3}
 par(mfrow=c(1,2))
 plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
 boxplot(patients$Weight~patients$Sex)
@@ -281,7 +283,7 @@ text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 
 ## Solution
 
-```{r}
+```{r,fig.height=4}
 plot(weather$Ozone)
 abline(h=100)
 highO <- which(weather$Ozone > 100)
@@ -294,6 +296,7 @@ text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 
 - Using the `par` function, create a layout with three columns
 - Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
+    + use different colours and plotting characters on each plot
 - Save the plot to a pdf
 
 ```{r echo=FALSE,fig.height=4,fig.width=10}
@@ -502,7 +505,7 @@ chisq.test();fisher.test()
 - We have already seen that men in our Patients dataset tend to be heavier than women
     + we can test this formally in R
 
-```{r echo=FALSE}
+```{r echo=FALSE,fig.height=3}
 par(mfrow=c(1,2))
 plot(patients$Age, patients$Weight,pch=16,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
@@ -544,7 +547,7 @@ t.test(patients$Weight~patients$Sex,var.equal=TRUE)
 -  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
 
  
-```{r fig.height=4}
+```{r fig.height=3}
 x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
 y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
 plot(x,y, xlim=c(0,10), ylim=c(0,10))
@@ -556,7 +559,7 @@ plot(x,y, xlim=c(0,10), ylim=c(0,10))
  The ~ is used to define a formula; i.e. "y is given by x"
 - Take care about the order of x and y in the plot and lm expressions
 
-```{r}
+```{r,fig.height=3}
 plot(x,y, xlim=c(0,10), ylim=c(0,10))
 myModel <- lm(y~x)
 abline(myModel)
@@ -581,7 +584,7 @@ names(myModel)
 ## Diagnostic plots of the fit
 
 - Get QC of fit from
-```{r}
+```{r,fig.height=4}
 par(mfrow=c(2,2))
 plot(myModel)
 ```
@@ -1174,6 +1177,8 @@ evals[match(probe,rownames(evals)),1:10]
 genevals <- evals[match(probe,rownames(evals)),]
 ```
 
+
+    
 ## Relating to patient characteristics
 
 - oh dear!
@@ -1496,7 +1501,7 @@ stats
 - Thanks for your attention
 - Practice, practice, practice
     + ....& persevere
-- Need inspiration?
+- Need inspiration? R code is freely-availabe, so read other peoples' code!
     + Read [blogs](http://www.r-bloggers.com/)
     + Follow the [forums](http://stackoverflow.com/questions/tagged/r)
     + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
