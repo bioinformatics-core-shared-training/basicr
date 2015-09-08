@@ -1033,7 +1033,7 @@ write.csv(rawData[norm,], "My_NB_output.csv")
     + e.g. it puts a point at 
         + x=1,y=70.8
         + x=2,y=67.9 etc...
-```{r}
+```{r,fig.height=3}
 patients$Weight
 plot(patients$Weight)
 ```
@@ -1041,7 +1041,7 @@ plot(patients$Weight)
 ##Making a Scatter Plot
 R tries to guess the most appropriate way to visualise the data
 
-```{r echo=FALSE}
+```{r echo=FALSE,fig.height=3}
 plot(patients$Weight)
 ```
 
@@ -1052,7 +1052,7 @@ plot(patients$Weight)
 
 - We can give two arguments to `plot`. It will put the values from the *first* argument in the *x* axis, and values from the *second* argument on the *y* axis
     + for when we want to visualise the relationship between two variables
-```{r}
+```{r,fig.height=3}
 patients$Age
 plot(patients$Weight,patients$Age)
 ```
@@ -1063,48 +1063,58 @@ plot(patients$Weight,patients$Age)
     + these are often just special cases of using the `plot` function
     + one such function is `barplot`
     
-```{r}
+```{r,fig.height=3,echo=FALSE}
+par(mar=c(1,5,1,5))
 barplot(patients$Age)
 ```
+
+```{r eval=FALSE}
+barplot(patients$Age)
+```
+
 
 ##Making a barplot
 
 - It is more usual to display count data in a barplot
     + e.g. the counts of a particular ***categorical*** variable
-```{r}
+```{r,fig.height=3,echo=FALSE}
+par(mar=c(1,5,1,5))
 barplot(summary(patients$Sex))
 ```
 
+```{r}
+barplot(summary(patients$Sex))
+```
 
 ##Plotting a distribution: Histogram
 
 - A histogram is a popular way of visualising a distribution of ***continuous*** data
     + can change the width of bins
+    + y-axis can be either frequency of density
 
-```{r}
+```{r,fig.height=3}
 hist(patients$Weight)
 ```
 
-##Plotting a distribution: Histogram
 
-- A histogram is a popular way of visualising a distribution ***continuous*** data
-
-```{r}
-hist(patients$Age)
-```
 
 ##Plotting a distribution: Boxplot
 
 - The boxplot is commonly-used in statistics to visualise a distribution
-    + The black solid line is the *median*
+    + The black solid line is the ***median***
     + The top and bottom of the box is the 75th and 25th percentiles
-        + Hence, the distance between these is a reflection of the *spread* of the data; the Inter-Quartile Range (IQR)
+        + Hence, the distance between these is a reflection of the *spread* of the data; the Inter-Quartile Range (***IQR***)
     + Whiskers are drawn at 1.5 x IQR and -1.5 x IQR
-    + Any points are outliers
-    
-```{r}
+
+```{r,eval=FALSE}
 boxplot(patients$Weight)
 ```
+
+```{r,fig.height=3,echo=FALSE}
+par(mar=c(1,5,1,5))
+boxplot(patients$Weight)
+```
+
 
 
 ##Plotting a distribution: Boxplot
@@ -1112,7 +1122,7 @@ boxplot(patients$Weight)
 - Sometimes we want to compare distributions between different categories in our data
 - For this we need to use the '*formula*' syntax
     + For now, `y ~ x` means put continuous variable `y` on the *y* axis and categorical `x` on the x axis
-```{r}
+```{r,fig.height=3}
 boxplot(patients$Weight~patients$Sex)
 ```
 
@@ -1177,7 +1187,7 @@ boxplot(weather$Ozone~weather$Month)
 - we can choose to draw lines on the plot rather than points
     + the rest of the plot is the same as before
 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,type="l")
 ```
 
@@ -1185,7 +1195,7 @@ plot(patients$Weight,type="l")
 
 - We can also have both lines and points
 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,type="b")
 ```
 
@@ -1193,7 +1203,7 @@ plot(patients$Weight,type="b")
 
 - Add an informative title to the plot using the `main` argument
 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age,main="Relationship between Weight and Age")
 ```
 
@@ -1201,21 +1211,21 @@ plot(patients$Weight,patients$Age,main="Relationship between Weight and Age")
 ## Simple customisations
 
 - Adding the x-axis label
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age,xlab="Weight")
 ```
 
 ## Simple customisations
 - Adding the y-axis label
 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age,ylab="Age")
 ```
 
 ## Simple customisations
 - We can specifiy multiple arguments at once
     + here `ylim` and `xlim` are used to specify axis limits
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age,
      ylab="Age",
      xlab="Weight",
@@ -1236,7 +1246,7 @@ plot(patients$Weight,patients$Age,
 
 Changing the `col` argument to `plot` changes the colour that the points are plotted in
 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age,col="red")
 ```
 
@@ -1245,7 +1255,7 @@ plot(patients$Weight,patients$Age,col="red")
 
 - R can use a variety of *p*lotting *ch*aracters
 - Each of which has a numeric *code* 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age, pch=16)
 ```
 
@@ -1267,20 +1277,20 @@ text(x,y-0.3,i+1)
 ##Plotting characters
 - Or you can specify a character
 
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age, pch="X")
 ```
 
 
 ##Size of points
 **C**haracter **ex**pansion
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age, cex=2)
 ```
 
 ##Size of points
 **C**haracter **ex**pansion
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age, cex=0.2)
 ```
 
@@ -1290,7 +1300,7 @@ plot(patients$Weight,patients$Age, cex=0.2)
 - we can use a vector of any length
     + the values will get *recycled* (re-used) so that each point gets assigned a value
 - we can use a pre-defined ***colour palette*** (see later)
-```{r}
+```{r,fig.height=3}
 plot(patients$Weight,patients$Age, 
      pch = 1:10,
      col=c("red","orange","green","blue"),
@@ -1302,7 +1312,7 @@ plot(patients$Weight,patients$Age,
 - Other plotting functions use the same arguments as `plot`
     + technical explanation: the arguments are '*inherited*'
 
-```{r}
+```{r,fig.height=3}
 boxplot(patients$Weight~patients$Sex,
         xlab="Sex",
         ylab="Weight",
@@ -1329,7 +1339,7 @@ boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 
 ## Solutions
 
-```{r}
+```{r,fig.height=3}
 plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
      ylab="Ozone level",xlab="Solar Radiation", 
      main="Relationship between ozone level and solar radiation")
@@ -1338,17 +1348,18 @@ plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
 
 ## Solutions
 
-```{r}
+```{r,fig.height=3}
 hist(weather$Temp,col="purple",xlab="Temperature",
      main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
 ```
 
 ## Solutions
 
-- The `rainbow` function is used to create a vector of colours for the boxplot
-    + Red, Orange, Yellow, Green, Blue, Indigo, Violet
+- The `rainbow` function is used to create a vector of colours for the boxplot; in other words a ***palette***
+    + Red, Orange, Yellow, Green, Blue, Indigo, Violet....etc
+    
 
-```{r}
+```{r,fig.height=3}
 boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 ```
 
@@ -1356,16 +1367,40 @@ boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 
 - more aesthetically-pleasing palettes are provided by the `RColorBrewer` package
 
-```{r}
+```{r eval=FALSE}
 library(RColorBrewer)
 display.brewer.all()
 ```
+
+```{r echo=FALSE}
+library(RColorBrewer)
+par(mar=c(0,4,0,1))
+display.brewer.all()
+```
+
+
+
 
 ## Solutions
 
 ```{r}
 boxplot(weather$Ozone~weather$Month,col=brewer.pal(5,"Set1"))
 ```
+
+## And finally..
+
+```{r eval=FALSE}
+library(palettetown)
+boxplot(weather$Ozone~weather$Month,col=pokepal("Pikachu",5))
+```
+
+```{r echo=FALSE, message=FALSE}
+if(!require(palettetown)) install.packages("palettetown")
+library(palettetown)
+boxplot(weather$Ozone~weather$Month,col=pokepal("Pikachu",5))
+```
+
+
 
 
 #End of Day 1
