@@ -832,7 +832,9 @@ probe
 ## Retrieving data for a particular gene
 
 Now, find which row in our expression matrix is indexed by this ID
+
 - save the expression values as a variable
+
 ```{r}
 match(probe,rownames(evals))
 evals[match(probe,rownames(evals)),1:10]
@@ -1256,7 +1258,8 @@ pval <- 0.1
         + http://christophergandrud.github.io/RepResR-RStudio/
         + Useful exercise is to compile the book from the [source code](https://github.com/christophergandrud/Rep-Res-Book)
     + [Implementing Reproducible Research](https://osf.io/s9tya/wiki/home/)
-
+    + FYI This course was generated from R markdown files
+        - see our github [repository](https://github.com/cambiotraining/r-intro)
 
 ## Exercise
 
