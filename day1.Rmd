@@ -756,7 +756,7 @@ patients <- data.frame(First_Name = firstName,
 ##Matrices
 - Data frames are R's speciality, but R also handles matrices:
     + all columns are assumed to contain the same data type. e.g. numerical
-    + some calculations are more efficient to do on matrices
+
     + matrices can be manipulated in the same fashion as data frame
         + we can easily convert between the two object types
 ```{r matrices1}
@@ -764,14 +764,11 @@ e <- matrix(1:10, nrow=5, ncol=2)
 e
 ```
 
-```{r matrices2}
-f <- matrix(1:10, nrow=2, ncol=5)
-f
-f %*% e
+- some calculations are more efficient to do on matrices. e.g.
+
+```{r}
+rowMeans(e)
 ```
-
-The `%*%` operator is the matrix multiplication operator, not the standard multiplication operator.
-
 
 
 ##Indexing data frames and matrices
@@ -895,27 +892,24 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
           + For each we have NMYC copy number relative to base ploidy
 - We need to determine which patients have amplifications
     + (i.e > 33% of cells show NMYC amplification)
+    
+## 0. Locate the data
 
-##0. Locating the data
+Before we even start the analysis, we need to be sure of where the data are located on our hard drive
 
-We first have to locate the data in our hard drive
-
-- The default location for R to look for data is the ***working directory***
-
+- Functions that import data need a file location as a character vector
+- The default location is the ***working directory***
 ```{r eval=FALSE}
 getwd()
+```
+
+- If the file you want to read is in your working directory, you can just use the file name
+```{r eval=FALSE}
 list.files()
 ```
 
-- If the file you want to read is listed in the output of `list.files()`, then you will be able to use the filename to read the data
-- Otherwise you will need the path to the file
-- The `file.choose` function will help you to store the location of the file as a variable
-```{r eval=FALSE}
-myfile <- file.choose()
-myfile
-```
-
-
+- Otherwise you need the *path* to the file
+  
 ##1. Read in the data
 
 - The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
@@ -931,30 +925,27 @@ rawData <- read.delim("1.3_NBcountData.txt")
 rawData <- read.delim("1.3_NBcountData.txt")
 ```
 
-- Using `file.choose`
+- Using `file.choose()`
 
 ```{r eval=FALSE}
 myfile <- file.choose()
 rawData <- read.delim(myfile)
 ```
 
+
 - If the data has been comma-separated then, `sep=","`:
 ```{r eval=FALSE}
 read.csv("1.3_NBcountData.csv")
 ```
-
 - For full list of arguments
 ```{r eval=FALSE}
 ?read.table
 ```
 
 ##1b. Check the data
+*Always* check the object to make sure the contents and dimensions are as you expect
 
-Always check that the data have been imported correctly
-
-- Check dimensions and first few rows
-- R may not always give an error message!
-- A common cause of problems is choosing an incorrect separator
+- R will sometimes create the object without error, but the contents may be un-usable for analysis
 
 ```{r analysis1}
 rawData[1:10,]  # View the first 10 rows to ensure import is OK
@@ -976,9 +967,15 @@ View(rawData)
 
 > Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham)
 
+You will make your life a lot easier if you keep your data ***tidy*** 
+
 http://vimeo.com/33727555
 
 http://vita.had.co.nz/papers/tidy-data.pdf
+
+and ***organised***
+
+http://kbroman.org/dataorg/
 
 ##Handling missing values
 

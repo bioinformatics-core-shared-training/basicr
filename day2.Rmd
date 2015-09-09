@@ -1505,5 +1505,6 @@ stats
     + Read [blogs](http://www.r-bloggers.com/)
     + Follow the [forums](http://stackoverflow.com/questions/tagged/r)
     + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
+    + Bookmark some [reference](http://www.statmethods.net/) guides
     + on twitter @rstudio, @Rbloggers, @RLangTip
     
