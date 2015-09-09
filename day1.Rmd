@@ -19,6 +19,7 @@ toc: yes
     + Producing graphs
     + ***How to get help!***
 - Give you all the background you need to ***practice*** by yourselves
+- Introduce tools to work in a ***reproducible*** manner
 
 ## Day 1 Schedule
 
@@ -210,6 +211,7 @@ min(3,4,5,6)
 ##Basic concepts in R - functions
 
 - Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the right order)
+      + when testing code, it is easier and safer to name the arguments
 
 ```{r functions2}
 seq(from = 2, to = 20, by = 4)
@@ -218,7 +220,9 @@ seq(2, 20, 4)
 
 ##Basic concepts in R - vectors
 
-- The basic data structure in R is a **vector** -- an ordered collection of values. R treats even single values as 1-element vectors. The function `c` *combines* its arguments into a vector:
+- The basic data structure in R is a **vector** -- an ordered collection of values. 
+- R treats even single values as 1-element vectors. 
+- The function `c` *combines* its arguments into a vector:
 
 ```{r vectors1}
 x <- c(3,4,5,6)
@@ -356,7 +360,7 @@ x + 1:3
 
 ##Basic concepts in R - Character vectors and naming
 
-- All the vectors we have seen so far have contained numbers, but we can also store strings in vectors -- this is called a **character** vector.
+- All the vectors we have seen so far have contained numbers, but we can also store text (/"strings") in vectors -- this is called a **character** vector.
 
 ```{r vector-naming1}
 gene.names <- c("Pax6", "Beta-actin", "FoxP2", "Hox9")
@@ -524,9 +528,9 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("PackageName")
 ```
 
-##Exercise: Install packages ggplot2 and DESeq
+## Where to find packages
 - Packages on CRAN:
-    + Use CRAN search to find functionality you need: http://cran.r-project.org/search.html
+    + Use metacran search to find functionality you need: http://www.r-pkg.org/
     + Or look for packages by theme: http://cran.r-project.org/web/views/
 - Packages in Bioconductor -- specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
 - Other repositories:
@@ -1014,15 +1018,19 @@ mean(na.omit(x))
 
 ##2. Analysis (reshaping data and maths)
 
-- Our analysis involves identifying patients with > 33% NB
-amplification
-
+- Our analysis involves identifying patients with > 33% NB amplification
+    + we can use the `which` function to select indices from a logical vector that are `TRUE`
+    
 ```{r analysis3}
 # create an index of results:
 prop <- rawData$NB_Amp / rawData$Nuclei 
+prop > 0.33
 # Get sample names of amplified patients:
 amp <- which(prop > 0.33) 
+amp
 ```
+
+##2. Analysis (reshaping data and maths)
 
 - We can plot a simple chart of the % NB amplification
     + note that two samples are amplified
@@ -1147,7 +1155,7 @@ barplot(summary(patients$Sex))
     + can change the width of bins
     + y-axis can be either frequency of density
 
-```{r,fig.height=3}
+```{r,fig.height=5}
 hist(patients$Weight)
 ```
 
@@ -1165,7 +1173,7 @@ hist(patients$Weight)
 boxplot(patients$Weight)
 ```
 
-```{r,fig.height=3,echo=FALSE}
+```{r,fig.height=4,echo=FALSE}
 par(mar=c(1,5,1,5))
 boxplot(patients$Weight)
 ```
@@ -1248,7 +1256,7 @@ boxplot(weather$Ozone~weather$Month)
 - we can choose to draw lines on the plot rather than points
     + the rest of the plot is the same as before
 
-```{r,fig.height=3}
+```{r,fig.height=5}
 plot(patients$Weight,type="l")
 ```
 
@@ -1361,7 +1369,7 @@ plot(patients$Weight,patients$Age, cex=0.2)
 - we can use a vector of any length
     + the values will get *recycled* (re-used) so that each point gets assigned a value
 - we can use a pre-defined ***colour palette*** (see later)
-```{r,fig.height=3}
+```{r,fig.height=5}
 plot(patients$Weight,patients$Age, 
      pch = 1:10,
      col=c("red","orange","green","blue"),
@@ -1373,7 +1381,7 @@ plot(patients$Weight,patients$Age,
 - Other plotting functions use the same arguments as `plot`
     + technical explanation: the arguments are '*inherited*'
 
-```{r,fig.height=3}
+```{r,fig.height=5}
 boxplot(patients$Weight~patients$Sex,
         xlab="Sex",
         ylab="Weight",
