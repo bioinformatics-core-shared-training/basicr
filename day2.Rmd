@@ -15,8 +15,8 @@ toc: yes
 
 1. Further customisation of plots
 2. Statistics
-3. Report-writing
-4. Data Manipulation Techniques
+3. Data Manipulation Techniques
+4. Report-writing
 
 #1. Further customisation of plots
 
@@ -41,11 +41,11 @@ toc: yes
 
 ##Initial plot
 
-- Recall our weather dataset from yesterday
+- Recall our patients dataset from yesterday
     + we might want to display other characteristics on the plot
         + e.g. gender of individual
 
-```{r echo=FALSE}
+```{r echo=FALSE,results='hide'}
 setwd("Day_2_scripts/")
 source("../Day_1_scripts/1.2_patients.R")
 ```
@@ -68,7 +68,7 @@ plot(patients$Age, patients$Weight,pch=16)
         + or add a set of new observations
 - Note that axis limits of the existing plot are not altered
 
-```{r}
+```{r fig.height=4}
 plot(patients$Age, patients$Weight,pch=16)
 points(40,68,pch="X")
 ```
@@ -129,8 +129,9 @@ points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
 - Each set of points can have a different colour and shape
 - Axis labels and title and limits are defined by the plot
 - You can add points ad-nauseum. Try not to make the plot cluttered!
+- Once you've added points to a plot, they cannot be removed
 - A call to `plot` will start a new graphics window
-
+    - or typing `dev.off`
 
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight,pch=16,type="n")
@@ -178,7 +179,7 @@ text(patients$Age-1, patients$Weight-0.5,labels=patients$Full_Name)
 
 - To aid our interpretation, it is often helpful to add guidelines
     + `grid()` is one easy way of doing this.
-```{r,fig.height=3}
+```{r,fig.height=5}
 plot(patients$Age, patients$Weight,pch=16)
 grid(col="steelblue")
 ```
@@ -189,7 +190,7 @@ grid(col="steelblue")
     + `v =` for vertical lines
     + `h=` for horizontal
     + can specify multiple lines in a vector
-```{r,fig.height=3}
+```{r,fig.height=5}
 plot(patients$Age, patients$Weight,pch=16)
 abline(v=40,col="red")
 abline(h=c(65,70,75),col="blue")
@@ -202,14 +203,14 @@ abline(h=c(65,70,75),col="blue")
 - The settings persist until the plot is closed with `dev.off`
 - `?par` and scroll to ***graphical parameters***
 - One example is `mfrow`
-    + multiple figures per row
+    + "multiple figures per row"
     + needs to be a vector of rows and columns
         + e.g. a plot with one row and two columns `par(mfrow=c(1,2))`
         + don't need the same kind of plot in each cell
         
 ## Plot layouts    
     
-```{r,fig.height=3}
+```{r,fig.height=5}
 par(mfrow=c(1,2))
 plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
 boxplot(patients$Weight~patients$Sex)
@@ -237,7 +238,7 @@ dev.off()
 
 ## Exporting graphs from RStudio
 
-- We can specify the dimensions of the plot, other properties of the file `?pdf`
+- We can specify the dimensions of the plot, and other properties of the file (`?pdf`)
 
 ```{r}
 pdf("ExampleGraph.pdf",width=10,height=10)
@@ -283,7 +284,7 @@ text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 
 ## Solution
 
-```{r,fig.height=4}
+```{r,fig.height=5}
 plot(weather$Ozone)
 abline(h=100)
 highO <- which(weather$Ozone > 100)
@@ -351,6 +352,9 @@ dnorm(10, mean=10, sd=5)
 ```{r}
 dnorm(100, mean=10, sd=5)
 ```
+
+##Distribution functions (continued)
+
 - The probability of drawing a value smaller than 10
 ```{r}
 pnorm(10, mean=10, sd=5)
@@ -505,7 +509,7 @@ chisq.test();fisher.test()
 - We have already seen that men in our Patients dataset tend to be heavier than women
     + we can test this formally in R
 
-```{r echo=FALSE,fig.height=3}
+```{r echo=FALSE,fig.height=5}
 par(mfrow=c(1,2))
 plot(patients$Age, patients$Weight,pch=16,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
@@ -529,6 +533,12 @@ var.test(patients$Weight~patients$Sex)
 t.test(patients$Weight~patients$Sex,var.equal=TRUE)
 ```
 
+- this function can be tuned in various ways
+    - assumed equal variances, or not (and use Welch's correction)
+    - deal with parired samples
+    - two-sided, or one-sided p-value
+    - as usual: `?t.test`
+- we will see an example 
 ##Linear regression: Basic data analysis
 
 - Linear modeling is supported by the function `lm()`
@@ -547,7 +557,7 @@ t.test(patients$Weight~patients$Sex,var.equal=TRUE)
 -  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
 
  
-```{r fig.height=3}
+```{r fig.height=5}
 x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
 y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
 plot(x,y, xlim=c(0,10), ylim=c(0,10))
@@ -559,7 +569,7 @@ plot(x,y, xlim=c(0,10), ylim=c(0,10))
  The ~ is used to define a formula; i.e. "y is given by x"
 - Take care about the order of x and y in the plot and lm expressions
 
-```{r,fig.height=3}
+```{r,fig.height=5}
 plot(x,y, xlim=c(0,10), ylim=c(0,10))
 myModel <- lm(y~x)
 abline(myModel)
@@ -632,9 +642,68 @@ abline(mod1,col="red",lty=2)
 ```
 
 
+# 3. Data Manipulation Techniques
+
+## Motivation
+
+- So far we have been lucky that all our data have been in the same file
+    + This is not usually the case
+    + A dataset may be spread over severall files
+        + This takes longer, and is harder, than many people realise
+    + We need to combine before doing an analysis
 
 
-# 3. Report Writing
+
+## Combining data from multiple sources: Gene Clustering Example
+
+- R has powerful functions to combine heterogeneous data sources into a single data set
+- Gene clustering example data
+    + gene expression values in ***Day_2_scripts/gene.expression.txt***
+    + patient information in ***Day_2_scripts/gene.description.txt***
+    + gene information in ***Day_2_scripts/cancer.patients.txt***
+- A breast cancer dataset with numerous patient characteristics 
+    + we will concentrate on ***ER status*** (positive / negative)
+    + what genes show a statistically-significant different change between ER groups?
+
+
+```{r echo=FALSE}
+
+if(!file.exists("Day_2_scripts/gene.expression.txt")){
+
+  if(!require(breastCancerNKI) | require(genefilter)) {
+    source("http://www.bioconductor.org/biocLite.R")
+    biocLite(c("breastCancerNKI","genefilter"))
+  }
+  data("nki")
+  cancer.patients <- pData(nki)[,c("samplename","age","er","grade")]
+  genes <- fData(nki)[,c("probe","HUGO.gene.symbol")]
+  ##get the top50 DE genes, plus 500 random
+  ps <- NULL
+  for(i in 1:nrow(genes)){
+    ps[i] <- t.test(exprs(nki)[i,] ~ factor(cancer.patients$er))$p.value
+  }
+  set.seed(070815)
+  ind <- order(ps, decreasing = FALSE)[1:50]
+  ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
+  
+  evalues <- exprs(nki)[ind,]
+  cancer.patients <- cancer.patients[order(cancer.patients$age),]
+  genes <- genes[order(genes[,1]),]
+  
+  write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
+  write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
+  write.table(cancer.patients, file="Day_2_scripts/cancer.patients.txt",quote=FALSE,sep="\t")
+}
+```
+
+
+## Analysis sketch
+
+- Read the relevant files
+- Do a sanity check to see if a known gene exhibits a change between groups
+- Test a list of candidate genes to see if they show a significant change
+- Make heatmaps of our genes
+
 
 ##The R scripting language
 
@@ -653,6 +722,234 @@ abline(mod1,col="red",lty=2)
     + conditional branching
 * Scripts may be written in any standard text editor, e.g. notepad, gedit, kate
     + we will use RStudio
+
+    
+## Peek at the data
+
+```{r eval=FALSE}
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
+dim(evals)
+```
+
+```{r echo=FALSE}
+evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
+dim(evals)
+```
+- `r nrow(evals)` rows and `r ncol(evals)` columns
++ One row for each gene
+    + rows are named according to particular technology used to make measurement
++ One column for each patient
+
+## Peek at the data
+```{r eval=FALSE}
+genes <- read.delim("gene.description.txt")
+head(genes)
+dim(genes)
+```
+
+```{r echo=FALSE}
+genes <- read.delim("Day_2_scripts/gene.description.txt")
+head(genes)
+dim(genes)
+```
+
+
+- `r nrow(genes)` rows and `r ncol(genes)` columns
+- One for for each gene
+    + more rows than genes we have measurements for
+- Includes mapping between manufacturer ID and Gene name
+
+## Peek at the data
+```{r eval=FALSE}
+subjects <- read.delim("cancer.patients.txt")
+head(subjects)
+dim(subjects)
+```
+
+
+```{r echo=FALSE}
+subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
+head(subjects)
+dim(subjects)
+```
+
+- One for for each patient in the study
+- Each column is a different characteristic of that patient
+    + e.g. whether a patient is ER positive or negative
+
+```{r}
+table(subjects$er)
+```
+
+
+## Retrieving data for a particular gene
+
+ - Gene `ESR1` is known to be hugely-different between ER positive and negative patient
+    + let's check that this is evident in our dataset
+    + if not, something has gone wrong!
+- First step is to locate this gene in our dataset
+
+## Character matching in R
+
+- we have already seen various ways of comparing numeric values
+    + ==, >, <
+    + each of which returns a vector of logical values
+    + == will also work with text
+    
+```{r}
+LETTERS
+"A" == LETTERS
+```
+
+## Character matching in R
+    
+- `match` and `grep` are often used to find particular matches
+    + CAUTION: by default, match will only return the ***first*** match!
+
+```{r}
+match("D", LETTERS)
+grep("F", rep(LETTERS,2))
+match("F", rep(LETTERS,2))
+```
+
+## Retrieving data for a particular gene
+
+- find the name of the ID that corresponds to gene ***ESR1***
+    + mapping between IDs and genes is in the ***genes*** data frame
+        + ID in first column, gene name in the second
+- save this probe as a variable
+
+```{r}
+ind <- match("ESR1", genes[,2])
+genes[ind,]
+probe <- genes[ind,1]
+probe
+```
+
+
+## Retrieving data for a particular gene
+
+Now, find which row in our expression matrix is indexed by this ID
+
+```{r}
+match(probe,rownames(evals))
+evals[match(probe,rownames(evals)),1:10]
+genevals <- evals[match(probe,rownames(evals)),]
+```
+
+
+    
+## Relating to patient characteristics
+
+- oh dear!
+
+```{r}
+boxplot(as.numeric(genevals)~factor(subjects$er))
+```
+
+## Relating to patient characteristics
+
+- the p-value is not encouraging either
+    + what could have gone wrong?
+    
+```{r}
+t.test(as.numeric(genevals)~factor(subjects$er))
+
+```
+
+## The right patients, but not neccessarily in the right order!
+
+- the problem is that our expression values are not in the same order as the clinical data
+    + a common occurence, sadly :/
+
+```{r}
+colnames(evals)[1:10]
+subjects$samplename[1:10]
+colnames(evals)[1:10] == subjects$samplename[1:10]
+```
+
+
+## Re-ordering both matrices
+
+- we can use `match` to re-order
+- the result is a vector
+    + first value is the column in expression matrix that the first row in the clinical data corresponds to
+    + etc
+    
+```{r}
+match(subjects$samplename,colnames(evals))
+
+```
+
+## Re-ordering both matrices
+
+- we can use this vector to index our expression matrix
+    + remembering to omit the row index
+- sanity check to make sure we've done the job
+
+```{r}
+evals <- evals[,match(subjects$samplename,colnames(evals))]
+genevals <- evals[match(probe,rownames(evals)),]
+colnames(evals)[1:10] == subjects$samplename[1:10]
+all(colnames(evals) == subjects$samplename)
+
+```
+
+
+## Try again
+
+- Much better!
+
+```{r}
+boxplot(as.numeric(genevals)~factor(subjects$er))
+```
+
+
+
+## Try again
+
+- Much better
+
+```{r}
+t.test(as.numeric(genevals)~factor(subjects$er))
+
+```
+
+## Complete script
+
+`gene-analysis.R`
+
+```{r eval=FALSE}
+genes <- read.delim("gene.description.txt")
+subjects <- read.delim("cancer.patients.txt")
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals <- evals[,match(subjects$samplename,colnames(evals))]
+
+ind <- match("ESR1", genes[,2])
+probe <- genes[ind,1]
+genevals <- evals[match(probe,rownames(evals)),]
+boxplot(as.numeric(genevals)~factor(subjects$er))
+t.test(as.numeric(genevals)~factor(subjects$er))
+```
+
+## (short) Exercise
+
+- make sure that you can run the script, and can understand it
+- modify the script to analyse `NAT1`
+
+There are a number of issues that we will address this afternoon
+
+- How can we handover the results of our analysis to our collaborators
+    + copy and paste the graphs into a word document!!?
+    + .....what happens if the data change?
+- Imagine if we have a list of 100 genes to test
+    + what a pain it would to change the script for each gene
+
+
+
+# 4. Report Writing
 
 ## Principles of Reproducible Research
 
@@ -696,7 +993,7 @@ Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpre
     + always ensure that you have the latest version
 
 ##Simple example in RStudio
-- Lets take Day_1_scripts/1.3_NBcountData.R
+- Lets take gene-analysis.R
 - Use the Compile Notebook button in RStudio
 - Take an R script and turn into HTML, PDF or even Word
 - All code will be displayed and the outputs printed
@@ -712,11 +1009,11 @@ Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpre
 - `knitr` is distributed with RStudio
     + `knitr` is the modern-day equivalent of `Sweave`
 - markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
-- the following should create the file `rna-seq.Rmd` in the Day_1_scripts folder
+- the following should create the file `gene-analysis.Rmd` in the Day_2_scripts folder
 
 ```{r eval=FALSE}
 library(knitr)
-spin(hair="../Day_1_scripts/1.3_NBcountData.R",knit=FALSE)
+spin(hair="gene-analysis.R",knit=FALSE)
 ```
 
 ## Not quite enough for a reproducible document
@@ -724,12 +1021,10 @@ spin(hair="../Day_1_scripts/1.3_NBcountData.R",knit=FALSE)
 - Minimally, you should record what version of R, and the packages you used.
 - use the `sessionInfo()` function
     + e.g. for the version of R I used to make the slides
+    + Lets add this to the gene-analysis.R script and see what happens
 ```{r}
 sessionInfo()
 ```
-
-- Lets add this to the R scripts and see what happens
-
 
 ## Defining chunks
 
@@ -753,7 +1048,7 @@ File - > New File - > R Markdown
 ---
 title: "Untitled"
 author: "Mark Dunning"
-date: "16/06/2015"
+date: "18/08/2015"
 output: html_document
 ---
 ```
@@ -981,261 +1276,24 @@ The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
 
 ## Exercise
 
-- Create a new markdown file that will report your analysis of the NB count data
+- Create a new markdown file that will report your analysis of the expression of ESR1 in breast cancer
     + File -> New File -> R Markdown
-- Create separate code chunks for each stage of the analysis (copy code from Day_1_scripts/1.3_NBcountData.R if you wish)
-    + Reading the data and print the first few rows
-    + Identify patients with >33% NB amplification
-    + Plot and identify the outliers
-    + Write out results table as comma separated values file
+- Create separate code chunks for each stage of the analysis (copy code from gene-analysis.R if you wish)
+    + Reading the data
+    + Re-order the gene expression matrix
+    + Extract data for ESR1
+    + Produce a boxplot
+    + Perform the t-test
     
 ## Exercise
 
-- Once you have a report that you are happy with
-- Use in-line R code to report how many patients have > 33% amplifications
+Once you have a report that you are happy with
+
+- Use "in-line" R code to report how many patients were involved in the study
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
-- Modify the selection criteria for amplification to be > 30%
-    + see how the various parts of the report change
-- Solution: *NBcounts-analysis.Rmd*
-
-
-# 4. Data Manipulation Techniques
-
-## Motivation
-
-- So far we have been lucky that all our data have been in the same file
-    + This is not usually the case
-    + A dataset may be spread over severall files
-        + This takes longer, and is harder, than many people realise
-    + We need to combine before doing an analysis
-
-
-
-## Combining data from multiple sources: Gene Clustering Example
-
-- R has powerful functions to combine heterogeneous data sources into a single data set
-- Gene clustering example data
-    + gene expression values in ***Day_2_scripts/gene.expression.txt***
-    + patient information in ***Day_2_scripts/gene.description.txt***
-    + gene information in ***Day_2_scripts/cancer.patients.txt***
-- A breast cancer dataset with numerous patient characteristics 
-    + we will concentrate on ***ER status*** (positive / negative)
-    + what genes show a statistically-significant different change between ER groups?
-
-
-```{r echo=FALSE}
-
-if(!file.exists("Day_2_scripts/gene.expression.txt")){
-
-  if(!require(breastCancerNKI) | require(genefilter)) {
-    source("http://www.bioconductor.org/biocLite.R")
-    biocLite(c("breastCancerNKI","genefilter"))
-  }
-  data("nki")
-  cancer.patients <- pData(nki)[,c("samplename","age","er","grade")]
-  genes <- fData(nki)[,c("probe","HUGO.gene.symbol")]
-  ##get the top50 DE genes, plus 500 random
-  ps <- NULL
-  for(i in 1:nrow(genes)){
-    ps[i] <- t.test(exprs(nki)[i,] ~ factor(cancer.patients$er))$p.value
-  }
-  set.seed(070815)
-  ind <- order(ps, decreasing = FALSE)[1:50]
-  ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
-  
-  evalues <- exprs(nki)[ind,]
-  cancer.patients <- cancer.patients[order(cancer.patients$age),]
-  genes <- genes[order(genes[,1]),]
-  
-  write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
-  write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
-  write.table(cancer.patients, file="Day_2_scripts/cancer.patients.txt",quote=FALSE,sep="\t")
-}
-```
-
-
-## Analysis sketch
-
-- Read the relevant files
-- Do a sanity check to see if a known gene exhibits a change between groups
-- Use a t-test to rank all genes
-- Make heatmaps of the top hits
-    
-## Peek at the data
-
-```{r eval=FALSE}
-evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
-evals[1:5,1:5]
-dim(evals)
-```
-
-```{r echo=FALSE}
-evals <- read.delim("Day_2_scripts/gene.expression.txt",stringsAsFactors = FALSE)
-evals[1:5,1:5]
-dim(evals)
-```
-- `r nrow(evals)` rows and `r ncol(evals)` columns
-+ One row for each gene
-    + rows are named according to particular technology used to make measurement
-+ One column for each patient
-
-## Peek at the data
-```{r eval=FALSE}
-genes <- read.delim("gene.description.txt")
-head(genes)
-dim(genes)
-```
-
-```{r echo=FALSE}
-genes <- read.delim("Day_2_scripts/gene.description.txt")
-head(genes)
-dim(genes)
-```
-
-
-- `r nrow(genes)` rows and `r ncol(genes)` columns
-- One for for each gene
-    + more rows than genes we have measurements for
-- Includes mapping between manufacturer ID and Gene name
-
-## Peek at the data
-```{r eval=FALSE}
-subjects <- read.delim("cancer.patients.txt")
-head(subjects)
-dim(subjects)
-```
-
-
-```{r echo=FALSE}
-subjects <- read.delim("Day_2_scripts/cancer.patients.txt")
-head(subjects)
-dim(subjects)
-```
-
-- One for for each patient in the study
-- Each column is a different characteristic of that patient
-    + e.g. whether a patient is ER positive or negative
-
-```{r}
-table(subjects$er)
-```
-
-
-## Retrieving data for a particular gene
-
- - Gene `ESR1` is known to be hugely-different between ER positive and negative patient
-    + let's check that this is evident in our dataset
-    + if not, something has gone wrong!
-- First step is to locate this gene in our dataset
-
-## Character matching in R
-
-- we have already seen various ways of comparing numeric values
-    + ==, >, <
-    + each of which returns a vector of logical values
-    + == will also work with text
-    
-```{r}
-LETTERS
-"A" == LETTERS
-```
-
-## Character matching in R
-    
-- `match` and `grep` are often used to find particular matches
-    + CAUTION: by default, match will only return the ***first*** match!
-
-```{r}
-match("D", LETTERS)
-grep("F", rep(LETTERS,2))
-match("F", rep(LETTERS,2))
-```
-
-## Retrieving data for a particular gene
-
-- find the name of the ID that corresponds to gene ***ESR1***
-    + mapping between IDs and genes is in the ***genes*** data frame
-        + ID in first column, gene name in the second
-- save this probe as a variable
-
-```{r}
-ind <- match("ESR1", genes[,2])
-genes[ind,]
-probe <- genes[ind,1]
-probe
-```
-
-
-## Retrieving data for a particular gene
-
-Now, find which row in our expression matrix is indexed by this ID
-
-```{r}
-match(probe,rownames(evals))
-evals[match(probe,rownames(evals)),1:10]
-genevals <- evals[match(probe,rownames(evals)),]
-```
-
-
-    
-## Relating to patient characteristics
-
-- oh dear!
-
-```{r fig.height=3}
-boxplot(as.numeric(genevals)~factor(subjects$er))
-t.test(as.numeric(genevals)~factor(subjects$er))
-```
-
-## The right patients, but not neccessarily in the right order!
-
-- the problem is that our expression values are not in the same order as the clinical data
-    + a common occurence :/
-
-```{r}
-colnames(evals)[1:10]
-subjects$samplename[1:10]
-colnames(evals)[1:10] == subjects$samplename[1:10]
-```
-
-
-## Re-ordering both matrices
-
-- we can use `match` to re-order
-- the result is a vector
-    + first value is the column in expression matrix that the first row in the clinical data corresponds to
-    + etc
-    
-```{r}
-match(subjects$samplename,colnames(evals))
-
-```
-
-## Re-ordering both matrices
-
-- we can use this vector to index our expression matrix
-    + remembering to omit the row index
-- sanity check to make sure we've done the job
-
-```{r}
-evals <- evals[,match(subjects$samplename,colnames(evals))]
-genevals <- evals[match(probe,rownames(evals)),]
-colnames(evals)[1:10] == subjects$samplename[1:10]
-all(colnames(evals) == subjects$samplename)
-
-```
-
-
-## Try again
-
-- Much better!
-
-```{r fig.height=3}
-boxplot(as.numeric(genevals)~factor(subjects$er))
-t.test(as.numeric(genevals)~factor(subjects$er))
-```
-
+- Hide code used to perform the t-test and the output of the test. However, use "in-line" R code to report the p-value of the t-test
+- Solution: *gene-analysis.Rmd*
 
 ##Introducing loops
 
@@ -1294,24 +1352,24 @@ for (i in 1:10) {
 }
 ```
 
-## Looping
-
-```{r}
-for (i in 1:10) {
-   print(t.test(as.numeric(evals[i,])~factor(subjects$er)))
-}
-```
 
 
 ## Storing results
 
+- the output of the t.test is an object with data placed in different slots
+    + the `names` of the object tells us what data we can retrieve, and what name to use
+    + N.B it is a "list" object
+
 ```{r}
-t <- t.test(as.numeric(evals[i,])~factor(subjects$er))
+t <- t.test(as.numeric(evals[1,])~factor(subjects$er))
 names(t)
 t$statistic
 ```
 
 ## Storing results
+
+- when using a loop, we often create an empty "dummy" variable
+- this is used store the results at each stage of the loop
 
 ```{r}
 stats <- NULL
@@ -1492,7 +1550,7 @@ stats
 
 ## Compiling the report
 
-- See the markdown document gene-report.Rmd
+- See the markdown document genelist-analysis.Rmd
 
 # End of Course
 
@@ -1505,6 +1563,6 @@ stats
     + Read [blogs](http://www.r-bloggers.com/)
     + Follow the [forums](http://stackoverflow.com/questions/tagged/r)
     + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
-    + Bookmark some [reference](http://www.statmethods.net/) guides
+    + Bookmark some [reference](https://en.wikibooks.org/wiki/R_Programming) guides
     + on twitter @rstudio, @Rbloggers, @RLangTip
     
