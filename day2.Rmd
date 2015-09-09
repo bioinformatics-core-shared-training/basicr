@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Solving Biological Problems Using R - Day 2"
-author: Mark Dunning, Suraj Menon, and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
+author: Mark Dunning, Suraj Menon, and Aiora Zabala. \n Original material by Robert Stojnić, Laurent Gatto, Rob Foy
   John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: 
@@ -538,7 +538,7 @@ t.test(patients$Weight~patients$Sex,var.equal=TRUE)
     - deal with parired samples
     - two-sided, or one-sided p-value
     - as usual: `?t.test`
-- we will see an example 
+
 ##Linear regression: Basic data analysis
 
 - Linear modeling is supported by the function `lm()`
@@ -832,10 +832,11 @@ probe
 ## Retrieving data for a particular gene
 
 Now, find which row in our expression matrix is indexed by this ID
-
+- save the expression values as a variable
 ```{r}
 match(probe,rownames(evals))
 evals[match(probe,rownames(evals)),1:10]
+evals[428,1:10]
 genevals <- evals[match(probe,rownames(evals)),]
 ```
 
@@ -843,7 +844,10 @@ genevals <- evals[match(probe,rownames(evals)),]
     
 ## Relating to patient characteristics
 
-- oh dear!
+We have numeric expression values and want to visualise them against our categorical data
+
+- use a boxplot, for example
+- something doesn't look correct though....
 
 ```{r}
 boxplot(as.numeric(genevals)~factor(subjects$er))
@@ -873,21 +877,29 @@ colnames(evals)[1:10] == subjects$samplename[1:10]
 
 ## Re-ordering both matrices
 
-- we can use `match` to re-order
-- the result is a vector
-    + first value is the column in expression matrix that the first row in the clinical data corresponds to
-    + etc
-    
-```{r}
-match(subjects$samplename,colnames(evals))
+- match returns a vector of the positions of (first) matches of its first argument in its second.
+- recall that we can use a vector to subset, or order, the columns of a data frame
 
+```{r}
+match(subjects$samplename,colnames(evals))[1:10]
 ```
+
+```{r echo=FALSE}
+mm <- match(subjects$samplename,colnames(evals))[1:10]
+```
+
+- the output indicates that column `r mm[1]` of the expression matrix represents the same data as row 1 of the `subjects` matrix
+- column `r mm[2]` of the expression matrix represents the same data as row 2 of the `subjects` matrix
+- etc....
+
 
 ## Re-ordering both matrices
 
 - we can use this vector to index our expression matrix
     + remembering to omit the row index
 - sanity check to make sure we've done the job
+- match the `probe` index as before
+    + we haven't changed the rows so this should be the same
 
 ```{r}
 evals <- evals[,match(subjects$samplename,colnames(evals))]
@@ -900,7 +912,7 @@ all(colnames(evals) == subjects$samplename)
 
 ## Try again
 
-- Much better!
+- Better!
 
 ```{r}
 boxplot(as.numeric(genevals)~factor(subjects$er))
@@ -1043,7 +1055,7 @@ File - > New File - > R Markdown
 
 - Choose 'Document' and the default output type (HTML)
 - A new tab is created in RStudio
-- The header also you to specify a Page title, author and output type
+- The header allows you to specify a Page title, author and output type
 ```{r eval=FALSE}
 ---
 title: "Untitled"
@@ -1110,12 +1122,12 @@ data <- read.delim("path.to.my.file")
 
 - might want to load some data from disk
     + e.g. the R object from reading the data in the previous slide
-- your P.I. wants to see your results, but doesn't really want to know about the R code that you used
 ```
 '''{r echo=FALSE}
 load("mydata.rda")
 '''
 ```
+- your P.I. wants to see your results, but doesn't really want to know about the R code that you used
 
 ## Chunk options: results
 
@@ -1164,6 +1176,7 @@ load("mydata.rda")
 ## Including plots
 
 - Use a plotting function (`plot`, `boxplot`, `hist` etc) will include the plot at the relevant point in the document
+
 ```
 '''{r}
 plot(1:10, jitter(1:10))
@@ -1236,35 +1249,6 @@ pval <- 0.1
 
 
 
-## Conditional output
-
-```{r}
-pval <- 0.1
-```
-
-
-```
-.....The statistical test was 'r ifelse(pval < 0.05, "", "not")' significant....
-```
-
-
-
-The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
-
-```{r}
-pval <- 0.01
-```
-
-
-```
-.....The statistical test was 'r ifelse(pval < 0.05, "", "not")' significant....
-```
-
-
-The statistical test was `r ifelse(pval < 0.05, "", "not")` significant
-
-
-
 ## References
 
 - Useful reference:
@@ -1295,6 +1279,8 @@ Once you have a report that you are happy with
 - Hide code used to perform the t-test and the output of the test. However, use "in-line" R code to report the p-value of the t-test
 - Solution: *gene-analysis.Rmd*
 
+We will now see how to modify the report to analyse multiple genes
+
 ##Introducing loops
 
 - Many programming languages have ways of doing the same thing many times, perhaps changing some variable each time. This is called *looping*
@@ -1324,6 +1310,7 @@ t.test(evals[2,]~factor(subjects$er))
 - R has two basic types of loop
     + a `for` loop: run some code on every value in a vector
     + a `while` loop: run some code while some condition is true
+        + *hardly ever used!*
     
 `for` 
 ```{r loops1, eval=FALSE}
@@ -1331,7 +1318,7 @@ for(i in 1:10){
   print(i)
 }
 ```
-`while`
+`while` 
 ```{r  eval=FALSE}
 i <- 1
 while ( i <= 10 ) {
@@ -1343,7 +1330,7 @@ while ( i <= 10 ) {
 ##Loops: Commands and flow control
 
 - Here's how we might use a `for` loop to test the first 10 genes
-- However, we are not storing the results of each calculation
+
 
 ```{r loops2, eval=FALSE}
 
@@ -1352,11 +1339,23 @@ for (i in 1:10) {
 }
 ```
 
+- this is exactly the same as:
+
+```{r eval=FALSE}
+i <- 1
+t.test(evals[i,]~factor(subjects$er))
+i <- 2
+t.test(evals[i,]~factor(subjects$er))
+i <- 3 ......
+```
+
 
 
 ## Storing results
 
-- the output of the t.test is an object with data placed in different slots
+However, this for loop is doing the calculations but not storing the results
+
+- the output of `t.test` is an object with data placed in different slots
     + the `names` of the object tells us what data we can retrieve, and what name to use
     + N.B it is a "list" object
 
@@ -1473,19 +1472,19 @@ for(i in 1:length(genelist)){
   probes <- genes[match(genelist[i],genes[,2]),1]
   j <- match(probes,rownames(evals))
   
-  if(length(probes)>0){
+  if(!is.na(probes)){
    tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
    stats[i] <- tmp$statistic
   }
   
-  }
+}
 ```
 
 
 ##Code formatting avoids bugs!
 Compare:
 ```{r eval=FALSE}
-f -26
+f<-26
 while(f!=0){
 print(letters[f])
 f <- f-1}
@@ -1503,7 +1502,7 @@ while( f != 0 ){
 - Use white spaces to divide the horizontal space between units of your code, e.g. around assignments, comparisons
 
 
-## Extracing multiple genes
+## Extracting multiple genes
 
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2","foo")
@@ -1524,9 +1523,12 @@ for(i in 1:length(genelist)){
 stats
 ```
 
-## Plotting genes
+## Adding plots 
 
-```{r}
+- The number of lines within the loop can be as long as you like *but preferably not too long*
+    + we can easily add boxplots to our code
+    
+```{r eval=FALSE}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
 stats <- NULL
 for(i in 1:length(genelist)){
@@ -1543,8 +1545,32 @@ for(i in 1:length(genelist)){
 }
 stats
 
+```
+
+## Making a heatmap
+
+- A heatmap is often used to visualise how the expression level of a set of genes vary between conditions
+- Making the plot is actually quite straightforward
+    + providing you have processed the data appropriately!
+    
+```{r}
+genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
+probes <- genes[match(genelist,genes[,2]),1]
+exprows <- match(probes,rownames(evals))
+
+heatmap(as.matrix(evals[exprows,]),)
+  
 
 ```
+
+## Hetmap adjustments
+
+```{r}
+sampcol <- rep("blue", ncol(evals))
+sampcol[subjects$er == 1 ] <- "yellow"
+heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol)
+```
+
 
 
 

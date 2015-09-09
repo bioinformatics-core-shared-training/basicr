@@ -36,3 +36,14 @@ for(i in 1:length(genelist)){
 }
 stats
 ```
+
+
+```{r}
+probes <- genes[match(genelist,genes[,2]),1]
+exprows <- match(probes,rownames(evals))
+sampcol <- rep("blue", ncol(evals))
+sampcol[subjects$er == 1 ] <- "yellow"
+heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol)
+  
+```
+

@@ -39,3 +39,4 @@ res<- t.test(as.numeric(genevals)~factor(subjects$er))
 ```
 
 The p-value of the association between ESR1 and ER status is `r res$p.value`
+
