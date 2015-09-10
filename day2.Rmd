@@ -22,7 +22,7 @@ toc: yes
 
 ## Recap
 
-- we have seen how to use `plot`, `boxplot` `hist` to make simple plots
+- we have seen how to use `plot`, `boxplot` , `hist` etc to make simple plots
 - these come with arguments that can be used to change the appearance of the plot
     + `col`, `pch`
     + `main`, `xlab`, `ylab`
@@ -131,7 +131,7 @@ points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
 - You can add points ad-nauseum. Try not to make the plot cluttered!
 - Once you've added points to a plot, they cannot be removed
 - A call to `plot` will start a new graphics window
-    - or typing `dev.off`
+    - or typing `dev.off()`
 
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight,pch=16,type="n")
@@ -222,7 +222,7 @@ boxplot(patients$Weight~patients$Sex)
     
 ## Exporting graphs from RStudio
 
-- Easiest option to tuse the Export button from the Plots panel
+- Easiest option to to use the Export button from the Plots panel
 - Otherwise, use the `pdf` function
     + you will see that the plot does not appear in RStudio
 ```{r eval=FALSE}
@@ -231,10 +231,27 @@ plot(rnorm(1:10))
 ```
 
 - you need to use the `dev.off` to stop printing graphs to the pdf and 'close' the file
-
+      + allows you to create a pdf document with multiple pages
 ```{r eval=FALSE}
 dev.off()
 ```
+
+- pdf is a good choice for publication as they can be imported into photoshop, inkscape etc
+
+## Exporting graphs from RStudio
+
+- To save any graph you have created to a pdf, repeat the code you used to create the plot with `pdf(..)` before and `dev.off()` afterwards
+    + you can have as many lines of code in-between as you like
+    
+```{r}
+pdf("mygraph.pdf")
+plot(patients$Age, patients$Weight,pch=16)
+abline(v=40,col="red")
+abline(h=c(65,70,75),col="blue")
+dev.off()
+```
+
+
 
 ## Exporting graphs from RStudio
 
@@ -247,8 +264,8 @@ dev.off()
 ```
 
 - Other formats can be created
-    + e.g. ***png***
-    
+    + e.g. ***png***, or others `?png`
+    + more appropriate for email, presentations, web page
     
 ```{r}
 png("ExampleGraph.png")
@@ -299,6 +316,7 @@ text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 - Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
     + use different colours and plotting characters on each plot
 - Save the plot to a pdf
+- HINT: Create the graph first in RStudio, then when you're happy with it, use the `pdf` function to save to a file
 
 ```{r echo=FALSE,fig.height=4,fig.width=10}
 par(mfrow=c(1,3))
@@ -503,6 +521,18 @@ cor.test()
 chisq.test();fisher.test()
 ```
 
+## Statistical tests in R
+
+- Bottom-line: Pretty much any statistical test you care to name will probably be in R
+    + this is not supposed to be a statistics course (sorry!)
+    + none of them are particular harder than others to use
+    + the difficulty is deciding which test to use
+        + whether the assumptions of the test are met etc
+    + consult your local statistician if not sure
+    + some good references
+        + [Simple R eBook](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf)
+        + [Elements of Statistical Learning eBook](http://statweb.stanford.edu/~tibs/ElemStatLearn/download.html)
+        
 
 ## Example analysis
 
@@ -959,7 +989,7 @@ There are a number of issues that we will address this afternoon
     + copy and paste the graphs into a word document!!?
     + .....what happens if the data change?
 - Imagine if we have a list of 100 genes to test
-    + what a pain it would to change the script for each gene
+    + what a pain it would be to change the script for each gene
 
 
 
