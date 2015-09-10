@@ -978,6 +978,38 @@ rawData[1:10,]  # View the first 10 rows to ensure import is OK
 View(rawData)
 ```
 
+##1c. Understanding the object
+
+Once we have read the data successfully, we can start to interact with it
+
+- The object we have created is a data frame
+```{r}
+class(rawData)
+```
+
+- we can query the dimensions
+
+```{r}
+ncol(rawData)
+nrow(rawData)
+dim(rawData)
+```
+
+##1c. Understanding the object
+
+- The names of the columns are automatically assigned
+
+```{r}
+colnames(rawData)
+```
+
+- We can use any of these names to access a particular column
+    + and create a vector
+        + TOP TIP: type the name of the object and hit TAB. You can select the column from the drop-down list!
+```{r}
+rawData$Nuclei
+```
+
 ##Word of caution
 
 
@@ -1093,6 +1125,8 @@ write.csv(rawData[norm,], "My_NB_output.csv")
     + best to learn from examples
 - ***You need to think about how best to visualise your data*** 
     + http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign
+- R cannot prevent you from creating a plotting disaster     
+    + http://www.businessinsider.com/the-27-worst-charts-of-all-time-2013-6?op=1&IR=T
     
 ##Making a Scatter Plot
 
