@@ -19,7 +19,7 @@ toc: yes
     + Producing graphs
     + ***How to get help!***
 - Give you all the background you need to ***practice*** by yourselves
-- Introduce tools to work in a ***reproducible*** manner
+- Introduce tools that will help you to work in a ***reproducible*** manner
 
 ## Day 1 Schedule
 
@@ -320,7 +320,9 @@ x[3:5] <- 1
 x
 ```
 
-Remember! **Square** brackets for indexing [], **parentheses** for function arguments ().
+Remember! 
+- **Square** brackets for ***indexing*** []
+- **parentheses** for function ***arguments*** ().
 
 ##Basic concepts in R - vector arithmetic
 
@@ -516,8 +518,24 @@ and the packages can be found in numerous server locations on the
 web called **repositories**
 - The two repositories you will come across the most are
     + **The Comprehensive R Archive Network (CRAN)**
-    + **Bioconductor**
+        + Use metacran search to find functionality you need: http://www.r-pkg.org/
+        + Or look for packages by theme: http://cran.r-project.org/web/views/
+    + **Bioconductor** specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
+- Other repositories:
+    + http://r-forge.r-project.org/
+    + github.com can also host R packages
+- Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
+    
+## Installing packages    
+    
 - CRAN packages can be installed using `install.packages`
+    + or clicking on the Packages tab in RStudio
+    
+```{r eval=FALSE}
+install.packages(name.of.my.package)
+```
+
+
 - Set the Bioconductor package download tool by typing:
 ```{r eval=FALSE}
 source("http://bioconductor.org/biocLite.R")
@@ -527,17 +545,6 @@ source("http://bioconductor.org/biocLite.R")
 ```{r eval=FALSE}
 biocLite("PackageName")
 ```
-
-## Where to find packages
-- Packages on CRAN:
-    + Use metacran search to find functionality you need: http://www.r-pkg.org/
-    + Or look for packages by theme: http://cran.r-project.org/web/views/
-- Packages in Bioconductor -- specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
-- Other repositories:
-    + http://r-forge.r-project.org/
-    + github.com can also host R packages
-  - Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
-
 
 ##Exercise: Install packages ggplot2 and DESeq
 
