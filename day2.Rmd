@@ -1083,17 +1083,6 @@ spin(hair="gene-analysis.R",knit=FALSE)
 sessionInfo()
 ```
 
-## Defining chunks
-
-- It is not great practice to have one long, continuous R script
-- Better to break-up into smaller pieces; '*chunks*'
-- You can document each chunk separately
-- Easier to catch errors
-- The characteristics of each chunk can be modified
-    + You might not want to print the R code for each chunk
-    + or the output
-    + etc
-
 ## Create a markdown file from scratch
 
 File - > New File - > R Markdown
@@ -1122,7 +1111,7 @@ output: html_document
     + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
     
 ##Text formatting
-See ***Markdown Quick Reference*** in RStudio
+See ***?*** - > ***Markdown Quick Reference*** in RStudio
 
 - enclose text in \* to format in *italics*
 - enclose text in \*\* to format in **bold**
@@ -1138,7 +1127,28 @@ See ***Markdown Quick Reference*** in RStudio
     + adding web links
     + tables
 
+
+## Defining chunks
+
+- It is not great practice to have one long, continuous R script
+- Better to break-up into smaller pieces; '*chunks*'
+- You can document each chunk separately
+- Easier to catch errors
+- The characteristics of each chunk can be modified
+    + You might not want to print the R code for each chunk
+    + or the output
+    + etc
+
+
 ## Chunk options
+
+Code chunks are encapsulated between backticks. Options for the chunk can be put inside the curly brackets`{....}`
+
+```
+'''{r}
+my code here.....
+'''
+```
 
 - It's a good idea to name each chunk
     + Easier to track-down errors
@@ -1224,24 +1234,24 @@ load("mydata.rda")
 
 ```
 '''{r}
-plot(1:10, jitter(1:10))
+plot(1:10, rnorm(10))
 '''
 ```
 
 ```{r echo=FALSE}
-plot(1:10, runif(10))
+plot(1:10, rnorm(10))
 ```
 
 ## Control over plots
 
 ```
 '''{r fig.height=2,fig.align='right', fig.height=4,fig.width=9}
-plot(1:10, jitter(1:10))
+plot(1:10, rnorm(10))
 '''
 ```
 
 ```{r echo=FALSE,fig.height=3,fig.align='right', fig.height=4,fig.width=9}
-plot(1:10, runif(10))
+plot(1:10, rnorm(10))
 ```
 
 
@@ -1261,6 +1271,7 @@ gender <- c(rep("F", 47), rep("M", 50))
 
 
 
+
 ```
 .....the p-value of the t-test is 'r pval', which indicates that.....
 ```
@@ -1268,6 +1279,8 @@ gender <- c(rep("F", 47), rep("M", 50))
 pval <- 0.05
 ```
 .....the p-value of the t-test is `r pval`, which indicates that.....
+
+- We call this "in-line" code
 
 ## Running R code from the main text
 
@@ -1323,7 +1336,7 @@ Once you have a report that you are happy with
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
 - Hide code used to perform the t-test and the output of the test. However, use "in-line" R code to report the p-value of the t-test
-- Solution: *gene-analysis.Rmd*
+- Solution: *esr1-analysis.Rmd*
 
 We will now see how to modify the report to analyse multiple genes
 
@@ -1509,6 +1522,8 @@ if (condition) {
 - Using the `for` loop we wrote before, we might want to warn the user if we can't find a particular gene with the pattern we are searching for. 
 - Here's how we can use an `if` statement to test for this
     + only run the t-test if we can successfully map the gene
+        + i.e if we cannot map the probe, then the probes vector would be `NA`
+        + only proceed if the probes vector is not `NA`
     
 ```{r flow-control,eval=FALSE}
 stats <- NULL
