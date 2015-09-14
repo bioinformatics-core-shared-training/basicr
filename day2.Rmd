@@ -22,13 +22,13 @@ toc: yes
 
 ## Recap
 
-- we have seen how to use `plot`, `boxplot` , `hist` etc to make simple plots
-- these come with arguments that can be used to change the appearance of the plot
+- We have seen how to use `plot`, `boxplot` , `hist` etc to make simple plots
+- These come with arguments that can be used to change the appearance of the plot
     + `col`, `pch`
     + `main`, `xlab`, `ylab`
     + etc....
-- we will now look at ways to modify the plot appearance after it has been created
-- also, how to export the graphs 
+- We will now look at ways to modify the plot appearance after it has been created
+- Also, how to export the graphs 
 - Set your working directory to ***Day_2_scripts***
 
 
@@ -62,7 +62,7 @@ plot(patients$Age, patients$Weight,pch=16)
 ##The points function
 
 - `points` can be used to set of points to an *existing* plot
-- it requires a vector of x and y coordinates
+- It requires a vector of x and y coordinates
     + these do not have to be the same length as the number of points in the initial plot
         + hence we can use `points` to highlight observations
         + or add a set of new observations
@@ -158,7 +158,7 @@ legend("topleft", legend=c("M","F"),
 
 ##Adding text
 
-- text can also be added to a plot in a similar manner
+- Text can also be added to a plot in a similar manner
     + the `labels` argument specifies the text we want to add
     
 ```{r fig.height=4,fig.width=8}
@@ -168,7 +168,7 @@ text(patients$Age, patients$Weight,labels=patients$Full_Name)
 
 ##Adding text
 
-- can alter the positions so they don't interfere with the points of the graph
+- Can alter the positions so they don't interfere with the points of the graph
     
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
@@ -230,7 +230,7 @@ pdf("ExampleGraph.pdf")
 plot(rnorm(1:10))
 ```
 
-- you need to use the `dev.off` to stop printing graphs to the pdf and 'close' the file
+- You need to use the `dev.off` to stop printing graphs to the pdf and 'close' the file
       + allows you to create a pdf document with multiple pages
 ```{r eval=FALSE}
 dev.off()
@@ -439,7 +439,7 @@ points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
 
 ## Create a normal distribution curve
 
-- we can repeat the calculation for a vector of values
+- We can repeat the calculation for a vector of values
     + remember that functions in R are often ***vectorized***
     + use `lines` in this case rather than `points`
     
@@ -575,7 +575,7 @@ var.test(patients$Weight~patients$Sex)
 t.test(patients$Weight~patients$Sex,var.equal=TRUE)
 ```
 
-- this function can be tuned in various ways
+- This function can be tuned in various ways
     - assumed equal variances, or not (and use Welch's correction)
     - deal with parired samples
     - two-sided, or one-sided p-value
@@ -689,8 +689,8 @@ abline(mod1,col="red",lty=2)
 ## Motivation
 
 - So far we have been lucky that all our data have been in the same file
-    + This is not usually the case
-    + A dataset may be spread over severall files
+    + this is not usually the case
+    +  dataset may be spread over severall files
         + This takes longer, and is harder, than many people realise
     + We need to combine before doing an analysis
 
@@ -920,7 +920,7 @@ colnames(evals)[1:10] == subjects$samplename[1:10]
 ```
 
 
-## Re-ordering both matrices
+## Re-ordering the matrix
 
 - match returns a vector of the positions of (first) matches of its first argument in its second.
 - recall that we can use a vector to subset, or order, the columns of a data frame
@@ -938,12 +938,12 @@ mm <- match(subjects$samplename,colnames(evals))[1:10]
 - etc....
 
 
-## Re-ordering both matrices
+## Re-ordering the matrix
 
-- we can use this vector to index our expression matrix
+- We can use this vector to index our expression matrix
     + remembering to omit the row index
-- sanity check to make sure we've done the job
-- match the `probe` index as before
+- Sanity check to make sure we've done the job
+- Match the `probe` index as before
     + we haven't changed the rows so this should be the same
 
 ```{r}
@@ -1066,7 +1066,7 @@ Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpre
 - `knitr` is distributed with RStudio
     + `knitr` is the modern-day equivalent of `Sweave`
 - markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
-- the following should create the file `gene-analysis.Rmd` in the Day_2_scripts folder
+- The following should create the file `gene-analysis.Rmd` in the Day_2_scripts folder
 
 ```{r eval=FALSE}
 library(knitr)
@@ -1076,9 +1076,9 @@ spin(hair="gene-analysis.R",knit=FALSE)
 ## Not quite enough for a reproducible document
 
 - Minimally, you should record what version of R, and the packages you used.
-- use the `sessionInfo()` function
+- Use the `sessionInfo()` function
     + e.g. for the version of R I used to make the slides
-    + Lets add this to the gene-analysis.R script and see what happens
+    + lets add this to the gene-analysis.R script and see what happens
 ```{r}
 sessionInfo()
 ```
@@ -1113,8 +1113,8 @@ output: html_document
 ##Text formatting
 See ***?*** - > ***Markdown Quick Reference*** in RStudio
 
-- enclose text in \* to format in *italics*
-- enclose text in \*\* to format in **bold**
+- Enclose text in \* to format in *italics*
+- Enclose text in \*\* to format in **bold**
 - \*\*\* for ***bold italics***
 - \` to format like `code`
 - \$ to include equations: $e =mc^2$
@@ -1175,14 +1175,14 @@ data <- read.delim("path.to.my.file")
 
 ## Chunk options: echo
 
-- might want to load some data from disk
+- Might want to load some data from disk
     + e.g. the R object from reading the data in the previous slide
 ```
 '''{r echo=FALSE}
 load("mydata.rda")
 '''
 ```
-- your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+- Your P.I. wants to see your results, but doesn't really want to know about the R code that you used
 
 ## Chunk options: results
 
@@ -1398,7 +1398,7 @@ for (i in 1:10) {
 }
 ```
 
-- this is exactly the same as:
+- This is exactly the same as:
 
 ```{r eval=FALSE}
 i <- 1
@@ -1426,8 +1426,8 @@ t$statistic
 
 ## Storing results
 
-- when using a loop, we often create an empty "dummy" variable
-- this is used store the results at each stage of the loop
+- When using a loop, we often create an empty "dummy" variable
+- This is used store the results at each stage of the loop
 
 ```{r}
 stats <- NULL
@@ -1635,10 +1635,11 @@ stats
 - A heatmap is often used to visualise how the expression level of a set of genes vary between conditions
 - Making the plot is actually quite straightforward
     + providing you have processed the data appropriately!
+    + here, we use `na.omit` to ensure we have no `NA` values
     
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
-probes <- genes[match(genelist,genes[,2]),1]
+probes <- na.omit(genes[match(genelist,genes[,2]),1])
 exprows <- match(probes,rownames(evals))
 
 heatmap(as.matrix(evals[exprows,]),)
