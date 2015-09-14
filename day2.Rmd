@@ -1517,14 +1517,36 @@ if (condition) {
 
 - `condition` is any logical value, and can contain multiple conditions. 
     + e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
+    
+## Other conditional tests
+
+- There are various tests that can check the type of data stored in a variable
+    + these tend to be called `is.` 
+        + try *tab-complete* on `is.`
+
+```{r}
+is.numeric(10)
+is.numeric("TEN")
+is.character(10)
+```
+
+- `is.na` is useful for seeing if an `NA` value is found
+    + cannot use `== NA`!
+
+```{r}
+match("foo", genes[,2])
+is.na(match("foo", genes[,2]))
+```
+
 
 ##Conditional branching: Commands and flow control
+
 - Using the `for` loop we wrote before, we might want to warn the user if we can't find a particular gene with the pattern we are searching for. 
 - Here's how we can use an `if` statement to test for this
     + only run the t-test if we can successfully map the gene
         + i.e if we cannot map the probe, then the probes vector would be `NA`
-        + only proceed if the probes vector is not `NA`
-    
+        + only proceed if the `probes` vector is not `NA`
+        
 ```{r flow-control,eval=FALSE}
 stats <- NULL
 
@@ -1536,7 +1558,7 @@ for(i in 1:length(genelist)){
   if(!is.na(probes)){
    tmp <- t.test(as.numeric(evals[j,])~factor(subjects$er))
    stats[i] <- tmp$statistic
-  }
+  } else message("Could not find gene ",genelist[i])
   
 }
 ```
@@ -1624,15 +1646,22 @@ heatmap(as.matrix(evals[exprows,]),)
 
 ```
 
-## Hetmap adjustments
+## Heatmap adjustments
+
+- We can provide a colour legend for the samples
+- Adjust colour of cells
 
 ```{r}
+library(RColorBrewer)
 sampcol <- rep("blue", ncol(evals))
 sampcol[subjects$er == 1 ] <- "yellow"
-heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol)
+rbPal <- brewer.pal(10, "RdBu")
+heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol,col=rbPal)
 ```
 
-
+- see also
+    + `heatmap.2` from `library(gplots)`; `example(heatmap.2)`
+    + `heatmap.plus` from `library(heatmap.plus)`; `example(heatmap.plus)`
 
 
 ## Compiling the report
