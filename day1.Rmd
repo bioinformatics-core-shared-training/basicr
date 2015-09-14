@@ -1206,7 +1206,7 @@ hist(patients$Weight)
 
 - The boxplot is commonly-used in statistics to visualise a distribution
     + The black solid line is the ***median***
-    + The top and bottom of the box is the 75th and 25th percentiles
+    + The top and bottom of the box are the 75th and 25th percentiles
         + Hence, the distance between these is a reflection of the *spread* of the data; the Inter-Quartile Range (***IQR***)
     + Whiskers are drawn at 1.5 x IQR and -1.5 x IQR
 
@@ -1294,7 +1294,7 @@ boxplot(weather$Ozone~weather$Month)
 - `plot` comes with a whole array of arguments that can be set when we call the function
     + see `?plot` and `?par`
 - Recall that unless specified, arguments have a default value
-- we can choose to draw lines on the plot rather than points
+- We can choose to draw lines on the plot rather than points
     + the rest of the plot is the same as before
 
 ```{r,fig.height=5}
@@ -1407,9 +1407,9 @@ plot(patients$Weight,patients$Age, cex=0.2)
 ##Colours and characters as vectors
 
 - Previously we have used a *vector* of length 1 as our value of colour and character
-- we can use a vector of any length
+- We can use a vector of any length
     + the values will get *recycled* (re-used) so that each point gets assigned a value
-- we can use a pre-defined ***colour palette*** (see later)
+- We can use a pre-defined ***colour palette*** (see later)
 ```{r,fig.height=5}
 plot(patients$Weight,patients$Age, 
      pch = 1:10,
@@ -1435,7 +1435,7 @@ boxplot(patients$Weight~patients$Sex,
 
 - Can you re-create the following plots?
 - HINT
-    + See the `breaks` and `freq` arguments to hist (`?hist`)
+    + see the `breaks` and `freq` arguments to hist (`?hist`)
     + for third plot, see the rainbow function (`?rainbow`)
     + don't worry too much about getting the colours exactly correct
     
@@ -1476,7 +1476,7 @@ boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 
 ## Solutions
 
-- more aesthetically-pleasing palettes are provided by the `RColorBrewer` package
+- More aesthetically-pleasing palettes are provided by the `RColorBrewer` package
 
 ```{r eval=FALSE}
 library(RColorBrewer)
