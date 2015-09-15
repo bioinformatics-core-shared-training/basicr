@@ -418,6 +418,9 @@ If our data are normally-distributed, we can calculate the probability of drawin
 - we can overlay this on the histogram using `points` as we just saw
 
 ```{r eval=FALSE}
+tempMean <- mean(weather$Temp)
+tempSD <- sd(weather$Temp)
+
 dnorm(80, mean=tempMean,sd=tempSD)
 hist(weather$Temp,col="purple",xlab="Temperature",
      main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
