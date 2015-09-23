@@ -1341,8 +1341,8 @@ plot(patients$Age,patients$Weight,
      ylab="Age",
      xlab="Weight",
      main="Relationship between Weight and Age",
-     ylim=c(10,70),
-     xlim=c(60,80))
+     xlim=c(10,70),
+     ylim=c(60,80))
 
 ```
 
