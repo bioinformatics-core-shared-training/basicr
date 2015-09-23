@@ -930,7 +930,8 @@ list.files()
 ```
 
 - Otherwise you need the *path* to the file
-  
+    + you can get this using `file.choose`
+    
 ##1. Read in the data
 
 - The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
@@ -1155,7 +1156,7 @@ plot(patients$Weight)
     + for when we want to visualise the relationship between two variables
 ```{r,fig.height=3}
 patients$Age
-plot(patients$Weight,patients$Age)
+plot(patients$Age,patients$Weight)
 ```
 
 ##Making a barplot
@@ -1314,7 +1315,7 @@ plot(patients$Weight,type="b")
 - Add an informative title to the plot using the `main` argument
 
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age,main="Relationship between Weight and Age")
+plot(patients$Age,patients$Weight,main="Relationship between Weight and Age")
 ```
 
 
@@ -1322,21 +1323,21 @@ plot(patients$Weight,patients$Age,main="Relationship between Weight and Age")
 
 - Adding the x-axis label
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age,xlab="Weight")
+plot(patients$Age,patients$Weight,xlab="Weight")
 ```
 
 ## Simple customisations
 - Adding the y-axis label
 
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age,ylab="Age")
+plot(patients$Age,patients$Weight,ylab="Age")
 ```
 
 ## Simple customisations
 - We can specifiy multiple arguments at once
     + here `ylim` and `xlim` are used to specify axis limits
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age,
+plot(patients$Age,patients$Weight,
      ylab="Age",
      xlab="Weight",
      main="Relationship between Weight and Age",
@@ -1357,7 +1358,7 @@ plot(patients$Weight,patients$Age,
 Changing the `col` argument to `plot` changes the colour that the points are plotted in
 
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age,col="red")
+plot(patients$Age,patients$Weight,col="red")
 ```
 
 
@@ -1366,7 +1367,7 @@ plot(patients$Weight,patients$Age,col="red")
 - R can use a variety of *p*lotting *ch*aracters
 - Each of which has a numeric *code* 
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age, pch=16)
+plot(patients$Age,patients$Weight, pch=16)
 ```
 
 ##Plotting characters
@@ -1388,20 +1389,20 @@ text(x,y-0.3,i+1)
 - Or you can specify a character
 
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age, pch="X")
+plot(patients$Age,patients$Weight, pch="X")
 ```
 
 
 ##Size of points
 **C**haracter **ex**pansion
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age, cex=2)
+plot(patients$Age,patients$Weight, cex=2)
 ```
 
 ##Size of points
 **C**haracter **ex**pansion
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age, cex=0.2)
+plot(patients$Age,patients$Weight, cex=0.2)
 ```
 
 ##Colours and characters as vectors
@@ -1411,7 +1412,7 @@ plot(patients$Weight,patients$Age, cex=0.2)
     + the values will get *recycled* (re-used) so that each point gets assigned a value
 - We can use a pre-defined ***colour palette*** (see later)
 ```{r,fig.height=5}
-plot(patients$Weight,patients$Age, 
+plot(patients$Age,patients$Weight, 
      pch = 1:10,
      col=c("red","orange","green","blue"),
      cex = 1:5)
