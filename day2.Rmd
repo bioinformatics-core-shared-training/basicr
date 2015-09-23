@@ -29,7 +29,7 @@ toc: yes
     + etc....
 - We will now look at ways to modify the plot appearance after it has been created
 - Also, how to export the graphs 
-- Set your working directory to ***Day_2_scripts***
+
 
 
 ## The painter's model
@@ -46,13 +46,12 @@ toc: yes
         + e.g. gender of individual
 
 ```{r echo=FALSE,results='hide'}
-setwd("Day_2_scripts/")
-source("../Day_1_scripts/1.2_patients.R")
+source("Day_1_scripts/1.2_patients.R")
 ```
 
         
 ```{r eval=FALSE}
-source("../Day_1_scripts/1.2_patients.R")
+source("1.2_patients.R")
 ```
 
 ```{r}
@@ -79,7 +78,7 @@ points(40,68,pch="X")
 - Often it is useful to create a blank 'canvas' with the correct labels and limits
 
 ```{r}
-plot(patients$Age, patients$Weight,pch=16,type="n")
+plot(patients$Age, patients$Weight,type="n")
 ```
 
 ## Adding points to differentiate gender
@@ -99,7 +98,7 @@ patients[males,"Weight"]
 ## Adding points to differentiate gender
 
 ```{r}
-plot(patients$Age, patients$Weight,pch=16,type="n")
+plot(patients$Age, patients$Weight,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
 
 ```
@@ -117,7 +116,7 @@ patients[females,]
 ## Adding points to differentiate gender
 
 ```{r}
-plot(patients$Age, patients$Weight,pch=16,type="n")
+plot(patients$Age, patients$Weight,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
 points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
 
@@ -134,7 +133,7 @@ points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
     - or typing `dev.off()`
 
 ```{r fig.height=4,fig.width=8}
-plot(patients$Age, patients$Weight,pch=16,type="n")
+plot(patients$Age, patients$Weight,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
 points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
 ```
@@ -149,7 +148,7 @@ points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
     + also recognises shortcuts such as ***topleft*** and ***bottomright***...
 
 ```{r fig.height=4,fig.width=8}
-plot(patients$Age, patients$Weight,pch=16,type="n")
+plot(patients$Age, patients$Weight,type="n")
 points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
 points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
 legend("topleft", legend=c("M","F"), 
@@ -282,10 +281,11 @@ weather <- read.csv("Day_1_scripts/ozone.csv")
 
 
 ```{r eval=FALSE}
-weather <- read.csv("../Day_1_scripts/ozone.csv")
+weather <- read.csv("ozone.csv")
 ```
 
-- Make a scatter plot of all daily observations of Ozone level
+- Make a scatter plot of all observations of Ozone level
+    + i.e. with the y axis being the Ozone variable, and x-axis being the row index
 - Highlight any days which had Ozone level > 100
 - Indicate which month the days with high ozone-level belong to
 
