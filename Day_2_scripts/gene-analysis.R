@@ -3,9 +3,6 @@ genes <- read.delim("gene.description.txt")
 subjects <- read.delim("cancer.patients.txt")
 evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
 
-## Make sure that the expression values are in the same order as the clinical data
-
-evals <- evals[,match(subjects$samplename,colnames(evals))]
 
 ## Find out which probe is used to measure ESR1
 

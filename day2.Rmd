@@ -721,19 +721,24 @@ if(!file.exists("Day_2_scripts/gene.expression.txt")){
   }
   data("nki")
   cancer.patients <- pData(nki)[,c("samplename","age","er","grade")]
-  genes <- fData(nki)[,c("probe","HUGO.gene.symbol")]
+  genes <- fData(nki)[,c("probe","HUGO.gene.symbol","Cytoband")]
+  
+  exprs(nki) <- exprs(nki)[!is.na(genes$HUGO.gene.symbol),]
+  
+  genes <- genes[!is.na(genes$HUGO.gene.symbol),]
+  
   ##get the top50 DE genes, plus 500 random
   ps <- NULL
   for(i in 1:nrow(genes)){
     ps[i] <- t.test(exprs(nki)[i,] ~ factor(cancer.patients$er))$p.value
   }
+  
   set.seed(070815)
   ind <- order(ps, decreasing = FALSE)[1:50]
   ind <- sort(c(ind, sample(setdiff(1:nrow(genes),ind),500)))
   
   evalues <- exprs(nki)[ind,]
-  cancer.patients <- cancer.patients[order(cancer.patients$age),]
-  genes <- genes[order(genes[,1]),]
+  genes <- genes[ind,]
   
   write.table(evalues, file="Day_2_scripts/gene.expression.txt",quote=FALSE,sep="\t")
   write.table(genes, file="Day_2_scripts/gene.description.txt",quote=FALSE,sep="\t")
@@ -789,13 +794,13 @@ dim(evals)
 
 ## Peek at the data
 ```{r eval=FALSE}
-genes <- read.delim("gene.description.txt")
+genes <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
 head(genes)
 dim(genes)
 ```
 
 ```{r echo=FALSE}
-genes <- read.delim("Day_2_scripts/gene.description.txt")
+genes <- read.delim("Day_2_scripts/gene.description.txt",stringsAsFactors = FALSE)
 head(genes)
 dim(genes)
 ```
@@ -895,7 +900,7 @@ genevals <- evals[match(probe,rownames(evals)),]
 We have numeric expression values and want to visualise them against our categorical data
 
 - use a boxplot, for example
-- something doesn't look correct though....
+
 
 ```{r}
 boxplot(as.numeric(genevals)~factor(subjects$er))
@@ -903,74 +908,7 @@ boxplot(as.numeric(genevals)~factor(subjects$er))
 
 ## Relating to patient characteristics
 
-- the p-value is not encouraging either
-    + what could have gone wrong?
-    
-```{r}
-t.test(as.numeric(genevals)~factor(subjects$er))
-
-```
-
-## The right patients, but not neccessarily in the right order!
-
-- the problem is that our expression values are not in the same order as the clinical data
-    + a common occurence, sadly :/
-
-```{r}
-colnames(evals)[1:10]
-subjects$samplename[1:10]
-colnames(evals)[1:10] == subjects$samplename[1:10]
-```
-
-
-## Re-ordering the matrix
-
-- match returns a vector of the positions of (first) matches of its first argument in its second.
-- recall that we can use a vector to subset, or order, the columns of a data frame
-
-```{r}
-match(subjects$samplename,colnames(evals))[1:10]
-```
-
-```{r echo=FALSE}
-mm <- match(subjects$samplename,colnames(evals))[1:10]
-```
-
-- the output indicates that column `r mm[1]` of the expression matrix represents the same data as row 1 of the `subjects` matrix
-- column `r mm[2]` of the expression matrix represents the same data as row 2 of the `subjects` matrix
-- etc....
-
-
-## Re-ordering the matrix
-
-- We can use this vector to index our expression matrix
-    + remembering to omit the row index
-- Sanity check to make sure we've done the job
-- Match the `probe` index as before
-    + we haven't changed the rows so this should be the same
-
-```{r}
-evals <- evals[,match(subjects$samplename,colnames(evals))]
-genevals <- evals[match(probe,rownames(evals)),]
-colnames(evals)[1:10] == subjects$samplename[1:10]
-all(colnames(evals) == subjects$samplename)
-
-```
-
-
-## Try again
-
-- Better!
-
-```{r}
-boxplot(as.numeric(genevals)~factor(subjects$er))
-```
-
-
-
-## Try again
-
-- Much better
+- the p-value is also encouraging 
 
 ```{r}
 t.test(as.numeric(genevals)~factor(subjects$er))
@@ -985,7 +923,6 @@ t.test(as.numeric(genevals)~factor(subjects$er))
 genes <- read.delim("gene.description.txt")
 subjects <- read.delim("cancer.patients.txt")
 evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
-evals <- evals[,match(subjects$samplename,colnames(evals))]
 
 ind <- match("ESR1", genes[,2])
 probe <- genes[ind,1]
