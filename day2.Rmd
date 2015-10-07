@@ -931,6 +931,32 @@ boxplot(as.numeric(genevals)~factor(subjects$er))
 t.test(as.numeric(genevals)~factor(subjects$er))
 ```
 
+## Exercise
+
+- write the expression matrix for just ER negative samples to a file
+- create a new data frame combining the patient information with ESR1 expression level
+    + e.g. 
+```{r echo=FALSE}
+df <- cbind(subjects, ER = as.numeric(genevals))
+head(df)
+```
+
+- sort the rows in this data frame according to ESR1 expression, and write the results to a file
+    + HINT: look-up the help for the `order` function
+
+## Solution
+
+```{r}
+erNegPatients <- subjects$er == 0
+write.table(evals[,erNegPatients], file="erNegativeExpression.txt")
+```
+
+```{r}
+df <- cbind(subjects, ER = as.numeric(genevals))
+df <- df[order(df$ER),]
+write.table(df, file="patientsOrderedByESR1.txt")
+```
+
 ## (short) Exercise
 
 - make sure that you can run the script, and can understand it
@@ -943,7 +969,6 @@ There are a number of issues that we will address this afternoon
     + .....what happens if the data change?
 - Imagine if we have a list of 100 genes to test
     + what a pain it would be to change the script for each gene
-
 
 
 # 4. Report Writing
