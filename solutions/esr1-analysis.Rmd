@@ -1,0 +1,42 @@
+---
+title: "Analysis of ESR1"
+author: "Mark Dunning"
+date: "9 September 2015"
+output: html_document
+---
+
+
+
+```{r cache=TRUE}
+genes <- read.delim("gene.description.txt")
+subjects <- read.delim("cancer.patients.txt")
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+```
+
+`r ncol(evals)` patients were involved in this study.
+
+```{r}
+evals <- evals[,match(subjects$samplename,colnames(evals))]
+```
+
+```{r}
+ind <- match("ESR1", genes[,2])
+probe <- genes[ind,1]
+```
+
+```{r}
+genevals <- evals[match(probe,rownames(evals)),]
+```
+
+`r table(subjects$er)[1]` patients were ER Negative, and `r table(subjects$er)[2]` patients were ER positive
+
+```{r echo=FALSE}
+boxplot(as.numeric(genevals)~factor(subjects$er),main="Expression of ESR1 in ER negative and positive")
+```
+
+```{r results='hide'}
+res<- t.test(as.numeric(genevals)~factor(subjects$er))
+```
+
+The p-value of the association between ESR1 and ER status is `r res$p.value`
+
