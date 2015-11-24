@@ -5,7 +5,7 @@ author: Mark Dunning, Suraj Menon, and Aiora Zabala. \n Original material by Rob
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: 
   slidy_presentation:
-    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0"
+    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0. COURSE HOME: cambiotraining.github.io/r-intro/"
 css: mystyle.css
 toc: yes
 
@@ -39,20 +39,42 @@ toc: yes
 - Lower levels are obscured by higher levels, 
     + allowing for blending, masking and overlaying of objects.
 
+## Example data
+
+- We will re-use the patients data from yesterday
+
+```{r}
+age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
+weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
+71.5, 73.2, 64.8)
+firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
+"Paul", "Joanna", "Matthew", "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis", 
+"Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
+
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
+FALSE, TRUE, FALSE, TRUE)
+
+sex <- c("Male", "Female", "Male", "Female", "Male", "Male",
+"Female", "Male", "Male", "Female")
+
+patients <- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName, secondName), 
+                       Sex = factor(sex),
+                       Age = age,
+                       Weight = weight,
+                       Consent = consent,
+                       stringsAsFactors = FALSE)
+```
+
+
+
 ##Initial plot
 
 - Recall our patients dataset from yesterday
     + we might want to display other characteristics on the plot
         + e.g. gender of individual
-
-```{r echo=FALSE,results='hide'}
-source("Day_1_scripts/1.2_patients.R")
-```
-
-        
-```{r eval=FALSE}
-source("1.2_patients.R")
-```
 
 ```{r}
 plot(patients$Age, patients$Weight,pch=16)
@@ -286,23 +308,13 @@ weather <- read.csv("ozone.csv")
 
 - Make a scatter plot of all observations of Ozone level
     + i.e. with the y axis being the Ozone variable, and x-axis being the row index
-- Highlight any days which had Ozone level > 100
-- Indicate which month the days with high ozone-level belong to
+- Highlight any days in the study which had Ozone level > 100
+- Indicate which month these days with high ozone-level belong to
 
 ## Target Graph
 
 ```{r echo=FALSE}
 plot(weather$Ozone,xlab="Day",ylab="Ozone level")
-abline(h=100)
-highO <- which(weather$Ozone > 100)
-points(highO, weather$Ozone[highO],col="red",pch=16)
-text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
-```
-
-## Solution
-
-```{r,fig.height=5}
-plot(weather$Ozone)
 abline(h=100)
 highO <- which(weather$Ozone > 100)
 points(highO, weather$Ozone[highO],col="red",pch=16)
@@ -325,6 +337,18 @@ plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab
 plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
 
 ```
+
+## Solution
+
+```{r,fig.height=5}
+plot(weather$Ozone)
+abline(h=100)
+highO <- which(weather$Ozone > 100)
+points(highO, weather$Ozone[highO],col="red",pch=16)
+text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
+```
+
+
 
 ## Solution
 
@@ -693,7 +717,7 @@ abline(mod1,col="red",lty=2)
 
 - So far we have been lucky that all our data have been in the same file
     + this is not usually the case
-    +  dataset may be spread over severall files
+    +  dataset may be spread over several files
         + This takes longer, and is harder, than many people realise
     + We need to combine before doing an analysis
 
@@ -703,9 +727,9 @@ abline(mod1,col="red",lty=2)
 
 - R has powerful functions to combine heterogeneous data sources into a single data set
 - Gene clustering example data
-    + gene expression values in ***Day_2_scripts/gene.expression.txt***
-    + patient information in ***Day_2_scripts/gene.description.txt***
-    + gene information in ***Day_2_scripts/cancer.patients.txt***
+    + gene expression values in ***data/gene.expression.txt***
+    + gene information in ***data/gene.description.txt***
+    + patient information in ***data/cancer.patients.txt***
 - A breast cancer dataset with numerous patient characteristics 
     + we will concentrate on ***ER status*** (positive / negative)
     + what genes show a statistically-significant different change between ER groups?
@@ -713,7 +737,7 @@ abline(mod1,col="red",lty=2)
 
 ```{r echo=FALSE}
 
-if(!file.exists("Day_2_scripts/gene.expression.txt")){
+if(!file.exists("data/gene.expression.txt")){
 
   if(!require(breastCancerNKI) | require(genefilter)) {
     source("http://www.bioconductor.org/biocLite.R")
@@ -917,7 +941,7 @@ t.test(as.numeric(genevals)~factor(subjects$er))
 
 ## Complete script
 
-`gene-analysis.R`
+`exercises/exercise7.Rmd`
 
 ```{r eval=FALSE}
 genes <- read.delim("gene.description.txt")
@@ -957,353 +981,9 @@ df <- df[order(df$ER),]
 write.table(df, file="patientsOrderedByESR1.txt")
 ```
 
-## (short) Exercise
 
-- make sure that you can run the script, and can understand it
-- modify the script to analyse `NAT1`
 
-There are a number of issues that we will address this afternoon
-
-- How can we handover the results of our analysis to our collaborators
-    + copy and paste the graphs into a word document!!?
-    + .....what happens if the data change?
-- Imagine if we have a list of 100 genes to test
-    + what a pain it would be to change the script for each gene
-
-
-# 4. Report Writing
-
-## Principles of Reproducible Research
-
-![step-two](images/SidneyHarris_MiracleWeb.jpg)
-
-Sidney Harris - New York Times
-
-## Why should we do reproducible research?
-
-Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpress.com/2015/07/15/five-selfish-reasons-for-working-reproducibly/) and [slides](http://f1000research.com/slides/4-207)
-
-1. Avoid disaster
-2. Easier to write papers
-3. Easier to talk to reviewers
-4. Continuity of your work in the lab
-5. Reputation
-
-
-##It is a hot topic at the moment
-
-- Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
-    + as reported in the ***New York Times***
-    
-![nyt-article](images/rep-research-nyt.png)
-
-##Hear the full account
-
-- Very entertaining talk from Keith Baggerly in Cambridge, December 2010
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
-
-
-##What can we do about it?
-
-- Use scripts / R
-- Use version control
-- Document early
-- Document everything
-- Write comments and explanations
-- Automatically-generate your plots, tables, etc from the data
-    + always ensure that you have the latest version
-
-##Simple example in RStudio
-- Lets take gene-analysis.R
-- Use the Compile Notebook button in RStudio
-- Take an R script and turn into HTML, PDF or even Word
-- All code will be displayed and the outputs printed
-- A compiled report will be generated in your working directory
-
-![compile](images/RStudio-menu.png)
-
-
-
-## What is going on?
-
-- The `knitr` package is being used convert the R script into 'markdown' format, which it then compiles into the output of your choosing
-- `knitr` is distributed with RStudio
-    + `knitr` is the modern-day equivalent of `Sweave`
-- markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
-- The following should create the file `gene-analysis.Rmd` in the Day_2_scripts folder
-
-```{r eval=FALSE}
-library(knitr)
-spin(hair="gene-analysis.R",knit=FALSE)
-```
-
-## Not quite enough for a reproducible document
-
-- Minimally, you should record what version of R, and the packages you used.
-- Use the `sessionInfo()` function
-    + e.g. for the version of R I used to make the slides
-    + lets add this to the gene-analysis.R script and see what happens
-```{r}
-sessionInfo()
-```
-
-## Create a markdown file from scratch
-
-File - > New File - > R Markdown
-
-- Choose 'Document' and the default output type (HTML)
-- A new tab is created in RStudio
-- The header allows you to specify a Page title, author and output type
-```{r eval=FALSE}
----
-title: "Untitled"
-author: "Mark Dunning"
-date: "18/08/2015"
-output: html_document
----
-```
-
-## Format of the file
-
-- **Lines 8 - 10** Plain text description
-- **Lines 12 - 14** An R code 'chunk'
-- **Lines 18 to 20** Another code chunk, this time producing a plot
-
-![md-format](images/markdown-format.png)
-
-- Pressing the ***Knit HTML*** button will create the report
-    + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
-    
-##Text formatting
-See ***?*** - > ***Markdown Quick Reference*** in RStudio
-
-- Enclose text in \* to format in *italics*
-- Enclose text in \*\* to format in **bold**
-- \*\*\* for ***bold italics***
-- \` to format like `code`
-- \$ to include equations: $e =mc^2$
-- \> quoted text: 
-
->To be or not to be
-
-- see Markdown Quick Reference for more 
-    + adding images
-    + adding web links
-    + tables
-
-
-## Defining chunks
-
-- It is not great practice to have one long, continuous R script
-- Better to break-up into smaller pieces; '*chunks*'
-- You can document each chunk separately
-- Easier to catch errors
-- The characteristics of each chunk can be modified
-    + You might not want to print the R code for each chunk
-    + or the output
-    + etc
-
-
-## Chunk options
-
-Code chunks are encapsulated between backticks. Options for the chunk can be put inside the curly brackets`{....}`
-
-```
-'''{r}
-my code here.....
-'''
-```
-
-- It's a good idea to name each chunk
-    + Easier to track-down errors
-- We can display R code, but not run it
-    + `eval=FALSE`
-- We can run R code, but not display it
-    + `echo=FALSE`
-    + e.g. setting display options
-- Suppress warning messages
-    + `warning=FALSE`
-
-    
-## Chunk options: eval
-
-- Sometimes we want to format code for display, but not execute
-    + we want to show the code for how we read our data, but want our report to compile quickly
-
-```
-'''{r,eval=FALSE}
-data <- read.delim("path.to.my.file")
-'''
-```
-
-
-## Chunk options: echo
-
-- Might want to load some data from disk
-    + e.g. the R object from reading the data in the previous slide
-```
-'''{r echo=FALSE}
-load("mydata.rda")
-'''
-```
-- Your P.I. wants to see your results, but doesn't really want to know about the R code that you used
-
-## Chunk options: results
-
-- Some code or functions might produce lots of output to the screen that we don't need
-```{r results='hide'}
-for(i in 1:100){
-  print(i)
-}
-```
-
-##Chunk options: message and warning
-
-- Loading an R package will sometimes print messages and / or warnings to the screen
-    + not always helpful in a report
-```
-'''{r}
-library(DESeq)
-'''
-```
-
-```{r echo=FALSE}
-library(DESeq)
-```
-
-##Chunk options: message and warning
-
-- Using `message=FALSE` and `warning=FALSE`
-```
-'''{r message=FALSE,warning=FALSE}
-library(DESeq)
-'''
-```
-- Could also need `suppressPackageStartupMessages`
-
-##Chunk options: cache
-
-- `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
-- speeds-up the compilation of the document
-    + we don't want to reload our dataset if we've only made a tiny change downstream
-```
-'''{r echo=FALSE,cache=TRUE}
-load("mydata.rda")
-'''
-```
-
-## Including plots
-
-- Use a plotting function (`plot`, `boxplot`, `hist` etc) will include the plot at the relevant point in the document
-
-```
-'''{r}
-plot(1:10, rnorm(10))
-'''
-```
-
-```{r echo=FALSE}
-plot(1:10, rnorm(10))
-```
-
-## Control over plots
-
-```
-'''{r fig.height=2,fig.align='right', fig.height=4,fig.width=9}
-plot(1:10, rnorm(10))
-'''
-```
-
-```{r echo=FALSE,fig.height=3,fig.align='right', fig.height=4,fig.width=9}
-plot(1:10, rnorm(10))
-```
-
-
-## Running R code from the main text
-
-- We can add R code to our main text, which gets evaluated
-    + make sure we always have the latest figures, p-values etc
-
-```
-.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
-```
-
-```{r echo=FALSE}
-gender <- c(rep("F", 47), rep("M", 50))
-```
-.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
-
-
-
-
-```
-.....the p-value of the t-test is 'r pval', which indicates that.....
-```
-```{r echo=FALSE}
-pval <- 0.05
-```
-.....the p-value of the t-test is `r pval`, which indicates that.....
-
-- We call this "in-line" code
-
-## Running R code from the main text
-
-- Like the rest of our report these R statements will get updated each time we compile the report
-
-```
-.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
-```
-
-```{r echo=FALSE}
-gender <- c(rep("F", 41), rep("M", 54))
-```
-.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
-
-
-
-```
-.....the p-value of the t-test is 'r pval', which indicates that.....
-```
-```{r echo=FALSE}
-pval <- 0.1
-```
-.....the p-value of the t-test is `r pval`, which indicates that.....
-
-
-
-## References
-
-- Useful reference:
-    +  Reproducible Research in R and RStudio
-        + http://christophergandrud.github.io/RepResR-RStudio/
-        + Useful exercise is to compile the book from the [source code](https://github.com/christophergandrud/Rep-Res-Book)
-    + [Implementing Reproducible Research](https://osf.io/s9tya/wiki/home/)
-    + FYI This course was generated from R markdown files
-        - see our github [repository](https://github.com/cambiotraining/r-intro)
-
-## Exercise
-
-- Create a new markdown file that will report your analysis of the expression of ESR1 in breast cancer
-    + File -> New File -> R Markdown
-- Create separate code chunks for each stage of the analysis (copy code from gene-analysis.R if you wish)
-    + Reading the data
-    + Re-order the gene expression matrix
-    + Extract data for ESR1
-    + Produce a boxplot
-    + Perform the t-test
-    
-## Exercise
-
-Once you have a report that you are happy with
-
-- Use "in-line" R code to report how many patients were involved in the study
-- Hide the code chunk used to produce the plot (`echo=FALSE`)
-- Cache the code chunk used to read the raw data (`cache=TRUE`)
-- Hide code used to perform the t-test and the output of the test. However, use "in-line" R code to report the p-value of the t-test
-- Solution: *esr1-analysis.Rmd*
-
-We will now see how to modify the report to analyse multiple genes
+#4. Programming in R
 
 ##Introducing loops
 
@@ -1634,6 +1314,332 @@ heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol,col=rbPal)
 
 - See the markdown document genelist-analysis.Rmd
 
+
+# 5. Report Writing
+
+## Principles of Reproducible Research
+
+![step-two](images/SidneyHarris_MiracleWeb.jpg)
+
+Sidney Harris - New York Times
+
+## Why should we do reproducible research?
+
+Five selfish reasons - [Florian Markowetz Blog](https://scientificbsides.wordpress.com/2015/07/15/five-selfish-reasons-for-working-reproducibly/) and [slides](http://f1000research.com/slides/4-207)
+
+1. Avoid disaster
+2. Easier to write papers
+3. Easier to talk to reviewers
+4. Continuity of your work in the lab
+5. Reputation
+
+
+##It is a hot topic at the moment
+
+- Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
+    + as reported in the ***New York Times***
+    
+![nyt-article](images/rep-research-nyt.png)
+
+##Hear the full account
+
+- Very entertaining talk from Keith Baggerly in Cambridge, December 2010
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
+
+
+##What can we do about it?
+
+- Use scripts / R
+- Use version control
+- Document early
+- Document everything
+- Write comments and explanations
+- Automatically-generate your plots, tables, etc from the data
+    + always ensure that you have the latest version
+
+##Simple example in RStudio
+- Lets take gene-analysis.R
+- Use the Compile Notebook button in RStudio
+- Take an R script and turn into HTML, PDF or even Word
+- All code will be displayed and the outputs printed
+- A compiled report will be generated in your working directory
+
+![compile](images/RStudio-menu.png)
+
+
+
+## What is going on?
+
+- The `knitr` package is being used convert the R script into 'markdown' format, which it then compiles into the output of your choosing
+- `knitr` is distributed with RStudio
+    + `knitr` is the modern-day equivalent of `Sweave`
+- markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
+- The following should create the file `gene-analysis.Rmd` in the Day_2_scripts folder
+
+```{r eval=FALSE}
+library(knitr)
+spin(hair="gene-analysis.R",knit=FALSE)
+```
+
+## Not quite enough for a reproducible document
+
+- Minimally, you should record what version of R, and the packages you used.
+- Use the `sessionInfo()` function
+    + e.g. for the version of R I used to make the slides
+    + lets add this to the gene-analysis.R script and see what happens
+```{r}
+sessionInfo()
+```
+
+## Create a markdown file from scratch
+
+File - > New File - > R Markdown
+
+- Choose 'Document' and the default output type (HTML)
+- A new tab is created in RStudio
+- The header allows you to specify a Page title, author and output type
+```{r eval=FALSE}
+---
+title: "Untitled"
+author: "Mark Dunning"
+date: "18/08/2015"
+output: html_document
+---
+```
+
+## Format of the file
+
+- **Lines 8 - 10** Plain text description
+- **Lines 12 - 14** An R code 'chunk'
+- **Lines 18 to 20** Another code chunk, this time producing a plot
+
+![md-format](images/markdown-format.png)
+
+- Pressing the ***Knit HTML*** button will create the report
+    + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
+    
+##Text formatting
+See ***?*** - > ***Markdown Quick Reference*** in RStudio
+
+- Enclose text in \* to format in *italics*
+- Enclose text in \*\* to format in **bold**
+- \*\*\* for ***bold italics***
+- \` to format like `code`
+- \$ to include equations: $e =mc^2$
+- \> quoted text: 
+
+>To be or not to be
+
+- see Markdown Quick Reference for more 
+    + adding images
+    + adding web links
+    + tables
+
+
+## Defining chunks
+
+- It is not great practice to have one long, continuous R script
+- Better to break-up into smaller pieces; '*chunks*'
+- You can document each chunk separately
+- Easier to catch errors
+- The characteristics of each chunk can be modified
+    + You might not want to print the R code for each chunk
+    + or the output
+    + etc
+
+
+## Chunk options
+
+Code chunks are encapsulated between backticks. Options for the chunk can be put inside the curly brackets`{....}`
+
+```
+'''{r}
+my code here.....
+'''
+```
+
+- It's a good idea to name each chunk
+    + Easier to track-down errors
+- We can display R code, but not run it
+    + `eval=FALSE`
+- We can run R code, but not display it
+    + `echo=FALSE`
+    + e.g. setting display options
+- Suppress warning messages
+    + `warning=FALSE`
+
+    
+## Chunk options: eval
+
+- Sometimes we want to format code for display, but not execute
+    + we want to show the code for how we read our data, but want our report to compile quickly
+
+```
+'''{r,eval=FALSE}
+data <- read.delim("path.to.my.file")
+'''
+```
+
+
+## Chunk options: echo
+
+- Might want to load some data from disk
+    + e.g. the R object from reading the data in the previous slide
+```
+'''{r echo=FALSE}
+load("mydata.rda")
+'''
+```
+- Your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+
+## Chunk options: results
+
+- Some code or functions might produce lots of output to the screen that we don't need
+```{r results='hide'}
+for(i in 1:100){
+  print(i)
+}
+```
+
+##Chunk options: message and warning
+
+- Loading an R package will sometimes print messages and / or warnings to the screen
+    + not always helpful in a report
+```
+'''{r}
+library(DESeq)
+'''
+```
+
+```{r echo=FALSE}
+library(DESeq)
+```
+
+##Chunk options: message and warning
+
+- Using `message=FALSE` and `warning=FALSE`
+```
+'''{r message=FALSE,warning=FALSE}
+library(DESeq)
+'''
+```
+- Could also need `suppressPackageStartupMessages`
+
+##Chunk options: cache
+
+- `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
+- speeds-up the compilation of the document
+    + we don't want to reload our dataset if we've only made a tiny change downstream
+```
+'''{r echo=FALSE,cache=TRUE}
+load("mydata.rda")
+'''
+```
+
+## Including plots
+
+- Use a plotting function (`plot`, `boxplot`, `hist` etc) will include the plot at the relevant point in the document
+
+```
+'''{r}
+plot(1:10, rnorm(10))
+'''
+```
+
+```{r echo=FALSE}
+plot(1:10, rnorm(10))
+```
+
+## Control over plots
+
+```
+'''{r fig.height=2,fig.align='right', fig.height=4,fig.width=9}
+plot(1:10, rnorm(10))
+'''
+```
+
+```{r echo=FALSE,fig.height=3,fig.align='right', fig.height=4,fig.width=9}
+plot(1:10, rnorm(10))
+```
+
+
+## Running R code from the main text
+
+- We can add R code to our main text, which gets evaluated
+    + make sure we always have the latest figures, p-values etc
+
+```
+.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+```
+
+```{r echo=FALSE}
+gender <- c(rep("F", 47), rep("M", 50))
+```
+.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
+
+
+
+
+```
+.....the p-value of the t-test is 'r pval', which indicates that.....
+```
+```{r echo=FALSE}
+pval <- 0.05
+```
+.....the p-value of the t-test is `r pval`, which indicates that.....
+
+- We call this "in-line" code
+
+## Running R code from the main text
+
+- Like the rest of our report these R statements will get updated each time we compile the report
+
+```
+.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+```
+
+```{r echo=FALSE}
+gender <- c(rep("F", 41), rep("M", 54))
+```
+.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
+
+
+
+```
+.....the p-value of the t-test is 'r pval', which indicates that.....
+```
+```{r echo=FALSE}
+pval <- 0.1
+```
+.....the p-value of the t-test is `r pval`, which indicates that.....
+
+
+
+## References
+
+- Useful reference:
+    +  Reproducible Research in R and RStudio
+        + http://christophergandrud.github.io/RepResR-RStudio/
+        + Useful exercise is to compile the book from the [source code](https://github.com/christophergandrud/Rep-Res-Book)
+    + [Implementing Reproducible Research](https://osf.io/s9tya/wiki/home/)
+    + FYI This course was generated from R markdown files
+        - see our github [repository](https://github.com/cambiotraining/r-intro)
+
+## Exercise
+
+Once you have a report that you are happy with
+
+- Use "in-line" R code to report how many patients were involved in the study
+- Hide the code chunk used to produce the plot (`echo=FALSE`)
+- Cache the code chunk used to read the raw data (`cache=TRUE`)
+- Hide code used to perform the t-test and the output of the test. However, use "in-line" R code to report the p-value of the t-test
+- Solution: *esr1-analysis.Rmd*
+
+We will now see how to modify the report to analyse multiple genes
+
+
+
 # End of Course
 
 ## Wrap-up
@@ -1648,3 +1654,4 @@ heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol,col=rbPal)
     + Bookmark some [reference](https://en.wikibooks.org/wiki/R_Programming) guides
     + on twitter @rstudio, @Rbloggers, @RLangTip
     
+# Supplementary; Next steps in R

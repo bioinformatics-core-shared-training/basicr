@@ -1,0 +1,38 @@
+---
+title: "Exercise 5"
+author: "Your Name"
+date: '`r format(Sys.time(), "%d %b %Y")`'
+output: html_document
+---
+
+```{r}
+weather <- read.csv("ozone.csv")
+```
+
+
++ Make a scatter plot of all observations of Ozone level
+    - i.e. with the y axis being the Ozone variable, and x-axis being the row index
+    - Highlight any days which had Ozone level > 100
+    - Indicate which month the days with high ozone-level belong to
+
+```{r}
+plot(weather$Ozone)
+abline(h=100)
+highO <- which(weather$Ozone > 100)
+points(highO, weather$Ozone[highO],col="red",pch=16)
+text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
+```
+
+
++ Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
+    - save the plot to a pdf file
+    
+```{r}
+pdf("ozoneCorrelations.pdf")
+par(mfrow=c(1,3))
+plot(weather$Solar.R,weather$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
+plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
+plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
+dev.off()
+```
+

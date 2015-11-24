@@ -5,7 +5,7 @@ author: Mark Dunning, Suraj Menon, and Aiora Zabala. Original material by Robert
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: 
   slidy_presentation:
-    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0"
+    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0. COURSE HOME: cambiotraining.github.io/r-intro/"
 css: mystyle.css
 toc: yes
 
@@ -77,10 +77,28 @@ http://www.revolutionanalytics.com/companies-using-r
 - New York Times
     + http://blog.revolutionanalytics.com/2011/03/how-the-new-york-times-uses-r-for-data-visualization.html
 
+## R can facilitate Reproducible Research
+
+![step-two](images/SidneyHarris_MiracleWeb.jpg)
+
+Sidney Harris - New York Times
+
+##It is a hot topic at the moment
+
+- Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
+    + as reported in the ***New York Times***
+    
+![nyt-article](images/rep-research-nyt.png)
+
+##Hear the full account
+
+- Very entertaining talk from Keith Baggerly in Cambridge, December 2010
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
 
 ##Various platforms supported
 
-- Release 3.2.0 (April 2015)
+- Release 3.2.2 (August 2015)
     + Base package and Contributed packages (general purpose extras)
     + `r length(XML:::readHTMLTable("http://cran.r-project.org/web/packages/available_packages_by_date.html")[[1]][[2]])` available packages as of `r date()`
 - Download from http://mirrors.ebi.ac.uk/CRAN/
@@ -109,28 +127,6 @@ To launch RStudio, find the RStudio icon in the menu bar on the left
 of the screen and click
 
 ![RStudio screenshot](images/rstudio-windows.png)
-
-##The Working Directory (wd)
-
-- Like many programs R has a concept of a working directory (wd)
-- It is the place where R will look for files to execute and where it will
-save files, by default
-- For this course we need to set the working directory to the location
-of the course scripts
-- At the command prompt in the terminal or in RStudio console type:
-
-```{r include=FALSE}
-options(width=60)
-```
-
-
-```{r eval=FALSE}
-setwd("R_course/Day_1_scripts")
-```
-
-- Alternatively in RStudio use the mouse and browse to the directory
-location
-- Session → Set Working Directory → Choose Directory...
 
 ##Basic concepts in R - command line calculation
 
@@ -451,22 +447,32 @@ to the special NULL value:
 names(coding.pc) <- NULL
 coding.pc
 ```
-##Writing scripts with RStudio
+
+## Documenting your analysis with RStudio
 
 Typing lots of commands directly to R can be tedious. A better way is to
 write the commands to a file and then load it into R.
 
-- Click on **File** →  **New** in Rstudio
-- Type in some R code, e.g.:
- 
-```{r writing-scripts, eval=FALSE}
-x <- 2 + 2
-print(x)
-```
-- Click on **Run** to execute the current line, and **Source** to execute the
-whole script
+- We will be documenting our analyses using ***markdown***
+    + markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
+    
+- To create a R markdown file, Click on **File** →  **New File**  -> **R Markdown** in Rstudio
+- This will make our analyses ***reproducible***
 
-Sourcing can also be performed manually with `source("myScript.R")`
+## Format of the file
+
+- **Lines 8 - 10** Plain text description
+- **Lines 12 - 14** An R code 'chunk'
+- **Lines 18 to 20** Another code chunk, this time producing a plot
+
+![md-format](images/markdown-format.png)
+
+- Pressing the ***Knit HTML*** button will create the report
+    + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
+- See `solutions/solution-exercise1.Rmd ` for solution to Exercise 1
+- All exercises will have a markdown template that you can edit
+    
+
 
 ##Getting help
 
@@ -546,7 +552,7 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("PackageName")
 ```
 
-##Exercise: Install packages ggplot2 and DESeq
+##Example: Install packages ggplot2 and DESeq
 
 - ggplot2 is a commonly used graphics package
     + in RStudio, go to **Tools** → **Install Packages**... and type the package name
@@ -845,29 +851,22 @@ s[a == 2]
 ```
 
 
-##Exercise
+##Exercise: exercise2.Rmd
 
-- Create a data frame called `my.patients` using the instructions in 
-the slides. Change the data if you like.
-- Check you have created the data frame correctly by loading the 
-original version from this file in the *Day_1_scripts* folder using 
-`source`
-```{r eval=FALSE}
-source("1.2_patients.R")
-```
--  Remake your data frame with three new variables: `country`, 
+- The markdown template has code to create the patients data frame from the slides
+- Make a new data frame with three extra variables: `country`, 
 `continent`, and `height` 
     + Make up the data
     + Make `country` a *character* vector but `continent` a *factor*
 - Try the **`summary`** function on your data frame. What does it do? 
 How does it treat vectors (numeric, character, logical) and factors? 
 (What does it do for matrices?)
-- Use logical indexing to select the following patients:
+- Use logical indexing to select the following patients from the data frame described in the slides:
     + Patients under 40
     + Patients who give consent to share their data
     + Men who weigh as much or more than the average European male (70.8 kg)
 
-##Logical indexing answers
+##Logical indexing answers: solutions/solution-exercise2.Rmd
 
 - Patients under 40:
 ```{r ex2ans1, eval=FALSE}
@@ -914,6 +913,23 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
 - We need to determine which patients have amplifications
     + (i.e > 33% of cells show NMYC amplification)
     
+##The Working Directory (wd)
+
+- Like many programs R has a concept of a working directory (wd)
+- It is the place where R will look for files to execute and where it will
+save files, by default
+- For this course we need to set the working directory to the location
+of the course scripts
+- At the command prompt in the terminal or in RStudio console type:
+
+```{r eval=FALSE}
+setwd("R_course/exercises")
+```
+
+- Alternatively in RStudio use the mouse and browse to the directory
+location
+- Session → Set Working Directory → Choose Directory...
+    
 ## 0. Locate the data
 
 Before we even start the analysis, we need to be sure of where the data are located on our hard drive
@@ -938,13 +954,13 @@ list.files()
 - We need to read in the results and assign it to an object (`rawdata`)
 
 ```{r echo=FALSE}
-setwd("Day_1_scripts/")
-rawData <- read.delim("1.3_NBcountData.txt")
+setwd("exercises/")
+rawData <- read.delim("countData.txt")
 ```
 
 
 ```{r  eval=FALSE}
-rawData <- read.delim("1.3_NBcountData.txt")
+rawData <- read.delim("countData.txt")
 ```
 
 - Using `file.choose()`
@@ -957,7 +973,7 @@ rawData <- read.delim(myfile)
 
 - If the data has been comma-separated then, `sep=","` or use `read.csv`:
 ```{r eval=FALSE}
-read.csv("1.3_NBcountData.csv")
+read.csv("countData.csv")
 ```
 - For full list of arguments
 ```{r eval=FALSE}
@@ -1096,14 +1112,14 @@ getwd() # print working directory
 list.files() # list files in working directory
 ```
 
-##Data analysis exercise: Which samples are near normal?
+##Data analysis exercise: exercise3.Rmd
 
 - Patients are near normal if:
 `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
 - Modify the condition in our previous code to find these patients
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
-##Solution to NB normality test
+##Solution: solutions/solution-exercise3.Rmd
 
 ```{r analysis7}
 norm <- which(prop < 0.33 & rawData$NB_Del == 0)
@@ -1239,7 +1255,7 @@ boxplot(patients$Weight~patients$Sex)
 
 ## Exercise: Data exploration
 
-- In the Day_1_scripts folder you will find the file `ozone.csv`
+- In the `data` folder you will find the file `ozone.csv`
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
     + Full description here http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
 - Import these data into R
@@ -1249,10 +1265,10 @@ boxplot(patients$Weight~patients$Sex)
     + boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
 
 
-## Suggestions
+## Suggestions: solutions/solution-exercise4.Rmd
 
 ```{r include=FALSE}
-weather <- read.csv("Day_1_scripts/ozone.csv")
+weather <- read.csv("data/ozone.csv")
 ```
 
 
@@ -1436,7 +1452,7 @@ boxplot(patients$Weight~patients$Sex,
 
 - Can you re-create the following plots?
 - HINT
-    + see the `breaks` and `freq` arguments to hist (`?hist`)
+    + see the `breaks` and `freq` arguments to hist (`?hist`) to create 50 bins and display density rather than frequency
     + for third plot, see the rainbow function (`?rainbow`)
     + don't worry too much about getting the colours exactly correct
     
