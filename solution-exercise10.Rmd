@@ -1,0 +1,36 @@
+---
+title: "Exercise 8"
+author: "Your Name"
+date: '`r format(Sys.time(), "%d %b %Y")`'
+output: pdf_document
+---
+
+- Modifiy the code chunk so this is run once only
+
+```{r cache=TRUE}
+genes <- read.delim("gene.description.txt")
+subjects <- read.delim("cancer.patients.txt")
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+```
+
+The number of subjects in the study is `r nrow(subjects)`. The number of genes being measured was `r nrow(genes)`
+
+
+```{r echo=FALSE}
+genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
+probes <- na.omit(genes[match(genelist,genes[,2]),1])
+exprows <- match(probes,rownames(evals))
+
+library(RColorBrewer)
+sampcol <- rep("blue", ncol(evals))
+sampcol[subjects$er == 1 ] <- "yellow"
+rbPal <- brewer.pal(10, "RdBu")
+heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol,col=rbPal)
+```
+
+- Create a list of R packages and versions
+
+```{r}
+sessionInfo()
+```
+
