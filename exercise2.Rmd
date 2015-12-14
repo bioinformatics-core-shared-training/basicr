@@ -30,9 +30,6 @@ patients <- data.frame(First_Name = firstName,
                        Weight = weight,
                        Consent = consent,
                        stringsAsFactors = FALSE)
-
-my.patients <- patients
-my.patients
 ```
 
 
@@ -42,7 +39,17 @@ my.patients
 + Make country a character vector but continent a factor
 
 
+
+```{r}
+##PUT YOUR R CODE HERE
+```
+
 ## Try the summary function on your data frame. What does it do? How does it treat vectors (numeric, character, logical) and factors? (What does it do for matrices?)
+
+```{r}
+##PUT YOUR R CODE HERE
+```
+
 
 ## Use logical indexing to select the following patients: 
 

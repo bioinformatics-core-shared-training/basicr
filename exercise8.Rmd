@@ -11,7 +11,7 @@ subjects <- read.delim("cancer.patients.txt")
 evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
 ```
 
-- Repeat the same steps we performed for the gene ESR, but for GATA3
+- Repeat the same steps we performed for the gene ESR1, but for GATA3
 
 ```{r}
 ##YOUR CODE HERE

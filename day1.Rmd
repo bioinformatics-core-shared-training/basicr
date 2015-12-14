@@ -400,7 +400,7 @@ names(gene.expression)
 
 - Let's assume a coding gene has an average length of 1.5 kilobases. On average, how many base pairs of each genome is made of coding genes? Create a new vector to record this called `coding.bases`.
 - What percentage of each genome is made up of protein coding genes? Use your `coding.bases` and `genome.size` vectors to calculate this. (See earlier slides for how to do division in R.)
-- How many times more bases are used for coding in the human genome compared to the yeast genome? How many times more bases are in the human genome in total compared to the yeast genome? Look up indices of your vectors to find out.
+- How many times more bases are used for coding in the human genome compared to the yeast genome? ("S. cerevisiae") How many times more bases are in the human genome in total compared to the yeast genome? Look up indices of your vectors to find out.
 
 ##Answers to genome exercise
 
@@ -467,9 +467,8 @@ write the commands to a file and then load it into R.
 
 ![md-format](images/markdown-format.png)
 
-- Pressing the ***Knit HTML*** button will create the report
-    + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
-- See `solutions/solution-exercise1.Rmd ` for solution to Exercise 1
+- Pressing the ***Knit HTML*** (/***Knit PDF***) button will create the report
+- See `solution-exercise1.Rmd ` for solution to Exercise 1
 - All exercises will have a markdown template that you can edit
     
 
@@ -866,7 +865,7 @@ How does it treat vectors (numeric, character, logical) and factors?
     + Patients who give consent to share their data
     + Men who weigh as much or more than the average European male (70.8 kg)
 
-##Logical indexing answers: solutions/solution-exercise2.Rmd
+##Logical indexing answers: solution-exercise2.Rmd
 
 - Patients under 40:
 ```{r ex2ans1, eval=FALSE}
@@ -923,7 +922,7 @@ of the course scripts
 - At the command prompt in the terminal or in RStudio console type:
 
 ```{r eval=FALSE}
-setwd("R_course/exercises")
+setwd("/home/participant/Course_Materials")
 ```
 
 - Alternatively in RStudio use the mouse and browse to the directory
@@ -953,13 +952,7 @@ list.files()
 - The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
 - We need to read in the results and assign it to an object (`rawdata`)
 
-```{r echo=FALSE}
-setwd("exercises/")
-rawData <- read.delim("countData.txt")
-```
-
-
-```{r  eval=FALSE}
+```{r}
 rawData <- read.delim("countData.txt")
 ```
 
@@ -1119,7 +1112,7 @@ list.files() # list files in working directory
 - Modify the condition in our previous code to find these patients
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
-##Solution: solutions/solution-exercise3.Rmd
+##Solution: solution-exercise3.Rmd
 
 ```{r analysis7}
 norm <- which(prop < 0.33 & rawData$NB_Del == 0)
@@ -1253,9 +1246,9 @@ boxplot(patients$Weight~patients$Sex)
     - `example(vioplot`) ### From vioplot library
     - `example(beeswarm)` ## From beeswarm library
 
-## Exercise: Data exploration
+## Exercise: exercise4a.Rmd
 
-- In the `data` folder you will find the file `ozone.csv`
+- In the course folder you will find the file `ozone.csv`
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
     + Full description here http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
 - Import these data into R
@@ -1265,10 +1258,10 @@ boxplot(patients$Weight~patients$Sex)
     + boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
 
 
-## Suggestions: solutions/solution-exercise4.Rmd
+## Suggestions: solution-exercise4a.Rmd
 
 ```{r include=FALSE}
-weather <- read.csv("data/ozone.csv")
+weather <- read.csv("ozone.csv")
 ```
 
 
@@ -1448,7 +1441,7 @@ boxplot(patients$Weight~patients$Sex,
 ```
 
 
-##Exercise 
+##Exercise: exercise4b.Rmd
 
 - Can you re-create the following plots?
 - HINT

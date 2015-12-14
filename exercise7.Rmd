@@ -5,34 +5,35 @@ date: '`r format(Sys.time(), "%d %b %Y")`'
 output: pdf_document
 ---
 
-```{r}
-genes <- read.delim("gene.description.txt")
-subjects <- read.delim("cancer.patients.txt")
+```{r eval=FALSE}
 evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
+dim(evals)
 ```
+
+```{r echo=FALSE}
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals[1:5,1:5]
+dim(evals)
+```
+
 
 
 ```{r}
-ind <- match("ESR1", genes[,2])
-probe <- genes[ind,1]
-genevals <- evals[match(probe,rownames(evals)),]
-
+genes <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+head(genes)
+dim(genes)
 ```
 
-```{r}
-boxplot(as.numeric(genevals)~factor(subjects$er))
-t.test(as.numeric(genevals)~factor(subjects$er))
-```
 
-- write the expression matrix for just ER negative samples to a file
-
-```{r}
-##YOUR CODE HERE
-```
-
-- create a new data frame combining the patient information with ESR1 expression level
+- create a new data frame containing information on genes on Chromosome 8
 
 ```{r}
 ##YOUR CODE HERE
 ```
 
+-order the rows in this data frame according to start position, and write the results to a file
+
+```{r}
+##YOUR CODE HERE
+```

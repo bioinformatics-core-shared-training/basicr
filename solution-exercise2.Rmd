@@ -56,11 +56,15 @@ my.patients <- data.frame(First_Name = firstName,
                        Continent = factor(Continent),
                        Height,
                        stringsAsFactors = FALSE)
-summary(my.patients)
+
 ```
 
 
 ## Try the summary function on your data frame. What does it do? How does it treat vectors (numeric, character, logical) and factors? (What does it do for matrices?)
+
+```{r}
+summary(my.patients)
+```
 
 ## Use logical indexing to select the following patients: 
 
