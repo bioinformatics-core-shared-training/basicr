@@ -334,7 +334,7 @@ plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Te
 
 ```
 
-## Solution
+## Solution: solution-exercise5.pdf
 
 ```{r,fig.height=5}
 plot(weather$Ozone)
@@ -694,7 +694,7 @@ plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
     + fit the linear model and print a summary of the output
     + plot the two variables and overlay a best-fit line
 
-## Solution: solution-exercise6.Rmd
+## Solution: solution-exercise6.pdf
 ```{r fig.show=FALSE}
 mod1 <- lm(weather$Ozone~weather$Temp)
 summary(mod1)
@@ -941,7 +941,7 @@ write.table(erNegPatientsByAge,file="erNegativeSubjectsByAge.txt",sep="\t")
 - create a new data frame containing information on genes on Chromosome 8
 - order the rows in this data frame according to start position, and write the results to a file
 
-## Solution: solution-exercise7.Rmd
+## Solution: solution-exercise7.pdf
 
 ```{r}
 chr8Genes <- genes[genes$Chromosome=="chr8",]
@@ -1190,7 +1190,7 @@ dim(chr8Expression)
 - Create a for loop to perform to test if the expression level of each gene on chromosome 8 is significantly different between ER positive and negative samples
 - Store the ***p-value*** from each individual test
 
-## Solution
+## Solution: solution-exercise9.pdf
 
 ```{r}
 pvals <- NULL
@@ -1545,7 +1545,7 @@ This analysis is recorded in `exercise10.Rmd`.
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
 
-
+Solution: solution-exercise10.Rmd
 
 # End of Course
 

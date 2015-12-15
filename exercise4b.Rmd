@@ -1,5 +1,5 @@
 ---
-title: "Exercise 4a"
+title: "Exercise 4b"
 author: "Your Name"
 date: "9 October 2015"
 output: pdf_document

@@ -865,7 +865,7 @@ How does it treat vectors (numeric, character, logical) and factors?
     + Patients who give consent to share their data
     + Men who weigh as much or more than the average European male (70.8 kg)
 
-##Logical indexing answers: solution-exercise2.Rmd
+##Logical indexing answers: solution-exercise2.pdf
 
 - Patients under 40:
 ```{r ex2ans1, eval=FALSE}
@@ -1112,7 +1112,7 @@ list.files() # list files in working directory
 - Modify the condition in our previous code to find these patients
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
-##Solution: solution-exercise3.Rmd
+##Solution: solution-exercise3.pdf
 
 ```{r analysis7}
 norm <- which(prop < 0.33 & rawData$NB_Del == 0)
@@ -1258,7 +1258,7 @@ boxplot(patients$Weight~patients$Sex)
     + boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
 
 
-## Suggestions: solution-exercise4a.Rmd
+## Suggestions: solution-exercise4a.pdf
 
 ```{r include=FALSE}
 weather <- read.csv("ozone.csv")
@@ -1458,7 +1458,7 @@ hist(weather$Temp,col="purple",xlab="Temperature",main="Distribution of Temperat
 boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 ```
 
-## Solutions
+## Solutions: solution-exercise4b.pdf
 
 ```{r,fig.height=5}
 plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,

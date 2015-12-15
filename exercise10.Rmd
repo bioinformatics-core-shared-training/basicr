@@ -1,5 +1,5 @@
 ---
-title: "Exercise 8"
+title: "Exercise 10"
 author: "Your Name"
 date: '`r format(Sys.time(), "%d %b %Y")`'
 output: pdf_document
