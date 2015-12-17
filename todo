@@ -13,3 +13,16 @@ pch=16 not required when using lines, points functions
 
 Point to spurious correlations page!
 
+
+
+
+
+plot with emoji!
+
+library(emoGG)
+library(ggplot2)
+
+patients$am[patients$Sex=="Male"] <- "1f474"
+patients$am[patients$Sex=="Female"] <-"1f475"
+
+ggplot(patients,aes(x = Age,y=Height,emoji=am)) + geom_emoji()
