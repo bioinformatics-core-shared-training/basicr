@@ -1,0 +1,15 @@
+Day 1
+
+Simple Customisations; Age and Weight labels are not correct
+
+Day 2
+
+Remove 'Day' variable from the Ozone data frame. Still causes confusion.
+...alternatively change example?
+
+mention that some customisations are actually easier in Photoshop, illustrator etc
+
+pch=16 not required when using lines, points functions
+
+Point to spurious correlations page!
+
