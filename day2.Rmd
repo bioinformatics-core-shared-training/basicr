@@ -710,6 +710,7 @@ abline(mod1,col="red",lty=2)
 ## Word of caution
 
 ***Correlation != Causation***
+
 ![spurious](images/spurious.png)
 
 http://tylervigen.com/spurious-correlations
