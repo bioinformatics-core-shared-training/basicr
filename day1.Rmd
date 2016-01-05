@@ -1332,14 +1332,14 @@ plot(patients$Age,patients$Weight,main="Relationship between Weight and Age")
 
 - Adding the x-axis label
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight,xlab="Weight")
+plot(patients$Age,patients$Weight,xlab="Age")
 ```
 
 ## Simple customisations
 - Adding the y-axis label
 
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight,ylab="Age")
+plot(patients$Age,patients$Weight,ylab="Weight")
 ```
 
 ## Simple customisations
@@ -1347,8 +1347,8 @@ plot(patients$Age,patients$Weight,ylab="Age")
     + here `ylim` and `xlim` are used to specify axis limits
 ```{r,fig.height=5}
 plot(patients$Age,patients$Weight,
-     ylab="Age",
-     xlab="Weight",
+     ylab="Weight",
+     xlab="Age",
      main="Relationship between Weight and Age",
      xlim=c(10,70),
      ylim=c(60,80))
@@ -1508,18 +1508,6 @@ display.brewer.all()
 boxplot(weather$Ozone~weather$Month,col=brewer.pal(5,"Set1"))
 ```
 
-## And finally..
-
-```{r eval=FALSE}
-library(palettetown)
-boxplot(weather$Ozone~weather$Month,col=pokepal("Pikachu",5))
-```
-
-```{r echo=FALSE, message=FALSE,fig.height=5}
-if(!require(palettetown)) install.packages("palettetown")
-library(palettetown)
-boxplot(weather$Ozone~weather$Month,col=pokepal("Pikachu",5))
-```
 
 
 

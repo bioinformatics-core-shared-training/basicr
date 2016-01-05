@@ -259,6 +259,7 @@ dev.off()
 ```
 
 - pdf is a good choice for publication as they can be imported into photoshop, inkscape etc
+    - sometimes it is easier to edit in these tools than R!
 
 ## Exporting graphs from RStudio
 
@@ -469,7 +470,7 @@ points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
     ```{r eval=FALSE}
 xs <- c(50,60,70,80,90,100)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red",pch=16)
+lines(xs,ys,col="red")
 ```
 
 ```{r fig.height=4,echo=FALSE}
@@ -477,7 +478,7 @@ hist(weather$Temp,col="purple",xlab="Temperature",
      main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
 xs <- c(50,60,70,80,90,100)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red",pch=16)
+lines(xs,ys,col="red")
 ```
 
 
@@ -490,7 +491,7 @@ lines(xs,ys,col="red",pch=16)
 ```{r eval=FALSE}
 xs <- seq(50,100,length.out = 10000)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red",pch=16)
+lines(xs,ys,col="red")
 ```
 
 
@@ -500,7 +501,7 @@ hist(weather$Temp,col="purple",xlab="Temperature",
      main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
 xs <- seq(50,100,length.out = 10000)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red",pch=16)
+lines(xs,ys,col="red")
 ```
 
 ## Simple testing
@@ -706,6 +707,12 @@ plot(weather$Temp, weather$Ozone,pch=16)
 abline(mod1,col="red",lty=2)
 ```
 
+## Word of caution
+
+***Correlation != Causation***
+![spurious](images/spurious.png)
+
+http://tylervigen.com/spurious-correlations
 
 # 3. Data Manipulation Techniques
 
