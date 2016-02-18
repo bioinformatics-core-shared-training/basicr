@@ -1,15 +1,19 @@
 ---
 title: "Introduction to Solving Biological Problems Using R - Day 2"
-author: Mark Dunning, Suraj Menon, and Aiora Zabala. \n Original material by Robert Stojnić, Laurent Gatto, Rob Foy
-  John Davey, Dávid Molnár and Ian Roberts
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: 
+output:
+  beamer_presentation: default
   slidy_presentation:
-    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0. COURSE HOME: cambiotraining.github.io/r-intro/"
+    footer: 'This work is licensed under the Creative Commons Attribution-ShareAlike
+      2.0. COURSE HOME: cambiotraining.github.io/r-intro/'
 css: mystyle.css
 toc: yes
-
 ---
+```{r include = FALSE}
+library(knitr)
+opts_chunk$set(comment = NA) # eliminates hashtag from R outputs
+```
 
 ## Day 2 Schedule
 
@@ -23,7 +27,7 @@ toc: yes
 
 ## Recap
 
-- We have seen how to use `plot`, `boxplot` , `hist` etc to make simple plots
+- We have seen how to use `plot()`, `boxplot()` , `hist()` etc to make simple plots
 - These come with arguments that can be used to change the appearance of the plot
     + `col`, `pch`
     + `main`, `xlab`, `ylab`
@@ -42,26 +46,32 @@ toc: yes
 
 ## Example data
 
-- We will re-use the patients data from yesterday
+- We will re-use the patients data from yesterday:
 
 ```{r}
 age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
 weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
 71.5, 73.2, 64.8)
 firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
-"Paul", "Joanna", "Matthew", "David", "Sally")
-secondName <- c("Jones", "Parker", "Evans", "Davis", 
-"Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
+               "Paul", "Joanna", "Matthew", "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis",
+                "Baker","Daniels", "Edwards", "Smith", 
+                "Roberts", "Wilson")
 
 consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
-FALSE, TRUE, FALSE, TRUE)
+             FALSE, TRUE, FALSE, TRUE)
 
-sex <- c("Male", "Female", "Male", "Female", "Male", "Male",
-"Female", "Male", "Male", "Female")
+sex <- c("Male", "Female", "Male", "Female", "Male", 
+         "Male", "Female", "Male", "Male", "Female")
+```
 
+## Example data
+
+```{r}
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
-                       Full_Name = paste(firstName, secondName), 
+                       Full_Name = paste(firstName, 
+                                         secondName), 
                        Sex = factor(sex),
                        Age = age,
                        Weight = weight,
@@ -74,55 +84,55 @@ patients <- data.frame(First_Name = firstName,
 ##Initial plot
 
 - Recall our patients dataset from yesterday
-    + we might want to display other characteristics on the plot
-        + e.g. gender of individual
+    + we might want to display other characteristics on the plot, e.g. gender of individual:
 
-```{r}
-plot(patients$Age, patients$Weight,pch=16)
+```{r, fig.height=5}
+plot(patients$Age, patients$Weight, pch=16)
 ```
 
 ##The points function
 
-- `points` can be used to set of points to an *existing* plot
+- `points()` can be used to set of points to an *existing* plot
 - It requires a vector of x and y coordinates
-    + these do not have to be the same length as the number of points in the initial plot
-        + hence we can use `points` to highlight observations
+    + These do not have to be the same length as the number of points in the initial plot:
+        + hence we can use `points()` to highlight observations
         + or add a set of new observations
-- Note that axis limits of the existing plot are not altered
-
 ```{r fig.height=4}
 plot(patients$Age, patients$Weight,pch=16)
 points(40,68,pch="X")
 ```
-
+- Note that axis limits of the existing plot are not altered
 
 ## Creating a blank plot
 
 - Often it is useful to create a blank 'canvas' with the correct labels and limits
 
-```{r}
-plot(patients$Age, patients$Weight,type="n")
+```{r, fig.height=5}
+plot(patients$Age, patients$Weight, type="n")
 ```
 
 ## Adding points to differentiate gender
 
-- Selecting males using the `==` comparison we saw yesterday
-    + gives a `TRUE` or `FALSE` value
-    + can be used to index the data frame
-    + which means we can get the relevant Age and Weight values
+- Selecting males using the **`==`** comparison we saw yesterday
+    + Gives a `TRUE` or `FALSE` value
+    + Can be used to index the data frame
+    + Which means we can get the relevant Age and Weight values
 ```{r}
 males <- patients$Sex == "Male"
+```
+```{r, eval=FALSE}
 males
 patients[males,]
-patients[males,"Age"]
-patients[males,"Weight"]
+patients[males, "Age"]
+patients[males, "Weight"]
 ```
 
 ## Adding points to differentiate gender
 
-```{r}
-plot(patients$Age, patients$Weight,type="n")
-points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+```{r, fig.height=5}
+plot(patients$Age, patients$Weight, type="n")
+points(patients$Age[males], patients$Weight[males], 
+       pch=16, col="steelblue")
 
 ```
 
@@ -132,16 +142,20 @@ points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
 
 ```{r}
 females <- patients$Sex == "Female"
+```
+```{r, eval=FALSE}
 females
 patients[females,]
 ```
 
 ## Adding points to differentiate gender
 
-```{r}
-plot(patients$Age, patients$Weight,type="n")
-points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
-points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
+```{r, fig.height=5}
+plot(patients$Age, patients$Weight, type="n")
+points(patients$Age[males], patients$Weight[males],
+       pch=16, col="steelblue")
+points(patients$Age[females], patients$Weight[females],
+       pch=16, col="orangered1")
 
 ```
 
@@ -155,10 +169,12 @@ points(patients$Age[females], patients$Weight[females],pch=16,col="orangered1")
 - A call to `plot` will start a new graphics window
     - or typing `dev.off()`
 
-```{r fig.height=4,fig.width=8}
-plot(patients$Age, patients$Weight,type="n")
-points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
-points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
+```{r fig.height=3,fig.width=8}
+plot(patients$Age, patients$Weight, type="n")
+points(patients$Age[males], patients$Weight[males],
+       pch=16, col="steelblue")
+points(patients$Age[females], patients$Weight[females], 
+       pch=17, col="orangered1")
 ```
 
 
@@ -170,10 +186,12 @@ points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
     + can give x and y coordinates where legend will appear
     + also recognises shortcuts such as ***topleft*** and ***bottomright***...
 
-```{r fig.height=4,fig.width=8}
-plot(patients$Age, patients$Weight,type="n")
-points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
-points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
+```{r fig.height=3,fig.width=8}
+plot(patients$Age, patients$Weight, type="n")
+points(patients$Age[males], patients$Weight[males], 
+       pch=16, col="steelblue")
+points(patients$Age[females], patients$Weight[females],
+       pch=17, col="orangered1")
 legend("topleft", legend=c("M","F"), 
        col=c("steelblue","orangered1"), pch=c(16,17))
 ```
@@ -184,93 +202,97 @@ legend("topleft", legend=c("M","F"),
     + the `labels` argument specifies the text we want to add
     
 ```{r fig.height=4,fig.width=8}
-plot(patients$Age, patients$Weight,pch=16)
-text(patients$Age, patients$Weight,labels=patients$Full_Name)
+plot(patients$Age, patients$Weight, pch=16)
+text(patients$Age, patients$Weight,
+     labels=patients$Full_Name)
 ```
 
 ##Adding text
 
 - Can alter the positions so they don't interfere with the points of the graph
     
-```{r fig.height=4,fig.width=8}
-plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
-text(patients$Age-1, patients$Weight-0.5,labels=patients$Full_Name)
+```{r fig.height=3,fig.width=8}
+plot(patients$Age, patients$Weight, pch=16,
+     xlim=c(10,70), ylim=c(60,75))
+text(patients$Age-1, patients$Weight-0.5, 
+     labels=patients$Full_Name)
 ```
 
 ## Adding lines
 
 - To aid our interpretation, it is often helpful to add guidelines
-    + `grid()` is one easy way of doing this.
+    + `grid()` is one easy way of doing this:
 ```{r,fig.height=5}
-plot(patients$Age, patients$Weight,pch=16)
+plot(patients$Age, patients$Weight, pch=16)
 grid(col="steelblue")
 ```
 
 ## Adding lines
 
-- Can also add lines that intersect the axes
+- Can also add lines that intersect the axes:
     + `v =` for vertical lines
     + `h=` for horizontal
     + can specify multiple lines in a vector
 ```{r,fig.height=5}
-plot(patients$Age, patients$Weight,pch=16)
-abline(v=40,col="red")
-abline(h=c(65,70,75),col="blue")
+plot(patients$Age, patients$Weight, pch=16)
+abline(v=40, col="red")
+abline(h=c(65,70,75), col="blue")
 ```
 
 
 ## Plot layouts
 
 - The `par` function can be used specify the appearance of a plot
-- The settings persist until the plot is closed with `dev.off`
+- The settings persist until the plot is closed with **`dev.off()`**
 - `?par` and scroll to ***graphical parameters***
-- One example is `mfrow`
+- One example is `mfrow`:
     + "multiple figures per row"
-    + needs to be a vector of rows and columns
+    + needs to be a vector of rows and columns:
         + e.g. a plot with one row and two columns `par(mfrow=c(1,2))`
         + don't need the same kind of plot in each cell
         
 ## Plot layouts    
     
-```{r,fig.height=5}
+```{r,fig.height=4}
 par(mfrow=c(1,2))
-plot(patients$Age, patients$Weight,pch=16,xlim=c(10,70),ylim=c(60,75))
-boxplot(patients$Weight~patients$Sex)
+plot(patients$Age, patients$Weight, pch=16,
+     xlim=c(10,70), ylim=c(60,75))
+boxplot(patients$Weight ~ patients$Sex)
 
 ```
 
-- see also `mar` for setting the margins
+- See also `mar` for setting the margins:
     + `par(mar=c(...))`
     
 ## Exporting graphs from RStudio
 
-- Easiest option to to use the Export button from the Plots panel
-- Otherwise, use the `pdf` function
-    + you will see that the plot does not appear in RStudio
+- Easiest option to to use the *Export* button from the *Plots* panel
+- Otherwise, use the `pdf()` function:
+    + You will see that the plot does not appear in RStudio
 ```{r eval=FALSE}
 pdf("ExampleGraph.pdf")
 plot(rnorm(1:10))
 ```
 
-- You need to use the `dev.off` to stop printing graphs to the pdf and 'close' the file
-      + allows you to create a pdf document with multiple pages
+- You need to use the `dev.off()` to stop printing graphs to the pdf and 'close' the file
+      + It allows you to create a pdf document with multiple pages
 ```{r eval=FALSE}
 dev.off()
 ```
 
-- pdf is a good choice for publication as they can be imported into photoshop, inkscape etc
-    - sometimes it is easier to edit in these tools than R!
+- pdf is a good choice for publication as they can be imported into Photoshop, Inkscape, etc.
+    - Sometimes it is easier to edit in these tools than R!
 
 ## Exporting graphs from RStudio
 
-- To save any graph you have created to a pdf, repeat the code you used to create the plot with `pdf(..)` before and `dev.off()` afterwards
+- To save any graph you have created to a pdf, repeat the code you used to create the plot with `pdf()` before and `dev.off()` afterwards
     + you can have as many lines of code in-between as you like
     
 ```{r}
 pdf("mygraph.pdf")
-plot(patients$Age, patients$Weight,pch=16)
-abline(v=40,col="red")
-abline(h=c(65,70,75),col="blue")
+plot(patients$Age, patients$Weight, pch=16)
+abline(v=40, col="red")
+abline(h=c(65,70,75), col="blue")
 dev.off()
 ```
 
@@ -281,13 +303,13 @@ dev.off()
 - We can specify the dimensions of the plot, and other properties of the file (`?pdf`)
 
 ```{r}
-pdf("ExampleGraph.pdf",width=10,height=10)
+pdf("ExampleGraph.pdf", width=10, height=10)
 plot(rnorm(1:10))
 dev.off()
 ```
 
-- Other formats can be created
-    + e.g. ***png***, or others `?png`
+- Other formats can be created:
+    + e.g. ***png***, or others `?jpeg`
     + more appropriate for email, presentations, web page
     
 ```{r}
@@ -297,16 +319,16 @@ dev.off()
 ```
 
 ##Exercise: exercise5.Rmd
-- Return to the weather data from yesterday
+- Return to the weather data from yesterday:
 
 ```{r}
 weather <- read.csv("ozone.csv")
 ```
 
-- Make a scatter plot of all observations of Ozone level
+- Make a scatter plot of all observations of ozone level:
     + i.e. with the y axis being the Ozone variable, and x-axis being the row index
-- Highlight any days in the study which had Ozone level > 100
-- Indicate which month these days with high ozone-level belong to
+- Highlight any days in the study which had ozone level > 100
+- Indicate which month these days with high ozone level belong to
 
 ## Target Graph
 
@@ -341,8 +363,9 @@ plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Te
 plot(weather$Ozone)
 abline(h=100)
 highO <- which(weather$Ozone > 100)
-points(highO, weather$Ozone[highO],col="red",pch=16)
-text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
+points(highO, weather$Ozone[highO], col="red", pch=16)
+text(highO,weather$Ozone[highO]-5, 
+     labels=weather$Month[highO])
 ```
 
 
@@ -352,50 +375,63 @@ text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 ```{r eval=FALSE}
 pdf("ozoneCorrelations.pdf")
 par(mfrow=c(1,3))
-plot(weather$Solar.R,weather$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
-plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
-plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
+plot(weather$Solar.R, weather$Ozone, pch=16,
+     col="lightgreen", ylab="Ozone level",
+     xlab="Solar Radiation")
+plot(weather$Wind, weather$Ozone, pch=15, 
+     col="steelblue", ylab="Ozone level", 
+     xlab="Wind Speed")
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
 dev.off()
 ```
+
+## Solution
 
 If the graph looks a bit stretched...
 
 ```{r eval=FALSE}
-pdf("ozoneCorrelations.pdf",width=10,height = 6)
+pdf("ozoneCorrelations.pdf", width=10,height = 6)
 par(mfrow=c(1,3))
-plot(weather$Solar.R,weather$Ozone,pch=16,col="lightgreen",ylab="Ozone level",xlab="Solar Radiation")
-plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab="Wind Speed")
-plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
+plot(weather$Solar.R, weather$Ozone, pch=16,
+     col="lightgreen", ylab="Ozone level",
+     xlab="Solar Radiation")
+plot(weather$Wind, weather$Ozone, pch=15, 
+     col="steelblue", ylab="Ozone level", 
+     xlab="Wind Speed")
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
 dev.off()
-
 ```
 
 
 # 2. Statistics
 ##Built-in support for statistics
-- R is a statistical programming language
+- R is a statistical programming language:
     + Classical statistical tests are built-in
     + Statistical modeling functions are built-in
     + Regression analysis is fully supported
     + Additional mathematical packages are available (`MASS`, Waves, sparse matrices, etc)
   
 ##Distribution functions  
-- Most commonly used distributions are built-in, functions have stereotypical names, e.g. for normal distribution
-    + `pnorm` - cumulative distribution for x
-    + `qnorm` - inverse of pnorm (from probability gives x)
-    + `dnorm` - distribution density
-    + `rnorm` - random number from normal distribution
+- Most commonly used distributions are built-in, functions have stereotypical names, e.g. for normal distribution:
+    + **`pnorm`** - cumulative distribution for x
+    + **`qnorm`** - inverse of pnorm (from probability gives x)
+    + **`dnorm`** - distribution density
+    + **`rnorm`** - random number from normal distribution
   
 ![distributions](images/distributions.png)  
   
-- available for variety of distributions: `punif` (uniform), `pbinom` (binomial), `pnbinom` (negative binomial), `ppois` (poisson), `pgeom` (geometric), `phyper` (hyper-geometric), `pt` (T distribution), pf (F distribution) 
+- Available for variety of distributions: `punif` (uniform), `pbinom` (binomial), `pnbinom` (negative binomial), `ppois` (poisson), `pgeom` (geometric), `phyper` (hyper-geometric), `pt` (T distribution), pf (F distribution) 
 
 ##Distribution functions 
-- 10 random values from the Normal distribution with mean 10 and standard deviation 5
+- 10 random values from the Normal distribution with mean 10 and standard deviation 5:
 ```{r eval=FALSE}
 rnorm(10, mean=10, sd=5)
 ```
-- The probability of drawing 10 from this distribution
+- The probability of drawing 10 from this distribution:
 ```{r}
 dnorm(10, mean=10, sd=5)
 ```
@@ -406,11 +442,11 @@ dnorm(100, mean=10, sd=5)
 
 ##Distribution functions (continued)
 
-- The probability of drawing a value smaller than 10
+- The probability of drawing a value smaller than 10:
 ```{r}
 pnorm(10, mean=10, sd=5)
 ```
-- The inverse of `pnorm`
+- The inverse of `pnorm()`:
 ```{r}
 qnorm(0.5, mean=10, sd=5)
 ```
@@ -421,45 +457,41 @@ qnorm(0.95, mean=0, sd=1)
 
 ## Example
 
-Recall our histogram of temperature from yesterday
+Recall our histogram of temperature from yesterday:
 
-- the data look to be roughly normally-distributed
-- an assumption we rely on for various statistical tests
+- The data look to be roughly normally-distributed
+- An assumption we rely on for various statistical tests
 
 ```{r fig.height=4}
-hist(weather$Temp,col="purple",xlab="Temperature",
-     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+hist(weather$Temp, col="purple", xlab="Temperature",
+     main="Distribution of Temperature",
+     breaks = 50:100, freq=FALSE)
 ```
 
 ## Create a normal distribution curve
 
-If our data are normally-distributed, we can calculate the probability of drawing particular values.
-
-- e.g. a temperature of 80
-- we can overlay this on the histogram using `points` as we just saw
+- If our data are normally-distributed, we can calculate the probability of drawing particular values.
+      + e.g. a temperature of 80
 
 ```{r eval=FALSE}
 tempMean <- mean(weather$Temp)
 tempSD <- sd(weather$Temp)
-
-dnorm(80, mean=tempMean,sd=tempSD)
-hist(weather$Temp,col="purple",xlab="Temperature",
-     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
-points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
+dnorm(80, mean=tempMean, sd=tempSD)
 ```
 
-
-```{r fig.height=4,echo=FALSE}
+```{r echo=FALSE}
 tempMean <- mean(weather$Temp)
 tempSD <- sd(weather$Temp)
-
-dnorm(80, mean=tempMean,sd=tempSD)
-hist(weather$Temp,col="purple",xlab="Temperature",
-     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
-points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
 ```
 
-
+- We can overlay this on the histogram using `points` as we just saw:
+```{r eval=FALSE}
+hist(weather$Temp, col="purple", xlab="Temperature",
+     main="Distribution of Temperature",
+     breaks = 50:100, freq=FALSE)
+points(80, dnorm(80, mean=tempMean, sd=tempSD),
+       col="red", pch=16)
+```
 
 ## Create a normal distribution curve
 
@@ -469,8 +501,8 @@ points(80, dnorm(80, mean=tempMean,sd=tempSD),col="red",pch=16)
     
     ```{r eval=FALSE}
 xs <- c(50,60,70,80,90,100)
-ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red")
+ys <- dnorm(xs, mean=tempMean, sd=tempSD)
+lines(xs, ys, col="red")
 ```
 
 ```{r fig.height=4,echo=FALSE}
@@ -481,21 +513,17 @@ ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red")
 ```
 
-
-
 ## Create a normal distribution curve
 
-- For a smoother curve, use a longer vector
-    + we can generate x values using the `seq` function
+- For a smoother curve, use a longer vector:
+    + We can generate x values using the `seq()` function
 
 ```{r eval=FALSE}
-xs <- seq(50,100,length.out = 10000)
-ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red")
+xs <- seq(50,100, length.out = 10000)
+ys <- dnorm(xs, mean=tempMean, sd=tempSD)
+lines(xs, ys, col="red")
 ```
 
-
-    
 ```{r fig.height=4,echo=FALSE}
 hist(weather$Temp,col="purple",xlab="Temperature",
      main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
@@ -511,68 +539,70 @@ lines(xs,ys,col="red")
 $$t = \frac{\bar{x} -\mu_0}{s / \sqrt(n)}$$
 
 ```{r}
-t <- (tempMean - 50) / (tempSD / sqrt(length(weather$Temp)))
+t <- (tempMean - 50) / (tempSD/sqrt(length(weather$Temp)))
 t
 ```
 
-- or use the `t.test` function to compute the statistic and corresponding p-value
+## Simple testing
+
+- ...or use the **`t.test()`** function to compute the statistic and corresponding p-value
 
 ```{r}
-t.test(weather$Temp,mu=50)
+t.test(weather$Temp, mu=50)
 ```
 
 
-##Two sample tests: Basic data analysis
+##Two-sample tests: Basic data analysis
 
-- Comparing 2 variances
+- Comparing 2 variances:
     + Fisher's F test
 ```{r eval=FALSE}
 var.test()
 ```
-- Comparing 2 sample means with normal errors
+- Comparing 2 sample means with normal errors:
     + Student's t test
 ```{r eval=FALSE}
 t.test()
 ```
-- Comparing 2 means with non-normal errors
+- Comparing 2 means with non-normal errors:
     + Wilcoxon's rank test
 ```{r eval=FALSE}
 wilcox.test()
 ```
 
-##Two sample tests: Basic data analysis
-- Comparing 2 proportions
+##Two-sample tests: Basic data analysis
+- Comparing 2 proportions:
     + Binomial test
 ```{r eval=FALSE}
 prop.test()
 ```
-- Correlating 2 variables
+- Correlating 2 variables:
     + Pearson's / Spearman's rank correlation
 ```{r eval=FALSE}
 cor.test()
 ```
-- Testing for independence of 2 variables in a contingency table
+- Testing for independence of 2 variables in a contingency table:
     + Chi-squared / Fisher's exact test
 ```{r eval=FALSE}
-chisq.test();fisher.test()
+chisq.test(); fisher.test()
 ```
 
 ## Statistical tests in R
 
 - Bottom-line: Pretty much any statistical test you care to name will probably be in R
-    + this is not supposed to be a statistics course (sorry!)
-    + none of them are particular harder than others to use
-    + the difficulty is deciding which test to use
-        + whether the assumptions of the test are met etc
-    + consult your local statistician if not sure
-    + some good references
+    + This is not supposed to be a statistics course (sorry!)
+    + None of them are particular harder than others to use
+    + The difficulty is deciding which test to use:
+        + whether the assumptions of the test are met, etc.
+    + Consult your local statistician if not sure
+    + Some good references:
         + [Simple R eBook](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf)
         + [Elements of Statistical Learning eBook](http://statweb.stanford.edu/~tibs/ElemStatLearn/download.html)
         
 
 ## Example analysis
 
-- We have already seen that men in our Patients dataset tend to be heavier than women
+- We have already seen that men in our `patients` dataset tend to be heavier than women
     + we can test this formally in R
 
 ```{r echo=FALSE,fig.height=5}
@@ -594,29 +624,28 @@ var.test(patients$Weight~patients$Sex)
 
 ## Perform the t-test
 
-
 ```{r}
-t.test(patients$Weight~patients$Sex,var.equal=TRUE)
+t.test(patients$Weight~patients$Sex, var.equal=TRUE)
 ```
 
-- This function can be tuned in various ways
-    - assumed equal variances, or not (and use Welch's correction)
-    - deal with parired samples
-    - two-sided, or one-sided p-value
-    - as usual: `?t.test`
+- This function can be tuned in various ways (`?t.test`):
+    - Assumed equal variances, or not (and use Welch's correction)
+    - Deal with parired samples
+    - Two-sided, or one-sided p-value
 
 ##Linear regression: Basic data analysis
 
-- Linear modeling is supported by the function `lm()`
-    + `example(lm)` the output assumes you know a fair bit about the subject
+- Linear modeling is supported by the function **`lm()`**:
+    + `example(lm)` 
+    + The output assumes you know a fair bit about the subject
 
-- `lm` is really useful for plotting lines of best fit to XY data in order to determine intercept, gradient & Pearson's correlation coefficient
+- `lm` is really useful for plotting lines of best fit to XY data, in order to determine intercept, gradient and Pearson's correlation coefficient
     + This is very easy in R
 
-- Three steps to plotting with a best fit line
-  1. Plot XY scatter-plot data
-  2. Fit a linear model
-  3. Add bestfit line data to plot with `abline()` function
+- Three steps to plotting with a best fit line:
+    1. Plot XY scatter-plot data
+    2. Fit a linear model
+    3. Add bestfit line data to plot with `abline()` function
   
 ##Typical linear regression analysis: Basic data analysis
 
@@ -650,16 +679,16 @@ summary(myModel)
 
 ##Typical linear regression analysis: Basic data analysis
 - Get the coefficients of the fit from:
-```{r}
-coef(myModel)
-resid(myModel)
-fitted(myModel)
-names(myModel)
+```{r, eval=FALSE}
+coef(myModel)   # Coefficients
+resid(myModel)  # Residuals
+fitted(myModel) # Fitted values
+names(myModel)  # Names of the objects within myModel
 ```
 
 ## Diagnostic plots of the fit
 
-- Get QC of fit from
+- Get QC of fit from:
 ```{r,fig.height=4}
 par(mfrow=c(2,2))
 plot(myModel)
@@ -667,17 +696,17 @@ plot(myModel)
 
 ##Modelling formulae
 - R has a very powerful formula syntax for describing statistical models
-- Suppose we had two explanatory variables `x` and `z` and one response
+- Suppose we had two explanatory variables `x` and `z`, and one response
 variable `y`
 - We can describe a relationship between, say, `y` and `x` using a tilde `~`,
 placing the response variable on the left of the tilde and the explanatory variables on the right:
     + `y~x`
 - It is very easy to extend this syntax to do multiple regressions, ANOVAs, to include interactions, and to do many other common modelling tasks. For example
 ```{r eval=FALSE}
-y~x       #If x is continuous this is linear regression
-y~x       #If x is categorical, this is ANOVA
-y~x+z     #If x and z are continuous, this is multiple regression
-y~x+z     #If x and z are categorical, this is two-way ANOVA
+y~x       #If x is continuous, this is linear regression
+y~x       #If x is categorical, ANOVA
+y~x+z     #If x and z are continuous, multiple regression
+y~x+z     #If x and z are categorical, two-way ANOVA
 y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
@@ -685,15 +714,15 @@ y~x*z     # * is a shorthand for x+z+x:z
 
 ## Exercise: exercise6.Rmd
 
-- There are suggestions that Ozone level could be influenced by Temperature
+- There are suggestions that Ozone level could be influenced by Temperature:
 
 ```{r echo=FALSE,fig.height=4}
 plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
 ```
 
-- Perform a linear regression analysis to assess this
-    + fit the linear model and print a summary of the output
-    + plot the two variables and overlay a best-fit line
+- Perform a linear regression analysis to assess this:
+    + Fit the linear model and print a summary of the output
+    + Plot the two variables and overlay a best-fit line
 
 ## Solution: solution-exercise6.pdf
 ```{r fig.show=FALSE}
@@ -703,8 +732,8 @@ summary(mod1)
 
 ## Solution
 ```{r}
-plot(weather$Temp, weather$Ozone,pch=16)
-abline(mod1,col="red",lty=2)
+plot(weather$Temp, weather$Ozone, pch=16)
+abline(mod1, col="red", lty=2)
 ```
 
 ## Word of caution
@@ -719,9 +748,9 @@ http://tylervigen.com/spurious-correlations
 
 ## Motivation
 
-- So far we have been lucky that all our data have been in the same file
-    + this is not usually the case
-    +  dataset may be spread over several files
+- So far we have been lucky that all our data have been in the same file:
+    + This is not usually the case
+    + Dataset may be spread over several files
         + This takes longer, and is harder, than many people realise
     + We need to combine before doing an analysis
 
@@ -730,13 +759,13 @@ http://tylervigen.com/spurious-correlations
 ## Combining data from multiple sources: Gene Clustering Example
 
 - R has powerful functions to combine heterogeneous data sources into a single data set
-- Gene clustering example data
-    + gene expression values in ***gene.expression.txt***
-    + gene information in ***gene.description.txt***
-    + patient information in ***cancer.patients.txt***
-- A breast cancer dataset with numerous patient characteristics 
-    + we will concentrate on ***ER status*** (positive / negative)
-    + what genes show a statistically-significant different change between ER groups?
+- Gene clustering example data:
+    + Gene expression values in ***gene.expression.txt***
+    + Gene information in ***gene.description.txt***
+    + Patient information in ***cancer.patients.txt***
+- A breast cancer dataset with numerous patient characteristics:
+    + We will concentrate on ***ER status*** (positive / negative)
+    + What genes show a statistically-significant different change between ER groups?
 
 
 ```{r echo=FALSE}
@@ -794,22 +823,23 @@ if(!file.exists("gene.expression.txt")){
 ## Peek at the data
 
 ```{r eval=FALSE}
-evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
-evals[1:5,1:5]
+evals <- read.delim("gene.expression.txt",
+                    stringsAsFactors = FALSE)
+evals[1:2,1:5]
 dim(evals)
 ```
 
 ```{r echo=FALSE}
 evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
-evals[1:5,1:5]
+evals[1:2,1:5]
 dim(evals)
 ```
 - `r nrow(evals)` rows and `r ncol(evals)` columns
-+ One row for each gene
-    + rows are named according to particular technology used to make measurement
-    + the names of each row can be returned by `rownames(evals)`; giving a vector
-+ One column for each patient
-    + the names of each column can be returned by `colnames(evals)`; giving a vector
++ One row for each gene:
+    + Rows are named according to particular technology used to make measurement
+    + The names of each row can be returned by `rownames(evals)`; giving a vector
++ One column for each patient:
+    + The names of each column can be returned by `colnames(evals)`; giving a vector
     
 ## Peek at the data
 
@@ -1465,7 +1495,7 @@ load("mydata.rda")
     + make sure we always have the latest figures, p-values etc
 
 ```
-.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+.....the sample population consisted of 'r table(gender)[1]' females and 'r table(gender)[2]' males.....
 ```
 
 ```{r echo=FALSE}
@@ -1491,13 +1521,13 @@ pval <- 0.05
 - Like the rest of our report these R statements will get updated each time we compile the report
 
 ```
-.....the sample population consisted of  'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+.....the sample population consisted of 'r table(gender)[1]' females and 'r table(gender)[2]' males.....
 ```
 
 ```{r echo=FALSE}
 gender <- c(rep("F", 41), rep("M", 54))
 ```
-.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
+.....the sample population consisted of `r table(gender)[1]` females and `r table(gender)[2]` males.....
 
 
 
@@ -1522,7 +1552,7 @@ genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
 probes <- na.omit(genes[match(genelist,genes[,2]),1])
 exprows <- match(probes,rownames(evals))
 
-heatmap(as.matrix(evals[exprows,]),)
+heatmap(as.matrix(evals[exprows,]))
   
 
 ```
