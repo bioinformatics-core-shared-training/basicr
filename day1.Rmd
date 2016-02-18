@@ -1,15 +1,21 @@
 ---
 title: "Introduction to Solving Biological Problems Using R - Day 1"
-author: Mark Dunning, Suraj Menon, and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy
-  John Davey, Dávid Molnár and Ian Roberts
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
+  Laurent Gatto, Rob Foy John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: 
+output:
   slidy_presentation:
-    footer: "This work is licensed under the Creative Commons Attribution-ShareAlike 2.0. COURSE HOME: cambiotraining.github.io/r-intro/"
+    footer: 'This work is licensed under the Creative Commons Attribution-ShareAlike
+      2.0. COURSE HOME: cambiotraining.github.io/r-intro/'
+  ioslides_presentation: default
+  beamer_presentation: default
 css: mystyle.css
 toc: yes
-
 ---
+```{r include = FALSE}
+library(knitr)
+opts_chunk$set(comment = NA) # eliminates hashtag from R outputs
+```
 
 ## Course Aims
 
@@ -132,7 +138,7 @@ of the screen and click
 
 - The command line can be used as a calculator. Type:
 
-```{r basic-calc1}
+```{r basic-calc1, eval=FALSE}
 2 + 2
 
 20/5 - sqrt(25) + 3^2
@@ -147,43 +153,44 @@ position in the output. In this case the output is a 'vector' of length 1
 
 ##Basic concepts in R - variables
 
-- A variable is a letter or word which takes (or contains) a value. We
-use the assignment 'operator', `<-`
-
-```{r variables1}
+- A variable is a letter or word which takes (or contains) a value. We use the **assignment operator: `<-`**
+```{r variables1, eval=FALSE}
 x <- 10
 x
+
 myNumber <- 25
 myNumber
 ```
+
 - We can perform arithmetic on variables:
-```{r variables2}
+```{r variables2, eval=FALSE}
 sqrt(myNumber)
-```
-- We can add variables together:
-```{r variables3}
-x + myNumber
 ```
 
 ##Basic concepts in R - variables
 
-- We can change the value of an existing variable:
+- We can add variables together:
+```{r variables3, eval=FALSE}
+x + myNumber
+```
 
-```{r variables4}
+- We can change the value of an existing variable:
+```{r variables4, eval=FALSE}
 x <- 21
 x
 ```
 
-- We can set one variable to equal the value of another variable:
+##Basic concepts in R - variables
 
-```{r variables5}
+- We can set one variable to equal the value of another variable:
+```{r variables5, eval=FALSE}
 x <- myNumber
 x
 ```
 
 - We can modify the contents of a variable:
 
-```{r variables6}
+```{r variables6, eval=FALSE}
 myNumber <- myNumber + sqrt(16)
 myNumber
 ```
@@ -194,11 +201,12 @@ myNumber
 ```{r eval=FALSE}
 sin(x)
 ```
-this returns the sine of x. In this case the function has one argument: **x**. Arguments are always contained in parentheses -- curved brackets, **()** -- separated by commas.
+- This returns the sine of x
+     + In this case the function has one argument: **x**. Arguments are always contained in parentheses -- curved brackets, **()** -- separated by commas.
 
 - Try these:
 
-```{r functions1}
+```{r functions1, eval=FALSE}
 sum(3,4,5,6)
 max(3,4,5,6)
 min(3,4,5,6)
@@ -207,100 +215,108 @@ min(3,4,5,6)
 ##Basic concepts in R - functions
 
 - Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the right order)
-      + when testing code, it is easier and safer to name the arguments
 
-```{r functions2}
+```{r functions2, eval=FALSE}
 seq(from = 2, to = 20, by = 4)
 seq(2, 20, 4)
 ```
+- When testing code, it is easier and safer to name the arguments
 
 ##Basic concepts in R - vectors
 
 - The basic data structure in R is a **vector** -- an ordered collection of values. 
 - R treats even single values as 1-element vectors. 
-- The function `c` *combines* its arguments into a vector:
+- The function **`c`** *combines* its arguments into a vector:
 
-```{r vectors1}
+```{r vectors1, eval=FALSE}
 x <- c(3,4,5,6)
 x
 ```
-- The square brackets `[]` indicate the position within the vector (the ***index***). We can extract individual elements by using the `[]` notation:
-```{r vectors2}
+- The square brackets `[]` indicate the position within the vector (the ***index***).
+- We can extract individual elements by using the `[]` notation:
+```{r vectors2, eval=FALSE}
 x[1]
 x[4]
 ```
 
-- We can even put a vector inside the square brackets: (*vector indexing*)
+##Basic concepts in R - vectors
 
-```{r vectors3}
+- We can even put a vector inside the square brackets (*vector indexing*):
+
+```{r vectors3, eval=FALSE}
 y <- c(2,3)
 x[y]
 ```
 
 ##Basic concepts in R - vectors
-- There are a number of shortcuts to create a vector. Instead of:
+
+- There are a number of shortcuts to create a vector. 
+- Instead of:
 ```{r vectors4}
-x <- c(3,4,5,6,7,8,9,10,11,12)
+x <- c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 ```
 - we can write:
-```{r vectors5}
+```{r vectors5, eval=FALSE}
 x <- 3:12
 x
 ```
-- or we can use the `seq()` function, which returns a vector:
-```{r vectors6}
+
+##Basic concepts in R - vectors
+
+- or we can use the **`seq()`** function, which returns a vector:
+```{r vectors6, eval=FALSE}
 x <- seq(2, 20, 4)
 x
 ```
 
-```{r vectors7}
+```{r vectors7, eval=FALSE}
 x <- seq(2, 20, length.out=5)
 x
 ```
 
+- or we can use the **`rep()`** function:
 
-##Basic concepts in R - vectors
-- or we can use the `rep()` function:
-
-```{r vectors8}
+```{r vectors8, eval=FALSE}
 y <- rep(3, 5)
 y
 ```
 
-```{r vectors9}
+```{r vectors9, eval=FALSE}
 y <- rep(1:3, 5)
 y
 ```
 
-
-
 ##Basic concepts in R - vectors
+
 - We have seen some ways of extracting elements of a vector. We can use these shortcuts to make things easier (or more complex!)
 
-```{r vectors10}
+```{r vectors10, eval=FALSE}
 x <- 3:12
+
 x[3:7]
 x[seq(2, 6, 2)]
 x[rep(3, 2)]
 ```
 
-
 ##Basic concepts in R - vectors
+
 - We can add an element to a vector:
-```{r vectors11}
+```{r vectors11, eval=FALSE}
 y <- c(x, 1)
 y
 ```
 - We can glue vectors together:
-```{r vectors12}
+```{r vectors12, eval=FALSE}
 z <- c(x, y)
 z
 ```
 
 ##Basic concepts in R - vectors
+
 - We can remove element(s) from a vector:
-```{r vectors13}
+```{r vectors13, eval=FALSE}
 x <- 3:12
+
 x[-3]
 x[-(5:7)]
 x[-seq(2, 6, 2)]
@@ -309,16 +325,18 @@ x[-seq(2, 6, 2)]
 ##Basic concepts in R - vectors
 
 - Finally, we can modify the contents of a vector:
-```{r vectors14}
+```{r vectors14, eval=FALSE}
 x[6] <- 4
 x
+
 x[3:5] <- 1
 x
 ```
 
-Remember! 
-- **Square** brackets for ***indexing*** []
-- **parentheses** for function ***arguments*** ().
+**Remember!**
+
+ - **Square** brackets [ ] for ***indexing***
+ - **Parentheses** () for function ***arguments***
 
 ##Basic concepts in R - vector arithmetic
 
@@ -328,19 +346,25 @@ application is element-wise
 ```{r vector-arithmetic1}
 x <- 1:10
 y <- x*2
+```
+```{r eval=FALSE}
 y
+```
+```{r vector-arithmetic1b}
 z <- x^2
+```
+```{r eval=FALSE}
 z
 ```
 
 ##Basic concepts in R - vector arithmetic
 
-- Adding two vectors
-```{r vector-arithmetic2}
+- Adding two vectors:
+```{r vector-arithmetic2, eval=FALSE}
 y + z
 ```
 - If vectors are not the same length, the shorter one will be recycled:
-```{r vector-arithmetic3}
+```{r vector-arithmetic3, eval=FALSE}
 x + 1:2
 ```
 - But be careful if the vector lengths aren't factors of each other:
@@ -362,24 +386,21 @@ x + 1:3
 
 ```{r vector-naming1}
 gene.names <- c("Pax6", "Beta-actin", "FoxP2", "Hox9")
+gene.names
 ```
 
-- We can name elements of vectors using the `names` function, which can be useful to keep track of the meaning of our data:
+##Basic concepts in R - Character vectors and naming
+
+- We can name elements of vectors using the **`names()`** function, which can be useful to keep track of the meaning of our data:
 ```{r vector-naming2}
 gene.expression <- c(0, 3.2, 1.2, -2)
-gene.expression
-
-```
-
-```{r vector-naming3}
 names(gene.expression) <- gene.names
 gene.expression
 
 ```
 
-- We can also use the `names` function to get a vector of the names of
-an object:
-```{r vector-naming4}
+- We can also use the `names()` function to get a vector of the names of an object:
+```{r vector-naming4, eval=FALSE}
 names(gene.expression)
 ```
 
@@ -398,9 +419,9 @@ names(gene.expression)
 
 ##Exercise: genes and genomes
 
-- Let's assume a coding gene has an average length of 1.5 kilobases. On average, how many base pairs of each genome is made of coding genes? Create a new vector to record this called `coding.bases`.
-- What percentage of each genome is made up of protein coding genes? Use your `coding.bases` and `genome.size` vectors to calculate this. (See earlier slides for how to do division in R.)
-- How many times more bases are used for coding in the human genome compared to the yeast genome? ("S. cerevisiae") How many times more bases are in the human genome in total compared to the yeast genome? Look up indices of your vectors to find out.
+1. Let's assume a coding gene has an average length of 1.5 kilobases. On average, **how many base pairs of each genome is made of coding genes?** Create a new vector to record this, called **`coding.bases`**.
+2. **What percentage of each genome is made up of protein coding genes?** Use your **`coding.bases`** and **`genome.size`** vectors to calculate this. (See earlier slides for how to do division in R.)
+3. How many times more bases are used for coding in the human genome compared to the yeast genome? (*S. cerevisiae*) **How many times more bases are in the human genome in total compared to the yeast genome?** Look up indices of your vectors to find out.
 
 ##Answers to genome exercise
 
@@ -410,11 +431,14 @@ coding.genes <- c(20774, 23139, 13937, 20532, 6692)
 species.name <- c("H. sapiens","M. musculus",
                   "D. melanogaster","C. elegans",
                   "S. cerevisiae")
+
 names(genome.size)  <- species.name
 names(coding.genes) <- species.name
 ```
-- To calculate the number of coding bases, we need to use the same
-scale as we used for genome size: 1.5 kilobases is 0.0015 Megabases.
+
+##Answers to genome exercise
+
+1. To calculate the number of coding bases, we need to use the same scale as we used for genome size (1.5 kilobases is 0.0015 Megabases):
 ```{r ex1answers2}
 coding.bases <- coding.genes*0.0015
 coding.bases
@@ -422,13 +446,16 @@ coding.bases
 
 ##Answers to genome exercise
 
-- To calculate the percentage of coding bases in each genome:
+2. To calculate the percentage of coding bases in each genome:
 
 ```{r ex1answers3}
 coding.pc <- coding.bases/genome.size*100
 coding.pc
 ```
-- To compare human to yeast:
+
+##Answers to genome exercise
+
+3. To compare human to yeast:
 ```{r ex1answers4}
 coding.bases[1]/coding.bases[5]
 ```
@@ -437,11 +464,9 @@ coding.bases[1]/coding.bases[5]
 genome.size[1]/genome.size[5]
 ```
 
-- Note that if a new vector is created using a named vector, the names
-are usually carried across to the new vector. Sometimes this is what
-we want (as for `coding.pc`) but sometimes it is not (when we are
-comparing human to yeast). We can remove names by setting them
-to the special NULL value:
+##Answers to genome exercise
+
+- Names are usually carried across to the new vector. Sometimes this is what we want (as for `coding.pc`) but sometimes it is not (when we are comparing human to yeast). We can remove names by setting them to the special `NULL` value:
 
 ```{r ex1answers6}
 names(coding.pc) <- NULL
@@ -450,62 +475,61 @@ coding.pc
 
 ## Documenting your analysis with RStudio
 
-Typing lots of commands directly to R can be tedious. A better way is to
-write the commands to a file and then load it into R.
+Typing lots of commands directly to R can be tedious. A better way is to write the commands to a file and then load it into R.
 
 - We will be documenting our analyses using ***markdown***
-    + markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files etc
+    + markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files, etc.
+    + a simpler (but not so informative) alternative is to use a script
     
-- To create a R markdown file, Click on **File** →  **New File**  -> **R Markdown** in Rstudio
+- To create an R markdown file, Click on **File** →  **New File**  →  **R Markdown** in Rstudio
 - This will make our analyses ***reproducible***
 
-## Format of the file
+## Format of an R markdown file
 
-- **Lines 8 - 10** Plain text description
-- **Lines 12 - 14** An R code 'chunk'
-- **Lines 18 to 20** Another code chunk, this time producing a plot
+- **Lines 8 - 10**: plain text description
+- **Lines 12 - 14**: an R code 'chunk'
+- **Lines 18 to 20**: another code chunk, this time producing a plot
 
 ![md-format](images/markdown-format.png)
 
-- Pressing the ***Knit HTML*** (/***Knit PDF***) button will create the report
+- Pressing the ***Knit HTML*** (/***Knit PDF***) button will create a report
 - See `solution-exercise1.Rmd ` for solution to Exercise 1
-- All exercises will have a markdown template that you can edit
-    
-
+- All exercises have a markdown template that you can edit
 
 ##Getting help
 
 - **This is possibly the most important slide in the whole course!?!**
-- To get help on any R function, type `?` followed by the function name. For example:
+- To get help on any R function, type **`?`** followed by the function name. For example:
 ```{r eval=FALSE}
 ?seq
 ```
-- This retrieves the syntax and arguments for the function. You can see
-the default order of arguments here. The help page also tells you which
-*package* it belongs to.
-- There will typically be example usage, which you can test using the
+- This retrieves the syntax and arguments for the function. The help page shows the default order of arguments. It also tells you which *package* it belongs to.
+- There is typically a usage example, which you can test using the
 `example` function:
 
 ```{r eval=FALSE}
 example(seq)
 ```
-- If you can't remember the exact name type `??` followed by your guess.
+
+##Getting help
+
+- If you can't remember the exact name, type **`??`** followed by your guess.
 R will return a list of possibilities:
 
 ```{r eval=FALSE}
 ??plot
 ```
-- The **Packages** tab in the lower-right panel of RStudio will help you to locate the help pages for a particular package and its functions
-    + Often there will be a user-guide / '*vignette*' too
+- The **Packages** tab in the lower-right panel of RStudio will help you locate the help pages for a particular package and its functions
+    + Often there will be a user-guide or '*vignette*' too
 
 ##Interacting with the R console
 
-- R console symbols:
-    + `;` end of line
+- **Important** -- R console symbols:
+    + **`;`** end of line
     (Enables multiple commands to be placed on one line of text)
-    + `#` comment
+    + **`#`** comment
     (indicates text is a comment and not executed)
-    + `+` command line wrap
+    + **`+`** command line wrap
     (R is waiting for you to complete an expression)
     
 - *Ctrl-c* or *escape* to clear input line and try again
@@ -514,27 +538,31 @@ R will return a list of possibilities:
 - Use up and down arrows to scroll through the command history
 
 ##R packages
+
 - R comes ready loaded with various libraries of functions called
-**packages**. e.g. the function **`sum()`** is in the **base** package and
+**packages**. For example: the function **`sum()`** is in the **base** package and
 **`sd()`**, which calculates the standard deviation of a vector, is in the
 **`stats`** package
 - There are 1000s of additional packages provided by third parties,
 and the packages can be found in numerous server locations on the
 web called **repositories**
-- The two repositories you will come across the most are
+- The two repositories you will come across the most are:
     + **The Comprehensive R Archive Network (CRAN)**
         + Use metacran search to find functionality you need: http://www.r-pkg.org/
         + Or look for packages by theme: http://cran.r-project.org/web/views/
     + **Bioconductor** specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
+    
+##R packages
+    
 - Other repositories:
     + http://r-forge.r-project.org/
-    + github.com can also host R packages
+    + https//github.com can also host R packages, and hosts the development version of many packages
 - Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
     
 ## Installing packages    
     
-- CRAN packages can be installed using `install.packages`
-    + or clicking on the Packages tab in RStudio
+- CRAN packages can be installed using **`install.packages()`**
+    + or clicking on the *Packages* tab in RStudio
     
 ```{r eval=FALSE}
 install.packages(name.of.my.package)
@@ -553,7 +581,7 @@ biocLite("PackageName")
 
 ##Example: Install packages ggplot2 and DESeq
 
-- ggplot2 is a commonly used graphics package
+- ggplot2 is a commonly used graphics package:
     + in RStudio, go to **Tools** → **Install Packages**... and type the package name
     + or use `install.packages()` function to install it:
   
@@ -561,19 +589,22 @@ biocLite("PackageName")
 install.packages("ggplot2")
 ```
    
-- `DESeq` is a Bioconductor package (http://www.bioconductor.org) for the analysis of RNA-seq data
+- `DESeq` is a Bioconductor package (http://www.bioconductor.org) for the analysis of RNA-seq data:
 
 ```{r eval=FALSE}
 source("http://www.bioconductor.org/biocLite.R")
 biocLite("DESeq")
 ```
 
-- R needs to be told to use the new functions from the installed packages. Use `library(...)` function to load the newly installed features:
+##Example: Load packages ggplot2 and DESeq
+
+- R needs to be told to use the new functions from the installed packages. Use **`library(...)`** function to load the newly installed features:
 
 ```{r eval=FALSE}
 library(ggplot2) # loads ggplot functions
 library(DESeq)   # loads DESeq functions
-library()        # Lists all the packages you've got installed 
+library()        # Lists all the packages 
+                 # you've got installed 
 ```
 
 # 2. Data structures
@@ -591,18 +622,38 @@ library()        # Lists all the packages you've got installed
 - We will explore how to construct these data from scratch.
     + (in practice, we would usually import such data from a file)
 
-|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
-|--|-------|-------|--------------|:----:|--:|------:|:-----:|
-|1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE|
-|2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
-|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
-|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
-|5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
-|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
-|7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
-|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
-|9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
-|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
+```{r echo=FALSE, tidy=T}
+age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
+weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
+            71.5, 73.2, 64.8)
+firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
+               "Paul", "Joanna", "Matthew", "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis", 
+                "Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
+             FALSE, TRUE, FALSE, TRUE)
+sex <- c("Male", "Female", "Male", "Female", "Male", "Male",
+         "Female", "Male", "Male", "Female")
+patients <- data.frame(firstName, secondName, 
+                       paste(firstName, secondName),  
+                       sex, age, weight, consent)
+names(patients) <- c("First_Name", "Second_Name", 
+                     "Full_Name", "Sex", "Age", "Weight", "Consent")
+kable(patients)
+```
+
+<!-- |  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent| -->
+<!-- |--|-------|-------|--------------|:----:|--:|------:|:-----:| -->
+<!-- |1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE| -->
+<!-- |2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE| -->
+<!-- |3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE| -->
+<!-- |4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE| -->
+<!-- |5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE| -->
+<!-- |6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE| -->
+<!-- |7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE| -->
+<!-- |8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE| -->
+<!-- |9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE| -->
+<!-- |10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE| -->
 
 ##Character, numeric and logical data types
 
@@ -611,22 +662,27 @@ example:
 
 ```{r patients1}
 age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
-weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
-71.5, 73.2, 64.8)
+weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 
+            63.5, 71.5, 73.2, 64.8)
 
 ```
 - We can define the names using character vectors:
 ```{r patients2}
-firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
-"Paul", "Joanna", "Matthew", "David", "Sally")
-secondName <- c("Jones", "Parker", "Evans", "Davis", 
-"Baker","Daniels", "Edwards", "Smith", "Roberts", "Wilson")
+firstName  <- c("Adam", "Eve", "John", "Mary",
+                "Peter", "Paul", "Joanna", "Matthew",
+                "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis",
+                "Baker","Daniels", "Edwards", "Smith", 
+                "Roberts", "Wilson")
 ```
+
+##Character, numeric and logical data types
+
 - We also have a new type of vector, the ***logical*** vector, which only 
 contains the values `TRUE` and `FALSE`:
 ```{r patients3}
-consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
-FALSE, TRUE, FALSE, TRUE)
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, 
+             FALSE, FALSE, TRUE, FALSE, TRUE)
 ```
 
 ##Character, numeric and logical data types
@@ -638,9 +694,9 @@ FALSE, TRUE, FALSE, TRUE)
 c(20, "a string", TRUE)
 
 ```
-- We can see the type of a particular vector using the **`class`** function:
+- We can see the type of a particular vector using the **`class()`** function:
 
-```{r}
+```{r, eval=FALSE}
  class(firstName)
  class(age)
  class(weight)
@@ -648,89 +704,76 @@ c(20, "a string", TRUE)
 ```
 
 ##Factors
-- Character vectors are fine for some variables, like names
-- But sometimes we have categorical data and we want R to 
-recognize this.
-- A factor is R's data structure for categorical data.
+
+- Character vectors are fine for some variables, like names. But sometimes we have categorical data and we want R to 
+recognize this
+- A factor is R's data structure for categorical data:
 
 ```{r patients4}
-sex <- c("Male", "Female", "Male", "Female", "Male", "Male",
-"Female", "Male", "Male", "Female")
-
-```
-
-```{r eval=FALSE}
+sex <- c("Male", "Female", "Male", "Female", "Male",
+         "Male", "Female", "Male", "Male", "Female")
 sex
 ```
 
-```{r echo=FALSE}
-options(width=60)
-sex
-```
+##Factors
 
 ```{r}
 factor(sex)
 ```
-
 - R has converted the strings of the sex character vector into two **levels**, which are the categories in the data
 - Note the values of this factor are not character strings, but levels
 - We can use this factor to compare data for males and females
 
-
 ##Creating a data frame (first attempt)
 
-- We can construct a data frame from other objects (N.B. The **`paste`** function joins character vectors together)
+- We can construct a data frame from other objects (N.B. The **`paste()`** function joins character vectors together)
 
-```{r patients5, eval=FALSE}
+```{r patients5}
 patients <- data.frame(firstName, secondName, 
                        paste(firstName, secondName),  
                        sex, age, weight, consent)
+```
+```{r patients5b, eval=FALSE}
 patients
 ```
 
-
 ```{r echo=FALSE}
-options(width=80)
-patients <- data.frame(firstName, secondName, 
+options(width=60)
+patients2 <- data.frame(firstName, secondName, 
                        paste(firstName, secondName),  
-                       sex, age, weight, consent)
-patients
+                       "..."="", stringsAsFactors = F)
+patients2 <- rbind(patients2[c(1:6),], c("...", "", "", ""))
+patients2
 ```
 
 
 ##Naming data frame variables
-- We can access particular variables using the '`$`' *operator*:
-```{r patients6}
+- We can access particular variables using the **'`$`'** *operator*:
+```{r patients6, eval=F}
 patients$age
 ```
 
-- R has inferred the names of our data frame variables from the names of the vectors or the commands (e.g. the `paste` command)
-- We can name the variables after we have created a data frame using the **`names`** function, and we can use the same function to see the names:
+- R has inferred the names of our data frame variables from the names of the vectors or the commands (e.g. the `paste()` command)
+- We can name the variables after we have created a data frame using the **`names()`** function, and we can use the same function to see the names:
 ```{r patients7}
-names(patients) <- c("First_Name", "Second_Name", 
-"Full_Name", "Sex", "Age", "Weight", "Consent")
+names(patients) <- c("First_Name", "Second_Name",
+                     "Full_Name", "Sex", "Age", 
+                     "Weight", "Consent")
 ```
 
 ```{r eval=FALSE}
 names(patients)
 ```
 
-
-```{r echo=FALSE}
-options(width=40)
-names(patients)
-
-```
-
-
-
 ##Naming data frame variables
+
 - Or we can name the variables when we define the data frame
 
 ```{r patients8}
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
-                       Full_Name = paste(firstName,secondName), 
+                       Full_Name = paste(firstName,
+                                         secondName), 
                        Sex = sex,
                        Age = age,
                        Weight = weight, 
@@ -742,18 +785,13 @@ names(patients)
     
 ```
 
-
-```{r echo=FALSE}
-options(width=40)
-names(patients)
-```
-
 ##Factors in data frames
+
 - When creating a data frame, R assumes all character vectors should 
 be categorical variables and converts them to factors. This is not 
 always what we want:
     + e.g. we are unlikely to be interested in the hypothesis that people called Adam are taller, so it seems a bit silly to represent this as a factor
-```{r patients9}
+```{r patients9, eval=FALSE}
 patients$First_Name
 ```
 
@@ -765,18 +803,18 @@ then explicitly stating when we want a factor by using `factor`:
 ```{r patients10}
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
-                       Full_Name = paste(firstName, secondName), 
+                       Full_Name = paste(firstName,
+                                         secondName), 
                        Sex = factor(sex),
                        Age = age,
                        Weight = weight,
                        Consent = consent,
                        stringsAsFactors = FALSE)
-
 ```
 
-```{r patients11}
- patients$Sex
- patients$First_Name
+```{r patients11, eval=FALSE}
+patients$Sex
+patients$First_Name
 ```
 
 ##Matrices
@@ -800,26 +838,30 @@ rowMeans(e)
 ##Indexing data frames and matrices
 
 - You can index multidimensional data structures like matrices and data 
-frames using commas. If you don't provide an index for either rows or 
-columns, all of the rows or columns will be returned.
+frames using commas:
+- **`object[rows, colums]`**
 
-**`object[rows, colums]`**
-
-```{r index1}
+```{r index1, eval=FALSE}
 e[1,2]
 e[1,]
 patients[1,2]
-
 patients[1,]
 ```
+
+- If you don't provide an index for either rows or 
+columns, all of the rows or columns will be returned.
 
 ##Advanced indexing
 - 'Values' in R are really vectors
 - Indices are actually vectors, and can be ***numeric*** or ***logical***:
 ```{r index3}
- s <- letters[1:5]
- s[c(1,3)]
- s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
+s <- letters[1:5]
+s
+```
+
+```{r index3b, eval=FALSE}
+s[c(1,3)]
+s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
 ```
 
 ##Advanced indexing
@@ -837,14 +879,16 @@ s[a < 3]
 
 - Operators allow us to combine multiple logical tests
 - comparison operators
-`<, >, <=, >=, ==, !=`
+**`<, >, <=, >=, ==, !=`**
 - logical operators 
-`!, &, |, xor`
+**`!, &, |, xor`**
     + The operators for 'comparison' and 'logical' always return logical values! i.e.  (`TRUE`, `FALSE`)
 
 ```{r}
 s
 a
+```
+```{r, eval=FALSE}
 s[a > 1 & a <3]
 s[a == 2]
 ```
@@ -853,35 +897,35 @@ s[a == 2]
 ##Exercise: exercise2.Rmd
 
 - The markdown template has code to create the patients data frame from the slides
-- Make a new data frame with three extra variables: `country`, 
-`continent`, and `height` 
+- Make a new data frame with three extra variables: **`country`**, 
+**`continent`**, and **`height`** 
     + Make up the data
     + Make `country` a *character* vector but `continent` a *factor*
-- Try the **`summary`** function on your data frame. What does it do? 
+- Try the **`summary()`** function on your data frame. What does it do? 
 How does it treat vectors (numeric, character, logical) and factors? 
 (What does it do for matrices?)
 - Use logical indexing to select the following patients from the data frame described in the slides:
-    + Patients under 40
-    + Patients who give consent to share their data
-    + Men who weigh as much or more than the average European male (70.8 kg)
+    1. Patients under 40
+    2. Patients who give consent to share their data
+    3. Men who weigh as much or more than the average European male (70.8 kg)
 
 ##Logical indexing answers: solution-exercise2.pdf
 
-- Patients under 40:
+1. Patients under 40:
 ```{r ex2ans1, eval=FALSE}
-patients[patients$Age < 40,]
+patients[patients$Age < 40, ]
 
 ```
 
-- Patients who give consent to share their data:
+2. Patients who give consent to share their data:
 ```{r ex2ans2, eval=FALSE}
-patients[patients$Consent == TRUE,]
+patients[patients$Consent == TRUE, ]
 
 ```
 
-- Men who weigh as much or more than the average European male  (70.8 kg):
+3. Men who weigh as much or more than the average European male  (70.8 kg):
 ```{r ex2ans3, eval=FALSE}
-patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
+patients[patients$Sex=="Male" & patients$Weight>=70.8, ]
 ```
 
 
@@ -889,7 +933,7 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
 
 ##3 steps to Basic Data Analysis
 
-- In this short section, we show how the data manipulation steps we have just seen can be used as part of an analysis pipeline
+- In this short section, we show how the data manipulation steps we have just seen can be used as part of an analysis pipeline:
 
 1. Reading in data
     + `read.table()`
@@ -904,7 +948,7 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
   
 ##A simple walkthrough
 
-- 50 neuroblastoma patients were tested for NMYC gene copy number by interphase nuclei FISH
+- 50 neuroblastoma patients were tested for NMYC gene copy number by interphase nuclei FISH:
       + Amplification of NMYC correlates with worse prognosis
       + We have count data
       + Numbers of cells per patient assayed
@@ -914,7 +958,7 @@ patients[patients$Sex == "Male" & patients$Weight >= 70.8,]
     
 ##The Working Directory (wd)
 
-- Like many programs R has a concept of a working directory (wd)
+- Like many programs R has a concept of a working directory (**`wd`**)
 - It is the place where R will look for files to execute and where it will
 save files, by default
 - For this course we need to set the working directory to the location
@@ -927,7 +971,7 @@ setwd("/home/participant/Course_Materials")
 
 - Alternatively in RStudio use the mouse and browse to the directory
 location
-- Session → Set Working Directory → Choose Directory...
+- ***Session → Set Working Directory → Choose Directory...***
     
 ## 0. Locate the data
 
@@ -945,7 +989,7 @@ list.files()
 ```
 
 - Otherwise you need the *path* to the file
-    + you can get this using `file.choose`
+    + you can get this using **`file.choose()`**
     
 ##1. Read in the data
 
@@ -956,7 +1000,7 @@ list.files()
 rawData <- read.delim("countData.txt")
 ```
 
-- Using `file.choose()`
+- Using `file.choose()`:
 
 ```{r eval=FALSE}
 myfile <- file.choose()
@@ -964,42 +1008,43 @@ rawData <- read.delim(myfile)
 ```
 
 
-- If the data has been comma-separated then, `sep=","` or use `read.csv`:
+- If the data is comma-separated, then use either the argument `sep=","` or the function `read.csv()`:
 ```{r eval=FALSE}
 read.csv("countData.csv")
 ```
-- For full list of arguments
+- For full list of arguments:
 ```{r eval=FALSE}
 ?read.table
 ```
 
 ##1b. Check the data
-*Always* check the object to make sure the contents and dimensions are as you expect
+- *Always* check the object to make sure the contents and dimensions are as you expect
 
 - R will sometimes create the object without error, but the contents may be un-usable for analysis
     + if you specify an incorrect separator, R will not be able to locate the columns in your data, and you may end up with an object with just one column
     
-```{r analysis1}
-rawData[1:10,]  # View the first 10 rows to ensure import is OK
+```{r analysis1, eval=FALSE}
+# View the first 10 rows to ensure import is OK
+rawData[1:10,]  
 ```
 
-- or use the `View` function to get a display of the data in RStudio
+- or use the `View()` function to get a display of the data in RStudio:
 ```{r eval=FALSE}
 View(rawData)
 ```
 
 ##1c. Understanding the object
 
-Once we have read the data successfully, we can start to interact with it
+- Once we have read the data successfully, we can start to interact with it
 
-- The object we have created is a data frame
+- The object we have created is a *data frame*:
 ```{r}
 class(rawData)
 ```
 
-- we can query the dimensions
+- We can query the dimensions:
 
-```{r}
+```{r, eval=FALSE}
 ncol(rawData)
 nrow(rawData)
 dim(rawData)
@@ -1007,16 +1052,16 @@ dim(rawData)
 
 ##1c. Understanding the object
 
-- The names of the columns are automatically assigned
+- The names of the columns are automatically assigned:
 
 ```{r}
 colnames(rawData)
 ```
 
-- We can use any of these names to access a particular column
+- We can use any of these names to access a particular column:
     + and create a vector
-        + TOP TIP: type the name of the object and hit TAB. You can select the column from the drop-down list!
-```{r}
+    + TOP TIP: type the name of the object and hit TAB: you can select the column from the drop-down list!
+```{r, eval=FALSE}
 rawData$Nuclei
 ```
 
@@ -1031,36 +1076,35 @@ rawData$Nuclei
 
 > Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham)
 
-You will make your life a lot easier if you keep your data ***tidy*** 
+##Word of caution
 
-http://vimeo.com/33727555
+- You will make your life a lot easier if you keep your data ***tidy***:
+     + http://vimeo.com/33727555
+     + http://vita.had.co.nz/papers/tidy-data.pdf
 
-http://vita.had.co.nz/papers/tidy-data.pdf
-
-and ***organised***
-
-http://kbroman.org/dataorg/
+- ...and ***organised***:
+     + http://kbroman.org/dataorg/
 
 ##Handling missing values
 
-- The data frame contains some `NA` values, which means the values are missing – a common occurrence in real data collection
+- The data frame contains some **`NA`** values, which means the values are missing – a common occurrence in real data collection
 - `NA` is a special value that can be present in objects of any type (logical, character, numeric etc)
-- `NA` is not the same as `NULL`.
+- `NA` is not the same as `NULL`:
     - `NULL` is an empty R object. 
     - `NA` is one missing value within an R object (like a data frame or a vector)
-- Often R functions will handle `NA`s gracefully
-```{r}
-x <- c(1,NA,3)
+- Often R functions will handle `NA`s gracefully:
+```{r, eval=FALSE}
+x <- c(1, NA, 3)
 length(x)
 ```
 
 ##Handling missing values
 
 - However, sometimes we have to tell the functions what to do with them. 
-- R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them
+- R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them:
 
-```{r analysis2}
-mean(x, na.rm=TRUE)
+```{r analysis2, eval=FALSE}
+mean(x, na.rm = TRUE)
 
 mean(na.omit(x))
 ```
@@ -1068,14 +1112,20 @@ mean(na.omit(x))
 ##2. Analysis (reshaping data and maths)
 
 - Our analysis involves identifying patients with > 33% NB amplification
-    + we can use the `which` function to select indices from a logical vector that are `TRUE`
+    + we can use the **`which()`** function to select indices from a logical vector that are `TRUE`
     
 ```{r analysis3}
-# create an index of results:
-prop <- rawData$NB_Amp / rawData$Nuclei 
+# Create an index of results:
+prop <- rawData$NB_Amp / rawData$Nuclei
+```
+```{r analysis3b, eval=FALSE}
 prop > 0.33
+```
+```{r analysis3c}
 # Get sample names of amplified patients:
 amp <- which(prop > 0.33) 
+```
+```{r analysis3d, eval=FALSE}
 amp
 ```
 
@@ -1097,17 +1147,16 @@ abline(h=0.33) # Add a horizonal line
 write.csv(rawData[amp,], file="selectedSamples.csv")
 ```
 - The output file is directly-readable by Excel
-- It's often helpful to double check where the data has been saved. 
-    + Use the *get working directory* function:
+- It's often helpful to double check where the data has been saved. Use the *get working directory* function:
 
 ```{r analysis6, eval=FALSE}
-getwd() # print working directory
+getwd()      # print working directory
 list.files() # list files in working directory
 ```
 
 ##Data analysis exercise: exercise3.Rmd
 
-- Patients are near normal if:
+- Patients are *near normal* if:
 `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
 - Modify the condition in our previous code to find these patients
 - Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
@@ -1126,53 +1175,55 @@ write.csv(rawData[norm,], "My_NB_output.csv")
 ##Plot basics
 
 - As we have heard, R has extensive graphical capabilities
-- but we need to start simple
-- we will describe *base* graphics in R; the plots available with any standard R installation
-    + other alternatives are available but require more R knowledge; e.g. `lattice`, `ggplot2`
-- plotting in R is a *vast* topic
-    + we cannot cover everything
-    + you can tinker with plots to your hearts content
-    + best to learn from examples
+- ...but we need to start simple
+- We will describe *base* graphics in R: the plots available with any standard R installation
+    + other more advanced alternatives are, e.g., `lattice`, `ggplot2`
+- Plotting in R is a *vast* topic:
+    + We cannot cover everything
+    + You can tinker with plots to your hearts content
+    + Best to learn from examples
 - ***You need to think about how best to visualise your data*** 
     + http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign
-- R cannot prevent you from creating a plotting disaster     
+- R cannot prevent you from creating a plotting disaster: 
     + http://www.businessinsider.com/the-27-worst-charts-of-all-time-2013-6?op=1&IR=T
     
 ##Making a Scatter Plot
 
-- If given a single vector as an argument, `plot` will make a scatter plot with the *values* of the vector on the *y* axis, and *indices* in the *x* axis
-    + e.g. it puts a point at 
-        + x=1,y=70.8
-        + x=2,y=67.9 etc...
+- If given a single vector as an argument, the function **`plot()`** will make a scatter plot with the *values* of the vector on the *y* axis, and *indices* in the *x* axis
+    + e.g. it puts a point at:
+        + x = 1, y = 70.8
+        + x = 2, y = 67.9 etc...
 ```{r,fig.height=3}
 patients$Weight
 plot(patients$Weight)
 ```
 
 ##Making a Scatter Plot
-R tries to guess the most appropriate way to visualise the data
+- R tries to guess the most appropriate way to visualise the data, according to the type and dimensions of the object(s) provided
 
 ```{r echo=FALSE,fig.height=3}
 plot(patients$Weight)
 ```
 
 - Axis limits, labels, titles are inferred from the data
-    + we can modify these as we wish
+    + We can modify these as we wish, by specifying ***arguments***
 
 ##Making a Scatter Plot of two variables
 
-- We can give two arguments to `plot`. It will put the values from the *first* argument in the *x* axis, and values from the *second* argument on the *y* axis
-    + for when we want to visualise the relationship between two variables
+- We can give two arguments to `plot()`:
+    + In order to visualise the relationship between two variables
+    + It will put the values from the *first* argument in the *x* axis, and values from the *second* argument on the *y* axis
+
 ```{r,fig.height=3}
 patients$Age
-plot(patients$Age,patients$Weight)
+plot(patients$Age, patients$Weight)
 ```
 
 ##Making a barplot
 
-- Other types of visualisation are available
-    + these are often just special cases of using the `plot` function
-    + one such function is `barplot`
+- Other types of visualisation are available:
+    + These are often just special cases of using the `plot()` function
+    + One such function is `barplot()`
     
     
 ```{r eval=FALSE}
@@ -1202,9 +1253,9 @@ barplot(summary(patients$Sex))
 
 ##Plotting a distribution: Histogram
 
-- A histogram is a popular way of visualising a distribution of ***continuous*** data
-    + can change the width of bins
-    + y-axis can be either frequency of density
+- A histogram is a popular way of visualising a distribution of ***continuous*** data:
+    + You can change the width of bins
+    + The y-axis can be either frequency of density
 
 ```{r,fig.height=5}
 hist(patients$Weight)
@@ -1214,22 +1265,19 @@ hist(patients$Weight)
 
 ##Plotting a distribution: Boxplot
 
-- The boxplot is commonly-used in statistics to visualise a distribution
-    + The black solid line is the ***median***
-    + The top and bottom of the box are the 75th and 25th percentiles
-        + Hence, the distance between these is a reflection of the *spread* of the data; the Inter-Quartile Range (***IQR***)
-    + Whiskers are drawn at 1.5 x IQR and -1.5 x IQR
-
+- The boxplot is commonly used in statistics to visualise a distribution:
 ```{r,eval=FALSE}
-boxplot(patients$Weight)
+boxplot(patients$Weight, horizontal = TRUE)
+```
+```{r,fig.height=2.5,echo=FALSE}
+par(mar=c(3,5,1,5))
+boxplot(patients$Weight, horizontal=T)
 ```
 
-```{r,fig.height=4,echo=FALSE}
-par(mar=c(1,5,1,5))
-boxplot(patients$Weight)
-```
-
-
+- The black solid line is the ***median***
+- The top and bottom of the box are the 75th and 25th percentiles
+     + Hence, the distance between these is a reflection of the *spread* of the data; the Inter-Quartile Range (***IQR***)
+- Whiskers are drawn at 1.5 x IQR and -1.5 x IQR
 
 ##Plotting a distribution: Boxplot
 
@@ -1237,25 +1285,25 @@ boxplot(patients$Weight)
 - For this we need to use the '*formula*' syntax
     + For now, `y ~ x` means put continuous variable `y` on the *y* axis and categorical `x` on the x axis
 ```{r,fig.height=3}
-boxplot(patients$Weight~patients$Sex)
+boxplot(patients$Weight ~ patients$Sex, horizontal = T)
 ```
 
-- Other alternatives to consider
+- Other alternatives to consider:
     - `example(dotchart)`
     - `example(stripchart)`
-    - `example(vioplot`) ### From vioplot library
-    - `example(beeswarm)` ## From beeswarm library
+    - `example(vioplot)  # From vioplot library`
+    - `example(beeswarm) # From beeswarm library`
 
 ## Exercise: exercise4a.Rmd
 
-- In the course folder you will find the file `ozone.csv`
+- In the course folder you will find the file `ozone.csv`:
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
-    + Full description here http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
-- Import these data into R
-- What data types are present? Try to think of ways to create the following plots from the data
-    + scatter plot two variables. e.g. Solar Radiation against Ozone
-    + a histogram. e.g. Temperature
-    + boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
+    + Full description here: http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
+1. Import these data into R
+2. What data types are present? Try to think of ways to create the following plots from the data
+    + Scatter plot two variables. e.g. Solar Radiation against Ozone
+    + A histogram. e.g. Temperature
+    + Boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
 
 
 ## Suggestions: solution-exercise4a.pdf
@@ -1277,7 +1325,7 @@ knitr:::kable(head(weather))
 ## Suggestions
 
 ```{r}
-plot(weather$Solar.R,weather$Ozone)
+plot(weather$Solar.R, weather$Ozone)
 ```
 
 ## Suggestions
@@ -1296,56 +1344,57 @@ boxplot(weather$Ozone)
 ## Suggestions
 
 ```{r}
-boxplot(weather$Ozone~weather$Month)
+boxplot(weather$Ozone ~ weather$Month)
 ```
 
 ## Simple customisations
 
-- `plot` comes with a whole array of arguments that can be set when we call the function
-    + see `?plot` and `?par`
-- Recall that unless specified, arguments have a default value
+- `plot()` comes with a large collection of arguments that can be set when we call the function:
+    + See `?plot` and `?par`
+- Recall that, unless specified, arguments have a default value
 - We can choose to draw lines on the plot rather than points
-    + the rest of the plot is the same as before
+    + The rest of the plot remains the same
 
 ```{r,fig.height=5}
-plot(patients$Weight,type="l")
+plot(patients$Weight, type = "l")
 ```
 
 ## Simple customisations
 
-- We can also have both lines and points
+- We can also have both lines and points:
 
 ```{r,fig.height=5}
-plot(patients$Weight,type="b")
+plot(patients$Weight, type = "b")
 ```
 
 ## Simple customisations
 
-- Add an informative title to the plot using the `main` argument
+- Add an informative title to the plot using the `main` argument:
 
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight,main="Relationship between Weight and Age")
+plot(patients$Age, patients$Weight,
+     main = "Relationship between Weight and Age")
 ```
 
 
 ## Simple customisations
 
-- Adding the x-axis label
+- Adding the x-axis label:
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight,xlab="Age")
+plot(patients$Age, patients$Weight, xlab = "Age")
 ```
 
 ## Simple customisations
-- Adding the y-axis label
+- Adding the y-axis label:
 
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight,ylab="Weight")
+plot(patients$Age, patients$Weight, ylab = "Weight")
 ```
 
 ## Simple customisations
-- We can specifiy multiple arguments at once
+- We can specifiy multiple arguments at once:
     + here `ylim` and `xlim` are used to specify axis limits
-```{r,fig.height=5}
+```{r,fig.height=4}
 plot(patients$Age,patients$Weight,
      ylab="Weight",
      xlab="Age",
@@ -1357,26 +1406,34 @@ plot(patients$Age,patients$Weight,
 
 ##Defining a colour
 
-- R can recognise various strings `"red"`, `"orange"`,`"green"`,`"blue"`,`"yellow"`....
-- Or more exotic ones `r sample(colours(),8)`..... See `colours()`.
+- R can recognise various strings, such as `"red"`, `"orange"`,`"green"`,`"blue"`,`"yellow"`...
+- Or more exotic ones like ``r sample(colours(),8)``...
+       + See `colours()`
 - See http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
-- Can also use **R**ed **G**reen **Blue** , hexadecimal, values
+- Can also use **R**ed **G**reen **Blue** and hexadecimal values:
+       + `rgb(0.7, 0.7, 0.7)` → A light grey in RGB format`
+       + `"#B3B3B3"` →  The same light grey in hexadecimal
+       + `"#0000FF88"`→ A semi-transparent blue, in hexadecimal
+          + The hexadecimal system is the native colour system for screen visualisation (e.g. webs). It indicates the intensity of Red, Green and Blue by using two digits for each colour, in a scale from 0-9 and A-F (0 meaning no intensity and F meaning most intense)
+```{r, eval=FALSE}
+
+```
 
 ##Use of colours
 
-Changing the `col` argument to `plot` changes the colour that the points are plotted in
+Changing the `col` argument to `plot()` changes the colour that the points are plotted in:
 
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight,col="red")
+plot(patients$Age, patients$Weight, col = "red")
 ```
 
 
 ##Plotting characters
 
-- R can use a variety of *p*lotting *ch*aracters
+- R can use a variety of **p**lotting **ch**aracters
 - Each of which has a numeric *code* 
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight, pch=16)
+plot(patients$Age, patients$Weight, pch = 16)
 ```
 
 ##Plotting characters
@@ -1389,104 +1446,104 @@ x <- floor(i /5) + 1
 y <- i %%5
 
 plot(1:10, type="n", xlim = c(1,5), ylim=c(-1,5),axes=F,xlab="",ylab="")
-points(x,y,pch=i+1)
+points(x,y,pch=i+1, cex=2)
 text(x,y-0.3,i+1)
 ```
 
 
 ##Plotting characters
-- Or you can specify a character
+- Or you can specify a character:
 
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight, pch="X")
+plot(patients$Age, patients$Weight, pch = "X")
 ```
 
 
 ##Size of points
-**C**haracter **ex**pansion
+**C**haracter **ex**pansion:
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight, cex=2)
+plot(patients$Age, patients$Weight, cex = 3)
 ```
 
 ##Size of points
-**C**haracter **ex**pansion
+**C**haracter **ex**pansion:
 ```{r,fig.height=5}
-plot(patients$Age,patients$Weight, cex=0.2)
+plot(patients$Age, patients$Weight, cex = 0.2)
 ```
 
 ##Colours and characters as vectors
 
 - Previously we have used a *vector* of length 1 as our value of colour and character
-- We can use a vector of any length
+- We can use a vector of any length:
     + the values will get *recycled* (re-used) so that each point gets assigned a value
 - We can use a pre-defined ***colour palette*** (see later)
-```{r,fig.height=5}
-plot(patients$Age,patients$Weight, 
-     pch = 1:10,
-     col=c("red","orange","green","blue"),
-     cex = 1:5)
+```{r,fig.height=4}
+plot(patients$Age, patients$Weight, 
+     pch = 1:10, cex = 1:5,
+     col = c("red", "orange", "green", "blue"))
 ```
 
 ##Other plots use the same arguments
 
-- Other plotting functions use the same arguments as `plot`
-    + technical explanation: the arguments are '*inherited*'
+- Other plotting functions use the same arguments as `plot()`
+    + technical explanation: the arguments are *'inherited'*
 
-```{r,fig.height=5}
+```{r,fig.height=4}
 boxplot(patients$Weight~patients$Sex,
-        xlab="Sex",
-        ylab="Weight",
-        main="Relationship between Weight and Gender",
-        col=c("blue","yellow"))
+        xlab = "Sex",
+        ylab = "Weight",
+        main = "Relationship between Weight and Gender",
+        col  = c("blue","yellow"))
 ```
 
 
 ##Exercise: exercise4b.Rmd
 
-- Can you re-create the following plots?
-- HINT
-    + see the `breaks` and `freq` arguments to hist (`?hist`) to create 50 bins and display density rather than frequency
-    + for third plot, see the rainbow function (`?rainbow`)
-    + don't worry too much about getting the colours exactly correct
+- Can you re-create the following plots? Hint:
+    + See the `breaks` and `freq` arguments to hist (`?hist`) to create 50 bins and display density rather than frequency
+    + For third plot, see the rainbow function (`?rainbow`)
+    + Don't worry too much about getting the colours exactly correct
     
-```{r echo=FALSE}
+```{r echo=FALSE, fig.height=5}
 par(mfrow=c(2,2))
-plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
-     ylab="Ozone level",xlab="Solar Radiation", 
+plot(weather$Solar.R,weather$Ozone, col="orange", pch=16,
+     ylab="Ozone level", xlab="Solar Radiation", 
      main="Relationship between ozone level and solar radiation")
-hist(weather$Temp,col="purple",xlab="Temperature",main="Distribution of Temperature",breaks=50:100,freq=FALSE)
+hist(weather$Temp, col="purple", xlab="Temperature", main="Distribution of Temperature", breaks=50:100, freq=FALSE)
 boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 ```
 
 ## Solutions: solution-exercise4b.pdf
 
 ```{r,fig.height=5}
-plot(weather$Solar.R,weather$Ozone,col="orange",pch=16,
-     ylab="Ozone level",xlab="Solar Radiation", 
-     main="Relationship between ozone level and solar radiation")
+plot(weather$Solar.R, weather$Ozone, col="orange", pch=16,
+     ylab="Ozone level", xlab="Solar Radiation", 
+     main="Relationship between ozone level and 
+     solar radiation")
 ```
 
 
 ## Solutions
 
 ```{r,fig.height=5}
-hist(weather$Temp,col="purple",xlab="Temperature",
-     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
+hist(weather$Temp, col="purple", xlab="Temperature",
+     main="Distribution of Temperature", breaks = 50:100, 
+     freq=FALSE)
 ```
 
 ## Solutions
 
-- The `rainbow` function is used to create a vector of colours for the boxplot; in other words a ***palette***
+- The **`rainbow()`** function is used to create a vector of colours for the boxplot; in other words a ***palette***:
     + Red, Orange, Yellow, Green, Blue, Indigo, Violet....etc
     
 
 ```{r,fig.height=5}
-boxplot(weather$Ozone~weather$Month,col=rainbow(5))
+boxplot(weather$Ozone ~ weather$Month, col=rainbow(5))
 ```
 
 ## Solutions
 
-- More aesthetically-pleasing palettes are provided by the `RColorBrewer` package
+- More aesthetically-pleasing palettes are provided by the **`RColorBrewer`** package:
 
 ```{r eval=FALSE}
 library(RColorBrewer)
@@ -1505,7 +1562,8 @@ display.brewer.all()
 ## Solutions
 
 ```{r fig.height=5}
-boxplot(weather$Ozone~weather$Month,col=brewer.pal(5,"Set1"))
+boxplot(weather$Ozone ~ weather$Month, 
+        col=brewer.pal(5,"Set1"))
 ```
 
 
@@ -1514,7 +1572,7 @@ boxplot(weather$Ozone~weather$Month,col=brewer.pal(5,"Set1"))
 
 #End of Day 1
 
-## To come tomorrow......
+## To come tomorrow...
 - More customisation of plots
 - Statistics
 - Further manipulation of data
