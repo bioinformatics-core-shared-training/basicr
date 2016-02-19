@@ -51,9 +51,9 @@ opts_chunk$set(comment = NA) # eliminates hashtag from R outputs
 ```{r}
 age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
 weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
-71.5, 73.2, 64.8)
-firstName <- c("Adam", "Eve", "John", "Mary", "Peter", 
-               "Paul", "Joanna", "Matthew", "David", "Sally")
+            71.5, 73.2, 64.8)
+firstName  <- c("Adam", "Eve", "John", "Mary", "Peter", 
+                "Paul", "Joanna", "Matthew", "David", "Sally")
 secondName <- c("Jones", "Parker", "Evans", "Davis",
                 "Baker","Daniels", "Edwards", "Smith", 
                 "Roberts", "Wilson")
@@ -70,8 +70,7 @@ sex <- c("Male", "Female", "Male", "Female", "Male",
 ```{r}
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
-                       Full_Name = paste(firstName, 
-                                         secondName), 
+                       Full_Name = paste(firstName, secondName), 
                        Sex = factor(sex),
                        Age = age,
                        Weight = weight,
@@ -95,12 +94,13 @@ plot(patients$Age, patients$Weight, pch=16)
 - `points()` can be used to set of points to an *existing* plot
 - It requires a vector of x and y coordinates
     + These do not have to be the same length as the number of points in the initial plot:
-        + hence we can use `points()` to highlight observations
-        + or add a set of new observations
+        + Hence we can use `points()` to highlight observations
+        + ...or add a set of new observations
 ```{r fig.height=4}
-plot(patients$Age, patients$Weight,pch=16)
-points(40,68,pch="X")
+plot(patients$Age, patients$Weight, pch=16)
+points(40,68, pch="X")
 ```
+
 - Note that axis limits of the existing plot are not altered
 
 ## Creating a blank plot
@@ -142,8 +142,6 @@ points(patients$Age[males], patients$Weight[males],
 
 ```{r}
 females <- patients$Sex == "Female"
-```
-```{r, eval=FALSE}
 females
 patients[females,]
 ```
@@ -177,6 +175,7 @@ points(patients$Age[females], patients$Weight[females],
        pch=17, col="orangered1")
 ```
 
+- TIP: try building the same plot, but using a vector of colors fo the attribute `col`, instead of subselecting the observations
 
 
 ## Adding a legend
@@ -199,12 +198,11 @@ legend("topleft", legend=c("M","F"),
 ##Adding text
 
 - Text can also be added to a plot in a similar manner
-    + the `labels` argument specifies the text we want to add
+    + The `labels` argument specifies the text we want to add
     
 ```{r fig.height=4,fig.width=8}
 plot(patients$Age, patients$Weight, pch=16)
-text(patients$Age, patients$Weight,
-     labels=patients$Full_Name)
+text(patients$Age, patients$Weight, labels=patients$Full_Name)
 ```
 
 ##Adding text
@@ -217,6 +215,8 @@ plot(patients$Age, patients$Weight, pch=16,
 text(patients$Age-1, patients$Weight-0.5, 
      labels=patients$Full_Name)
 ```
+
+- Alternatively, you can use the argument `adj`
 
 ## Adding lines
 
@@ -231,7 +231,7 @@ grid(col="steelblue")
 
 - Can also add lines that intersect the axes:
     + `v =` for vertical lines
-    + `h=` for horizontal
+    + `h =` for horizontal
     + can specify multiple lines in a vector
 ```{r,fig.height=5}
 plot(patients$Age, patients$Weight, pch=16)
@@ -364,9 +364,12 @@ plot(weather$Ozone)
 abline(h=100)
 highO <- which(weather$Ozone > 100)
 points(highO, weather$Ozone[highO], col="red", pch=16)
-text(highO,weather$Ozone[highO]-5, 
-     labels=weather$Month[highO])
+text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
 ```
+
+- Note: check what is the difference of using:
+     + `which(weather$Ozone > 100)`, or simply
+     + `weather$Ozone > 100`
 
 
 
@@ -603,7 +606,7 @@ chisq.test(); fisher.test()
 ## Example analysis
 
 - We have already seen that men in our `patients` dataset tend to be heavier than women
-    + we can test this formally in R
+- We can **test this formally** in R
 
 ```{r echo=FALSE,fig.height=5}
 par(mfrow=c(1,2))
@@ -667,7 +670,7 @@ plot(x,y, xlim=c(0,10), ylim=c(0,10))
 ```{r,fig.height=5}
 plot(x,y, xlim=c(0,10), ylim=c(0,10))
 myModel <- lm(y~x)
-abline(myModel)
+abline(myModel, col="red")
 ```
 
 ## In-depth summary
@@ -689,7 +692,7 @@ names(myModel)  # Names of the objects within myModel
 ## Diagnostic plots of the fit
 
 - Get QC of fit from:
-```{r,fig.height=4}
+```{r,fig.height=5}
 par(mfrow=c(2,2))
 plot(myModel)
 ```
@@ -823,14 +826,13 @@ if(!file.exists("gene.expression.txt")){
 ## Peek at the data
 
 ```{r eval=FALSE}
-evals <- read.delim("gene.expression.txt",
-                    stringsAsFactors = FALSE)
+evals <- read.delim("gene.expression.txt", stringsAsFactors = FALSE)
 evals[1:2,1:5]
 dim(evals)
 ```
 
 ```{r echo=FALSE}
-evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals <- read.delim("gene.expression.txt", stringsAsFactors = FALSE)
 evals[1:2,1:5]
 dim(evals)
 ```
@@ -880,7 +882,7 @@ To get a feel for these data, we will look at how we can subset and order
     + these are indicated by an entry of ***0*** in the `er` column
 
 ```{r eval=FALSE}
-subjects$er==0
+subjects$er == 0
 ```
 
 ```{r echo=FALSE}
@@ -897,15 +899,15 @@ We can do the comparison within the square brackets
 - Best practice to create a new variable and leave the original data frame untouched
 
 ```{r}
-erNegPatients <- subjects[subjects$er==0,]
+erNegPatients <- subjects[subjects$er == 0,]
 head(erNegPatients)
 ```
 
 ## Ordering and sorting
 
-Sorting is supported by the `sort` function
+Sorting is supported by the **`sort()`** function
 
-- given a vector, it will return a sorted version of the same length
+- Given a vector, it will return a sorted version of the same length
 
 ```{r eval=FALSE}
 sort(erNegPatients$grade)
@@ -916,14 +918,14 @@ Biobase:::selectSome(sort(erNegPatients$grade),maxToShow = 20)
 ```
 
 
-- but this is not useful in all cases
-    + we have lost the extra information that we have about the patients
+- But this is not useful in all cases
+    + We have lost the extra information that we have about the patients
     
 ## Ordering and sorting
 
-- Instead, we can use `order`
-- Given a vector, `order` will give a set of numeric values which will give an ordered version of the vector
-    + default is smallest ---> largest
+- Instead, we can use **`order()`**
+- Given a vector, `order()` will give a set of numeric values which will give an ordered version of the vector
+    + default is smallest --> largest
 
 ```{r}
 myvec <- c(9,10,4,3,8,5,6,2,1,7)
@@ -931,7 +933,7 @@ myvec
 order(myvec)
 ```
 
-- i.e. number in position 9 is the smallest, number in position 8 is the second smallest
+- i.e. number in position 9 is the smallest, number in position 8 is the second smallest:
 
 ```{r}
 myvec[9]
@@ -940,7 +942,7 @@ myvec[8]
 
 ## Ordering and sorting
 
-- We can use the result of `order` to perform a subset of our original vector
+- We can use the result of `order()` to perform a subset of our original vector
 - The result is an ordered vector
 ```{r}
 myvec.ord <- myvec[order(myvec)]
@@ -960,7 +962,7 @@ head(erNegPatientsByAge)
 
 ## Ordering and sorting
 
-- can change the behaviour of `order` to be Largest ----> Smallest
+- can change the behaviour of `order` to be Largest --> Smallest
 ```{r}
 erNegPatientsByAge <- erNegPatients[order(erNegPatients$age,decreasing = TRUE),]
 head(erNegPatientsByAge)
@@ -969,24 +971,24 @@ head(erNegPatientsByAge)
 - we can write the result to a fie if we wish
 
 ```{r eval=FALSE}
-write.table(erNegPatientsByAge,file="erNegativeSubjectsByAge.txt",sep="\t")
+write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
 ```
 
 
 ## Exercise: exercise7.Rmd
 
 - Imagine we want to know information about chromosome 8 genes that have been measured.
-- create a new data frame containing information on genes on Chromosome 8
-- order the rows in this data frame according to start position, and write the results to a file
+1. Create a new data frame containing information on genes on Chromosome 8
+2. Order the rows in this data frame according to start position, and write the results to a file
 
 ## Solution: solution-exercise7.pdf
 
 ```{r}
 chr8Genes <- genes[genes$Chromosome=="chr8",]
 head(chr8Genes)
-chr8GenesOrd <-chr8Genes[order(chr8Genes$Start),]
+chr8GenesOrd <- chr8Genes[order(chr8Genes$Start),]
 head(chr8GenesOrd)
-write.table(chr8GenesOrd,"chromosome8.gene.info.txt",sep="\t")
+write.table(chr8GenesOrd, "chromosome8.gene.info.txt", sep="\t")
 ```
 
 
@@ -999,7 +1001,7 @@ write.table(chr8GenesOrd,"chromosome8.gene.info.txt",sep="\t")
 
 ## Character matching in R
 
-- we have already seen various ways of comparing numeric values
+- We have already seen various ways of comparing numeric values
     + ==, >, <
     + each of which returns a vector of logical values
     + == will also work with text
@@ -1011,7 +1013,7 @@ LETTERS
 
 ## Character matching in R
     
-- `match` and `grep` are often used to find particular matches
+- `match()` and `grep()` are often used to find particular matches
     + CAUTION: by default, match will only return the ***first*** match!
 
 ```{r}
@@ -1022,10 +1024,10 @@ match("F", rep(LETTERS,2))
 
 ## Retrieving data for a particular gene
 
-- find the name of the ID that corresponds to gene ***ESR1***
+- Find the name of the ID that corresponds to gene ***ESR1***
     + mapping between IDs and genes is in the ***genes*** data frame
         + ID in first column, gene name in the second
-- save this ID as a variable
+- Save this ID as a variable
 
 ```{r}
 ind <- match("ESR1", genes$HUGO.gene.symbol)
@@ -1043,8 +1045,8 @@ Now, find which row in our expression matrix is indexed by this ID
 - save the expression values as a variable
 
 ```{r}
-match(probe,rownames(evals))
-evals[match(probe,rownames(evals)),1:10]
+match(probe, rownames(evals))
+evals[match(probe, rownames(evals)), 1:10]
 genevals <- evals[match(probe,rownames(evals)),]
 ```
 
@@ -1058,15 +1060,15 @@ We have numeric expression values and want to visualise them against our categor
 
 
 ```{r}
-boxplot(as.numeric(genevals)~factor(subjects$er))
+boxplot(as.numeric(genevals) ~ factor(subjects$er))
 ```
 
 ## Relating to patient characteristics
 
-- the p-value is also encouraging 
+- The p-value is also encouraging 
 
 ```{r}
-t.test(as.numeric(genevals)~factor(subjects$er))
+t.test(as.numeric(genevals) ~ factor(subjects$er))
 
 ```
 
@@ -1077,20 +1079,21 @@ t.test(as.numeric(genevals)~factor(subjects$er))
 `esr1Example.Rmd`
 
 ```{r eval=FALSE}
-genes <- read.delim("gene.description.txt")
+genes    <- read.delim("gene.description.txt")
 subjects <- read.delim("cancer.patients.txt")
-evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals    <- read.delim("gene.expression.txt", stringsAsFactors = FALSE)
 
-ind <- match("ESR1", genes[,2])
-probe <- genes[ind,1]
+ind      <- match("ESR1", genes[,2])
+probe    <- genes[ind,1]
 genevals <- evals[match(probe,rownames(evals)),]
-boxplot(as.numeric(genevals)~factor(subjects$er))
-t.test(as.numeric(genevals)~factor(subjects$er))
+
+boxplot(as.numeric(genevals) ~ factor(subjects$er))
+t.test(as.numeric(genevals) ~ factor(subjects$er))
 ```
 
 ## Exercise: exercise8.Rmd
 
-Repeat the same steps we performed for the gene ESR1, but for GATA3
+Repeat the same steps we performed for the gene ESR1, but for GATA3:
 
 - Try and make as few changes as possible from the ESR1 script
 - Can you see why making a markdown document is useful for analysis?
@@ -1099,32 +1102,32 @@ Repeat the same steps we performed for the gene ESR1, but for GATA3
 
 ## Motivation
 
-From the previous exercise, you should see how we can easily adapt our markdown scripts
+From the previous exercise, you should see how we can easily adapt our markdown scripts:
 
 - e.g. ESR1 versus GATA3
 - But what if we want to analyse many genes?
-- it would be tedious to create a new markdown document for every gene
-- ......and prone to error too
+- It would be tedious to create a new markdown document for every gene
+- ...and prone to error too
 
 ##Introducing loops
 
-- Many programming languages have ways of doing the same thing many times, perhaps changing some variable each time. This is called *looping*
+- Many programming languages have ways of doing the same thing many times, perhaps changing some variable each time. This is called **looping**
 - Loops are not used in R so often, because we can usually achieve the same thing using vector calculations
 - For example, to add two vectors together, we do not need to add each pair of elements one by one, we can just add the vectors
 ```{r eval=FALSE}
-x<- 1:10
+x <- 1:10
 y <- 11:20
 x+y
 ```
-- But there are some situations where R functions can not take vectors as input. For example, `t.test` will only test one gene at a time
+- But there are some situations where R functions can not take vectors as input. For example, `t.test()` will only test one gene at a time
 - What if we wanted to test multiple genes?
 
 ##Introducing loops
 - We could do this:
 
 ```{r eval=FALSE}
-t.test(evals[1,]~factor(subjects$er))
-t.test(evals[2,]~factor(subjects$er))
+t.test(evals[1,] ~ factor(subjects$er))
+t.test(evals[2,] ~ factor(subjects$er))
 
 ```
 
@@ -1133,23 +1136,22 @@ t.test(evals[2,]~factor(subjects$er))
 
 ##Loops: Commands and flow control
 - R has two basic types of loop
-    + a `for` loop: run some code on every value in a vector
-    + a `while` loop: run some code while some condition is true
-        + *hardly ever used!*
+    + a **`for`** loop: run some code on every value in a vector
+    + a **`while`** loop: run some code while some condition is true (*hardly ever used!*)
     
 `for` 
 ```{r loops1, eval=FALSE}
-for(i in 1:10){
+for(i in 1:10) {
   print(i)
-}
+  }
 ```
 `while` 
 ```{r  eval=FALSE}
 i <- 1
-while ( i <= 10 ) {
-   print(i)
-   i <- i + 1
-}
+while(i <= 10 ) {
+  print(i)
+  i <- i + 1
+  }
 ```
 
 ##Loops: Commands and flow control
@@ -1158,20 +1160,20 @@ while ( i <= 10 ) {
 
 
 ```{r loops2, eval=FALSE}
-
-for (i in 1:10) {
-   t.test(as.numeric(evals[i,])~factor(subjects$er))
-}
+for(i in 1:10) {
+  t.test(as.numeric(evals[i,]) ~ factor(subjects$er))
+  }
 ```
 
 - This is exactly the same as:
 
 ```{r eval=FALSE}
 i <- 1
-t.test(evals[i,]~factor(subjects$er))
+t.test(evals[i,] ~ factor(subjects$er))
 i <- 2
-t.test(evals[i,]~factor(subjects$er))
-i <- 3 ......
+t.test(evals[i,] ~ factor(subjects$er))
+i <- 3
+...
 ```
 
 
@@ -1180,12 +1182,12 @@ i <- 3 ......
 
 However, this for loop is doing the calculations but not storing the results
 
-- the output of `t.test` is an object with data placed in different slots
-    + the `names` of the object tells us what data we can retrieve, and what name to use
+- The output of `t.test()` is an object with data placed in different slots
+    + the `names()` of the object tells us what data we can retrieve, and what name to use
     + N.B it is a "list" object
 
 ```{r}
-t <- t.test(as.numeric(evals[1,])~factor(subjects$er))
+t <- t.test(as.numeric(evals[1,]) ~ factor(subjects$er))
 names(t)
 t$statistic
 ```
@@ -1197,10 +1199,10 @@ t$statistic
 
 ```{r}
 stats <- NULL
-for (i in 1:10) {
-   tmp <- t.test(as.numeric(evals[i,])~factor(subjects$er))
-   stats[i] <- tmp$statistic
-}
+for(i in 1:10) {
+  tmp <- t.test(as.numeric(evals[i,]) ~ factor(subjects$er))
+  stats[i] <- tmp$statistic
+  }
 stats
 ```
 
@@ -1217,8 +1219,8 @@ head(chr8GenesOrd)
 - We can use the `match` function to tell us which rows in the matrix correspond to chromosome 8 genes
 
 ```{r}
-match(chr8GenesOrd$probe,rownames(evals))
-chr8Expression <- evals[match(chr8GenesOrd$probe,rownames(evals)),]
+match(chr8GenesOrd$probe, rownames(evals))
+chr8Expression <- evals[match(chr8GenesOrd$probe, rownames(evals)),]
 dim(chr8Expression)
 ```
 
@@ -1232,10 +1234,10 @@ dim(chr8Expression)
 
 ```{r}
 pvals <- NULL
-for (i in 1:18) {
-   tmp <- t.test(as.numeric(chr8Expression[i,])~factor(subjects$er))
-   pvals[i] <- tmp$p.value
-}
+for(i in 1:18) {
+  tmp <- t.test(as.numeric(chr8Expression[i,]) ~ factor(subjects$er))
+  pvals[i] <- tmp$p.value
+  }
 pvals
 ```
 
@@ -1248,22 +1250,23 @@ pvals
 
 ```{r if, eval=FALSE}
 if (condition) {
-... do this ...
-} else {
-... do something else ...
-}
+  ... do this ...
+  } else {
+    ... do something else ...
+    }
 
 ```
 
 - `condition` is any logical value, and can contain multiple conditions. 
     + e.g. `(a == 2 & b < 5)`, this is a compound conditional argument
+- The condition should return a *single* value of `TRUE` or `FALSE`
     
     
     
 ## Other conditional tests
 
 - There are various tests that can check the type of data stored in a variable
-    + these tend to be called `is.` 
+    + these tend to be called **`is...()`**. 
         + try *tab-complete* on `is.`
 
 ```{r}
@@ -1272,7 +1275,7 @@ is.numeric("TEN")
 is.character(10)
 ```
 
-- `is.na` is useful for seeing if an `NA` value is found
+- `is.na()` is useful for seeing if an `NA` value is found
     + cannot use `== NA`!
 
 ```{r}
@@ -1283,25 +1286,26 @@ is.na(match("foo", genes[,2]))
 
 ##Conditional branching: Commands and flow control
 
-- Using the `for` loop we wrote before, we could add some code to plot the expression of each gene
+- Using the **`for`** loop we wrote before, we could add some code to plot the expression of each gene
     + a boxplot would be ideal
 - However, we might only want plots for genes with a "significant" pvalue
 - Here's how we can use an `if` statement to test for this
-    + for each iteration of the the loop
-        + test if the p-value from the test is below 0.05 or not
-        + if the p-value is less than 0.05 make a boxplot
-        + if not, do nothing
+    + for each iteration of the the loop:
+        1. test if the p-value from the test is below 0.05 or not
+        2. if the p-value is less than 0.05 make a boxplot
+        3. if not, do nothing
         
 ```{r flow-control,eval=FALSE}
 pdf("Chromosome8Genes.pdf")
 pvals <- NULL
 for (i in 1:18) {
-   tmp <- t.test(as.numeric(chr8Expression[i,])~factor(subjects$er))
-   pvals[i] <- tmp$p.value
-   if(tmp$p.value < 0.05){
-     boxplot(as.numeric(chr8Expression[i,])~factor(subjects$er),main=chr8Genes$HUGO.gene.symbol[i])
-   }
-} 
+  tmp <- t.test(as.numeric(chr8Expression[i,]) ~ factor(subjects$er))
+  pvals[i] <- tmp$p.value
+  if(tmp$p.value < 0.05){
+    boxplot(as.numeric(chr8Expression[i,]) ~ factor(subjects$er),
+            main=chr8Genes$HUGO.gene.symbol[i])
+    }
+  } 
 pvals
 dev.off()
 
@@ -1314,15 +1318,15 @@ Compare:
 f<-26
 while(f!=0){
 print(letters[f])
-f <- f-1}
+f<-f-1}
 ```
 to:
 ```{r eval=FALSE}
 f <- 26
-while( f != 0 ){
-   print(letters[f])
-   f <- f-1
-}
+while(f != 0 ){
+  print(letters[f])
+  f <- f-1
+  }
 ```
 - The code between brackets `{}` *always* is *indented*, this clearly separates what is executed once, and what is run multiple times
 - Trailing bracket `}` always alone on the line at the same indentation level as the initial bracket `{`
@@ -1335,7 +1339,7 @@ while( f != 0 ){
 
 ## Creating a markdown file from scratch
 
-File - > New File - > R Markdown
+***File → New File → R Markdown***
 
 - Choose 'Document' and the default output type (HTML)
 - A new tab is created in RStudio
@@ -1351,17 +1355,17 @@ output: html_document
 
 ## Format of the file
 
-- **Lines 8 - 10** Plain text description
-- **Lines 12 - 14** An R code 'chunk'
-- **Lines 18 to 20** Another code chunk, this time producing a plot
+- **Lines 8 - 10**: Plain text description
+- **Lines 12 - 14**: An R code 'chunk'
+- **Lines 18 to 20**: Another code chunk, this time producing a plot
 
 ![md-format](images/markdown-format.png)
 
-- Pressing the ***Knit HTML*** button will create the report
+- Pressing the ***Knit HTML*** button will create the report:
     + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
     
 ##Text formatting
-See ***?*** - > ***Markdown Quick Reference*** in RStudio
+See ***?*** → ***Markdown Quick Reference*** in RStudio:
 
 - Enclose text in \* to format in *italics*
 - Enclose text in \*\* to format in **bold**
@@ -1372,10 +1376,10 @@ See ***?*** - > ***Markdown Quick Reference*** in RStudio
 
 >To be or not to be
 
-- see Markdown Quick Reference for more 
-    + adding images
-    + adding web links
-    + tables
+- See *Markdown Quick Reference** for more:
+    + Adding images
+    + Adding web links
+    + Tables
 
 
 ## Not quite enough for a reproducible document
@@ -1395,19 +1399,19 @@ sessionInfo()
 - Better to break-up into smaller pieces; '*chunks*'
 - You can document each chunk separately
 - Easier to catch errors
-- The characteristics of each chunk can be modified
+- The characteristics of each chunk can be modified:
     + You might not want to print the R code for each chunk
-    + or the output
-    + etc
+    + ...or the output
+    + etc.
 
 
 ## Chunk options
 
-Code chunks are encapsulated between backticks. Options for the chunk can be put inside the curly brackets`{....}`
+Code chunks are encapsulated between backticks. Options for the chunk can be put inside the curly brackets`{...}`
 
 ```
 '''{r}
-my code here.....
+my code here...
 '''
 ```
 
@@ -1424,11 +1428,10 @@ my code here.....
     
 ## Chunk options: eval
 
-- Sometimes we want to format code for display, but not execute
-    + we want to show the code for how we read our data, but want our report to compile quickly
+- Sometimes we want to format code for display, but not execute; we want to show the code for how we read our data, but want our report to compile quickly
 
 ```
-'''{r,eval=FALSE}
+'''{r, eval=FALSE}
 data <- read.delim("path.to.my.file")
 '''
 ```
@@ -1449,15 +1452,15 @@ load("mydata.rda")
 
 - Some code or functions might produce lots of output to the screen that we don't need
 ```{r results='hide'}
-for(i in 1:100){
+for(i in 1:100) {
   print(i)
-}
+  }
 ```
 
 ##Chunk options: message and warning
 
 - Loading an R package will sometimes print messages and / or warnings to the screen
-    + not always helpful in a report
+- This is not always helpful in a report:
 ```
 '''{r}
 library(DESeq)
@@ -1472,7 +1475,7 @@ library(DESeq)
 
 - Using `message=FALSE` and `warning=FALSE`
 ```
-'''{r message=FALSE,warning=FALSE}
+'''{r message=FALSE, warning=FALSE}
 library(DESeq)
 '''
 ```
@@ -1480,11 +1483,11 @@ library(DESeq)
 
 ##Chunk options: cache
 
-- `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
-- speeds-up the compilation of the document
+- The argument `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
+- It speeds-up the compilation of the document
     + we don't want to reload our dataset if we've only made a tiny change downstream
 ```
-'''{r echo=FALSE,cache=TRUE}
+'''{r echo=FALSE, cache=TRUE}
 load("mydata.rda")
 '''
 ```
@@ -1495,49 +1498,57 @@ load("mydata.rda")
     + make sure we always have the latest figures, p-values etc
 
 ```
-.....the sample population consisted of 'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+'''
+...the sample population consisted of 'r table(gender)[1]' females 
+and 'r table(gender)[2]' males...
+'''
 ```
-
 ```{r echo=FALSE}
 gender <- c(rep("F", 47), rep("M", 50))
 ```
-.....the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males.....
+...the sample population consisted of  `r table(gender)[1]` females and `r table(gender)[2]` males...
 
-
-
+- Alternatively:
 
 ```
-.....the p-value of the t-test is 'r pval', which indicates that.....
+'''
+...the p-value of the t-test is 'r pval', which indicates that...
+'''
 ```
 ```{r echo=FALSE}
 pval <- 0.05
 ```
-.....the p-value of the t-test is `r pval`, which indicates that.....
+...the p-value of the t-test is `r pval`, which indicates that...
 
-- We call this "in-line" code
+- We call this **"in-line" code**
 
 ## Running R code from the main text
 
 - Like the rest of our report these R statements will get updated each time we compile the report
 
 ```
-.....the sample population consisted of 'r table(gender)[1]' females and 'r table(gender)[2]' males.....
+'''
+...the sample population consisted of 'r table(gender)[1]' females
+and 'r table(gender)[2]' males...
+'''
 ```
 
 ```{r echo=FALSE}
 gender <- c(rep("F", 41), rep("M", 54))
 ```
-.....the sample population consisted of `r table(gender)[1]` females and `r table(gender)[2]` males.....
+...the sample population consisted of `r table(gender)[1]` females and `r table(gender)[2]` males...
 
 
 
 ```
-.....the p-value of the t-test is 'r pval', which indicates that.....
+'''
+...the p-value of the t-test is 'r pval', which indicates that...
+'''
 ```
 ```{r echo=FALSE}
 pval <- 0.1
 ```
-.....the p-value of the t-test is `r pval`, which indicates that.....
+...the p-value of the t-test is `r pval`, which indicates that...
 
 
 ## Making a heatmap
@@ -1545,12 +1556,12 @@ pval <- 0.1
 - A heatmap is often used to visualise how the expression level of a set of genes vary between conditions
 - Making the plot is actually quite straightforward
     + providing you have processed the data appropriately!
-    + here, we use `na.omit` to ensure we have no `NA` values
+    + here, we use `na.omit()` to ensure we have no `NA` values
     
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
-probes <- na.omit(genes[match(genelist,genes[,2]),1])
-exprows <- match(probes,rownames(evals))
+probes   <- na.omit(genes[match(genelist, genes[,2]), 1])
+exprows  <- match(probes, rownames(evals))
 
 heatmap(as.matrix(evals[exprows,]))
   
@@ -1567,7 +1578,7 @@ library(RColorBrewer)
 sampcol <- rep("blue", ncol(evals))
 sampcol[subjects$er == 1 ] <- "yellow"
 rbPal <- brewer.pal(10, "RdBu")
-heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol,col=rbPal)
+heatmap(as.matrix(evals[exprows,]), ColSideColors = sampcol, col=rbPal)
 ```
 
 - see also
@@ -1579,7 +1590,7 @@ heatmap(as.matrix(evals[exprows,]),ColSideColors = sampcol,col=rbPal)
 
 This analysis is recorded in `exercise10.Rmd`.
 
-- Use "in-line" R code to report how many patients were involved in the study
+- Use in-line R code to report how many patients were involved in the study
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
 
@@ -1589,13 +1600,14 @@ Solution: solution-exercise10.Rmd
 
 ## Wrap-up
 
-- Thanks for your attention
+- **Thanks for your attention**
 - Practice, practice, practice
-    + ....& persevere
-- Need inspiration? R code is freely-availabe, so read other peoples' code!
+    + ... & persevere
+- Need inspiration? R code is freely-availabe, so read other people's code!
     + Read [blogs](http://www.r-bloggers.com/)
     + Follow the [forums](http://stackoverflow.com/questions/tagged/r)
     + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
     + Bookmark some [reference](https://en.wikibooks.org/wiki/R_Programming) guides
     + on twitter @rstudio, @Rbloggers, @RLangTip
+- Please fill in the feedback form for us to improve the course
     
