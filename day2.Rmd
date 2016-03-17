@@ -748,6 +748,13 @@ abline(mod1, col="red", lty=2)
 
 http://tylervigen.com/spurious-correlations
 
+But no-one would ever take such trends seriously....would they?
+
+## Wrong!
+
+![ice-cream](images/icecreamvspolio.jpg)
+
+
 # 3. Data Manipulation Techniques
 
 ## Motivation
