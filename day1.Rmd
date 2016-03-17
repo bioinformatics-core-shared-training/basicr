@@ -138,7 +138,7 @@ of the screen and click
 
 - The command line can be used as a calculator. Type:
 
-```{r basic-calc1}
+```{r basic-calc1, eval=FALSE}
 2 + 2
 20/5 - sqrt(25) + 3^2
 sin(pi/2)
@@ -151,7 +151,8 @@ position in the output. In this case the output is a 'vector' of length 1
 ##Basic concepts in R - variables
 
 - A variable is a letter or word which takes (or contains) a value. We use the **assignment operator: `<-`**
-```{r variables1}
+```{r variables1, eval=FALSE}
+
 x <- 10
 x
 
@@ -160,19 +161,20 @@ myNumber
 ```
 
 - We can perform arithmetic on variables:
-```{r variables2}
+```{r variables2, eval=FALSE}
 sqrt(myNumber)
 ```
 
 ##Basic concepts in R - variables
 
 - We can add variables together:
-```{r variables3}
+```{r variables3, eval=FALSE}
 x + myNumber
 ```
 
 - We can change the value of an existing variable:
-```{r variables4}
+
+```{r variables4, eval=FALSE}
 x <- 21
 x
 ```
@@ -203,7 +205,7 @@ sin(x)
 
 - Try these:
 
-```{r functions1}
+```{r functions1, eval=FALSE}
 sum(3,4,5,6)
 max(3,4,5,6)
 min(3,4,5,6)
@@ -213,7 +215,7 @@ min(3,4,5,6)
 
 - Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the right order)
 
-```{r functions2}
+```{r functions2, eval=FALSE}
 seq(from = 2, to = 20, by = 4)
 seq(2, 20, 4)
 ```
@@ -225,7 +227,7 @@ seq(2, 20, 4)
 - R treats even single values as 1-element vectors. 
 - The function **`c`** *combines* its arguments into a vector:
 
-```{r vectors1}
+```{r vectors1, eval=FALSE}
 x <- c(3,4,5,6)
 x
 ```
@@ -240,7 +242,7 @@ x[4]
 
 - We can even put a vector inside the square brackets (*vector indexing*):
 
-```{r vectors3}
+```{r vectors3, eval=FALSE}
 y <- c(2,3)
 x[y]
 ```
@@ -253,7 +255,7 @@ x[y]
 x <- c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 ```
 - we can write:
-```{r vectors5}
+```{r vectors5, eval=FALSE}
 x <- 3:12
 x
 ```
@@ -261,24 +263,26 @@ x
 ##Basic concepts in R - vectors
 
 - or we can use the **`seq()`** function, which returns a vector:
-```{r vectors6}
+
+```{r vectors6, eval=FALSE}
 x <- seq(2, 20, 4)
 x
 ```
 
-```{r vectors7}
+```{r vectors7, eval=FALSE}
 x <- seq(2, 20, length.out=5)
 x
 ```
 
 - or we can use the **`rep()`** function:
 
-```{r vectors8}
+
+```{r vectors8, eval=FALSE}
 y <- rep(3, 5)
 y
 ```
 
-```{r vectors9}
+```{r vectors9, eval=FALSE}
 y <- rep(1:3, 5)
 y
 ```
@@ -287,9 +291,10 @@ y
 
 - We have seen some ways of extracting elements of a vector. We can use these shortcuts to make things easier (or more complex!)
 
-```{r vectors10}
+```{r vectors10, eval=FALSE}
 x <- 3:12
 # Extract elements from x:
+
 x[3:7]
 x[seq(2, 6, 2)]
 x[rep(3, 2)]
@@ -298,12 +303,12 @@ x[rep(3, 2)]
 ##Basic concepts in R - vectors
 
 - We can add an element to a vector:
-```{r vectors11}
+```{r vectors11, eval=FALSE}
 y <- c(x, 1)
 y
 ```
 - We can glue vectors together:
-```{r vectors12}
+```{r vectors12, eval=FALSE}
 z <- c(x, y)
 z
 ```
@@ -311,8 +316,9 @@ z
 ##Basic concepts in R - vectors
 
 - We can remove element(s) from a vector:
-```{r vectors13}
+```{r vectors13, eval=FALSE}
 x <- 3:12
+
 x[-3]
 x[-(5:7)]
 x[-seq(2, 6, 2)]
@@ -342,20 +348,25 @@ application is element-wise
 ```{r vector-arithmetic1}
 x <- 1:10
 y <- x*2
+```
+```{r eval=FALSE}
 y
-
+```
+```{r vector-arithmetic1b}
 z <- x^2
+```
+```{r eval=FALSE}
 z
 ```
 
 ##Basic concepts in R - vector arithmetic
 
 - Adding two vectors:
-```{r vector-arithmetic2}
+```{r vector-arithmetic2, eval=FALSE}
 y + z
 ```
 - If vectors are not the same length, the shorter one will be recycled:
-```{r vector-arithmetic3}
+```{r vector-arithmetic3, eval=FALSE}
 x + 1:2
 ```
 - But be careful if the vector lengths aren't factors of each other:
@@ -391,7 +402,8 @@ gene.expression
 ```
 
 - We can also use the `names()` function to get a vector of the names of an object:
-```{r vector-naming4}
+```{r vector-naming4, eval=FALSE}
+
 names(gene.expression)
 ```
 
@@ -457,7 +469,7 @@ genome.size[1]/genome.size[5]
 
 ##Answers to genome exercise
 
-- Note that names are usually carried across to the new vector. Sometimes this is what we want (as for `coding.pc`) but sometimes it is not (when we are comparing human to yeast). We can remove names by setting them to the special `NULL` value:
+- Names are usually carried across to the new vector. Sometimes this is what we want (as for `coding.pc`) but sometimes it is not (when we are comparing human to yeast). We can remove names by setting them to the special `NULL` value:
 
 ```{r ex1answers6}
 names(coding.pc) <- NULL
@@ -468,11 +480,12 @@ coding.pc
 
 Typing lots of commands directly to R can be tedious. A better way is to write the commands to a file and then load it into R.
 
-- We will be documenting our analyses using ***markdown***
-    + Markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files, etc.
-    + A simpler (but not so informative) alternative is to use a script
-    
+
 - To create an R markdown file, Click on ***File → New File  →  R Markdown*** in Rstudio
+    + markdown is a easy-to-read, easy-to-write text format often used to write HTML, readme files, etc.
+    + a simpler (but not so informative) alternative is to use a script
+    
+
 - This will make our analyses ***reproducible***
 
 ## Format of an R markdown file
@@ -542,6 +555,9 @@ web called **repositories**
         + Use metacran search to find functionality you need: http://www.r-pkg.org/
         + Or look for packages by theme: http://cran.r-project.org/web/views/
     + **Bioconductor** specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
+    
+##R packages
+    
 - Other repositories:
     + http://r-forge.r-project.org/
     + https//github.com can also host R packages, and hosts the development version of many packages
@@ -550,8 +566,9 @@ web called **repositories**
 ## Installing packages    
     
 - CRAN packages can be installed using **`install.packages()`**
-    + ...or clicking on the *Packages* tab in RStudio
-    
+
+    + or clicking on the *Packages* tab in RStudio
+
 ```{r eval=FALSE}
 install.packages(name.of.my.package)
 ```
@@ -589,9 +606,11 @@ biocLite("DESeq")
 - R needs to be told to use the new functions from the installed packages. Use **`library(...)`** function to load the newly installed features:
 
 ```{r eval=FALSE}
-library(ggplot2) # Loads ggplot functions
-library(DESeq)   # Loads DESeq functions
-library()        # Lists all the packages installed 
+
+library(ggplot2) # loads ggplot functions
+library(DESeq)   # loads DESeq functions
+library()        # Lists all the packages 
+                 # you've got installed 
 ```
 
 # 2. Data structures
@@ -609,7 +628,8 @@ library()        # Lists all the packages installed
 - We will explore how to construct these data from scratch.
     + (in practice, we would usually import such data from a file)
 
-```{r echo=FALSE}
+
+```{r echo=FALSE, tidy=T}
 age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
 weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
             71.5, 73.2, 64.8)
@@ -683,7 +703,7 @@ c(20, "a string", TRUE)
 ```
 - We can see the type of a particular vector using the **`class()`** function:
 
-```{r}
+```{r, eval=FALSE}
  class(firstName)
  class(age)
  class(weight)
@@ -748,10 +768,11 @@ names(patients) <- c("First_Name", "Second_Name",
                      "Weight", "Consent")
 ```
 
-```{r}
+```{r eval=FALSE}
 names(patients)
 ```
 
+>>>>>>> 9cfbfd4738f27e3783f35d4140c28414a80b6c75
 ##Naming data frame variables
 
 - Or we can name the variables when we define the data frame
@@ -760,10 +781,16 @@ names(patients)
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
                        Full_Name = paste(firstName, secondName), 
+                       Full_Name = paste(firstName,
+                                         secondName), 
                        Sex = sex,
                        Age = age,
                        Weight = weight, 
                        Consent = consent)
+
+```
+
+```{r eval=FALSE}
 names(patients)
 ```
 
@@ -785,12 +812,17 @@ then explicitly stating when we want a factor by using **`factor()`**:
 ```{r patients10}
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
-                       Full_Name = paste(firstName, secondName), 
+                       Full_Name = paste(firstName,
+                                         secondName), 
                        Sex = factor(sex),
                        Age = age,
                        Weight = weight,
                        Consent = consent,
                        stringsAsFactors = FALSE)
+
+```
+
+```{r patients11, eval=FALSE}
 patients$Sex
 patients$First_Name
 ```
@@ -819,7 +851,7 @@ rowMeans(e)
 frames using commas:
 - **`object[rows, colums]`**
 
-```{r index1}
+```{r index1, eval=FALSE}
 e[1,2]
 e[1,]
 patients[1,2]
@@ -837,6 +869,9 @@ s <- letters[1:5]
 s
 
 # View some of the values in s:
+```
+
+```{r index3b, eval=FALSE}
 s[c(1,3)]
 s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
 ```
@@ -866,8 +901,10 @@ s[a < 3]
 ```{r}
 s
 a
+```
 
-# More logical tests:
+```{r, eval=FALSE}
+
 s[a > 1 & a <3]
 s[a == 2]
 ```
@@ -937,7 +974,8 @@ patients[patients$Sex=="Male" & patients$Weight>=70.8, ]
     
 ##The Working Directory (wd)
 
-- Like many programs R has a concept of a *working directory* (**`wd`**)
+
+- Like many programs R has a concept of a working directory (**`wd`**)
 - It is the place where R will look for files to execute and where it will
 save files, by default
 - For this course we need to set the working directory to the location
@@ -948,9 +986,11 @@ of the course scripts
 setwd("/home/participant/Course_Materials")
 ```
 
-- Alternatively in RStudio use the mouse and browse to the directory location:
-      + ***Session → Set Working Directory → Choose Directory...***
-    
+
+- Alternatively in RStudio use the mouse and browse to the directory
+location
+- ***Session → Set Working Directory → Choose Directory...***
+
 ## 0. Locate the data
 
 Before we even start the analysis, we need to be sure of where the data are located on our hard drive
@@ -1006,7 +1046,8 @@ read.csv("countData.csv")
 rawData[1:10,]  
 ```
 
-- or use the `View()` function to get a neat display of the data:
+
+- or use the `View()` function to get a display of the data in RStudio:
 ```{r eval=FALSE}
 View(rawData)
 ```
@@ -1022,7 +1063,7 @@ class(rawData)
 
 - We can query the dimensions:
 
-```{r}
+```{r, eval=FALSE}
 ncol(rawData)
 nrow(rawData)
 dim(rawData)
@@ -1077,7 +1118,8 @@ rawData$Nuclei
     - `NULL` is an empty R object. 
     - `NA` is one missing value within an R object (like a data frame or a vector)
 - Often R functions will handle `NA`s gracefully:
-```{r}
+
+```{r, eval=FALSE}
 x <- c(1, NA, 3)
 length(x)
 ```
@@ -1087,8 +1129,10 @@ length(x)
 - However, sometimes we have to tell the functions what to do with them. 
 - R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them:
 
-```{r analysis2}
+
+```{r analysis2, eval=FALSE}
 mean(x, na.rm = TRUE)
+
 mean(na.omit(x))
 ```
 
@@ -1100,10 +1144,16 @@ mean(na.omit(x))
 ```{r analysis3}
 # Create an index of results:
 prop <- rawData$NB_Amp / rawData$Nuclei
-# Find which observations have a proportion higher than 33%:
+
+```
+```{r analysis3b, eval=FALSE}
 prop > 0.33
+```
+```{r analysis3c}
 # Get sample names of amplified patients:
 amp <- which(prop > 0.33) 
+```
+```{r analysis3d, eval=FALSE}
 amp
 ```
 
@@ -1129,15 +1179,18 @@ write.csv(rawData[amp,], file="selectedSamples.csv")
 - It's often helpful to double check where the data has been saved. Use the *get working directory* function:
 
 ```{r analysis6, eval=FALSE}
-getwd()      # Print working directory
-list.files() # List files in working directory
+getwd()      # print working directory
+list.files() # list files in working directory
+
 ```
 
 ##Data analysis exercise: exercise3.Rmd
 
-- Patients are *near normal* if: `(NB_Amp / Nuclei < 0.33 & NB_Del == 0)` (where `NB_Del` is the number of deletions)
-1. Modify the condition in our previous code to find these patients
-2. Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
+
+- Patients are *near normal* if:
+`(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
+- Modify the condition in our previous code to find these patients
+- Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
 ##Solution: solution-exercise3.pdf
 
@@ -1177,7 +1230,8 @@ plot(patients$Weight)
 ```
 
 ##Making a Scatter Plot
-- R tries to guess the most appropriate way to visualise the data, according to the class and dimensions of the object(s) provided
+- R tries to guess the most appropriate way to visualise the data, according to the type and dimensions of the object(s) provided
+
 
 ```{r echo=FALSE,fig.height=3}
 plot(patients$Weight)
@@ -1233,7 +1287,7 @@ barplot(summary(patients$Sex))
 
 - A histogram is a popular way of visualising a distribution of ***continuous*** data:
     + You can change the width of bins
-    + The y-axis can be either frequency of density (`freq` argument)
+    + The y-axis can be either frequency of density
 
 ```{r,fig.height=5}
 hist(patients$Weight)
@@ -1263,7 +1317,8 @@ boxplot(patients$Weight, horizontal=T)
 - For this we need to use the '*formula*' syntax
     + For now, `y ~ x` means put continuous variable `y` on the *y* axis and categorical `x` on the x axis
 ```{r,fig.height=3}
-boxplot(patients$Weight ~ patients$Sex)
+boxplot(patients$Weight ~ patients$Sex, horizontal = T)
+
 ```
 
 - Other alternatives to consider:
@@ -1388,9 +1443,10 @@ plot(patients$Age,patients$Weight,
        + See `colours()`
 - See http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
 - Can also use **R**ed **G**reen **Blue** and hexadecimal values:
-       + `rgb(0.7, 0.7, 0.7)` → A light grey in RGB values
-       + `"#B3B3B3"` →  The same light grey ,in hexadecimal
-       + `"#0000FF88"` → A semi-transparent blue, in hexadecimal
+
+       + `rgb(0.7, 0.7, 0.7)` → A light grey in RGB format`
+       + `"#B3B3B3"` →  The same light grey in hexadecimal
+       + `"#0000FF88"`→ A semi-transparent blue, in hexadecimal
           + The hexadecimal system is the native colour system for screen visualisation (e.g. webs). It indicates the intensity of Red, Green and Blue by using two digits for each colour, in a scale from 0-9 and A-F (0 meaning no intensity and F meaning most intense)
 
 ##Use of colours
@@ -1419,9 +1475,9 @@ i <- 0:25
 x <- floor(i /5) + 1
 y <- i %%5
 
-plot(1:10, type="n", xlim = c(1,6), ylim=c(-1,5),axes=F,xlab="",ylab="")
-points(x,y,pch=i, cex=3)
-text(x,y-0.4,i, cex=2)
+plot(1:10, type="n", xlim = c(1,5), ylim=c(-1,5),axes=F,xlab="",ylab="")
+points(x,y,pch=i+1, cex=2)
+text(x,y-0.3,i+1)
 ```
 
 
@@ -1460,7 +1516,7 @@ plot(patients$Age, patients$Weight,
 ##Other plots use the same arguments
 
 - Other plotting functions use the same arguments as `plot()`
-    + Technical explanation: the arguments are *'inherited'*
+    + technical explanation: the arguments are *'inherited'*
 
 ```{r,fig.height=4}
 boxplot(patients$Weight~patients$Sex,
@@ -1473,8 +1529,8 @@ boxplot(patients$Weight~patients$Sex,
 
 ##Exercise: exercise4b.Rmd
 
-- Can you re-create the following plots?
-- Hint:
+- Can you re-create the following plots? Hint:
+
     + See the `breaks` and `freq` arguments to hist (`?hist`) to create 50 bins and display density rather than frequency
     + For third plot, see the rainbow function (`?rainbow`)
     + Don't worry too much about getting the colours exactly correct
@@ -1511,6 +1567,8 @@ hist(weather$Temp, col="purple", xlab="Temperature",
 - The **`rainbow()`** function is used to create a vector of colours for the boxplot; in other words a ***palette***:
     + Red, Orange, Yellow, Green, Blue, Indigo, Violet, etc.
     + Other palette functions available: `heat.colors(), terrain.colors(), topo.colors(), cm.colors()`
+    + Red, Orange, Yellow, Green, Blue, Indigo, Violet....etc
+
     
 
 ```{r,fig.height=5}
@@ -1530,7 +1588,7 @@ display.brewer.all()
 
 ```{r fig.height=5}
 boxplot(weather$Ozone ~ weather$Month, 
-        col=brewer.pal(5, "Set1"))
+        col=brewer.pal(5,"Set1"))
 ```
 
 
