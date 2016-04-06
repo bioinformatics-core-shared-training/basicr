@@ -44,6 +44,11 @@ opts_chunk$set(comment = NA) # eliminates hashtag from R outputs
 - Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels.
 - Lower levels are obscured by higher levels, 
     + allowing for blending, masking and overlaying of objects.
+- Caution: You can't undo the changes you make to the plot
+
+![undo](http://cdn.inquisitr.com/wp-content/uploads/2012/08/jesus-christ-fresco.gif)
+
+*http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/*
 
 ## Example data
 
@@ -283,7 +288,8 @@ dev.off()
 
 - pdf is a good choice for publication as they can be imported into Photoshop, Inkscape, etc.
     - Sometimes it is easier to edit in these tools than R!
-
+    - If it is taking too long to customise a plot in R, consider if you should be using one of these tools instead
+    
 ## Exporting graphs from RStudio
 
 - To save any graph you have created to a pdf, repeat the code you used to create the plot with `pdf()` before and `dev.off()` afterwards
@@ -326,24 +332,6 @@ dev.off()
 weather <- read.csv("ozone.csv")
 ```
 
-- Make a scatter plot of all observations of ozone level:
-    + i.e. with the y axis being the Ozone variable, and x-axis being the row index
-- Highlight any days in the study which had ozone level > 100
-- Indicate which month these days with high ozone level belong to
-
-## Target Graph
-
-```{r echo=FALSE}
-plot(weather$Ozone,xlab="Day",ylab="Ozone level")
-abline(h=100)
-highO <- which(weather$Ozone > 100)
-points(highO, weather$Ozone[highO],col="red",pch=16)
-text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
-```
-
-
-## Exercise: exercise5.Rmd
-
 - Using the `par` function, create a layout with three columns
 - Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
     + use different colours and plotting characters on each plot
@@ -357,22 +345,6 @@ plot(weather$Wind,weather$Ozone, pch=15,col="steelblue",ylab="Ozone level", xlab
 plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Temperature")
 
 ```
-
-## Solution: solution-exercise5.pdf
-
-```{r,fig.height=5}
-plot(weather$Ozone)
-abline(h=100)
-highO <- which(weather$Ozone > 100)
-points(highO, weather$Ozone[highO], col="red", pch=16)
-text(highO,weather$Ozone[highO]-5, labels=weather$Month[highO])
-```
-
-- Note: check what is the difference of using:
-     + `which(weather$Ozone > 100)`, or simply
-     + `weather$Ozone > 100`
-
-
 
 ## Solution
 
@@ -409,6 +381,80 @@ plot(weather$Temp,weather$Ozone, pch=17,
      xlab="Temperature")
 dev.off()
 ```
+
+##Exercise: exercise5.Rmd
+
+- Temperature and Ozone level seem to be correlated
+- However, there are some observations that do not seem to fit the trend
+    + those with Ozone level > 100
+- Modify the plot so that these outlier observations are in a different colour
+
+```{r fig.height=5}
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
+```
+
+## Target graph
+
+HINT: You can break down the problem into the following steps
+
+- Create a blank plot
+- Identify observations with ozone > 100
+    + plot the corresponding Temperature and Ozone values for these in red
+- Identify observations with ozone < 100
+    + plot the corresponding Temperature and Ozone values for these in orange
+
+
+```{r echo=FALSE, fig.height=5}
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
+highO <- which(weather$Ozone > 100)
+abline(h=100,lty=2)
+points(weather$Temp[highO],weather$Ozone[highO],pch=17,col="red")
+```
+
+## Solution: solution-exercise5.pdf
+
+```{r fig.height=5}
+highO <- which(weather$Ozone > 100)
+lowO <- which(weather$Ozone < 100)
+
+plot(weather$Temp,weather$Ozone, type="n",
+     ylab="Ozone level",
+     xlab="Temperature")
+points(weather$Temp[highO],weather$Ozone[highO],
+       col="red",pch=16)
+points(weather$Temp[lowO],weather$Ozone[lowO],
+       col="orange",pch=16)
+abline(h=100,lty=2)
+```
+
+
+## Alternative Solution
+
+```{r fig.height=5}
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
+highO <- which(weather$Ozone > 100)
+abline(h=100,lty=2)
+points(weather$Temp[highO],weather$Ozone[highO],pch=17,col="red")
+```
+
+## Alternative Solution
+
+```{r}
+mycol = rep("orange",nrow(weather))
+highO <- which(weather$Ozone > 100)
+mycol[highO] <- "red"
+plot(weather$Temp,weather$Ozone, pch=17,
+     col=mycol, ylab="Ozone level",
+     xlab="Temperature")
+abline(h=100,lty=2)
+```
+
 
 
 # 2. Statistics
@@ -538,9 +584,11 @@ lines(xs,ys,col="red")
 
 ## Simple testing
 
-- If we want to compute the probability of observing a particular temperature, from the same distribution we can use the standard formula to calculate a t statistic:
+- If we want to compute the probability of observing a particular temperature, from the same distribution, we can use the standard formula to calculate a t statistic:
 
 $$t = \frac{\bar{x} -\mu_0}{s / \sqrt(n)}$$
+
+- Say a temperature of 50; which from the histogram seems to be unlikely
 
 ```{r}
 t <- (tempMean - 50) / (tempSD/sqrt(length(weather$Temp)))
@@ -600,8 +648,10 @@ chisq.test(); fisher.test()
         + whether the assumptions of the test are met, etc.
     + Consult your local statistician if not sure
     + Some good references:
+        + [Statistical Analysis Using R (Course from the Babaraham Bioinformatics Core)](http://www.bioinformatics.babraham.ac.uk/training.html#rstats)
+        + [Quick-R guide to stats](http://www.statmethods.net/stats/index.html)
         + [Simple R eBook](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf)
-        + [Elements of Statistical Learning eBook](http://statweb.stanford.edu/~tibs/ElemStatLearn/download.html)
+        + [R wiki](https://en.wikibooks.org/wiki/R_Programming/Descriptive_Statistics)
         
 
 ## Example analysis
