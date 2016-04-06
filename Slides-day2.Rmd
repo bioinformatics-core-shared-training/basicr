@@ -425,9 +425,9 @@ plot(weather$Temp,weather$Ozone, type="n",
      ylab="Ozone level",
      xlab="Temperature")
 points(weather$Temp[highO],weather$Ozone[highO],
-       col="red",pch=16)
+       col="red",pch=17)
 points(weather$Temp[lowO],weather$Ozone[lowO],
-       col="orange",pch=16)
+       col="orange",pch=17)
 abline(h=100,lty=2)
 ```
 
