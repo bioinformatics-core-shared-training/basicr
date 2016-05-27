@@ -1106,13 +1106,13 @@ rawData$Nuclei
 ##Word of caution
 
 
-![tolstoy](images/tolstoy.jpg)
+![](images/tolstoy.jpg)
 
 
 
-![hadley](images/hadley.jpg)
+![](images/hadley.jpg)
 
-> Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham)
+> Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham - RStudio chief scientist and author of dplyr, ggplot2 and others)
 
 ##Word of caution
 
