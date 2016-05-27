@@ -57,15 +57,15 @@ http://www.r-project.org/
 ##R in the New York Times
 http://goo.gl/pww4ZO
 
-![R new york time](images/NYTimes_R_Article.png)
+![New York Times, Jan 2009](images/NYTimes_R_Article.png)
 
 ##R in Nature
-![R in nature](images/r-in-nature.png)
+![Nature, Dec 2014](images/r-in-nature.png)
 
 ##R plotting capabilities
 http://spatial.ly/2012/02/great-maps-ggplot2/
 
-![R cycle journeys](images/cyclejourneys.png)
+![](images/cyclejourneys.png)
 
 ##R plotting capabilities
 https://www.facebook.com/notes/facebook-engineering/visualizing-friendships/469716398919
@@ -82,19 +82,21 @@ http://www.revolutionanalytics.com/companies-using-r
     + http://blog.revolutionanalytics.com/2014/05/microsoft-uses-r-for-xbox-matchmaking.html
 - New York Times
     + http://blog.revolutionanalytics.com/2011/03/how-the-new-york-times-uses-r-for-data-visualization.html
-
+- Buzzfeed
+    + http://blog.revolutionanalytics.com/2015/12/buzzfeed-uses-r-for-data-journalism.html
+    
 ## R can facilitate Reproducible Research
 
-![step-two](images/SidneyHarris_MiracleWeb.jpg)
+![Sidney Harris - New York Times](images/SidneyHarris_MiracleWeb.jpg)
 
-Sidney Harris - New York Times
+
 
 ##It is a hot topic at the moment
 
 - Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
     + as reported in the ***New York Times***
     
-![nyt-article](images/rep-research-nyt.png)
+![New York Times, July 2011](images/rep-research-nyt.png)
 
 ##Hear the full account
 
@@ -102,9 +104,20 @@ Sidney Harris - New York Times
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
 
+## Nature editorial - May 2016
+
+![rep-crisis](images/rep-crisis.png)
+
+
+[Reality check on reproducibility](http://www.nature.com/news/reality-check-on-reproducibility-1.19961)
+
+[1,500 scientists lift the lid on reproducibility](http://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)
+
+
+
 ##Various platforms supported
 
-- Release 3.2.2 (August 2015)
+- Release 3.3.0 (May 2016)
     + Base package and Contributed packages (general purpose extras)
     + `r length(XML:::readHTMLTable("http://cran.r-project.org/web/packages/available_packages_by_date.html")[[1]][[2]])` available packages as of `r date()`
 - Download from http://mirrors.ebi.ac.uk/CRAN/
@@ -1209,6 +1222,7 @@ write.csv(rawData[norm,], "My_NB_output.csv")
 - ...but we need to start simple
 - We will describe *base* graphics in R: the plots available with any standard R installation
     + other more advanced alternatives are, e.g., `lattice`, `ggplot2`
+    + See our [intermediate R course](http://training.csx.cam.ac.uk/bioinformatics/event/1800066) for fancy graphics
 - Plotting in R is a *vast* topic:
     + We cannot cover everything
     + You can tinker with plots to your hearts content

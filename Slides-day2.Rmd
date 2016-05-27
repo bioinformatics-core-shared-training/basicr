@@ -46,9 +46,9 @@ opts_chunk$set(comment = NA) # eliminates hashtag from R outputs
     + allowing for blending, masking and overlaying of objects.
 - Caution: You can't undo the changes you make to the plot
 
-![undo](http://cdn.inquisitr.com/wp-content/uploads/2012/08/jesus-christ-fresco.gif)
+![](http://cdn.inquisitr.com/wp-content/uploads/2012/08/jesus-christ-fresco.gif)
 
-*http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/*
+[http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/](http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/)
 
 ## Example data
 
@@ -647,6 +647,8 @@ chisq.test(); fisher.test()
     + The difficulty is deciding which test to use:
         + whether the assumptions of the test are met, etc.
     + Consult your local statistician if not sure
+    + An upcoming course that will help
+        + [Introduction to Statistical Analysis](http://training.csx.cam.ac.uk/bioinformatics/event/1809255)
     + Some good references:
         + [Statistical Analysis Using R (Course from the Babaraham Bioinformatics Core)](http://www.bioinformatics.babraham.ac.uk/training.html#rstats)
         + [Quick-R guide to stats](http://www.statmethods.net/stats/index.html)
@@ -794,15 +796,21 @@ abline(mod1, col="red", lty=2)
 
 ***Correlation != Causation***
 
-![spurious](images/spurious.png)
+![](images/spurious.png)
 
 http://tylervigen.com/spurious-correlations
+
+## Word of caution
+
+![](images/screen shot 2014-04-20 at 11.06.28 am.png.jpeg)
+
+[So if I want to win a nobel prize, I should eat even more chocolate?!?!?](http://www.businessinsider.com/chocolate-consumption-vs-nobel-prizes-2014-4?IR=T)
 
 But no-one would ever take such trends seriously....would they?
 
 ## Wrong!
 
-![ice-cream](images/icecreamvspolio.jpg)
+![Cutting-down on Ice Cream was recommended as a safeguard against polio!](images/icecreamvspolio.jpg)
 
 
 # 3. Data Manipulation Techniques
@@ -1667,5 +1675,6 @@ Solution: solution-exercise10.Rmd
     + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
     + Bookmark some [reference](https://en.wikibooks.org/wiki/R_Programming) guides
     + on twitter @rstudio, @Rbloggers, @RLangTip
+    + Attend the [follow-on course](http://training.csx.cam.ac.uk/bioinformatics/event/1800066) on data manipulation and graphics
 - Please fill in the feedback form for us to improve the course
     
