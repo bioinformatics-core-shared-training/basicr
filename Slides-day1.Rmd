@@ -106,7 +106,7 @@ http://www.revolutionanalytics.com/companies-using-r
 
 ## Nature editorial - May 2016
 
-![rep-crisis](images/rep-crisis.png)
+![Nature, May 2016](images/rep-crisis.png)
 
 
 [Reality check on reproducibility](http://www.nature.com/news/reality-check-on-reproducibility-1.19961)
