@@ -1,7 +1,7 @@
 # Day 1 	
-09:30 - 11:00 	Introduction to R and its environment
+09:30 - 11:30 	Introduction to R and its environment
 
-11:00 - 12:30 	Data Structures
+11:30 - 12:30 	Data Structures
 
 12:30 - 13:30 	* Lunch *
 
