@@ -792,7 +792,6 @@ names(patients)
 ```{r patients8}
 patients <- data.frame(First_Name = firstName, 
                        Second_Name = secondName, 
-                       Full_Name = paste(firstName, secondName), 
                        Full_Name = paste(firstName,
                                          secondName), 
                        Sex = sex,
