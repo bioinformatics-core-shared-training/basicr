@@ -785,7 +785,6 @@ names(patients) <- c("First_Name", "Second_Name",
 names(patients)
 ```
 
->>>>>>> 9cfbfd4738f27e3783f35d4140c28414a80b6c75
 ##Naming data frame variables
 
 - Or we can name the variables when we define the data frame
