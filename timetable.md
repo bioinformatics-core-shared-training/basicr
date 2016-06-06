@@ -3,7 +3,7 @@
 
 11:00 - 12:30 	Data Structures
 
-* 12:30 - 13:30 	Lunch *
+12:30 - 13:30 	* Lunch *
 
 13:30 - 15:00 	Data Analysis Example
 
@@ -15,7 +15,7 @@
 
 11:00 - 12:30 	Statistics
 
-* 12:30 - 13:30 	Lunch * 
+12:30 - 13:30 	* Lunch * 
 
 13:30 - 15:30 	Data Manipulation Techniques
 
