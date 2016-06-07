@@ -750,6 +750,7 @@ coef(myModel)   # Coefficients
 resid(myModel)  # Residuals
 fitted(myModel) # Fitted values
 names(myModel)  # Names of the objects within myModel
+residuals(myModel) + fitted(myModel) # what values does this give?
 ```
 
 ## Diagnostic plots of the fit
