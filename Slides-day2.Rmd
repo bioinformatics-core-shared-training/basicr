@@ -1007,9 +1007,8 @@ Biobase:::selectSome(sort(erNegPatients$grade),maxToShow = 20)
     + default is smallest --> largest
 
 ```{r}
-myvec <- c(9,10,4,3,8,5,6,2,1,7)
+myvec <- c(90,100,40,30,80,50,60,20,10,70)
 myvec
-order(myvec)
 ```
 
 - i.e. number in position 9 is the smallest, number in position 8 is the second smallest:
@@ -1018,6 +1017,14 @@ order(myvec)
 myvec[9]
 myvec[8]
 ```
+
+N.B. `order` will also work on character vectors 
+
+```{r}
+firstName  <- c("Adam", "Eve", "John", "Mary", "Peter", "Paul", "Joanna", "Matthew", "David", "Sally")
+order(firstName)
+```
+
 
 ## Ordering and sorting
 

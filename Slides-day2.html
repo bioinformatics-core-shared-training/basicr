@@ -1035,18 +1035,20 @@ NKI_44     NKI_44  53  0     3</code></pre>
 <li>default is smallest –&gt; largest</li>
 </ul></li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">myvec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">7</span>)
+<pre class="sourceCode r"><code class="sourceCode r">myvec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">90</span>,<span class="dv">100</span>,<span class="dv">40</span>,<span class="dv">30</span>,<span class="dv">80</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">70</span>)
 myvec</code></pre>
-<pre><code> [1]  9 10  4  3  8  5  6  2  1  7</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">order</span>(myvec)</code></pre>
-<pre><code> [1]  9  8  4  3  6  7 10  5  1  2</code></pre>
+<pre><code> [1]  90 100  40  30  80  50  60  20  10  70</code></pre>
 <ul>
 <li>i.e. number in position 9 is the smallest, number in position 8 is the second smallest:</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">myvec[<span class="dv">9</span>]</code></pre>
-<pre><code>[1] 1</code></pre>
+<pre><code>[1] 10</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">myvec[<span class="dv">8</span>]</code></pre>
-<pre><code>[1] 2</code></pre>
+<pre><code>[1] 20</code></pre>
+<p><code>order</code> will also work on character vectors</p>
+<pre class="sourceCode r"><code class="sourceCode r">firstName  &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Adam&quot;</span>, <span class="st">&quot;Eve&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Mary&quot;</span>, <span class="st">&quot;Peter&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;Joanna&quot;</span>, <span class="st">&quot;Matthew&quot;</span>, <span class="st">&quot;David&quot;</span>, <span class="st">&quot;Sally&quot;</span>)
+<span class="kw">order</span>(firstName)</code></pre>
+<pre><code> [1]  1  9  2  7  3  4  8  6  5 10</code></pre>
 </div><div id="ordering-and-sorting-4" class="slide section level2">
 <h1>Ordering and sorting</h1>
 <ul>
@@ -1055,7 +1057,7 @@ myvec</code></pre>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">myvec.ord &lt;-<span class="st"> </span>myvec[<span class="kw">order</span>(myvec)]
 myvec.ord</code></pre>
-<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre><code> [1]  10  20  30  40  50  60  70  80  90 100</code></pre>
 <ul>
 <li>Implication: We can use <code>order</code> on a particular column of a data frame, and use the result to sort all the rows</li>
 </ul>
