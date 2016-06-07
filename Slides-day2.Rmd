@@ -759,7 +759,7 @@ residuals(myModel) + fitted(myModel) # what values does this give?
     + Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
     
 ```{r,fig.height=5}
-par(mfrow=c(2,2))
+par(mfrow=c(2,2)) 
 plot(myModel)
 ```
 
@@ -944,7 +944,7 @@ dim(subjects)
 
 - One for each patient in the study
 - Each column is a different characteristic of that patient
-    + e.g. whether a patient is ER positive or negative
+    + e.g. whether a patient is ER positive (value of 1) or negative (value of 0)
 
 ```{r}
 table(subjects$er)
@@ -1032,6 +1032,7 @@ myvec.ord
 
 ## Ordering and sorting
 
+- We might want to select the youngest ER negative patients for a follow-up study
 - Here we order the `age` column and use the result to re-order the rows in the data frame
 
 ```{r}
@@ -1047,7 +1048,7 @@ erNegPatientsByAge <- erNegPatients[order(erNegPatients$age,decreasing = TRUE),]
 head(erNegPatientsByAge)
 ```
 
-- we can write the result to a fie if we wish
+- we can write the result to a flie if we wish
 
 ```{r eval=FALSE}
 write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
