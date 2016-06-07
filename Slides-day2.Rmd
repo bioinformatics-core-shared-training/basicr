@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
-  Laurent Gatto, Rob Foy John Davey, Dávid Molnár and Ian Roberts
+  Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
   slidy_presentation:
@@ -745,6 +745,8 @@ names(myModel)  # Names of the objects within myModel
 ## Diagnostic plots of the fit
 
 - Get QC of fit from:
+    + Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
+    
 ```{r,fig.height=5}
 par(mfrow=c(2,2))
 plot(myModel)
