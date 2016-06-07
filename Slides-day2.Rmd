@@ -434,27 +434,35 @@ abline(h=100,lty=2)
 
 ## Alternative Solution
 
-```{r fig.height=5}
-plot(weather$Temp,weather$Ozone, pch=17,
-     col="orange", ylab="Ozone level",
-     xlab="Temperature")
+Defining a vector of colours and plotting characters, and over-writing particular entries
+
+- `rep` is used to repeat a value a certain number of times
+
+```{r}
+mycol <-rep("orange",nrow(weather))
 highO <- which(weather$Ozone > 100)
+mycol[highO] <- "red"
+mypch <- rep(17, nrow(weather))
+mypch[highO] <- 18
+plot(weather$Temp,weather$Ozone, 
+     col=mycol, pch=mypch,ylab="Ozone level",
+     xlab="Temperature")
 abline(h=100,lty=2)
-points(weather$Temp[highO],weather$Ozone[highO],pch=17,col="red")
 ```
 
 ## Alternative Solution
 
+`ifelse` is a handy function for creating a vector of values based on a logical test
+
 ```{r}
-mycol = rep("orange",nrow(weather))
-highO <- which(weather$Ozone > 100)
-mycol[highO] <- "red"
-plot(weather$Temp,weather$Ozone, pch=17,
-     col=mycol, ylab="Ozone level",
+mycol <- ifelse(weather$Ozone > 100, "red","orange")
+mypch <- ifelse(weather$Ozone > 100, 18,17)
+
+plot(weather$Temp,weather$Ozone, 
+     col=mycol, pch=mypch,ylab="Ozone level",
      xlab="Temperature")
 abline(h=100,lty=2)
 ```
-
 
 
 # 2. Statistics
@@ -1429,7 +1437,7 @@ output: html_document
 - **Lines 12 - 14**: An R code 'chunk'
 - **Lines 18 to 20**: Another code chunk, this time producing a plot
 
-![md-format](images/markdown-format.png)
+![](images/markdown-format.png)
 
 - Pressing the ***Knit HTML*** button will create the report:
     + Note that you need to 'save' the markdown file before you will see the compiled report in your working directory
