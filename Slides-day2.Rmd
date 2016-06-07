@@ -982,6 +982,13 @@ erNegPatients <- subjects[subjects$er == 0,]
 head(erNegPatients)
 ```
 
+or
+
+```{r}
+View(erNegPatients)
+```
+
+
 ## Ordering and sorting
 
 Sorting is supported by the **`sort()`** function
@@ -1047,6 +1054,10 @@ erNegPatientsByAge <- erNegPatients[order(erNegPatients$age),]
 head(erNegPatientsByAge)
 ```
 
+```{r}
+
+```
+
 ## Ordering and sorting
 
 - can change the behaviour of `order` to be Largest --> Smallest
@@ -1055,7 +1066,7 @@ erNegPatientsByAge <- erNegPatients[order(erNegPatients$age,decreasing = TRUE),]
 head(erNegPatientsByAge)
 ```
 
-- we can write the result to a flie if we wish
+- we can write the result to a file if we wish
 
 ```{r eval=FALSE}
 write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")

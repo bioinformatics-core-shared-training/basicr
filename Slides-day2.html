@@ -1011,6 +1011,8 @@ NKI_12     NKI_12  46  0     3
 NKI_24     NKI_24  49  0     3
 NKI_28     NKI_28  40  0     3
 NKI_44     NKI_44  53  0     3</code></pre>
+<p>or</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">View</span>(erNegPatients)</code></pre>
 </div><div id="ordering-and-sorting-2" class="slide section level2">
 <h1>Ordering and sorting</h1>
 <p>Sorting is supported by the <strong><code>sort()</code></strong> function</p>
@@ -1045,7 +1047,7 @@ myvec</code></pre>
 <pre><code>[1] 10</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">myvec[<span class="dv">8</span>]</code></pre>
 <pre><code>[1] 20</code></pre>
-<p><code>order</code> will also work on character vectors</p>
+<p>N.B. <code>order</code> will also work on character vectors</p>
 <pre class="sourceCode r"><code class="sourceCode r">firstName  &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Adam&quot;</span>, <span class="st">&quot;Eve&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;Mary&quot;</span>, <span class="st">&quot;Peter&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;Joanna&quot;</span>, <span class="st">&quot;Matthew&quot;</span>, <span class="st">&quot;David&quot;</span>, <span class="st">&quot;Sally&quot;</span>)
 <span class="kw">order</span>(firstName)</code></pre>
 <pre><code> [1]  1  9  2  7  3  4  8  6  5 10</code></pre>
