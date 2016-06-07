@@ -59,8 +59,11 @@ http://goo.gl/pww4ZO
 
 ![New York Times, Jan 2009](images/NYTimes_R_Article.png)
 
-##R in Nature
-![Nature, Dec 2014](images/r-in-nature.png)
+## R - "the ultimate virus"
+
+![University of Aukland alumni magazine, June 2016](images/r-virus.png)
+
+http://www.ingenio-magazine.com/r-the-ultimate-virus/
 
 ##R plotting capabilities
 http://spatial.ly/2012/02/great-maps-ggplot2/

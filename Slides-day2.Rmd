@@ -625,6 +625,8 @@ wilcox.test()
 ##Two-sample tests: Basic data analysis
 - Comparing 2 proportions:
     + Binomial test
+    + e.g. [here](http://www.r-tutor.com/elementary-statistics/inference-about-two-populations/comparison-two-population-proportions)
+    
 ```{r eval=FALSE}
 prop.test()
 ```
@@ -654,7 +656,7 @@ chisq.test(); fisher.test()
         + [Quick-R guide to stats](http://www.statmethods.net/stats/index.html)
         + [Simple R eBook](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf)
         + [R wiki](https://en.wikibooks.org/wiki/R_Programming/Descriptive_Statistics)
-        
+        + [R tutor](http://www.r-tutor.com/elementary-statistics)
 
 ## Example analysis
 
