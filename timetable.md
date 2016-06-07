@@ -17,8 +17,8 @@
 
 12:30 - 13:30 	* Lunch * 
 
-13:30 - 15:30 	Data Manipulation Techniques
+13:30 - 15:00 	Data Manipulation Techniques
 
-15:30 - 17:00 	Programming in R
+15:00 - 16:00 	Programming in R
 
-17:00 - 17:30 	Further report writing
+16:00 - end 	Further report writing
