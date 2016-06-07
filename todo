@@ -1,15 +1,6 @@
 Change histogram example to be wind speed:- temperature is not normally-distributed!
 
+Can also use shapiro.test
+
 Use the subset function?
 
-Just for fun!
-
-plot with emoji;
-
-library(emoGG)
-library(ggplot2)
-
-patients$am[patients$Sex=="Male"] <- "1f474"
-patients$am[patients$Sex=="Female"] <-"1f475"
-
-ggplot(patients,aes(x = Age,y=Height,emoji=am)) + geom_emoji()
