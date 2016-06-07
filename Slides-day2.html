@@ -1613,12 +1613,15 @@ data &lt;- read.delim(&quot;path.to.my.file&quot;)
 load(&quot;mydata.rda&quot;)
 '''</code></pre></li>
 </ul></li>
-<li>Your P.I. wants to see your results, but doesn’t really want to know about the R code that you used</li>
+<li>or your P.I. wants to see your results, but doesn’t really want to know about the R code that you used</li>
 </ul>
 </div><div id="chunk-options-results" class="slide section level2">
 <h1>Chunk options: results</h1>
 <ul>
-<li>Some code or functions might produce lots of output to the screen that we don’t need</li>
+<li>Some code or functions might produce lots of output to the screen that we don’t need
+<ul>
+<li><code>results='hide'</code></li>
+</ul></li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">for(i in <span class="dv">1</span>:<span class="dv">100</span>) {
   <span class="kw">print</span>(i)

@@ -1516,16 +1516,18 @@ data <- read.delim("path.to.my.file")
 load("mydata.rda")
 '''
 ```
-- Your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+- or your P.I. wants to see your results, but doesn't really want to know about the R code that you used
 
 ## Chunk options: results
 
 - Some code or functions might produce lots of output to the screen that we don't need
+    + `results='hide'`
 ```{r results='hide'}
 for(i in 1:100) {
   print(i)
   }
 ```
+
 
 ##Chunk options: message and warning
 
@@ -1664,7 +1666,7 @@ This analysis is recorded in `exercise10.Rmd`.
 - Hide the code chunk used to produce the plot (`echo=FALSE`)
 - Cache the code chunk used to read the raw data (`cache=TRUE`)
 
-Solution: solution-exercise10.Rmd
+Solution: solution-exercise10.pdf
 
 # End of Course
 

@@ -13,11 +13,10 @@ subjects <- read.delim("cancer.patients.txt")
 evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
 ```
 
-- Report the number of subjects and genes in your dataset using "in-line" R code
+The number of genes in the study is ..... and there were ..... subjects
 
-- Modify the code chunk so the R code is not printed to the screen
 
-```{r}
+```{r results='hide'}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
 probes <- na.omit(genes[match(genelist,genes[,2]),1])
 exprows <- match(probes,rownames(evals))
