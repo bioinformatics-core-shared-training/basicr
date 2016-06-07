@@ -1,28 +1,6 @@
-Day 1
+Change histogram example to be wind speed:- temperature is not normally-distributed!
 
-Simple Customisations; Age and Weight labels are not correct
+Can also use shapiro.test
 
-Day 2
+Use the subset function?
 
-Remove 'Day' variable from the Ozone data frame. Still causes confusion.
-...alternatively change example?
-
-mention that some customisations are actually easier in Photoshop, illustrator etc
-
-pch=16 not required when using lines, points functions
-
-Point to spurious correlations page!
-
-
-
-
-
-plot with emoji!
-
-library(emoGG)
-library(ggplot2)
-
-patients$am[patients$Sex=="Male"] <- "1f474"
-patients$am[patients$Sex=="Female"] <-"1f475"
-
-ggplot(patients,aes(x = Age,y=Height,emoji=am)) + geom_emoji()
