@@ -521,33 +521,33 @@ Recall our histogram of temperature from yesterday:
 - An assumption we rely on for various statistical tests
 
 ```{r fig.height=4}
-hist(weather$Temp, col="purple", xlab="Temperature",
-     main="Distribution of Temperature",
-     breaks = 50:100, freq=FALSE)
+hist(weather$Wind, col="purple", xlab="Wind Speed",
+     main="Distribution of Wind Speed",
+     breaks = 20, freq=FALSE)
 ```
 
 ## Create a normal distribution curve
 
 - If our data are normally-distributed, we can calculate the probability of drawing particular values.
-      + e.g. a temperature of 80
+      + e.g. a temperature of 10
 
 ```{r eval=FALSE}
-tempMean <- mean(weather$Temp)
-tempSD <- sd(weather$Temp)
-dnorm(80, mean=tempMean, sd=tempSD)
+tempMean <- mean(weather$Wind)
+tempSD <- sd(weather$Wind)
+dnorm(10, mean=tempMean, sd=tempSD)
 ```
 
 ```{r echo=FALSE}
-tempMean <- mean(weather$Temp)
-tempSD <- sd(weather$Temp)
+tempMean <- mean(weather$Wind)
+tempSD <- sd(weather$Wind)
 ```
 
 - We can overlay this on the histogram using `points` as we just saw:
 ```{r eval=FALSE}
-hist(weather$Temp, col="purple", xlab="Temperature",
-     main="Distribution of Temperature",
-     breaks = 50:100, freq=FALSE)
-points(80, dnorm(80, mean=tempMean, sd=tempSD),
+hist(weather$Wind, col="purple", xlab="Wind Speed",
+     main="Distribution of Wind Speed",
+     breaks = 20, freq=FALSE)
+points(10, dnorm(10, mean=tempMean, sd=tempSD),
        col="red", pch=16)
 ```
 
@@ -558,15 +558,15 @@ points(80, dnorm(80, mean=tempMean, sd=tempSD),
     + use `lines` in this case rather than `points`
     
     ```{r eval=FALSE}
-xs <- c(50,60,70,80,90,100)
+xs <- c(0,5,10,15,20)
 ys <- dnorm(xs, mean=tempMean, sd=tempSD)
 lines(xs, ys, col="red")
 ```
 
 ```{r fig.height=4,echo=FALSE}
-hist(weather$Temp,col="purple",xlab="Temperature",
-     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
-xs <- c(50,60,70,80,90,100)
+hist(weather$Wind,col="purple",xlab="Wind Speed",
+     main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
+xs <- c(0,5,10,15,20)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red")
 ```
@@ -577,15 +577,15 @@ lines(xs,ys,col="red")
     + We can generate x values using the `seq()` function
 
 ```{r eval=FALSE}
-xs <- seq(50,100, length.out = 10000)
+xs <- seq(00,20, length.out = 10000)
 ys <- dnorm(xs, mean=tempMean, sd=tempSD)
 lines(xs, ys, col="red")
 ```
 
 ```{r fig.height=4,echo=FALSE}
-hist(weather$Temp,col="purple",xlab="Temperature",
-     main="Distribution of Temperature",breaks = 50:100,freq=FALSE)
-xs <- seq(50,100,length.out = 10000)
+hist(weather$Wind,col="purple",xlab="Wind Speed",
+     main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
+xs <- seq(00,20, length.out = 10000)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red")
 ```
@@ -596,10 +596,10 @@ lines(xs,ys,col="red")
 
 $$t = \frac{\bar{x} -\mu_0}{s / \sqrt(n)}$$
 
-- Say a temperature of 50; which from the histogram seems to be unlikely
+- Say a Wind Speed of 2; which from the histogram seems to be unlikely
 
 ```{r}
-t <- (tempMean - 50) / (tempSD/sqrt(length(weather$Temp)))
+t <- (tempMean - 2) / (tempSD/sqrt(length(weather$Temp)))
 t
 ```
 
@@ -608,7 +608,7 @@ t
 - ...or use the **`t.test()`** function to compute the statistic and corresponding p-value
 
 ```{r}
-t.test(weather$Temp, mu=50)
+t.test(weather$Wind, mu=2)
 ```
 
 
@@ -658,9 +658,9 @@ chisq.test(); fisher.test()
         + whether the assumptions of the test are met, etc.
     + Consult your local statistician if not sure
     + An upcoming course that will help
-        + [Introduction to Statistical Analysis](http://training.csx.cam.ac.uk/bioinformatics/event/1809255)
+        + [Introduction to Statistical Analysis](http://bioinformatics-core-shared-training.github.io/IntroductionToStats/)
     + Some good references:
-        + [Statistical Analysis Using R (Course from the Babaraham Bioinformatics Core)](http://www.bioinformatics.babraham.ac.uk/training.html#rstats)
+        + [Statistical Analysis Using R (Course from the Babaraham Bioinformatics Core)](http://training.csx.cam.ac.uk/bioinformatics/event/1827771)
         + [Quick-R guide to stats](http://www.statmethods.net/stats/index.html)
         + [Simple R eBook](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf)
         + [R wiki](https://en.wikibooks.org/wiki/R_Programming/Descriptive_Statistics)

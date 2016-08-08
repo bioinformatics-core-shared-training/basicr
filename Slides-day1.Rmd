@@ -1350,7 +1350,7 @@ boxplot(patients$Weight ~ patients$Sex, horizontal = T)
 1. Import these data into R
 2. What data types are present? Try to think of ways to create the following plots from the data
     + Scatter plot two variables. e.g. Solar Radiation against Ozone
-    + A histogram. e.g. Temperature
+    + A histogram. e.g. Wind Speed
     + Boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
 
 
@@ -1378,7 +1378,7 @@ plot(weather$Solar.R, weather$Ozone)
 ## Suggestions
 
 ```{r}
-hist(weather$Temp)
+hist(weather$Wind)
 ```
 
 
@@ -1555,7 +1555,7 @@ par(mfrow=c(2,2))
 plot(weather$Solar.R,weather$Ozone, col="orange", pch=16,
      ylab="Ozone level", xlab="Solar Radiation", 
      main="Relationship between ozone level and solar radiation")
-hist(weather$Temp, col="purple", xlab="Temperature", main="Distribution of Temperature", breaks=50:100, freq=FALSE)
+hist(weather$Wind, col="purple", xlab="Wind Speed", main="Distribution of Wind Speed", breaks=20, freq=FALSE)
 boxplot(weather$Ozone~weather$Month,col=rainbow(5))
 ```
 
@@ -1572,8 +1572,8 @@ plot(weather$Solar.R, weather$Ozone, col="orange", pch=16,
 ## Solutions
 
 ```{r,fig.height=5}
-hist(weather$Temp, col="purple", xlab="Temperature",
-     main="Distribution of Temperature", breaks = 50:100, 
+hist(weather$Wind, col="purple", xlab="Temperature",
+     main="Distribution of Temperature", breaks = 20, 
      freq=FALSE)
 ```
 
