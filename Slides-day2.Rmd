@@ -515,7 +515,7 @@ qnorm(0.95, mean=0, sd=1)
 
 ## Example
 
-Recall our histogram of temperature from yesterday:
+Recall our histogram of Wind Speed from yesterday:
 
 - The data look to be roughly normally-distributed
 - An assumption we rely on for various statistical tests
@@ -529,7 +529,7 @@ hist(weather$Wind, col="purple", xlab="Wind Speed",
 ## Create a normal distribution curve
 
 - If our data are normally-distributed, we can calculate the probability of drawing particular values.
-      + e.g. a temperature of 10
+      + e.g. a Wind Speed of 10
 
 ```{r eval=FALSE}
 tempMean <- mean(weather$Wind)
@@ -543,13 +543,14 @@ tempSD <- sd(weather$Wind)
 ```
 
 - We can overlay this on the histogram using `points` as we just saw:
-```{r eval=FALSE}
+```{r fig.height=4}
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
 points(10, dnorm(10, mean=tempMean, sd=tempSD),
        col="red", pch=16)
 ```
+
 
 ## Create a normal distribution curve
 
@@ -592,14 +593,14 @@ lines(xs,ys,col="red")
 
 ## Simple testing
 
-- If we want to compute the probability of observing a particular temperature, from the same distribution, we can use the standard formula to calculate a t statistic:
+- If we want to compute the probability of observing a particular Wind Speed, from the same distribution, we can use the standard formula to calculate a t statistic:
 
 $$t = \frac{\bar{x} -\mu_0}{s / \sqrt(n)}$$
 
 - Say a Wind Speed of 2; which from the histogram seems to be unlikely
 
 ```{r}
-t <- (tempMean - 2) / (tempSD/sqrt(length(weather$Temp)))
+t <- (tempMean - 2) / (tempSD/sqrt(length(weather$Wind)))
 t
 ```
 
