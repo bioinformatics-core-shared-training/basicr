@@ -87,6 +87,9 @@ http://www.revolutionanalytics.com/companies-using-r
     + http://blog.revolutionanalytics.com/2011/03/how-the-new-york-times-uses-r-for-data-visualization.html
 - Buzzfeed
     + http://blog.revolutionanalytics.com/2015/12/buzzfeed-uses-r-for-data-journalism.html
+- New Zealand Tourist Board
+    + https://mbienz.shinyapps.io/tourism_dashboard_prod/
+
     
 ## R can facilitate Reproducible Research
 
