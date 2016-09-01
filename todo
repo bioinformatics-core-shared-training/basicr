@@ -7,3 +7,11 @@ Use the subset function?
 Mention New Zealand Tourist board Shiny app
 
 https://mbienz.shinyapps.io/tourism_dashboard_prod/
+
+For FISH example, add the prop vector to the data frame?
+
+Use month names in the labels?
+
+Exercise 4a.Rmd to finish before the colors and other modifications
+
+Solution to 4b still refers to Temperature rather than wind speed
