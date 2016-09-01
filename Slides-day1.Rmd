@@ -1575,8 +1575,8 @@ plot(weather$Solar.R, weather$Ozone, col="orange", pch=16,
 ## Solutions
 
 ```{r,fig.height=5}
-hist(weather$Wind, col="purple", xlab="Temperature",
-     main="Distribution of Temperature", breaks = 20, 
+hist(weather$Wind, col="purple", xlab="Wind Speed",
+     main="Distribution of Wind Speed", breaks = 20, 
      freq=FALSE)
 ```
 

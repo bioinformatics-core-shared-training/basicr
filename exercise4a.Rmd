@@ -36,7 +36,7 @@ output: pdf_document
 ##YOUR CODE HERE
 ```
 
-# Histogram of temperature; density on y axis, coloured purple, broken into bins of size 1 unit
+# Histogram of Wind Speed; density on y axis, coloured purple, broken into bins of size 1 unit
 
 ```{r}
 ##YOUR CODE HERE
