@@ -25,3 +25,7 @@ Put both parts of exercise together in the slides
 More about needed to use dev.off() for each pdf file to close
 
 Path to ozone file is incorrect in Exercise5.Rmd
+
+Explain 'as.numeric' properly in gene expression example
+
+Boxplots in exercise 9 report don't get displayed properly (two plots in a column)
