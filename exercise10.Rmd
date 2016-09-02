@@ -2,7 +2,7 @@
 title: "Exercise 10"
 author: "Your Name"
 date: '`r format(Sys.time(), "%d %b %Y")`'
-output: pdf_document
+output: html_document
 ---
 
 - Modifiy the code chunk so this is run once only
@@ -17,6 +17,8 @@ The number of genes in the study is ..... and there were ..... subjects
 
 
 ```{r results='hide'}
+
+##HIDE ME!!!
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
 probes <- na.omit(genes[match(genelist,genes[,2]),1])
 exprows <- match(probes,rownames(evals))

@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r}
-weather <- read.csv("data/ozone.csv")
+weather <- read.csv("ozone.csv")
 ```
 
 
