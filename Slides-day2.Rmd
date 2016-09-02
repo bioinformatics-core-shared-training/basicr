@@ -346,6 +346,40 @@ plot(weather$Temp,weather$Ozone,pch=17,col="orange", ylab="Ozone level",xlab="Te
 
 ```
 
+##Exercise: exercise5.Rmd
+
+- Temperature and Ozone level seem to be correlated
+- However, there are some observations that do not seem to fit the trend
+    + those with Ozone level > 100
+- Modify the plot so that these outlier observations are in a different colour
+
+```{r fig.height=5}
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
+```
+
+## Target graph
+
+HINT: You can break down the problem into the following steps
+
+- Create a blank plot
+- Identify observations with ozone > 100
+    + plot the corresponding Temperature and Ozone values for these in red
+- Identify observations with ozone < 100
+    + plot the corresponding Temperature and Ozone values for these in orange
+
+
+```{r echo=FALSE, fig.height=5}
+plot(weather$Temp,weather$Ozone, pch=17,
+     col="orange", ylab="Ozone level",
+     xlab="Temperature")
+highO <- which(weather$Ozone > 100)
+abline(h=100,lty=2)
+points(weather$Temp[highO],weather$Ozone[highO],pch=17,col="red")
+```
+
+
 ## Solution
 
 ```{r eval=FALSE}
@@ -382,38 +416,6 @@ plot(weather$Temp,weather$Ozone, pch=17,
 dev.off()
 ```
 
-##Exercise: exercise5.Rmd
-
-- Temperature and Ozone level seem to be correlated
-- However, there are some observations that do not seem to fit the trend
-    + those with Ozone level > 100
-- Modify the plot so that these outlier observations are in a different colour
-
-```{r fig.height=5}
-plot(weather$Temp,weather$Ozone, pch=17,
-     col="orange", ylab="Ozone level",
-     xlab="Temperature")
-```
-
-## Target graph
-
-HINT: You can break down the problem into the following steps
-
-- Create a blank plot
-- Identify observations with ozone > 100
-    + plot the corresponding Temperature and Ozone values for these in red
-- Identify observations with ozone < 100
-    + plot the corresponding Temperature and Ozone values for these in orange
-
-
-```{r echo=FALSE, fig.height=5}
-plot(weather$Temp,weather$Ozone, pch=17,
-     col="orange", ylab="Ozone level",
-     xlab="Temperature")
-highO <- which(weather$Ozone > 100)
-abline(h=100,lty=2)
-points(weather$Temp[highO],weather$Ozone[highO],pch=17,col="red")
-```
 
 ## Solution: solution-exercise5.pdf
 
