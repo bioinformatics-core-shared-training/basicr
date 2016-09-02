@@ -23,3 +23,5 @@ Example in slides of points that go outside the axis limits?
 Put both parts of exercise together in the slides
 
 More about needed to use dev.off() for each pdf file to close
+
+Path to ozone file is incorrect in Exercise5.Rmd
