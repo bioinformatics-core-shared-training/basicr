@@ -129,11 +129,13 @@ males <- patients$Sex == "Male"
 ```{r, eval=FALSE}
 males
 patients[males,]
-patients[males, "Age"]
-patients[males, "Weight"]
+patients$Age[males]
+patients$Weight[males]
 ```
 
 ## Adding points to differentiate gender
+
+- The points we add have to be within the `x` and `y` limits of the original plot axes, otherwise they won't be displayed
 
 ```{r, fig.height=5}
 plot(patients$Age, patients$Weight, type="n")
@@ -146,6 +148,7 @@ points(patients$Age[males], patients$Weight[males],
 ## Adding points to differentiate gender
 
 
+    
 ```{r}
 females <- patients$Sex == "Female"
 females
@@ -153,6 +156,9 @@ patients[females,]
 ```
 
 ## Adding points to differentiate gender
+
+- Again, we have to be careful that all the points are within the `x` and `y` limits
+    + this is why creating the blank plot containing the limits of the data is useful
 
 ```{r, fig.height=5}
 plot(patients$Age, patients$Weight, type="n")
@@ -168,7 +174,6 @@ points(patients$Age[females], patients$Weight[females],
 
 - Each set of points can have a different colour and shape
 - Axis labels and title and limits are defined by the plot
-- You can add points ad-nauseum. Try not to make the plot cluttered!
 - Once you've added points to a plot, they cannot be removed
 - A call to `plot` will start a new graphics window
     - or typing `dev.off()`
@@ -181,7 +186,7 @@ points(patients$Age[females], patients$Weight[females],
        pch=17, col="orangered1")
 ```
 
-- TIP: try building the same plot, but using a vector of colors fo the attribute `col`, instead of subselecting the observations
+
 
 
 ## Adding a legend
@@ -272,8 +277,8 @@ boxplot(patients$Weight ~ patients$Sex)
     
 ## Exporting graphs from RStudio
 
-- Easiest option to to use the *Export* button from the *Plots* panel
-- Otherwise, use the `pdf()` function:
+- When using Rstudio interactively, the easiest option is to use the *Export* button from the *Plots* panel
+- Otherwise, in an R script you can use the `pdf()` function:
     + You will see that the plot does not appear in RStudio
 ```{r eval=FALSE}
 pdf("ExampleGraph.pdf")
@@ -303,6 +308,8 @@ abline(h=c(65,70,75), col="blue")
 dev.off()
 ```
 
+- If no plots are appearing in RStudio, it could be you are still writing to a pdf file
+    + run `dev.off()` multiple times until you see a message `cannot shut down device (the null device)`
 
 
 ## Exporting graphs from RStudio
@@ -336,7 +343,8 @@ weather <- read.csv("ozone.csv")
 - Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
     + use different colours and plotting characters on each plot
 - Save the plot to a pdf
-- HINT: Create the graph first in RStudio, then when you're happy with it, use the `pdf` function to save to a file
+- HINT: Create the graph first in RStudio. When you're happy with it, re-run the code preceeded by the `pdf` function to save to a file
+    + don't forget to use `dev.off()` to close the file
 
 ```{r echo=FALSE,fig.height=4,fig.width=10}
 par(mfrow=c(1,3))
@@ -491,7 +499,7 @@ abline(h=100,lty=2)
 ```{r eval=FALSE}
 rnorm(10, mean=10, sd=5)
 ```
-- The probability of drawing 10 from this distribution:
+- The probability of drawing exactly 10 from this distribution:
 ```{r}
 dnorm(10, mean=10, sd=5)
 ```
