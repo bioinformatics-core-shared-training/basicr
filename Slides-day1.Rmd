@@ -334,13 +334,17 @@ z
 
 ##Basic concepts in R - vectors
 
-- We can remove element(s) from a vector:
+- We can "remove" element(s) from a vector:
+    + NOTE: the vector x doesn't get modified
+    + we're just displaying what the vector looks like without particular elements
+    
 ```{r vectors13, eval=FALSE}
 x <- 3:12
 
 x[-3]
 x[-(5:7)]
 x[-seq(2, 6, 2)]
+x
 ```
 
 ##Basic concepts in R - vectors
@@ -540,7 +544,7 @@ example(seq)
 R will return a list of possibilities:
 
 ```{r eval=FALSE}
-??plot
+??mean
 ```
 - The **Packages** tab in the lower-right panel of RStudio will help you locate the help pages for a particular package and its functions
     + Often there will be a user-guide or '*vignette*' too
@@ -574,12 +578,7 @@ web called **repositories**
         + Use metacran search to find functionality you need: http://www.r-pkg.org/
         + Or look for packages by theme: http://cran.r-project.org/web/views/
     + **Bioconductor** specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
-    
-##R packages
-    
-- Other repositories:
-    + http://r-forge.r-project.org/
-    + https//github.com can also host R packages, and hosts the development version of many packages
+    + **https//github.com** can also host R packages, and hosts the development version of many packages
 - Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
     
 ## Installing packages    
@@ -617,17 +616,17 @@ install.packages("ggplot2")
 
 ```{r eval=FALSE}
 source("http://www.bioconductor.org/biocLite.R")
-biocLite("DESeq")
+biocLite("DESeq2")
 ```
 
-##Example: Load packages ggplot2 and DESeq
+##Example: Load packages ggplot2 and DESeq2
 
 - R needs to be told to use the new functions from the installed packages. Use **`library(...)`** function to load the newly installed features:
 
 ```{r eval=FALSE}
 
 library(ggplot2) # loads ggplot functions
-library(DESeq)   # loads DESeq functions
+library(DESeq2)   # loads DESeq functions
 library()        # Lists all the packages 
                  # you've got installed 
 ```
@@ -1054,7 +1053,6 @@ read.csv("countData.csv")
 
 ##1b. Check the data
 - *Always* check the object to make sure the contents and dimensions are as you expect
-
 - R will sometimes create the object without error, but the contents may be un-usable for analysis
     + If you specify an incorrect separator, R will not be able to locate the columns in your data, and you may end up with an object with just one column
     
@@ -1072,7 +1070,6 @@ View(rawData)
 ##1c. Understanding the object
 
 - Once we have read the data successfully, we can start to interact with it
-
 - The object we have created is a *data frame*:
 ```{r}
 class(rawData)
@@ -1226,7 +1223,7 @@ write.csv(rawData[norm,], "My_NB_output.csv")
 - ...but we need to start simple
 - We will describe *base* graphics in R: the plots available with any standard R installation
     + other more advanced alternatives are, e.g., `lattice`, `ggplot2`
-    + See our [intermediate R course](http://training.csx.cam.ac.uk/bioinformatics/event/1800066) for fancy graphics
+    + See our [intermediate R course](http://bioinformatics-core-shared-training.github.io/r-intermediate/) for fancy graphics
 - Plotting in R is a *vast* topic:
     + We cannot cover everything
     + You can tinker with plots to your hearts content
@@ -1548,10 +1545,10 @@ boxplot(patients$Weight~patients$Sex,
 ##Exercise: exercise4b.Rmd
 
 - Can you re-create the following plots? Hint:
-
-    + See the `breaks` and `freq` arguments to hist (`?hist`) to create 50 bins and display density rather than frequency
+    + See the `breaks` and `freq` arguments to hist (`?hist`) to create 20 bins and display density rather than frequency
     + For third plot, see the rainbow function (`?rainbow`)
     + Don't worry too much about getting the colours exactly correct
+    + The `las` argument changes the label orientation. See `?par`.
     
 ```{r echo=FALSE, fig.height=5}
 par(mfrow=c(2,2))
@@ -1559,7 +1556,7 @@ plot(weather$Solar.R,weather$Ozone, col="orange", pch=16,
      ylab="Ozone level", xlab="Solar Radiation", 
      main="Relationship between ozone level and solar radiation")
 hist(weather$Wind, col="purple", xlab="Wind Speed", main="Distribution of Wind Speed", breaks=20, freq=FALSE)
-boxplot(weather$Ozone~weather$Month,col=rainbow(5))
+boxplot(weather$Ozone~weather$Month,col=rainbow(5),names=c("May", "Jun", "Jul", "Aug","Sep"),las=2,lab="Ozone Level",main="Distribution of Ozone per-month")
 ```
 
 ## Solutions: solution-exercise4b.pdf
@@ -1590,17 +1587,28 @@ hist(weather$Wind, col="purple", xlab="Wind Speed",
     
 
 ```{r,fig.height=5}
-boxplot(weather$Ozone ~ weather$Month, col=rainbow(5))
+boxplot(weather$Ozone~weather$Month,col=rainbow(5),
+        names=c("May", "Jun", "Jul", "Aug","Sep"),
+        las=2,lab="Ozone Level",
+        main="Distribution of Ozone per-month")
 ```
 
 ## Solutions
 
 - More aesthetically-pleasing palettes are provided by the **`RColorBrewer`** package:
+    + Can also check for palettes that are accepted for those with colour-blindness
 
-```{r}
+```{r eval=FALSE}
 library(RColorBrewer)
 display.brewer.all()
+display.brewer.all(colorblindFriendly = TRUE)
 ```
+
+```{r echo=FALSE}
+library(RColorBrewer)
+display.brewer.all(colorblindFriendly = TRUE)
+```
+
 
 ## Solutions
 

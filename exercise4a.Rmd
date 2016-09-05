@@ -17,32 +17,13 @@ output: pdf_document
 ##YOUR CODE HERE
 ```
 
-# a histogram. e.g. Temperature
+# a histogram. e.g. Wind Speed
 
 ```{r}
 ##YOUR CODE HERE
 ```
 
 # boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
-
-```{r}
-##YOUR CODE HERE
-```
-
-
-# Scatter plot of solar radiation versus ozone level; points coloured in orange with filled circles
-
-```{r}
-##YOUR CODE HERE
-```
-
-# Histogram of Wind Speed; density on y axis, coloured purple, broken into bins of size 1 unit
-
-```{r}
-##YOUR CODE HERE
-```
-
-# Boxplot of Ozone level per-month; different colours for each month
 
 ```{r}
 ##YOUR CODE HERE
