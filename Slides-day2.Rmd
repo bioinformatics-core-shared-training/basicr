@@ -585,7 +585,10 @@ lines(xs,ys,col="red")
 ## Create a normal distribution curve
 
 - For a smoother curve, use a longer vector:
-    + We can generate x values using the `seq()` function
+    + we can generate x values using the `seq()` function
+- Inspecting the data in this manner is usually acceptable to assess normality
+    + the fit doesn't have to be exact
+    + the shapiro test is also available `?shapiro.test`
 
 ```{r eval=FALSE}
 xs <- seq(00,20, length.out = 10000)
@@ -804,7 +807,11 @@ plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
 - Perform a linear regression analysis to assess this:
     + Fit the linear model and print a summary of the output
     + Plot the two variables and overlay a best-fit line
-
+    + What is the equation of the best-fit line in the form
+        + $$ y = mx + c$$
+    + Calculate the correlation between the two variables using the function `cor` (`?cor`)
+        + can you annotate the plot with the correlation coefficient?
+    
 ## Solution: solution-exercise6.pdf
 ```{r fig.show=FALSE}
 mod1 <- lm(weather$Ozone~weather$Temp)
@@ -815,7 +822,28 @@ summary(mod1)
 ```{r}
 plot(weather$Temp, weather$Ozone, pch=16)
 abline(mod1, col="red", lty=2)
+c = coef(mod1)
+text(95,150, paste("y = ", round(c[2],2), "x",round(c[1],2),sep=""))
 ```
+
+## Solution
+```{r}
+plot(weather$Temp, weather$Ozone, pch=16)
+abline(mod1, col="red", lty=2)
+cor = cor(weather$Temp,weather$Ozone,use="c")
+cor
+text(95,150, paste("r^2 = ", round(cor^2,2)))
+```
+
+## Solution
+```{r}
+plot(weather$Temp, weather$Ozone, pch=16)
+abline(mod1, col="red", lty=2)
+cor = cor(weather$Temp,weather$Ozone,use="c")
+cor
+text(95,150, substitute(paste(r^2, "=" ,x),list(x=round(cor^2,2))))
+```
+
 
 ## Word of caution
 
@@ -913,17 +941,23 @@ if(!file.exists("gene.expression.txt")){
 }
 ```
 
+## Analysis goals
+
+- We will show how to lookup a particular gene in the dataset
+- Also, how to look-up genes in a given genomic region
+- Assess if a given gene is differentially-expressed
+- Create a heatmap to cluster the samples and reveal any subgroups in the data
 
 ## Peek at the data
 
 ```{r eval=FALSE}
-evals <- read.delim("gene.expression.txt", stringsAsFactors = FALSE)
+evals <- read.delim("gene.expression.txt")
 evals[1:2,1:5]
 dim(evals)
 ```
 
 ```{r echo=FALSE}
-evals <- read.delim("gene.expression.txt", stringsAsFactors = FALSE)
+evals <- read.delim("gene.expression.txt")
 evals[1:2,1:5]
 dim(evals)
 ```
@@ -949,7 +983,7 @@ dim(genes)
 
 ## Peek at the data
 ```{r}
-subjects <- read.delim("cancer.patients.txt")
+subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
 head(subjects)
 dim(subjects)
 ```
@@ -1102,6 +1136,18 @@ head(chr8GenesOrd)
 write.table(chr8GenesOrd, "chromosome8.gene.info.txt", sep="\t")
 ```
 
+## Alternative: 
+
+- you might find the function `subset` a bit easier to use
+    + no messing around with square brackets
+    + no need to remember row and column indices
+    + no need for `$` operator to access columns
+
+```{r}
+chr8Genes <- subset(genes, Chromosome=="chr8")
+head(chr8Genes)
+```
+
 
 ## Retrieving data for a particular gene
 
@@ -1109,21 +1155,10 @@ write.table(chr8GenesOrd, "chromosome8.gene.info.txt", sep="\t")
     + let's check that this is evident in our dataset
     + if not, something has gone wrong!
 - First step is to locate this gene in our dataset
+- We can use `==` to do this, but there are some alternatives that are worth knowing about
 
 ## Character matching in R
 
-- We have already seen various ways of comparing numeric values
-    + ==, >, <
-    + each of which returns a vector of logical values
-    + == will also work with text
-    
-```{r}
-LETTERS
-"A" == LETTERS
-```
-
-## Character matching in R
-    
 - `match()` and `grep()` are often used to find particular matches
     + CAUTION: by default, match will only return the ***first*** match!
 
@@ -1133,9 +1168,27 @@ grep("F", rep(LETTERS,2))
 match("F", rep(LETTERS,2))
 ```
 
+## Character matching in R
+
+- `grep` can also do partial matching
+    + can also do complex matching using "regular expressions"
+    
+```{r}
+month.name
+grep("ary",month.name)
+grep("ber",month.name)
+```
+
+- `%in%` will return a logical if each element is contained in a shortened list
+
+```{r}
+month.name %in% c("May", "June")
+```
+
+
 ## Retrieving data for a particular gene
 
-- Find the name of the ID that corresponds to gene ***ESR1***
+- Find the name of the ID that corresponds to gene ***ESR1*** using `match`
     + mapping between IDs and genes is in the ***genes*** data frame
         + ID in first column, gene name in the second
 - Save this ID as a variable
@@ -1159,27 +1212,33 @@ Now, find which row in our expression matrix is indexed by this ID
 match(probe, rownames(evals))
 evals[match(probe, rownames(evals)), 1:10]
 genevals <- evals[match(probe,rownames(evals)),]
+class(genevals)
 ```
 
 
     
 ## Relating to patient characteristics
 
-We have numeric expression values and want to visualise them against our categorical data
+We have expression values and want to visualise them against our categorical data
 
 - use a boxplot, for example
+- however, we have to first make sure our values are treat as numeric data
+- as we created the subset of a data frame, the result was also a data frame
+    + use `as.numeric`
 
 
 ```{r}
-boxplot(as.numeric(genevals) ~ factor(subjects$er))
+boxplot(as.numeric(genevals) ~ subjects$er)
 ```
 
 ## Relating to patient characteristics
 
-- The p-value is also encouraging 
+- In this case there is a clear difference, so we probably don't even need a p-value to convince ourselves of the difference
+    + in real-life, we would probably test lots of genes and implement some kind of multiple-testing
+    + e.g. `p.adjust` (`?p.adjust`)
 
 ```{r}
-t.test(as.numeric(genevals) ~ factor(subjects$er))
+t.test(as.numeric(genevals) ~ subjects$er)
 
 ```
 
@@ -1190,16 +1249,16 @@ t.test(as.numeric(genevals) ~ factor(subjects$er))
 `esr1Example.Rmd`
 
 ```{r eval=FALSE}
-genes    <- read.delim("gene.description.txt")
-subjects <- read.delim("cancer.patients.txt")
-evals    <- read.delim("gene.expression.txt", stringsAsFactors = FALSE)
+genes    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+evals    <- read.delim("gene.expression.txt")
 
 ind      <- match("ESR1", genes[,2])
 probe    <- genes[ind,1]
 genevals <- evals[match(probe,rownames(evals)),]
 
-boxplot(as.numeric(genevals) ~ factor(subjects$er))
-t.test(as.numeric(genevals) ~ factor(subjects$er))
+boxplot(as.numeric(genevals) ~ subjects$er)
+t.test(as.numeric(genevals) ~ subjects$er)
 ```
 
 ## Exercise: exercise8.Rmd
@@ -1340,6 +1399,7 @@ dim(chr8Expression)
 
 - Create a for loop to perform to test if the expression level of each gene on chromosome 8 is significantly different between ER positive and negative samples
 - Store the ***p-value*** from each individual test
+- How many genes have a p-value < 0.05?
 
 ## Solution: solution-exercise9.pdf
 
@@ -1350,8 +1410,24 @@ for(i in 1:18) {
   pvals[i] <- tmp$p.value
   }
 pvals
+table(pvals < 0.05)
+sum(pvals < 0.05)
 ```
 
+## Solution: solution-exercise9.pdf
+
+- Our code will be more robust if we store the number of chromosome 8 genes as a variable
+    + if the data change, the code should still run
+
+```{r}
+ngenes <- nrow(chr8Expression)
+pvals <- NULL
+for(i in 1:ngenes) {
+  tmp <- t.test(as.numeric(chr8Expression[i,]) ~ factor(subjects$er))
+  pvals[i] <- tmp$p.value
+  }
+pvals
+```
 
 
 ##Conditional branching: Commands and flow control
@@ -1487,7 +1563,7 @@ See ***?*** → ***Markdown Quick Reference*** in RStudio:
 
 >To be or not to be
 
-- See *Markdown Quick Reference** for more:
+- See **Help -> Markdown Quick Reference** for more:
     + Adding images
     + Adding web links
     + Tables
@@ -1704,8 +1780,9 @@ heatmap(as.matrix(evals[exprows,]), ColSideColors = sampcol, col=rbPal)
 This analysis is recorded in `exercise10.Rmd`.
 
 - Use in-line R code to report how many patients were involved in the study
-- Hide the code chunk used to produce the plot (`echo=FALSE`)
-- Cache the code chunk used to read the raw data (`cache=TRUE`)
+- Hide the code chunk used to produce the plot 
+- Cache the code chunk used to read the raw data 
+- Print the version of R, and version numbers of all packages, used to do the analysis
 
 Solution: solution-exercise10.pdf
 

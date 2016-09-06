@@ -26,7 +26,7 @@ head(chr8GenesOrd)
 chr8Expression <- evals[match(chr8GenesOrd$probe,rownames(evals)),]
 ```
 
-- Create a for loop to perform to test if the expression level of each gene on chromosome 8 is significantly different between ER positive and negative samples
+- Create a for loop to perform to test if the expression level of each gene on chromosome 8 is significantly different between ER positive and negative samples. Print the p-values resulting from each test
 
 ```{r}
 ##YOUR CODE HERE

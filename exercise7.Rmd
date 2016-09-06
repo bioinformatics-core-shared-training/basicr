@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r eval=FALSE}
-evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+evals <- read.delim("gene.expression.txt")
 evals[1:5,1:5]
 dim(evals)
 ```
