@@ -1,33 +1,6 @@
-Change histogram example to be wind speed:- temperature is not normally-distributed!
-
-Can also use shapiro.test
-
-Use the subset function?
-
-Mention New Zealand Tourist board Shiny app
-
-https://mbienz.shinyapps.io/tourism_dashboard_prod/
 
 For FISH example, add the prop vector to the data frame?
 
-Use month names in the labels?
-
-Exercise 4a.Rmd to finish before the colors and other modifications
-
-Solution to 4b still refers to Temperature rather than wind speed
-
-Make sure that slide PDFs are re-compiled
-
-Example in slides of points that go outside the axis limits?
-
-Put both parts of exercise together in the slides
-
-More about needed to use dev.off() for each pdf file to close
-
-Path to ozone file is incorrect in Exercise5.Rmd
-
-Explain 'as.numeric' properly in gene expression example
 
 Boxplots in exercise 9 report don't get displayed properly (two plots in a column)
 
-Note that we should use variable rather than 18 for chromosome 18 genes
