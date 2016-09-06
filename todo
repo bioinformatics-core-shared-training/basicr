@@ -1,15 +1,6 @@
 
-Can also use shapiro.test
-
-Use the subset function?
-
-
 For FISH example, add the prop vector to the data frame?
 
-Make sure that slide PDFs are re-compiled
-
-Explain 'as.numeric' properly in gene expression example
 
 Boxplots in exercise 9 report don't get displayed properly (two plots in a column)
 
-Note that we should use variable rather than 18 for chromosome 18 genes
