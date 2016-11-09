@@ -1,0 +1,74 @@
+---
+title: "New Exercise"
+author: "Mark Dunning"
+date: "9 November 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Exercise: Body-Mass Index
+- Let's try some vector arithmetic. Here are the weights and heights of five individuals
+
+|Person | Weight (kg) | Height (cm)|
+|-------|------------------:|-------------------:|
+|*Jo*|70.8|182|
+|*Sam*|67.9|179|
+|*Charlie*|75.3|169|
+|*Frankie*|61.9|175|
+|*Alex*|72.4|181|
+
+
+- Create *weight* and *height* vectors to hold the data in each column using the `c` function. Create a *person* vector and use this vector to name the values in the other two vectors.
+
+##Exercise: Body-Mass Index
+
+1. The body-mass index is given by the formula:- $BMI = (Weight)/(Height^2)$; where Height is given in ***metres***
+  + Create a new vector to record this, called `bmi`.
+
+2. Create a new vector `bmi.sorted` where the bmi values are put in increasing numeric order (HINT: look up the help on the `sort` function)
+3. The interquartile range (IQR) of a vector is defined as the 75% percentile of the data minus the 25% percentile. Calculate the IQR for our bmi values 
+    + check your answer using the `IQR` function
+
+##Answers to exercise
+
+```{r ex1answers1}
+weight <- c(65.8,67.9,75.3,61.9,92.4)
+height <- c(192,179,169,175,171)
+person <- c("Jo","Sam","Charlie","Frankie","Alex")
+names(weight) <- names(height) <- person
+```
+
+##Answers to exercise
+
+1. The body-mass index is given by the formula:- $BMI = (Weight)/(Height^2)$; where Height is given in ***metres***
+  + Create a new vector to record this, called `bmi`.
+  
+```{r ex1answers2}
+bmi <- (weight)/((height/100)^2)
+bmi
+```
+
+
+##Answers to exercise
+
+2. Create a new vector `bmi.sorted` where the bmi values are put in increasing numeric order
+3. Print the second, third and fourth items in the vector `bmi.sorted`
+
+```{r}
+bmi.sorted <- sort(bmi)
+bmi.sorted[4] - bmi.sorted[2]
+IQR(bmi)
+```
+
+## Answers to exercise
+
+Names are usually carried across to the new vector. Sometimes this is what we want (as for `bmi`) but sometimes it is not (when we are comparing values in `bmi.sorted`). We can remove names by setting them to the special NULL value:
+
+```{r}
+names(bmi.sorted) <- NULL
+bmi.sorted[4] - bmi.sorted[2]
+```
+
