@@ -430,74 +430,68 @@ gene.expression
 names(gene.expression)
 ```
 
-##Exercise: genes and genomes
-- Let's try some vector arithmetic. Here are the genome lengths and number of protein coding genes for several model organisms:
 
-|Species | Genome size (Mb) | Protein coding genes|
+##Exercise: Body-Mass Index
+- Let's try some vector arithmetic. Here are the weights and heights of five individuals
+
+|Person | Weight (kg) | Height (cm)|
 |-------|------------------:|-------------------:|
-|*Homo sapiens*|3,102|20,774|
-|*Mus musculus*|2,731|23,139|
-|*Drosophila melanogaster*|169|13,937|
-|*Caenorhabditis elegans*|100|20,532|
-|*Saccharomyces cerevisiae*|12|6,692|
+|*Jo*|70.8|182|
+|*Sam*|67.9|179|
+|*Charlie*|75.3|169|
+|*Frankie*|61.9|175|
+|*Alex*|72.4|181|
 
-- Create *genome.size* and *coding.genes* vectors to hold the data in each column using the `c` function. Create a *species.name* vector and use this vector to name the values in the other two vectors.
 
-##Exercise: genes and genomes
+- Create *weight* and *height* vectors to hold the data in each column using the `c` function. Create a *person* vector and use this vector to name the values in the other two vectors.
 
-1. Let's assume a coding gene has an average length of 1.5 kilobases. On average, **how many base pairs of each genome is made of coding genes?** Create a new vector to record this, called **`coding.bases`**.
-2. **What percentage of each genome is made up of protein coding genes?** Use your **`coding.bases`** and **`genome.size`** vectors to calculate this. (See earlier slides for how to do division in R.)
-3. How many times more bases are used for coding in the human genome compared to the yeast genome? (*S. cerevisiae*) **How many times more bases are in the human genome in total compared to the yeast genome?** Look up indices of your vectors to find out.
+##Exercise: Body-Mass Index
 
-##Answers to genome exercise
+1. The body-mass index is given by the formula:- $BMI = (Weight)/(Height^2)$; where Height is given in ***metres***
+    + Create a new vector to record this, called `bmi`.
+2. Create a new vector `bmi.sorted` where the bmi values are put in increasing numeric order (HINT: look up the help on the `sort` function)
+3. The interquartile range (IQR) of a vector is defined as the 75% percentile of the data minus the 25% percentile. Calculate the IQR for our bmi values 
+    + check your answer using the `IQR` function
+
+##Answers to exercise
 
 ```{r ex1answers1}
-genome.size  <- c(3102, 2731, 169, 100, 12)
-coding.genes <- c(20774, 23139, 13937, 20532, 6692)
-species.name <- c("H. sapiens","M. musculus",
-                  "D. melanogaster","C. elegans",
-                  "S. cerevisiae")
-
-names(genome.size)  <- species.name
-names(coding.genes) <- species.name
+weight <- c(65.8,67.9,75.3,61.9,92.4)
+height <- c(192,179,169,175,171)
+person <- c("Jo","Sam","Charlie","Frankie","Alex")
+names(weight) <- names(height) <- person
 ```
 
-##Answers to genome exercise
+##Answers to exercise
 
-1. To calculate the number of coding bases, we need to use the same scale as we used for genome size (1.5 kilobases is 0.0015 Megabases):
+1. The body-mass index is given by the formula:- $BMI = (Weight)/(Height^2)$; where Height is given in ***metres***
+    + Create a new vector to record this, called `bmi`.
 ```{r ex1answers2}
-coding.bases <- coding.genes*0.0015
-coding.bases
+bmi <- (weight)/((height/100)^2)
+bmi
 ```
 
-##Answers to genome exercise
 
-2. To calculate the percentage of coding bases in each genome:
+##Answers to exercise
 
-```{r ex1answers3}
-coding.pc <- coding.bases/genome.size*100
-coding.pc
+2. Create a new vector `bmi.sorted` where the bmi values are put in increasing numeric order
+3. Print the second, third and fourth items in the vector `bmi.sorted`
+    + check your answer using the `IQR` functio
+```{r}
+bmi.sorted <- sort(bmi)
+bmi.sorted[4] - bmi.sorted[2]
+IQR(bmi)
 ```
 
-##Answers to genome exercise
+## Answers to exercise
 
-3. To compare human to yeast:
-```{r ex1answers4}
-coding.bases[1]/coding.bases[5]
+Names are usually carried across to the new vector. Sometimes this is what we want (as for `bmi`) but sometimes it is not (when we are comparing values in `bmi.sorted`). We can remove names by setting them to the special NULL value:
+
+```{r}
+names(bmi.sorted) <- NULL
+bmi.sorted[4] - bmi.sorted[2]
 ```
 
-```{r ex1answers5}
-genome.size[1]/genome.size[5]
-```
-
-##Answers to genome exercise
-
-- Names are usually carried across to the new vector. Sometimes this is what we want (as for `coding.pc`) but sometimes it is not (when we are comparing human to yeast). We can remove names by setting them to the special `NULL` value:
-
-```{r ex1answers6}
-names(coding.pc) <- NULL
-coding.pc
-```
 
 ## Documenting your analysis with RStudio
 
