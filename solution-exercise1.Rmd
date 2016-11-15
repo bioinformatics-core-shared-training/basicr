@@ -5,31 +5,20 @@ date: '`r format(Sys.time(), "%d %b %Y")`'
 output: pdf_document
 ---
 
-
 ```{r}
-genome.size  <- c(3102, 2731, 169, 100, 12)
-coding.genes <- c(20774, 23139, 13937, 20532, 6692)
-species.name <- c("H. sapiens","M. musculus",
-                  "D. melanogaster","C. elegans",
-                  "S. cerevisiae")
-names(genome.size)  <- species.name
-names(coding.genes) <- species.name
-```
-
-
-```{r}
-coding.bases <- coding.genes*0.0015
-coding.bases
+weight <- c(65.8,67.9,75.3,61.9,92.4)
+height <- c(192,179,169,175,171)
+person <- c("Jo","Sam","Charlie","Frankie","Alex")
+names(weight) <- names(height) <- person
 ```
 
 ```{r}
-coding.pc <- coding.bases/genome.size*100
-coding.pc
+bmi <- (weight)/((height/100)^2)
+bmi
 ```
-
 
 ```{r}
-coding.bases[1]/coding.bases[5]
-genome.size[1]/genome.size[5]
+bmi.sorted <- sort(bmi)
+bmi.sorted[4] - bmi.sorted[2]
+IQR(bmi)
 ```
-
