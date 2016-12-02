@@ -436,11 +436,11 @@ names(gene.expression)
 
 |Person | Weight (kg) | Height (cm)|
 |-------|------------------:|-------------------:|
-|*Jo*|70.8|182|
+|*Jo*|65.8|192|
 |*Sam*|67.9|179|
 |*Charlie*|75.3|169|
 |*Frankie*|61.9|175|
-|*Alex*|72.4|181|
+|*Alex*|92.4|171|
 
 
 - Create *weight* and *height* vectors to hold the data in each column using the `c` function. Create a *person* vector and use this vector to name the values in the other two vectors.
