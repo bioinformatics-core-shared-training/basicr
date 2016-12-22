@@ -55,6 +55,43 @@ points(weather$Temp[highO],weather$Ozone[highO],pch=17,col="red")
 dev.off()
 
 
+## Plot of weights of makes versus females
+
+png("images/males-versus-females.png")
+age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
+weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
+            71.5, 73.2, 64.8)
+firstName  <- c("Adam", "Eve", "John", "Mary", "Peter", 
+                "Paul", "Joanna", "Matthew", "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis",
+                "Baker","Daniels", "Edwards", "Smith", 
+                "Roberts", "Wilson")
+
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
+             FALSE, TRUE, FALSE, TRUE)
+
+sex <- c("Male", "Female", "Male", "Female", "Male", 
+         "Male", "Female", "Male", "Male", "Female")
+
+patients <- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName, secondName), 
+                       Sex = factor(sex),
+                       Age = age,
+                       Weight = weight,
+                       Consent = consent,
+                       stringsAsFactors = FALSE)
+
+males <- patients$Sex == "Male"
+females <- patients$Sex == "Female"
+par(mfrow=c(1,2))
+plot(patients$Age, patients$Weight,pch=16,type="n")
+points(patients$Age[males], patients$Weight[males],pch=16,col="steelblue")
+points(patients$Age[females], patients$Weight[females],pch=17,col="orangered1")
+legend("topleft", legend=c("M","F"), 
+       col=c("steelblue","orangered1"), pch=c(16,17))
+boxplot(patients$Weight~patients$Sex)
+dev.off()
 ## Gene Expression dataset
 
 

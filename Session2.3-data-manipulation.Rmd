@@ -180,7 +180,7 @@ write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
 ```
 
 
-## Exercise:
+## Exercise: Exercise7 
 
 - Imagine we want to know information about chromosome 8 genes that have been measured.
 1. Create a new data frame containing information on genes on Chromosome 8
@@ -315,7 +315,7 @@ boxplot(as.numeric(genevals) ~ subjects$er)
 t.test(as.numeric(genevals) ~ subjects$er)
 ```
 
-## Exercise: exercise8.Rmd
+## Exercise: Exercise 8
 
 Repeat the same steps we performed for the gene ESR1, but for GATA3:
 

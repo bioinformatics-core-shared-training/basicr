@@ -308,7 +308,7 @@ plot(rnorm(1:10))
 dev.off()
 ```
 
-##Exercise: 
+##Exercise: Exercise 5a
 - Return to the weather data from yesterday:
 
 ```{r}
@@ -324,8 +324,14 @@ weather <- read.csv("ozone.csv")
 
 ![](images/exercise5a.png)
 
+```{r}
 
-##Exercise: 
+
+
+```
+
+
+##Exercise: Exercise 5b
 - Temperature and Ozone level seem to be correlated
 - However, there are some observations that do not seem to fit the trend
     + those with Ozone level > 100
@@ -345,6 +351,8 @@ HINT: You can break down the problem into the following steps
 
 
 ```{r}
+
+
 
 ```
 
