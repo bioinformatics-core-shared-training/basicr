@@ -213,6 +213,15 @@ plot(prop, ylim=c(0,1))
 abline(h=0.33) 
 ```
 
+- It is also useful to save the variable we have computed as a new column in the data frame
+
+```{r}
+round(prop,2)
+rawData$Proportion <- round(prop,2)
+head(rawData)
+```
+
+
 ##3. Outputting the results
 
 - We write out a data frame of results (patients > 33% NB amplification) as a 'comma separated values' text file (CSV):
