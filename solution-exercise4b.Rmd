@@ -1,7 +1,7 @@
 ---
 title: "Exercise 4b"
 author: "Your Name"
-date: "9 October 2015"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output: pdf_document
 ---
 
