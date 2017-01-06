@@ -1,0 +1,27 @@
+---
+title: "Exercise 5"
+author: "Your Name"
+date: '`r format(Sys.time(), "%d %b %Y")`'
+output: html_document
+---
+
+```{r}
+weather <- read.csv("ozone.csv")
+```
+
+
++ Plot Ozone versus Solar Radiation, Wind Speed and Temperature on separate graphs
+    - save the plot to a pdf file
+    
+```{r}
+##YOUR CODE HERE
+```
+
+
++ Repeat the plot of Ozone versus Temperature and use a different colour to highlight any points with Ozone level > 100
+
+
+```{r}
+
+```
+

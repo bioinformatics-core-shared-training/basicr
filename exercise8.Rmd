@@ -1,0 +1,18 @@
+---
+title: "Exercise 8"
+author: "Your Name"
+date: '`r format(Sys.time(), "%d %b %Y")`'
+output: pdf_document
+---
+
+```{r}
+genes <- read.delim("gene.description.txt")
+subjects <- read.delim("cancer.patients.txt")
+evals <- read.delim("gene.expression.txt",stringsAsFactors = FALSE)
+```
+
+- Repeat the same steps we performed for the gene ESR1, but for GATA3
+
+```{r}
+##YOUR CODE HERE
+```
