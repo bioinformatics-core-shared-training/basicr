@@ -1,0 +1,253 @@
+---
+title: "Introduction to Solving Biological Problems Using R - Day 2"
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
+  Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output: html_notebook
+---
+
+# 3. R for data analysis
+
+##3 steps to Basic Data Analysis
+
+- In this short section, we show how the data manipulation steps we have just seen can be used as part of an analysis pipeline:
+
+1. Reading in data
+    + `read.table()`
+    + `read.csv(), read.delim()`
+2. Analysis
+    + Manipulating & reshaping the data
+    + Any maths you like
+    + Plotting the outcome
+3. Writing out results
+    + `write.table()`
+    + `write.csv()`
+  
+##A simple walkthrough
+
+- 50 neuroblastoma patients were tested for NMYC gene copy number by interphase nuclei FISH:
+      + Amplification of NMYC correlates with worse prognosis
+      + We have count data
+      + Numbers of cells per patient assayed
+          + For each we have NMYC copy number relative to base ploidy
+- We need to determine which patients have amplifications
+    + (i.e > 33% of cells show NMYC amplification)
+    
+##The Working Directory (wd)
+
+
+- Like many programs R has a concept of a working directory 
+- It is the place where R will look for files to execute and where it will
+save files, by default
+- For this course we need to set the working directory to the location
+of the course scripts
+- In RStudio use the mouse and browse to the directory where you saved the Course Materials
+
+- ***Session → Set Working Directory → Choose Directory...***
+
+## 0. Locate the data
+
+Before we even start the analysis, we need to be sure of where the data are located on our hard drive
+
+- Functions that import data need a file location as a character vector
+- The default location is the ***working directory***
+```{r}
+getwd()
+```
+
+- If the file you want to read is in your working directory, you can just use the file name
+```{r}
+list.files()
+```
+
+- Otherwise you need the *path* to the file
+    + you can get this using **`file.choose()`**
+    
+##1. Read in the data
+
+- The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
+- We need to read in the results and assign it to an object (`rawdata`)
+
+```{r}
+rawData <- read.delim("countData.txt")
+```
+
+In the latest RStudio, there is the option to import data directly from the File menu. ***File*** -> ***Import Dataset*** -> ***From Csv***
+
+- If the data is comma-separated, then use either the argument `sep=","` or the function `read.csv()`:
+```{r}
+read.csv("countData.csv")
+```
+- For full list of arguments:
+```{r}
+?read.table
+```
+
+##1b. Check the data
+- *Always* check the object to make sure the contents and dimensions are as you expect
+- R will sometimes create the object without error, but the contents may be un-usable for analysis
+    + If you specify an incorrect separator, R will not be able to locate the columns in your data, and you may end up with an object with just one column
+    
+```{r}
+# View the first 10 rows to ensure import is OK
+rawData[1:10,]  
+```
+
+
+- or use the `View()` function to get a display of the data in RStudio:
+```{r}
+View(rawData)
+```
+
+##1c. Understanding the object
+
+- Once we have read the data successfully, we can start to interact with it
+- The object we have created is a *data frame*:
+```{r}
+class(rawData)
+```
+
+- We can query the dimensions:
+
+```{r}
+ncol(rawData)
+nrow(rawData)
+dim(rawData)
+```
+
+- Or the structure of an object:
+     + TIP: In RStudio, window *Environment*, click the blue arrow in the left of an object's name, in order to see the object structure
+```{r}
+str(rawData)
+```
+
+##1c. Understanding the object
+
+- The names of the columns are automatically assigned:
+
+```{r}
+colnames(rawData)
+```
+
+- We can use any of these names to access a particular column:
+    + and create a vector
+    + TOP TIP: type the name of the object and hit TAB: you can select the column from the drop-down list!
+```{r}
+rawData$Nuclei
+```
+
+##Word of caution
+
+
+![](images/tolstoy.jpg)
+
+
+
+![](images/hadley.jpg)
+
+> Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham - RStudio chief scientist and author of dplyr, ggplot2 and others)
+
+##Word of caution
+
+You will make your life a lot easier if you keep your data **tidy** and ***organised***. Before blaming R, consider if your data are in a suitable form for analysis. The more manual manipulation you have done on the data (highlighting, formulas, copy-and-pasting), the less happy R is going to be to read it. Here are some useful links on some common pitfalls and how to avoid them
+
+- http://www.datacarpentry.org/spreadsheet-ecology-lesson/01-format-data.html
+- http://kbroman.org/dataorg/
+
+##Handling missing values
+
+- The data frame contains some **`NA`** values, which means the values are missing – a common occurrence in real data collection
+- `NA` is a special value that can be present in objects of any type (logical, character, numeric etc)
+- `NA` is not the same as `NULL`:
+    - `NULL` is an empty R object. 
+    - `NA` is one missing value within an R object (like a data frame or a vector)
+- Often R functions will handle `NA`s gracefully:
+
+```{r}
+x <- c(1, NA, 3)
+length(x)
+```
+
+##Handling missing values
+
+- However, sometimes we have to tell the functions what to do with them. 
+- R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them:
+
+
+```{r}
+mean(x, na.rm = TRUE)
+
+mean(na.omit(x))
+```
+
+##2. Analysis (reshaping data and maths)
+
+- Our analysis involves identifying patients with > 33% NB amplification
+    + we can use the **`which()`** function to select indices from a logical vector that are `TRUE`
+    
+```{r}
+# Create an index of results:
+prop <- rawData$NB_Amp / rawData$Nuclei
+
+```
+
+```{r}
+prop > 0.33
+```
+
+```{r}
+amp <- which(prop > 0.33) 
+amp
+```
+
+
+##2. Analysis (reshaping data and maths)
+
+- We can plot a simple chart of the % NB amplification
+    + Note that two samples are amplified
+    + Plotting will be covered in detail shortly
+
+```{r}
+plot(prop, ylim=c(0,1))
+# Add a horizonal line:
+abline(h=0.33) 
+```
+
+- It is also useful to save the variable we have computed as a new column in the data frame
+
+```{r}
+round(prop,2)
+rawData$Proportion <- round(prop,2)
+head(rawData)
+```
+
+
+##3. Outputting the results
+
+- We write out a data frame of results (patients > 33% NB amplification) as a 'comma separated values' text file (CSV):
+```{r}
+write.csv(rawData[amp,], file="selectedSamples.csv")
+```
+- The output file is directly-readable by Excel
+- It's often helpful to double check where the data has been saved. Use the *get working directory* function:
+
+```{r}
+getwd()      # print working directory
+list.files() # list files in working directory
+
+```
+
+##Exercise: Exercise 3
+
+- Patients are *near normal* if:
+`(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
+- Modify the condition in our previous code to find these patients
+- Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
+
+
+```{r}
+### Your Answer Here ### 
+
+
+```
+

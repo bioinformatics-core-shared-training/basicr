@@ -1,0 +1,31 @@
+---
+title: "Exercise 4a"
+author: "Your Name"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output: pdf_document
+---
+
+# Import the ozone dataset into R
+
+```{r}
+weather <- read.csv("ozone.csv")
+```
+
+# scatter plot two variables. e.g. Solar Radiation against Ozone
+
+```{r}
+plot(weather$Solar.R, weather$Ozone)
+```
+
+# a histogram. e.g. Wind Speed
+
+```{r}
+hist(weather$Wind)
+```
+
+# boxplot of a continuous variable against a categorical variable. e.g. Ozone level per month
+
+```{r}
+boxplot(weather$Ozone ~ weather$Month)
+```
+

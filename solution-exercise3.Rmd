@@ -1,0 +1,47 @@
+---
+title: "Exercise 3"
+author: "Mark Dunning"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output: pdf_document
+---
+
+
+# Reading the data
+
+```{r}
+rawData <- read.delim("countData.txt")
+rawData[1:10,]
+```
+
+# Analysis
+
+```{r}
+prop <- rawData$NB_Amp / rawData$Nuclei
+amp <- which(prop > 0.33)
+```
+
+# Plotting
+
+```{r}
+plot(prop, ylim=c(0,1.2)) # plot a simple chart of NB amplifications
+abline(h=0.33, lwd=1.5, lty=2) # Add a dotted line at 33%
+```
+
+## Write out the results
+
+```{r}
+# Write out results table as comma separated values file
+write.csv(rawData[amp,],file="selectedSamples.csv")
+```
+
+# Exercise
+
+```{r}
+norm <- which(prop < 0.33 & rawData$NB_Del == 0)
+norm
+```
+
+```{r}
+write.csv(rawData[norm,], "My_NB_output.csv")
+```
+
