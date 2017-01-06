@@ -99,12 +99,14 @@ points(10, dnorm(10, mean=tempMean, sd=tempSD),
     + remember that functions in R are often ***vectorized***
     + use `lines` in this case rather than `points`
     
-    ```{r eval=FALSE}
+```{r}
 xs <- c(0,5,10,15,20)
 ys <- dnorm(xs, mean=tempMean, sd=tempSD)
 ```
 
-```{r fig.height=4,echo=FALSE}
+As with `points`, we can only use `lines` to add to an existing plot
+
+```{r}
 hist(weather$Wind,col="purple",xlab="Wind Speed",
      main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
 xs <- c(0,5,10,15,20)
@@ -112,7 +114,6 @@ ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red")
 ```
 
-## Create a normal distribution curve
 
 - For a smoother curve, use a longer vector:
     + we can generate x values using the `seq()` function
@@ -216,6 +217,13 @@ Some other common types of test you might come across are:-
   
 ## Test variance assumption
 
+We firstly need to test if the variances of the two groups are comparable
+
+- it is usually safer to insepct the boxplots, but a function is provided to aid us
+- `var.test`
+- for completeness, we include the code to create the patients data frame
+    + you probably won't need this if you're following the whole course
+
 ```{r}
 age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
 weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
@@ -240,12 +248,16 @@ patients <- data.frame(First_Name = firstName,
                        Weight = weight,
                        Consent = consent,
                        stringsAsFactors = FALSE)
-patients
 
 var.test(patients$Weight~patients$Sex)
 ```
 
+The `var.test` function was testing the hypothesis that the variances are equal, but a non-significant p-value means we cannot reject this hypothesis.
+
 ## Perform the t-test
+
+As said previously, `t.test` can also be used for two-group comparisons
+- the function requires minimal alterations to perform a two-sample test
 
 ```{r}
 t.test(patients$Weight~patients$Sex, var.equal=TRUE)
@@ -270,8 +282,6 @@ t.test(patients$Weight~patients$Sex, var.equal=TRUE)
     2. Fit a linear model
     3. Add bestfit line data to plot with `abline()` function
   
-##Typical linear regression analysis: Basic data analysis
-
 -  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
 
  
@@ -282,9 +292,7 @@ plot(x,y, xlim=c(0,10), ylim=c(0,10))
 ```
 
 
-##Typical linear regression analysis: Basic data analysis
-
- The ~ is used to define a formula; i.e. "y is given by x"
+The ~ is used to define a formula; i.e. "y is given by x"
 - Take care about the order of x and y in the plot and lm expressions
 
 ```{r}
@@ -342,7 +350,7 @@ y~x*z     # * is a shorthand for x+z+x:z
 
 - There are suggestions that Ozone level could be influenced by Temperature:
 
-```{r echo=FALSE,fig.height=4}
+```{r}
 plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
 ```
 
@@ -355,6 +363,13 @@ plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
         + can you annotate the plot with the correlation coefficient?
     
 
+```{r}
+
+## Your answer here... ##
+
+```
+
+
 ## Word of caution
 
 ***Correlation != Causation***
@@ -365,7 +380,7 @@ http://tylervigen.com/spurious-correlations
 
 ## Word of caution
 
-![](images/screen shot 2014-04-20 at 11.06.28 am.png.jpeg)
+![](images/nobel-prize.jpeg)
 
 [So if I want to win a nobel prize, I should eat even more chocolate?!?!?](http://www.businessinsider.com/chocolate-consumption-vs-nobel-prizes-2014-4?IR=T)
 
