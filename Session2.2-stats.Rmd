@@ -28,13 +28,10 @@ output: html_notebook
 
 ##Distribution functions 
 - 10 random values from the Normal distribution with mean 10 and standard deviation 5:
-
 ```{r}
 rnorm(10, mean=10, sd=5)
 ```
-
 - The probability of drawing exactly 10 from this distribution:
-
 ```{r}
 dnorm(10, mean=10, sd=5)
 ```
@@ -65,7 +62,7 @@ Recall our histogram of Wind Speed from yesterday:
 - The data look to be roughly normally-distributed
 - An assumption we rely on for various statistical tests
 
-```{r fig.height=4}
+```{r}
 weather <- read.csv("ozone.csv")
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
@@ -84,16 +81,13 @@ dnorm(10, mean=tempMean, sd=tempSD)
 ```
 
 - We can overlay this on the histogram using `points` as we just saw:
-```{r fig.height=4}
+```{r}
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
 points(10, dnorm(10, mean=tempMean, sd=tempSD),
        col="red", pch=16)
 ```
-
-
-## Create a normal distribution curve
 
 - We can repeat the calculation for a vector of values
     + remember that functions in R are often ***vectorized***
@@ -102,31 +96,21 @@ points(10, dnorm(10, mean=tempMean, sd=tempSD),
 ```{r}
 xs <- c(0,5,10,15,20)
 ys <- dnorm(xs, mean=tempMean, sd=tempSD)
+hist(weather$Wind, col="purple", xlab="Wind Speed",
+     main="Distribution of Wind Speed",
+     breaks = 20, freq=FALSE)
+lines(xs, ys, col="red")
 ```
 
-As with `points`, we can only use `lines` to add to an existing plot
 
-```{r}
-hist(weather$Wind,col="purple",xlab="Wind Speed",
-     main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
-xs <- c(0,5,10,15,20)
-ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red")
-```
-
+## Create a normal distribution curve
 
 - For a smoother curve, use a longer vector:
     + we can generate x values using the `seq()` function
 - Inspecting the data in this manner is usually acceptable to assess normality
     + the fit doesn't have to be exact
-    + the shapiro test is also available `?shapiro.test` but not really recommended by Statisticians
+    + the shapiro test is also available `?shapiro.test` (but not really recommended by statisticians)
 
-```{r}
-
-xs <- seq(00,20, length.out = 10000)
-ys <- dnorm(xs, mean=tempMean, sd=tempSD)
-
-```
 
 ```{r}
 hist(weather$Wind,col="purple",xlab="Wind Speed",
@@ -157,37 +141,21 @@ t
 t.test(weather$Wind, mu=2)
 ```
 
-The `t.test` function can also be used for two-sample tests to compare two groups.
-- the help page reveals the full range of available options
-- paired or not paired
-- equal variances or not
-- two-sided test or one-sided
+## A variety of tests are supported
 
+The R authors have tried to make them as consistent as possible
 
-```{r eval=FALSE}
-?t.test
-```
-
-The R authors have tried to make the *syntax* (i.e. argument names) and output similar for different statistical tests. For example, the `wilcox.test` function can be used when normality cannot be assumed
-
-- so less effort is required in learning to use a new function
-- more time can be spent figuring out which test should be used
-- and interpreting the output
-
-```{r  eval=FALSE}
-?wilcox.test
-```
-
-Some other common types of test you might come across are:-
-
-```{r eval=FALSE}
+```{r}
 ?var.test
+?t.test
+?wilcox.test
 ?prop.test
 ?cor.test
 ?chisq.test
 ?fisher.test
 ```
 
+    
 
 ## Statistical tests in R
 
@@ -214,50 +182,24 @@ Some other common types of test you might come across are:-
 
 ![](images/males-versus-females.png)
 
-  
+We need to run this if we don't have the patients data in our R environment
+```{r}
+source("create-patients-data.R")
+```
+
 ## Test variance assumption
 
-We firstly need to test if the variances of the two groups are comparable
-
-- it is usually safer to insepct the boxplots, but a function is provided to aid us
-- `var.test`
-- for completeness, we include the code to create the patients data frame
-    + you probably won't need this if you're following the whole course
+- N.B. some would advocate simply eye-balling the data to assess if the variances of the two groups are roughly the same
 
 ```{r}
-age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
-weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 63.5, 
-            71.5, 73.2, 64.8)
-firstName  <- c("Adam", "Eve", "John", "Mary", "Peter", 
-                "Paul", "Joanna", "Matthew", "David", "Sally")
-secondName <- c("Jones", "Parker", "Evans", "Davis",
-                "Baker","Daniels", "Edwards", "Smith", 
-                "Roberts", "Wilson")
-
-consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE,
-             FALSE, TRUE, FALSE, TRUE)
-
-sex <- c("Male", "Female", "Male", "Female", "Male", 
-         "Male", "Female", "Male", "Male", "Female")
-
-patients <- data.frame(First_Name = firstName, 
-                       Second_Name = secondName, 
-                       Full_Name = paste(firstName, secondName), 
-                       Sex = factor(sex),
-                       Age = age,
-                       Weight = weight,
-                       Consent = consent,
-                       stringsAsFactors = FALSE)
-
 var.test(patients$Weight~patients$Sex)
 ```
 
-The `var.test` function was testing the hypothesis that the variances are equal, but a non-significant p-value means we cannot reject this hypothesis.
-
 ## Perform the t-test
 
-As said previously, `t.test` can also be used for two-group comparisons
-- the function requires minimal alterations to perform a two-sample test
+Note the same function as before can be used, but with different parameters
+
+- Here we specify a formula, but could also give the function two vectors (i.e. the weights of males in one vector, and the weights of females in the other)
 
 ```{r}
 t.test(patients$Weight~patients$Sex, var.equal=TRUE)
@@ -282,6 +224,8 @@ t.test(patients$Weight~patients$Sex, var.equal=TRUE)
     2. Fit a linear model
     3. Add bestfit line data to plot with `abline()` function
   
+##Typical linear regression analysis: Basic data analysis
+
 -  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
 
  
@@ -292,10 +236,12 @@ plot(x,y, xlim=c(0,10), ylim=c(0,10))
 ```
 
 
-The ~ is used to define a formula; i.e. "y is given by x"
+##Typical linear regression analysis: Basic data analysis
+
+ The ~ is used to define a formula; i.e. "y is given by x"
 - Take care about the order of x and y in the plot and lm expressions
 
-```{r}
+```{r,fig.height=5}
 plot(x,y, xlim=c(0,10), ylim=c(0,10))
 myModel <- lm(y~x)
 abline(myModel, col="red")
@@ -323,7 +269,7 @@ residuals(myModel) + fitted(myModel) # what values does this give?
 - Get QC of fit from:
     + Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
     
-```{r,fig.height=5}
+```{r}
 par(mfrow=c(2,2)) 
 plot(myModel)
 ```
@@ -350,7 +296,7 @@ y~x*z     # * is a shorthand for x+z+x:z
 
 - There are suggestions that Ozone level could be influenced by Temperature:
 
-```{r}
+```{r }
 plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
 ```
 
@@ -362,13 +308,12 @@ plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
     + Calculate the correlation between the two variables using the function `cor` (`?cor`)
         + can you annotate the plot with the correlation coefficient?
     
-
+    
 ```{r}
 
-## Your answer here... ##
+### Your Answer Here ###
 
 ```
-
 
 ## Word of caution
 
