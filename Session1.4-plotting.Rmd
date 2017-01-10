@@ -301,6 +301,11 @@ boxplot(patients$Weight~patients$Sex,
     
 ![](images/exercise4b.png)
 
+```{r}
+### Your Answer Here ###
+
+
+```
 
 ## More on colours
 
