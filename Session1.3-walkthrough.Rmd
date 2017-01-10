@@ -65,7 +65,7 @@ list.files()
     
 ##1. Read in the data
 
-- The data is a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
+- The data are a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
 - We need to read in the results and assign it to an object (`rawdata`)
 
 ```{r}
@@ -74,7 +74,7 @@ rawData <- read.delim("countData.txt")
 
 In the latest RStudio, there is the option to import data directly from the File menu. ***File*** -> ***Import Dataset*** -> ***From Csv***
 
-- If the data is comma-separated, then use either the argument `sep=","` or the function `read.csv()`:
+- If the data are comma-separated, then use either the argument `sep=","` or the function `read.csv()`:
 ```{r}
 read.csv("countData.csv")
 ```
@@ -134,6 +134,8 @@ colnames(rawData)
     + TOP TIP: type the name of the object and hit TAB: you can select the column from the drop-down list!
 ```{r}
 rawData$Nuclei
+
+
 ```
 
 ##Word of caution
