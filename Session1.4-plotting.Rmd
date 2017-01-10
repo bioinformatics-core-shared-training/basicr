@@ -32,6 +32,13 @@ output: html_notebook
     + e.g. it puts a point at:
         + x = 1, y = 70.8
         + x = 2, y = 67.9 etc...
+- We are going to be using the patients data frame, which we can re-create by running the following R script
+
+```{r}
+source("create-patients-data.R")
+```
+
+        
 ```{r}
 patients$Weight
 plot(patients$Weight)
@@ -100,12 +107,11 @@ hist(patients$Weight)
 
 - The boxplot is commonly used in statistics to visualise a distribution:
 ```{r}
-boxplot(patients$Weight, horizontal = TRUE)
+boxplot(patients$Weight)
 ```
 
 ```{r}
-par(mar=c(3,5,1,5))
-boxplot(patients$Weight, horizontal=T)
+boxplot(patients$Weight)
 ```
 
 - The black solid line is the ***median***
@@ -118,7 +124,7 @@ boxplot(patients$Weight, horizontal=T)
 - For this we need to use the '*formula*' syntax
     + For now, `y ~ x` means put continuous variable `y` on the *y* axis and categorical `x` on the x axis
 ```{r}
-boxplot(patients$Weight ~ patients$Sex, horizontal = T)
+boxplot(patients$Weight ~ patients$Sex)
 
 ```
 
@@ -228,11 +234,14 @@ plot(patients$Age, patients$Weight, col = "red")
 
 - R can use a variety of **p**lotting **ch**aracters
 - Each of which has a numeric *code* 
-```{r,fig.height=5}
+
+![](images/pch.png)
+
+```{r}
 plot(patients$Age, patients$Weight, pch = 16)
 ```
 
-![](images/pch.png)
+
 
 - Or you can specify a character:
 
