@@ -3,6 +3,7 @@
 ## Exercise 4a
 
 png("images/exercise4a.png",width=600,height=300)
+par(mfrow=c(1,3))
 weather <- read.csv("ozone.csv")
 plot(weather$Solar.R, weather$Ozone)
 hist(weather$Wind)
