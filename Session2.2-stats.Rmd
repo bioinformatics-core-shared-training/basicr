@@ -191,7 +191,7 @@ The `t.test` can also be used to test for the difference between two groups
 
 ```{r}
 
-
+male.weight <- patients$Weight[patients$Sex == "Male"]
 ## Your Answer here ##
 
 ```
@@ -297,6 +297,10 @@ y~x*z     # * is a shorthand for x+z+x:z
 
 
 ## Word of caution
+
+R will do whatever you ask it, it will never check the assumptions or help you to interpret the result
+
+![](images/clippy.jpg)
 
 ***Correlation != Causation***
 
