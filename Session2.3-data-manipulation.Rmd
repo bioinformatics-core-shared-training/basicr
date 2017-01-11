@@ -52,7 +52,6 @@ evals[1:2,1:5]
 + One column for each patient:
     + The names of each column can be returned by `colnames(evals)`; giving a vector
     
-## Peek at the data
 
 ```{r}
 genes <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
@@ -64,7 +63,7 @@ head(genes)
 - One for each gene
 - Includes mapping between manufacturer ID and Gene name
 
-## Peek at the data
+
 ```{r}
 subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
 head(subjects)
@@ -91,10 +90,6 @@ To get a feel for these data, we will look at how we can subset and order
 ```{r}
 subjects$er == 0
 ```
-
-
-
-## Ordering and sorting
 
 We can do the comparison within the square brackets
 
@@ -165,8 +160,6 @@ head(erNegPatientsByAge)
 ```
 
 
-## Ordering and sorting
-
 - can change the behaviour of `order` to be Largest --> Smallest
 ```{r}
 erNegPatientsByAge <- erNegPatients[order(erNegPatients$age,decreasing = TRUE),]
@@ -226,8 +219,6 @@ match("D", LETTERS)
 grep("F", rep(LETTERS,2))
 match("F", rep(LETTERS,2))
 ```
-
-## Character matching in R
 
 - `grep` can also do partial matching
     + can also do complex matching using "regular expressions"
