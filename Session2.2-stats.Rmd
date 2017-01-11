@@ -115,7 +115,7 @@ lines(xs, ys, col="red")
 ```{r}
 hist(weather$Wind,col="purple",xlab="Wind Speed",
      main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
-xs <- seq(00,20, length.out = 10000)
+xs <- seq(0,20, length.out = 10000)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red")
 ```
@@ -133,17 +133,13 @@ t <- (tempMean - 2) / (tempSD/sqrt(length(weather$Wind)))
 t
 ```
 
-## Simple testing
-
 - ...or use the **`t.test()`** function to compute the statistic and corresponding p-value
 
 ```{r}
 t.test(weather$Wind, mu=2)
 ```
 
-## A variety of tests are supported
-
-The R authors have tried to make them as consistent as possible
+- A variety of tests are supported the R authors have tried to make them as consistent as possible
 
 ```{r}
 ?var.test
@@ -156,9 +152,6 @@ The R authors have tried to make them as consistent as possible
 ```
 
     
-
-## Statistical tests in R
-
 - Bottom-line: Pretty much any statistical test you care to name will probably be in R
     + This is not supposed to be a statistics course (sorry!)
     + None of them are particular harder than others to use
@@ -187,28 +180,37 @@ We need to run this if we don't have the patients data in our R environment
 source("create-patients-data.R")
 ```
 
-## Test variance assumption
 
-- N.B. some would advocate simply eye-balling the data to assess if the variances of the two groups are roughly the same
+The `t.test` can also be used to test for the difference between two groups
 
-```{r}
-var.test(patients$Weight~patients$Sex)
-```
+## Exercise: Exercise 6
 
-## Perform the t-test
-
-Note the same function as before can be used, but with different parameters
-
-- Here we specify a formula, but could also give the function two vectors (i.e. the weights of males in one vector, and the weights of females in the other)
+- Use the `t.test` function to assess whether there is significant difference between the weights of males and females
+    + you will need to create two vectors; one for the weight of females and one for the weight of males
+    + use the help page `?t.test` to decide how to tell `t.test` to use these values as input
 
 ```{r}
-t.test(patients$Weight~patients$Sex, var.equal=TRUE)
+
+
+## Your Answer here ##
+
 ```
 
 - This function can be tuned in various ways (`?t.test`):
-    - Assumed equal variances, or not (and use Welch's correction)
+    - Assumed equal variances, or not
     - Deal with paired samples
-    - Two-sided, or one-sided p-value
+    - Two-sided, or one-sided test
+
+Look at the help page for `t.test`, which parameter do you think you would change if you wanted to assume equal variances?
+    + usually you would decide based on the plots
+    + the `var.test` function can also be used, but is not completely reliable
+    
+    
+```{r}
+
+
+```
+
 
 ##Linear regression: Basic data analysis
 
@@ -217,62 +219,63 @@ t.test(patients$Weight~patients$Sex, var.equal=TRUE)
     + The output assumes you know a fair bit about the subject
 
 - `lm` is really useful for plotting lines of best fit to XY data, in order to determine intercept, gradient and Pearson's correlation coefficient
-    + This is very easy in R
 
-- Three steps to plotting with a best fit line:
+
+## Example:
+
+- There are suggestions that Ozone level could be influenced by Temperature:
+- Three steps fitting a model and plotting with a best fit line:
     1. Plot XY scatter-plot data
     2. Fit a linear model
     3. Add bestfit line data to plot with `abline()` function
-  
-##Typical linear regression analysis: Basic data analysis
 
--  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
+1. Produce the scatter plot
+  - make sure you put the variables on the correct axes
 
- 
-```{r fig.height=5}
-x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
-y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
-plot(x,y, xlim=c(0,10), ylim=c(0,10))
+```{r }
+weather <- read.csv("ozone.csv")
+plot(weather$Temp, weather$Ozone)
 ```
 
+2. Fit the linear model
 
-##Typical linear regression analysis: Basic data analysis
-
- The ~ is used to define a formula; i.e. "y is given by x"
-- Take care about the order of x and y in the plot and lm expressions
-
-```{r,fig.height=5}
-plot(x,y, xlim=c(0,10), ylim=c(0,10))
-myModel <- lm(y~x)
-abline(myModel, col="red")
-```
-
-## In-depth summary
+- The `~` (tilde) is used to define a formula; i.e. “y is given by x”
+- `summary` will give a summary of the model (assuming you know something about linear models)
 
 ```{r}
+
+myModel <- lm(weather$Ozone~weather$Temp)
 summary(myModel)
 ```
 
+- It is important to visualize the fit, which can be done using the `abline` function
+    + we have already seen `abline` for adding horizontal and vertical lines, here it is being used to plot a line with a particular gradient and intercept
 
-##Typical linear regression analysis: Basic data analysis
-- Get the coefficients of the fit from:
 ```{r}
+plot(weather$Temp,weather$Ozone)
+abline(myModel)
+```
+
+Some helpful functions can be used to access particular information from the model
+    
+```{r}
+
 coef(myModel)   # Coefficients
 resid(myModel)  # Residuals
 fitted(myModel) # Fitted values
-names(myModel)  # Names of the objects within myModel
 residuals(myModel) + fitted(myModel) # what values does this give?
+
 ```
 
-## Diagnostic plots of the fit
+If you want, you can also dig into the details of how well the model fits the data
 
-- Get QC of fit from:
-    + Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
-    
+- Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
+
 ```{r}
 par(mfrow=c(2,2)) 
 plot(myModel)
 ```
+
 
 ##Modelling formulae
 - R has a very powerful formula syntax for describing statistical models
@@ -292,28 +295,6 @@ y~x*z     # * is a shorthand for x+z+x:z
 ```
 
 
-## Exercise: Exercise 6
-
-- There are suggestions that Ozone level could be influenced by Temperature:
-
-```{r }
-plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
-```
-
-- Perform a linear regression analysis to assess this:
-    + Fit the linear model and print a summary of the output
-    + Plot the two variables and overlay a best-fit line
-    + What is the equation of the best-fit line in the form
-        + $$ y = mx + c$$
-    + Calculate the correlation between the two variables using the function `cor` (`?cor`)
-        + can you annotate the plot with the correlation coefficient?
-    
-    
-```{r}
-
-### Your Answer Here ###
-
-```
 
 ## Word of caution
 
