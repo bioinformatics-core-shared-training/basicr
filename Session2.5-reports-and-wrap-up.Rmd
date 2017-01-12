@@ -3,15 +3,15 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output:
-  html_notebook: default
-  html_document: default
+output: html_notebook
 ---
 
 # 5. Report Writing and Wrap-Up
 
 
 ## Creating a markdown file from scratch
+
+So far you have been working with the R notebooks supplied with the course, but for your own analyses you'll want to start from scratch.
 
 ***File → New File → R Markdown***
 
@@ -64,18 +64,11 @@ sessionInfo()
 - The characteristics of each chunk can be modified:
     + You might not want to print the R code for each chunk
     + ...or the output
-    + etc.
+
 
 
 ## Chunk options
 
-Code chunks are encapsulated between backticks. Options for the chunk can be put inside the curly brackets`{...}`
-
-```
-'''{r}
-my code here...
-'''
-```
 
 - It's a good idea to name each chunk
     + Easier to track-down errors
@@ -92,23 +85,22 @@ my code here...
 
 - Sometimes we want to format code for display, but not execute; we want to show the code for how we read our data, but want our report to compile quickly
 
-```
-'''{r, eval=FALSE}
-data <- read.delim("path.to.my.file")
-'''
-```
+e.g.
 
+```{r, eval=FALSE}
+data <- read.delim("path.to.my.file")
+```
 
 ## Chunk options: echo
 
-- Might want to load some data from disk
+- Might want to load some data, silently, from disk
     + e.g. the R object from reading the data in the previous slide
+    + or your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+    
+```{r echo=FALSE}
+plot(rnorm(100))
 ```
-'''{r echo=FALSE}
-load("mydata.rda")
-'''
-```
-- or your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+
 
 ## Chunk options: results
 
@@ -125,23 +117,12 @@ for(i in 1:100) {
 
 - Loading an R package will sometimes print messages and / or warnings to the screen
 - This is not always helpful in a report:
-```
-'''{r}
-library(DESeq)
-'''
-```
-
-```{r echo=FALSE}
-library(DESeq)
-```
-
-##Chunk options: message and warning
-
 - Using `message=FALSE` and `warning=FALSE`
-```
-'''{r message=FALSE, warning=FALSE}
+
+
+```{r message=FALSE, warning=FALSE}
 library(DESeq)
-'''
+
 ```
 - Could also need `suppressPackageStartupMessages`
 
@@ -150,10 +131,9 @@ library(DESeq)
 - The argument `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
 - It speeds-up the compilation of the document
     + we don't want to reload our dataset if we've only made a tiny change downstream
-```
-'''{r echo=FALSE, cache=TRUE}
-load("mydata.rda")
-'''
+
+```{r echo=FALSE, cache=TRUE}
+evals <- read.delim("gene.expression.txt")
 ```
 
 ## Running R code from the main text
