@@ -41,7 +41,6 @@ source("create-patients-data.R")
         
 ```{r}
 patients$Weight
-plot(patients$Weight)
 ```
 
 ##Making a Scatter Plot
@@ -84,12 +83,6 @@ barplot(patients$Age)
 ```{r}
 barplot(summary(patients$Sex))
 ```
-    
-```{r}
-par(mar=c(1,5,1,5))
-barplot(summary(patients$Sex))
-```
-
 
 ##Plotting a distribution: Histogram
 
@@ -106,10 +99,6 @@ hist(patients$Weight)
 ##Plotting a distribution: Boxplot
 
 - The boxplot is commonly used in statistics to visualise a distribution:
-```{r}
-boxplot(patients$Weight)
-```
-
 ```{r}
 boxplot(patients$Weight)
 ```
@@ -215,7 +204,7 @@ plot(patients$Age,patients$Weight,
 - Or more exotic ones like ``r sample(colours(),8)``...
        + See `colours()`
 - See http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
-- Can also use **R**ed **G**reen **Blue** and hexadecimal values:
+- Can also use **R**ed **G**reen **B**lue and hexadecimal values:
 
        + `rgb(0.7, 0.7, 0.7)` → A light grey in RGB format`
        + `"#B3B3B3"` →  The same light grey in hexadecimal

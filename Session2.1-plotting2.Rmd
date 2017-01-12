@@ -235,8 +235,7 @@ boxplot(patients$Weight ~ patients$Sex)
     
 ## Exporting graphs from RStudio
 
-- When using Rstudio interactively, the easiest option is to use the *Export* button from the *Plots* panel
-- Otherwise, in an R script you can use the `pdf()` function:
+- You can use the `pdf()` function to export one or more plots to a pdf file:
     + You will see that the plot does not appear in RStudio
 - You need to use the `dev.off()` to stop printing graphs to the pdf and 'close' the file
     + It allows you to create a pdf document with multiple pages
