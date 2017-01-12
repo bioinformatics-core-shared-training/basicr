@@ -171,7 +171,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Introduction to Solving Biological Problems Using R - Day 2</h1>
 <h4 class="author"><em>Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts</em></h4>
-<h4 class="date"><em>Last modified: 22 Dec 2016</em></h4>
+<h4 class="date"><em>Last modified: 12 Jan 2017</em></h4>
 
 </div>
 
@@ -312,7 +312,7 @@ $(document).ready(function () {
 <li>Latest release 3.3.2 (October 2016)
 <ul>
 <li>Base package and Contributed packages (general purpose extras)</li>
-<li>9763 available packages as of Thu Dec 22 11:56:05 2016</li>
+<li>9893 available packages as of Thu Jan 12 16:20:45 2017</li>
 </ul></li>
 <li>Download from <a href="http://mirrors.ebi.ac.uk/CRAN/" class="uri">http://mirrors.ebi.ac.uk/CRAN/</a></li>
 <li>Windows, Mac and Linux versions available</li>
@@ -359,12 +359,10 @@ $(document).ready(function () {
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoXCJIZWxsbyBXb3JsZFwiKVxuYGBgIn0= -->
-<pre class="r"><code>print(&quot;Hello World&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoXCJIZWxsbyBXb3JsZFwiKVxuXG5gYGAifQ== -->
+<pre class="r"><code>print(&quot;Hello World&quot;)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGVsbG8gV29ybGRcIlxuIn0= -->
-<pre><code>[1] &quot;Hello World&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -380,24 +378,13 @@ $(document).ready(function () {
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMiArIDJcbmBgYCJ9 -->
-<pre class="r"><code>2 + 2</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMiArIDJcbjIgLSAyXG40ICogM1xuMTAgLyAyXG5cblxuYGBgIn0= -->
+<pre class="r"><code>2 + 2
+2 - 2
+4 * 3
+10 / 2
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
-<pre><code>[1] 4</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMjAvNSAtIHNxcnQoMjUpICsgM14yXG5gYGAifQ== -->
-<pre class="r"><code>20/5 - sqrt(25) + 3^2</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDhcbiJ9 -->
-<pre><code>[1] 8</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2luKHBpLzIpXG5gYGAifQ== -->
-<pre class="r"><code>sin(pi/2)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDFcbiJ9 -->
-<pre><code>[1] 1</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Note: The number in the square brackets is an indicator of the position in the output. In this case the output is a ‘vector’ of length 1 (i.e. a single number). More on vectors coming up…</p>
@@ -433,20 +420,12 @@ log(1)
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAxMFxueFxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAxMFxueFxubXlOdW1iZXIgPC0gMjVcbm15TnVtYmVyXG5gYGAifQ== -->
 <pre class="r"><code>x &lt;- 10
-x</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEwXG4ifQ== -->
-<pre><code>[1] 10</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlOdW1iZXIgPC0gMjVcbm15TnVtYmVyXG5gYGAifQ== -->
-<pre class="r"><code>myNumber &lt;- 25
+x
+myNumber &lt;- 25
 myNumber</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDI1XG4ifQ== -->
-<pre><code>[1] 25</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -457,9 +436,6 @@ myNumber</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3FydChteU51bWJlcilcbmBgYCJ9 -->
 <pre class="r"><code>sqrt(myNumber)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDVcbiJ9 -->
-<pre><code>[1] 5</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -481,9 +457,6 @@ myNumber</code></pre>
 <pre class="r"><code>x &lt;- 21
 x</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIxXG4ifQ== -->
-<pre><code>[1] 21</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -495,9 +468,6 @@ x</code></pre>
 <pre class="r"><code>x &lt;- myNumber
 x</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDI1XG4ifQ== -->
-<pre><code>[1] 25</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -509,9 +479,6 @@ x</code></pre>
 <pre class="r"><code>myNumber &lt;- myNumber + sqrt(16)
 myNumber</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDI5XG4ifQ== -->
-<pre><code>[1] 29</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>When we are feeling lazy we might give our variables short names (<code>x</code>, <code>y</code>, <code>i</code>…etc), but a better practice would be to give them meaningful names. There are some restrictions on creating variable names. They cannot start with a number or contain characters such as <code>.</code>, <code>_</code>, ‘-’. Naming variables the same as in-built functions in R, such as <code>c</code>, <code>T</code>, <code>mean</code> should also be avoided.</p>
@@ -558,18 +525,10 @@ seq(2, 20, 4)</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VxKGZyb20gPSAyLCB0byA9IDIwLCBieSA9IDQpXG5gYGAifQ== -->
-<pre class="r"><code>seq(from = 2, to = 20, by = 4)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VxKGZyb20gPSAyLCB0byA9IDIwLCBieSA9IDQpXG5zZXEoMiwgMjAsIDQpXG5gYGAifQ== -->
+<pre class="r"><code>seq(from = 2, to = 20, by = 4)
+seq(2, 20, 4)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAyICA2IDEwIDE0IDE4XG4ifQ== -->
-<pre><code>[1]  2  6 10 14 18</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VxKDIsIDIwLCA0KVxuYGBgIn0= -->
-<pre class="r"><code>seq(2, 20, 4)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAyICA2IDEwIDE0IDE4XG4ifQ== -->
-<pre><code>[1]  2  6 10 14 18</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Arguments can have <em>default</em> values, meaning we do not need to specify values for these in order to run the function.</p>
@@ -614,9 +573,6 @@ rnorm(10, 2, 3)</code></pre>
 <pre class="r"><code>x &lt;- c(3,4,5,6)
 x</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMgNCA1IDZcbiJ9 -->
-<pre><code>[1] 3 4 5 6</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -625,18 +581,11 @@ x</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueFsxXVxuYGBgIn0= -->
-<pre class="r"><code>x[1]</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueFsxXVxueFs0XVxuXG5gYGAifQ== -->
+<pre class="r"><code>x[1]
+x[4]
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDNcbiJ9 -->
-<pre><code>[1] 3</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueFs0XVxuYGBgIn0= -->
-<pre class="r"><code>x[4]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcbiJ9 -->
-<pre><code>[1] 6</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -764,13 +713,14 @@ z</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueFxuXG5gYGAifQ== -->
-<pre class="r"><code>x
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAzOjEyXG5cbnhbLTNdXG54Wy0oNTo3KV1cbnhbLXNlcSgyLCA2LCAyKV1cbnhcbmBgYCJ9 -->
+<pre class="r"><code>x &lt;- 3:12
+
+x[-3]
+x[-(5:7)]
+x[-seq(2, 6, 2)]
+x</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMyAgNCAgNSAgNiAgNyAgOCAgOSAxMCAxMSAxMlxuIn0= -->
-<pre><code> [1]  3  4  5  6  7  8  9 10 11 12</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -855,12 +805,6 @@ y &lt;- x*2</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCArIDE6M1xuYGBgIn0= -->
 <pre class="r"><code>x + 1:3</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoibG9uZ2VyIG9iamVjdCBsZW5ndGggaXMgbm90IGEgbXVsdGlwbGUgb2Ygc2hvcnRlciBvYmplY3QgbGVuZ3RoXG4ifQ== -->
-<pre><code>longer object length is not a multiple of shorter object length</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgNCAgNiAgOCAgNyAgOSAxMSAxMCAxMiAxNCAxM1xuIn0= -->
-<pre><code> [1]  4  6  8  7  9 11 10 12 14 13</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>

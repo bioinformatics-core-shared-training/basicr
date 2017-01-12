@@ -170,7 +170,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Introduction to Solving Biological Problems Using R - Day 2</h1>
 <h4 class="author"><em>Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts</em></h4>
-<h4 class="date"><em>Last modified: 10 Jan 2017</em></h4>
+<h4 class="date"><em>Last modified: 12 Jan 2017</em></h4>
 
 </div>
 
@@ -242,9 +242,6 @@ $(document).ready(function () {
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2V0d2QoKVxuYGBgIn0= -->
 <pre class="r"><code>getwd()</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiL2hvbWUvZHVubmluMDEvd29yay9naXQvc2hhcmVkLXRyYWluaW5nL3ItaW50cm9cIlxuIn0= -->
-<pre><code>[1] &quot;/home/dunnin01/work/git/shared-training/r-intro&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ul>
@@ -445,18 +442,11 @@ length(x)</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbih4LCBuYS5ybSA9IFRSVUUpXG5gYGAifQ== -->
-<pre class="r"><code>mean(x, na.rm = TRUE)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbih4LCBuYS5ybSA9IFRSVUUpXG5cbm1lYW4obmEub21pdCh4KSlcbmBgYCJ9 -->
+<pre class="r"><code>mean(x, na.rm = TRUE)
+
+mean(na.omit(x))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDcuNVxuIn0= -->
-<pre><code>[1] 7.5</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuYS5vbWl0KHgpKVxuYGBgIn0= -->
-<pre class="r"><code>mean(na.omit(x))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDcuNVxuIn0= -->
-<pre><code>[1] 7.5</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -470,9 +460,10 @@ length(x)</code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDcmVhdGUgYW4gaW5kZXggb2YgcmVzdWx0czpcbnByb3AgPC0gcmF3RGF0YSROQl9BbXAgLyByYXdEYXRhJE51Y2xlaVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDcmVhdGUgYW4gaW5kZXggb2YgcmVzdWx0czpcbnByb3AgPC0gcmF3RGF0YSROQl9BbXAgLyByYXdEYXRhJE51Y2xlaVxuXG5gYGAifQ== -->
 <pre class="r"><code># Create an index of results:
-prop &lt;- rawData$NB_Amp / rawData$Nuclei</code></pre>
+prop &lt;- rawData$NB_Amp / rawData$Nuclei
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -481,11 +472,6 @@ prop &lt;- rawData$NB_Amp / rawData$Nuclei</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcCA+IDAuMzNcbmBgYCJ9 -->
 <pre class="r"><code>prop &gt; 0.33</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRVxuWzIwXSBGQUxTRSBGQUxTRSBGQUxTRSAgVFJVRSBGQUxTRSAgICBOQSBGQUxTRSAgICBOQSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRVxuWzM5XSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSAgICBOQSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRSBGQUxTRVxuIn0= -->
-<pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-[20] FALSE FALSE FALSE  TRUE FALSE    NA FALSE    NA FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-[39] FALSE FALSE FALSE FALSE    NA FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -494,9 +480,6 @@ prop &lt;- rawData$NB_Amp / rawData$Nuclei</code></pre>
 <pre class="r"><code>amp &lt;- which(prop &gt; 0.33) 
 amp</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDExIDIzXG4ifQ== -->
-<pre><code>[1] 11 23</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -523,25 +506,11 @@ abline(h=0.33) </code></pre>
 </ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm91bmQocHJvcCwyKVxuYGBgIn0= -->
-<pre class="r"><code>round(prop,2)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAwLjAwIDAuMDYgMC4wNSAwLjA1IDAuMDQgMC4wOSAwLjAyIDAuMDIgMC4wMCAwLjAwIDAuMzQgMC4wMiAwLjA5IDAuMDggMC4wMCAwLjA4IDAuMDkgMC4wMCAwLjA4IDAuMDkgMC4wMiAwLjA5XG5bMjNdIDAuNzEgMC4wMyAgIE5BIDAuMDIgICBOQSAwLjAwIDAuMDYgMC4wMCAwLjAyIDAuMDIgMC4wNSAwLjAwIDAuMDUgMC4wMyAwLjA5IDAuMDkgMC4wNSAwLjA1IDAuMDMgMC4wMCAgIE5BIDAuMjFcbls0NV0gMC4wMyAwLjAyIDAuMDMgMC4wOSAwLjA4IDAuMDhcbiJ9 -->
-<pre><code> [1] 0.00 0.06 0.05 0.05 0.04 0.09 0.02 0.02 0.00 0.00 0.34 0.02 0.09 0.08 0.00 0.08 0.09 0.00 0.08 0.09 0.02 0.09
-[23] 0.71 0.03   NA 0.02   NA 0.00 0.06 0.00 0.02 0.02 0.05 0.00 0.05 0.03 0.09 0.09 0.05 0.05 0.03 0.00   NA 0.21
-[45] 0.03 0.02 0.03 0.09 0.08 0.08</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmF3RGF0YSRQcm9wb3J0aW9uIDwtIHJvdW5kKHByb3AsMilcbmhlYWQocmF3RGF0YSlcbmBgYCJ9 -->
-<pre class="r"><code>rawData$Proportion &lt;- round(prop,2)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm91bmQocHJvcCwyKVxucmF3RGF0YSRQcm9wb3J0aW9uIDwtIHJvdW5kKHByb3AsMilcbmhlYWQocmF3RGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>round(prop,2)
+rawData$Proportion &lt;- round(prop,2)
 head(rawData)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NiwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMVFQVS9ETUJCMW5JK3FsbHFReXN5Q0dBQWxBMGhzS0NxcXhGWVZwbTdJcEFFaVVqdHlVb0ZnWWVtUGdCVVdscTcwbnpBejh4OEs1OVNPakMyOTNGZnUzcjI3R0l3UHlaZ2doREJ5WFFkaEYxd1B3OGRCSG1wTCs0Q1Eyd01uQUhTVWRlb0dLTWkvQWI1Vjd3T09BTHNLSVNBeTZrajFZZ09lVVk4QkI0QWRoWDNBbmxISGlsTS9SNkZyekVmeFlubitNOTlleGg4djhyMDI5djN4KzJ5eDlSUi9rcFBpN1l0WWduMUdwMmtKem1ZOWJKMXNqV2lWcGF4U1lUQ2NKWG1hTmRIcFpYOWFHTkdRQ3lNYXBMbUt5RWp3Z29zcTQ4eGliUXQrSDJsbUtSTS9yMVVFOW5wSlRrdTluazZTQ2Exb2RDMmdINktWMWRMaWhXU0VKdHhUaHpPYkhXRWxObVpNYmpJSms5c1p1d3VQSllGeDVJNnl3WDlmVXVKZk5jclg4bE4yazdGVTc1N1RxK1lXWFZCY0M0NEtrVFdYSlpBdG80cFh0TGxad25PZHFiV2gxUi9HeWdMTHRnSUFBQT09In0= -->
-<div data-pagedtable>
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Patient"],"name":[1],"type":["int"],"align":["right"]},{"label":["Nuclei"],"name":[2],"type":["int"],"align":["right"]},{"label":["NB_Amp"],"name":[3],"type":["int"],"align":["right"]},{"label":["NB_Nor"],"name":[4],"type":["int"],"align":["right"]},{"label":["NB_Del"],"name":[5],"type":["int"],"align":["right"]},{"label":["Proportion"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"65","3":"0","4":"63","5":"2","6":"0.00","_rn_":"1"},{"1":"2","2":"51","3":"3","4":"43","5":"5","6":"0.06","_rn_":"2"},{"1":"3","2":"37","3":"2","4":"35","5":"0","6":"0.05","_rn_":"3"},{"1":"4","2":"37","3":"2","4":"35","5":"0","6":"0.05","_rn_":"4"},{"1":"5","2":"45","3":"2","4":"42","5":"1","6":"0.04","_rn_":"5"},{"1":"6","2":"46","3":"4","4":"41","5":"1","6":"0.09","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[6]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
