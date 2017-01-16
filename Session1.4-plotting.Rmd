@@ -20,7 +20,7 @@ output: html_notebook
 - Plotting in R is a *vast* topic:
     + We cannot cover everything
     + You can tinker with plots to your hearts content
-    + Best to learn from examples
+    + Best to learn from examples; e.g. [The R Graph Gallery](http://www.r-graph-gallery.com/)
 - ***You need to think about how best to visualise your data*** 
     + http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign
 - R cannot prevent you from creating a plotting disaster: 
