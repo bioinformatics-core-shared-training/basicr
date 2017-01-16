@@ -214,7 +214,7 @@ plot(patients$Age,patients$Weight,
 
 Changing the `col` argument to `plot()` changes the colour that the points are plotted in:
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, col = "red")
 ```
 
@@ -234,7 +234,7 @@ plot(patients$Age, patients$Weight, pch = 16)
 
 - Or you can specify a character:
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, pch = "X")
 ```
 
@@ -243,13 +243,13 @@ plot(patients$Age, patients$Weight, pch = "X")
 
 **C**haracter **ex**pansion: Make the size of points 3 times larger than the default
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, cex = 3)
 ```
 
 or 20% of the original size
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, cex = 0.2)
 ```
 
@@ -260,7 +260,7 @@ plot(patients$Age, patients$Weight, cex = 0.2)
     + the values will get *recycled* (re-used) so that each point gets assigned a value
 - We can use a pre-defined ***colour palette*** (see later)
 
-```{r,fig.height=4}
+```{r}
 plot(patients$Age, patients$Weight, 
      pch = 1:10, cex = 1:5,
      col = c("red", "orange", "green", "blue"))
@@ -271,7 +271,7 @@ plot(patients$Age, patients$Weight,
 - Other plotting functions use the same arguments as `plot()`
     + technical explanation: the arguments are *'inherited'*
 
-```{r,fig.height=4}
+```{r}
 boxplot(patients$Weight~patients$Sex,
         xlab = "Sex",
         ylab = "Weight",
