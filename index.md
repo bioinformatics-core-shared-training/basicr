@@ -10,10 +10,10 @@ This course provides an introduction to the R programming language and software 
 
 ### Day 1
 
-- [Introduction](Session1.1-intro.nb.html)
-- [Data Structures](Session1.2-data-structures.nb.html)
-- [Analysis Walkthrough](Session1.3-walkthrough.nb.html)
-- [Introduction to Plotting](Session1.4-plotting.nb.html)
+- [Introduction](Session1.1-intro.nb.html): [Solution](solution-exercise1.pdf)
+- [Data Structures](Session1.2-data-structures.nb.html) : [Solution](solution-exercise2.pdf)
+- [Analysis Walkthrough](Session1.3-walkthrough.nb.html): [Solution](solution-exercise3.pdf)
+- [Introduction to Plotting](Session1.4-plotting.nb.html) : [Solution](solution-exercise4a.pdf) : [Solution](solution-exercise4b.pdf)
 
 ### Day 2
 
