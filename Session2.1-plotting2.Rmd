@@ -253,12 +253,14 @@ dev.off()
 
 - To save any graph you have created to a pdf, repeat the code you used to create the plot with `pdf()` before and `dev.off()` afterwards
     + you can have as many lines of code in-between as you like
+    + each new plot will be written to a different page
     
 ```{r}
 pdf("mygraph.pdf")
 plot(patients$Age, patients$Weight, pch=16)
 abline(v=40, col="red")
 abline(h=c(65,70,75), col="blue")
+boxplot(patients$Weight ~ patients$Sex)
 dev.off()
 ```
 
