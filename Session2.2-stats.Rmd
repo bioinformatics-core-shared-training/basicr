@@ -191,7 +191,6 @@ The `t.test` can also be used to test for the difference between two groups
 
 ```{r}
 
-male.weight <- patients$Weight[patients$Sex == "Male"]
 ## Your Answer here ##
 
 ```
@@ -206,6 +205,13 @@ Look at the help page for `t.test`, which parameter do you think you would chang
     + the `var.test` function can also be used, but is not completely reliable
     
     
+```{r}
+
+
+```
+
+Let's try and use a non-parametric test instead
+
 ```{r}
 
 
@@ -274,6 +280,21 @@ If you want, you can also dig into the details of how well the model fits the da
 ```{r}
 par(mfrow=c(2,2)) 
 plot(myModel)
+```
+
+We can also calculate the correlation between two variables using the function `cor`
+
+
+```{r}
+cor(weather$Temp, weather$Ozone)
+```
+
+
+```{r}
+r.squared <- cor(weather$Temp, weather$Ozone,method = "p",use="c")^2
+plot(weather$Temp,weather$Ozone)
+abline(myModel)
+text(90,150, label=paste("r^2=", round(r.squared,3)))
 ```
 
 

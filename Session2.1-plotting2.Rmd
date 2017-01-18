@@ -261,6 +261,9 @@ plot(patients$Age, patients$Weight, pch=16)
 abline(v=40, col="red")
 abline(h=c(65,70,75), col="blue")
 boxplot(patients$Weight ~ patients$Sex)
+x <- 1:10
+y <- x^2 + 4*x
+plot(x,y)
 dev.off()
 ```
 
@@ -335,3 +338,28 @@ HINT: You can break down the problem into the following steps
 
 ```
 
+## Other plotting features
+
+We can choose not to show the x- and y-axis in the initial plot
+
+```{r}
+plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
+```
+
+They can be added afterwards with the `axis` function
+    - first argument is whether the axis appears on the bottom (1), left (2), top (3) or right (4)
+    - can also define where the tick marks are located, and the labels to display
+    
+```{r}
+plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
+axis(1)
+axis(4, at = c(60,65,70,75),labels = c("60kg","65kg","70kg","75kg"))
+
+```
+
+
+
+
+## Need inspiration?
+
+The [R Graph Gallery](http://www.r-graph-gallery.com/) has lots of examples (and code) showing what can be achieved with R graphics
