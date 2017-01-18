@@ -17,10 +17,10 @@ This course provides an introduction to the R programming language and software 
 
 ### Day 2
 
-- [Plotting continued](Session2.1-plotting2.nb.html)
-- [Statistics](Session2.2-stats.nb.html)
-- [Data Manipulation](Session2.3-data-manipulation.nb.html)
-- [Introduction to Programming in R](Session2.4-programming.nb.html)
+- [Plotting continued](Session2.1-plotting2.nb.html): [Solution](solution-exercise5.pdf)
+- [Statistics](Session2.2-stats.nb.html) : [Solution](solution-exercise6.pdf)
+- [Data Manipulation](Session2.3-data-manipulation.nb.html) : [Solution](solution-exercise7.pdf)
+- [Introduction to Programming in R](Session2.4-programming.nb.html) : [Solution](solution-exercise8.pdf)
 - [Wrap-up](Session2.5-reports-and-wrap-up.nb.html)
 
 ## Data files
