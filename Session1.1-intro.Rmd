@@ -269,16 +269,6 @@ seq(from = 2, to = 20, by = 4)
 seq(2, 20, 4)
 ```
 
-
-##Basic concepts in R - functions
-
-- Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the correct order)
-
-```{r}
-seq(from = 2, to = 20, by = 4)
-seq(2, 20, 4)
-```
-
 Arguments can have *default* values, meaning we do not need to specify values for these in order to run the function.
 
 `rnorm` is a function that will generate a series of values from a *normal distribution*. In order to use the function, we need to tell R how many values we want
@@ -384,7 +374,6 @@ x[seq(2, 6, 2)]
 x[rep(3, 2)]
 ```
 
-##Basic concepts in R - vectors
 
 - We can add an element to a vector:
 
@@ -400,8 +389,6 @@ z <- c(x, y)
 z
 ```
 
-##Basic concepts in R - vectors
-
 - We can "remove" element(s) from a vector:
     + NOTE: the vector x doesn't get modified
     + we're just displaying what the vector looks like without particular elements
@@ -414,8 +401,6 @@ x[-(5:7)]
 x[-seq(2, 6, 2)]
 x
 ```
-
-##Basic concepts in R - vectors
 
 - Finally, we can modify the contents of a vector:
 
@@ -454,8 +439,6 @@ z <- x^2
 z
 ```
 
-##Basic concepts in R - vector arithmetic
-
 - Adding two vectors:
 
 ```{r}
@@ -485,8 +468,6 @@ x + 1:3
 gene.names <- c("Pax6", "Beta-actin", "FoxP2", "Hox9")
 gene.names
 ```
-
-##Basic concepts in R - Character vectors and naming
 
 - We can name elements of vectors using the `names()` function, which can be useful to keep track of the meaning of our data:
 
@@ -558,21 +539,6 @@ R will return a list of possibilities:
 
 - The **Packages** tab in the lower-right panel of RStudio will help you locate the help pages for a particular package and its functions
     + Often there will be a user-guide or '*vignette*' too
-
-## Interacting with the R console
-
-- **Important** -- R console symbols:
-    + **`;`** end of line
-    (Enables multiple commands to be placed on one line of text)
-    + **`#`** comment
-    (indicates text is a comment and not executed)
-    + **`+`** command line wrap
-    (R is waiting for you to complete an expression)
-    
-- *Ctrl-c* or *escape* to clear input line and try again
-- *Ctrl-l* to clear window
-- Use the *TAB* key for command auto completion
-- (Use up and down arrows to scroll through the command history)
 
 ## R packages
 

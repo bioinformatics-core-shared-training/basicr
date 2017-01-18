@@ -203,8 +203,6 @@ amp
 ```
 
 
-##2. Analysis (reshaping data and maths)
-
 - We can plot a simple chart of the % NB amplification
     + Note that two samples are amplified
     + Plotting will be covered in detail shortly

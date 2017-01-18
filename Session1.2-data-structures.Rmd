@@ -247,9 +247,9 @@ Let's first create some example data
 
 mat1 <- matrix(11:20, nrow=5,ncol=2)
 mat1
-mat2 <- matrix(21:20, nrow=5, ncol=2)
+mat2 <- matrix(21:30, nrow=5, ncol=2)
 mat2
-mat3 <- matrix(30:27,nrow=5,ncol=2)
+mat3 <- matrix(31:40,nrow=5,ncol=2)
 mat3
 
 ```
@@ -327,7 +327,6 @@ s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
 ```{r}
 a <- 1:5
 
-# Logical tests:
 a < 3
 s[a < 3]
 ```

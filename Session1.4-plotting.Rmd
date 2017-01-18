@@ -43,7 +43,7 @@ source("create-patients-data.R")
 patients$Weight
 ```
 
-##Making a Scatter Plot
+
 - R tries to guess the most appropriate way to visualise the data, according to the type and dimensions of the object(s) provided
 
 
@@ -53,8 +53,6 @@ plot(patients$Weight)
 
 - Axis limits, labels, titles are inferred from the data
     + We can modify these as we wish, by specifying ***arguments***
-
-##Making a Scatter Plot of two variables
 
 - We can give two arguments to `plot()`:
     + In order to visualise the relationship between two variables
@@ -128,7 +126,8 @@ boxplot(patients$Weight ~ patients$Sex)
 - In the course folder you will find the file `ozone.csv`:
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
     + Full description here: http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
-1. Import these data into R
+1. Read these data into R using `read.csv` or `read.delim` as described in the previous section
+    + you will need to choose which is appropriate for the file type
 2. What data types are present? Try to think of ways to create the following plots from the data
     + Scatter plot two variables. e.g. Solar Radiation against Ozone
     + A histogram. e.g. Wind Speed
@@ -314,6 +313,11 @@ library(RColorBrewer)
 display.brewer.all()
 display.brewer.all(colorblindFriendly = TRUE)
 ```
+
+```{r}
+boxplot(ozone$Temp ~ ozone$Month,col=brewer.pal(5,"Set1"))
+```
+
 
 #End of Day 1
 

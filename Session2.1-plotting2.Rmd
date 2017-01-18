@@ -99,7 +99,7 @@ patients$Age[males]
 patients$Weight[males]
 ```
 
-## Adding points to differentiate gender
+
 
 - The points we add have to be within the `x` and `y` limits of the original plot axes, otherwise they won't be displayed
 
@@ -220,8 +220,6 @@ abline(h=c(65,70,75), col="blue")
         + e.g. a plot with one row and two columns `par(mfrow=c(1,2))`
         + don't need the same kind of plot in each cell
         
-## Plot layouts    
-    
 ```{r}
 par(mfrow=c(1,2))
 plot(patients$Age, patients$Weight, pch=16,
@@ -329,7 +327,7 @@ HINT: You can break down the problem into the following steps
     + plot the corresponding Temperature and Ozone values for these in red
 - Identify observations with ozone < 100
     + plot the corresponding Temperature and Ozone values for these in orange
-
+- Can you modify your code so that 
 
 ```{r}
 

@@ -278,7 +278,6 @@ We have expression values and want to visualise them against our categorical dat
 boxplot(as.numeric(genevals) ~ subjects$er)
 ```
 
-## Relating to patient characteristics
 
 - In this case there is a clear difference, so we probably don't even need a p-value to convince ourselves of the difference
     + in real-life, we would probably test lots of genes and implement some kind of multiple-testing
