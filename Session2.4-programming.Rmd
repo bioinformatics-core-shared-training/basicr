@@ -34,9 +34,9 @@ x+y
 
 For completeness, we can re-run the R code to import the data
 ```{r}
-genes    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
-subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
-evals    <- read.delim("gene.expression.txt")
+geneAnnotation    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+normalizedValues    <- read.delim("gene.expression.txt")
 ```
 
 ##Introducing loops
@@ -44,8 +44,8 @@ evals    <- read.delim("gene.expression.txt")
 - We could do this to perform t-tests on the first two genes
 
 ```{r eval=FALSE}
-t.test(as.numeric(evals[1,]) ~ factor(subjects$er))
-t.test(as.numeric(evals[2,]) ~ factor(subjects$er))
+t.test(as.numeric(normalizedValues[1,]) ~ factor(patientMetadata$er))
+t.test(as.numeric(normalizedValues[2,]) ~ factor(patientMetadata$er))
 
 ```
 
@@ -83,7 +83,7 @@ while(i <= 10 ) {
 ```{r}
 for(i in 1:10) {
   
-  t.test(as.numeric(evals[i,]) ~ factor(subjects$er))
+  t.test(as.numeric(normalizedValues[i,]) ~ factor(patientMetadata$er))
   
   }
 ```
@@ -92,9 +92,9 @@ for(i in 1:10) {
 
 ```{r eval=FALSE}
 i <- 1
-t.test(as.numeric(evals[i,]) ~ factor(subjects$er))
+t.test(as.numeric(normalizedValues[i,]) ~ factor(patientMetadata$er))
 i <- 2
-t.test(as.numeric(evals[i,]) ~ factor(subjects$er))
+t.test(as.numeric(normalizedValues[i,]) ~ factor(patientMetadata$er))
 i <- 3
 ###....etc....####
 ```
@@ -110,7 +110,7 @@ However, this for loop is doing the calculations but not storing the results
 
 
 ```{r}
-t <- t.test(as.numeric(evals[1,]) ~ factor(subjects$er))
+t <- t.test(as.numeric(normalizedValues[1,]) ~ factor(patientMetadata$er))
 names(t)
 t$statistic
 ```
@@ -122,7 +122,7 @@ t$statistic
 ```{r}
 stats <- NULL
 for(i in 1:10) {
-  tmp <- t.test(as.numeric(evals[i,]) ~ factor(subjects$er))
+  tmp <- t.test(as.numeric(normalizedValues[i,]) ~ factor(patientMetadata$er))
   stats[i] <- tmp$statistic
   }
 stats
@@ -144,8 +144,8 @@ head(chr8GenesOrd)
 - We can use the `match` function to tell us which rows in the matrix correspond to chromosome 8 genes
 
 ```{r}
-match(chr8GenesOrd$probe, rownames(evals))
-chr8Expression <- evals[match(chr8GenesOrd$probe, rownames(evals)),]
+match(chr8GenesOrd$probe, rownames(normalizedValues))
+chr8Expression <- normalizedValues[match(chr8GenesOrd$probe, rownames(normalizedValues)),]
 dim(chr8Expression)
 ```
 
@@ -221,10 +221,10 @@ is.na(match("foo", genes[,2]))
 pdf("Chromosome8Genes.pdf")
 pvals <- NULL
 for (i in 1:18) {
-  tmp <- t.test(as.numeric(chr8Expression[i,]) ~ factor(subjects$er))
+  tmp <- t.test(as.numeric(chr8Expression[i,]) ~ factor(patientMetadata$er))
   pvals[i] <- tmp$p.value
   if(tmp$p.value < 0.05){
-    boxplot(as.numeric(chr8Expression[i,]) ~ factor(subjects$er),
+    boxplot(as.numeric(chr8Expression[i,]) ~ factor(patientMetadata$er),
             main=chr8Genes$HUGO.gene.symbol[i])
     }
   } 
@@ -264,10 +264,10 @@ while(f != 0 ){
     
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
-probes   <- na.omit(genes[match(genelist, genes[,2]), 1])
-exprows  <- match(probes, rownames(evals))
+probes   <- na.omit(genes[match(genelist, genes$probe), 1])
+exprows  <- match(probes, rownames(normalizedValues))
 
-heatmap(as.matrix(evals[exprows,]))
+heatmap(as.matrix(normalizedValues[exprows,]))
   
 
 ```
@@ -279,10 +279,10 @@ heatmap(as.matrix(evals[exprows,]))
 
 ```{r}
 library(RColorBrewer)
-sampcol <- rep("blue", ncol(evals))
-sampcol[subjects$er == 1 ] <- "yellow"
+sampcol <- rep("blue", ncol(normalizedValues))
+sampcol[patientMetadata$er == 1 ] <- "yellow"
 rbPal <- brewer.pal(10, "RdBu")
-heatmap(as.matrix(evals[exprows,]), ColSideColors = sampcol, col=rbPal)
+heatmap(as.matrix(normalizedValues[exprows,]), ColSideColors = sampcol, col=rbPal)
 ```
 
 - see also

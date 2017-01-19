@@ -40,33 +40,33 @@ output: html_notebook
 ## Peek at the data
 
 ```{r}
-evals <- read.delim("gene.expression.txt")
-evals[1:2,1:5]
+normalizedValues <- read.delim("gene.expression.txt")
+normalizedValues[1:2,1:5]
 ```
 
 
-- `r nrow(evals)` rows and `r ncol(evals)` columns
+- `r nrow(normalizedValues)` rows and `r ncol(normalizedValues)` columns
 + One row for each gene:
     + Rows are named according to particular technology used to make measurement
-    + The names of each row can be returned by `rownames(evals)`; giving a vector
+    + The names of each row can be returned by `rownames(normalizedValues)`; giving a vector
 + One column for each patient:
-    + The names of each column can be returned by `colnames(evals)`; giving a vector
+    + The names of each column can be returned by `colnames(normalizedValues)`; giving a vector
     
 
 ```{r}
-genes <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
-head(genes)
+geneAnnotation <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+head(geneAnnotation)
 ```
 
 
-- `r nrow(genes)` rows and `r ncol(genes)` columns
+- `r nrow(geneAnnotation)` rows and `r ncol(geneAnnotation)` columns
 - One for each gene
 - Includes mapping between manufacturer ID and Gene name
 
 
 ```{r}
-subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
-head(subjects)
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+head(patientMetadata)
 ```
 
 - One for each patient in the study
@@ -74,7 +74,7 @@ head(subjects)
     + e.g. whether a patient is ER positive (value of 1) or negative (value of 0)
 
 ```{r}
-table(subjects$er)
+table(patientMetadata$er)
 ```
 
 
@@ -88,7 +88,7 @@ To get a feel for these data, we will look at how we can subset and order
     + these are indicated by an entry of ***0*** in the `er` column
 
 ```{r}
-subjects$er == 0
+patientMetadata$er == 0
 ```
 
 We can do the comparison within the square brackets
@@ -97,7 +97,7 @@ We can do the comparison within the square brackets
 - Best practice to create a new variable and leave the original data frame untouched
 
 ```{r}
-erNegPatients <- subjects[subjects$er == 0,]
+erNegPatients <- patientMetadata[patientMetadata$er == 0,]
 head(erNegPatients)
 ```
 
@@ -196,7 +196,7 @@ write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
     + you'll find out about this on our intermediate course
     
 ```{r}
-chr8Genes <- subset(genes, Chromosome=="chr8")
+chr8Genes <- subset(geneAnnotation, Chromosome=="chr8")
 head(chr8Genes)
 ```
 
@@ -244,10 +244,10 @@ month.name %in% c("May", "June")
 - Save this ID as a variable
 
 ```{r}
-ind <- match("ESR1", genes$HUGO.gene.symbol)
-genes[ind,]
-probe <- genes[ind,1]
-probe
+rowInd <- match("ESR1", genes$HUGO.gene.symbol)
+geneAnnotation[rowInd,]
+myProbe <- geneAnnotation$probe[rowInd]
+myProbe
 ```
 
 Now, find which row in our expression matrix is indexed by this ID
@@ -256,10 +256,10 @@ Now, find which row in our expression matrix is indexed by this ID
 - save the expression values as a variable
 
 ```{r}
-match(probe, rownames(evals))
-evals[match(probe, rownames(evals)), 1:10]
-genevals <- evals[match(probe,rownames(evals)),]
-class(genevals)
+match(myProbe, rownames(normalizedValues))
+normalizedValues[match(myProbe, rownames(normalizedValues)), 1:10]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+class(myGeneExpression)
 ```
 
 
@@ -275,7 +275,7 @@ We have expression values and want to visualise them against our categorical dat
 
 
 ```{r}
-boxplot(as.numeric(genevals) ~ subjects$er)
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
 ```
 
 
@@ -284,7 +284,7 @@ boxplot(as.numeric(genevals) ~ subjects$er)
     + e.g. `p.adjust` (`?p.adjust`)
 
 ```{r}
-t.test(as.numeric(genevals) ~ subjects$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
 
 ```
 
@@ -293,16 +293,16 @@ t.test(as.numeric(genevals) ~ subjects$er)
 ## Complete script
 
 ```{r}
-genes    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
-subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
-evals    <- read.delim("gene.expression.txt")
+geneAnnotation    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+normalizedValues    <- read.delim("gene.expression.txt")
 
-ind      <- match("ESR1", genes[,2])
-probe    <- genes[ind,1]
-genevals <- evals[match(probe,rownames(evals)),]
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
 
-boxplot(as.numeric(genevals) ~ subjects$er)
-t.test(as.numeric(genevals) ~ subjects$er)
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
 ```
 
 ## Exercise: Exercise 8
