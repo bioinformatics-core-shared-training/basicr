@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Solving Biological Problems Using R - Day 2"
+title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
@@ -20,7 +20,7 @@ output: html_notebook
 - Plotting in R is a *vast* topic:
     + We cannot cover everything
     + You can tinker with plots to your hearts content
-    + Best to learn from examples
+    + Best to learn from examples; e.g. [The R Graph Gallery](http://www.r-graph-gallery.com/)
 - ***You need to think about how best to visualise your data*** 
     + http://www.bioinformatics.babraham.ac.uk/training.html#figuredesign
 - R cannot prevent you from creating a plotting disaster: 
@@ -41,10 +41,9 @@ source("create-patients-data.R")
         
 ```{r}
 patients$Weight
-plot(patients$Weight)
 ```
 
-##Making a Scatter Plot
+
 - R tries to guess the most appropriate way to visualise the data, according to the type and dimensions of the object(s) provided
 
 
@@ -54,8 +53,6 @@ plot(patients$Weight)
 
 - Axis limits, labels, titles are inferred from the data
     + We can modify these as we wish, by specifying ***arguments***
-
-##Making a Scatter Plot of two variables
 
 - We can give two arguments to `plot()`:
     + In order to visualise the relationship between two variables
@@ -84,12 +81,6 @@ barplot(patients$Age)
 ```{r}
 barplot(summary(patients$Sex))
 ```
-    
-```{r}
-par(mar=c(1,5,1,5))
-barplot(summary(patients$Sex))
-```
-
 
 ##Plotting a distribution: Histogram
 
@@ -106,10 +97,6 @@ hist(patients$Weight)
 ##Plotting a distribution: Boxplot
 
 - The boxplot is commonly used in statistics to visualise a distribution:
-```{r}
-boxplot(patients$Weight)
-```
-
 ```{r}
 boxplot(patients$Weight)
 ```
@@ -139,7 +126,8 @@ boxplot(patients$Weight ~ patients$Sex)
 - In the course folder you will find the file `ozone.csv`:
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
     + Full description here: http://faculty.washington.edu/heagerty/Books/Biostatistics/DATA/ozonedoc.txt
-1. Import these data into R
+1. Read these data into R using `read.csv` or `read.delim` as described in the previous section
+    + you will need to choose which is appropriate for the file type
 2. What data types are present? Try to think of ways to create the following plots from the data
     + Scatter plot two variables. e.g. Solar Radiation against Ozone
     + A histogram. e.g. Wind Speed
@@ -215,7 +203,7 @@ plot(patients$Age,patients$Weight,
 - Or more exotic ones like ``r sample(colours(),8)``...
        + See `colours()`
 - See http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
-- Can also use **R**ed **G**reen **Blue** and hexadecimal values:
+- Can also use **R**ed **G**reen **B**lue and hexadecimal values:
 
        + `rgb(0.7, 0.7, 0.7)` → A light grey in RGB format`
        + `"#B3B3B3"` →  The same light grey in hexadecimal
@@ -225,7 +213,7 @@ plot(patients$Age,patients$Weight,
 
 Changing the `col` argument to `plot()` changes the colour that the points are plotted in:
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, col = "red")
 ```
 
@@ -245,7 +233,7 @@ plot(patients$Age, patients$Weight, pch = 16)
 
 - Or you can specify a character:
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, pch = "X")
 ```
 
@@ -254,13 +242,13 @@ plot(patients$Age, patients$Weight, pch = "X")
 
 **C**haracter **ex**pansion: Make the size of points 3 times larger than the default
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, cex = 3)
 ```
 
 or 20% of the original size
 
-```{r,fig.height=5}
+```{r}
 plot(patients$Age, patients$Weight, cex = 0.2)
 ```
 
@@ -271,7 +259,7 @@ plot(patients$Age, patients$Weight, cex = 0.2)
     + the values will get *recycled* (re-used) so that each point gets assigned a value
 - We can use a pre-defined ***colour palette*** (see later)
 
-```{r,fig.height=4}
+```{r}
 plot(patients$Age, patients$Weight, 
      pch = 1:10, cex = 1:5,
      col = c("red", "orange", "green", "blue"))
@@ -282,7 +270,7 @@ plot(patients$Age, patients$Weight,
 - Other plotting functions use the same arguments as `plot()`
     + technical explanation: the arguments are *'inherited'*
 
-```{r,fig.height=4}
+```{r}
 boxplot(patients$Weight~patients$Sex,
         xlab = "Sex",
         ylab = "Weight",
@@ -325,6 +313,11 @@ library(RColorBrewer)
 display.brewer.all()
 display.brewer.all(colorblindFriendly = TRUE)
 ```
+
+```{r}
+boxplot(ozone$Temp ~ ozone$Month,col=brewer.pal(5,"Set1"))
+```
+
 
 #End of Day 1
 

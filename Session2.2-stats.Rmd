@@ -3,9 +3,7 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output:
-  html_notebook: default
-  html_document: default
+output: html_notebook
 ---
 
 
@@ -30,7 +28,7 @@ output:
 
 ##Distribution functions 
 - 10 random values from the Normal distribution with mean 10 and standard deviation 5:
-```{r eval=FALSE}
+```{r}
 rnorm(10, mean=10, sd=5)
 ```
 - The probability of drawing exactly 10 from this distribution:
@@ -64,7 +62,7 @@ Recall our histogram of Wind Speed from yesterday:
 - The data look to be roughly normally-distributed
 - An assumption we rely on for various statistical tests
 
-```{r fig.height=4}
+```{r}
 weather <- read.csv("ozone.csv")
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
@@ -83,7 +81,7 @@ dnorm(10, mean=tempMean, sd=tempSD)
 ```
 
 - We can overlay this on the histogram using `points` as we just saw:
-```{r fig.height=4}
+```{r}
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
@@ -91,26 +89,19 @@ points(10, dnorm(10, mean=tempMean, sd=tempSD),
        col="red", pch=16)
 ```
 
-
-## Create a normal distribution curve
-
 - We can repeat the calculation for a vector of values
     + remember that functions in R are often ***vectorized***
     + use `lines` in this case rather than `points`
     
-    ```{r eval=FALSE}
+```{r}
 xs <- c(0,5,10,15,20)
 ys <- dnorm(xs, mean=tempMean, sd=tempSD)
+hist(weather$Wind, col="purple", xlab="Wind Speed",
+     main="Distribution of Wind Speed",
+     breaks = 20, freq=FALSE)
 lines(xs, ys, col="red")
 ```
 
-```{r fig.height=4,echo=FALSE}
-hist(weather$Wind,col="purple",xlab="Wind Speed",
-     main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
-xs <- c(0,5,10,15,20)
-ys <- dnorm(xs, mean=tempMean,sd=tempSD)
-lines(xs,ys,col="red")
-```
 
 ## Create a normal distribution curve
 
@@ -118,18 +109,13 @@ lines(xs,ys,col="red")
     + we can generate x values using the `seq()` function
 - Inspecting the data in this manner is usually acceptable to assess normality
     + the fit doesn't have to be exact
-    + the shapiro test is also available `?shapiro.test`
+    + the shapiro test is also available `?shapiro.test` (but not really recommended by statisticians)
 
-```{r eval=FALSE}
-xs <- seq(00,20, length.out = 10000)
-ys <- dnorm(xs, mean=tempMean, sd=tempSD)
-lines(xs, ys, col="red")
-```
 
-```{r fig.height=4,echo=FALSE}
+```{r}
 hist(weather$Wind,col="purple",xlab="Wind Speed",
      main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
-xs <- seq(00,20, length.out = 10000)
+xs <- seq(0,20, length.out = 10000)
 ys <- dnorm(xs, mean=tempMean,sd=tempSD)
 lines(xs,ys,col="red")
 ```
@@ -147,54 +133,25 @@ t <- (tempMean - 2) / (tempSD/sqrt(length(weather$Wind)))
 t
 ```
 
-## Simple testing
-
 - ...or use the **`t.test()`** function to compute the statistic and corresponding p-value
 
 ```{r}
 t.test(weather$Wind, mu=2)
 ```
 
+- A variety of tests are supported the R authors have tried to make them as consistent as possible
 
-##Two-sample tests: Basic data analysis
-
-- Comparing 2 variances:
-    + Fisher's F test
-```{r eval=FALSE}
-var.test()
-```
-- Comparing 2 sample means with normal errors:
-    + Student's t test
-```{r eval=FALSE}
-t.test()
-```
-- Comparing 2 means with non-normal errors:
-    + Wilcoxon's rank test
-```{r eval=FALSE}
-wilcox.test()
+```{r}
+?var.test
+?t.test
+?wilcox.test
+?prop.test
+?cor.test
+?chisq.test
+?fisher.test
 ```
 
-##Two-sample tests: Basic data analysis
-- Comparing 2 proportions:
-    + Binomial test
-    + e.g. [here](http://www.r-tutor.com/elementary-statistics/inference-about-two-populations/comparison-two-population-proportions)
     
-```{r eval=FALSE}
-prop.test()
-```
-- Correlating 2 variables:
-    + Pearson's / Spearman's rank correlation
-```{r eval=FALSE}
-cor.test()
-```
-- Testing for independence of 2 variables in a contingency table:
-    + Chi-squared / Fisher's exact test
-```{r eval=FALSE}
-chisq.test(); fisher.test()
-```
-
-## Statistical tests in R
-
 - Bottom-line: Pretty much any statistical test you care to name will probably be in R
     + This is not supposed to be a statistics course (sorry!)
     + None of them are particular harder than others to use
@@ -218,23 +175,48 @@ chisq.test(); fisher.test()
 
 ![](images/males-versus-females.png)
 
-  
-## Test variance assumption
-
+We need to run this if we don't have the patients data in our R environment
 ```{r}
-var.test(patients$Weight~patients$Sex)
+source("create-patients-data.R")
 ```
 
-## Perform the t-test
+
+The `t.test` can also be used to test for the difference between two groups
+
+## Exercise: Exercise 6
+
+- Use the `t.test` function to assess whether there is significant difference between the weights of males and females
+    + you will need to create two vectors; one for the weight of females and one for the weight of males
+    + use the help page `?t.test` to decide how to tell `t.test` to use these values as input
 
 ```{r}
-t.test(patients$Weight~patients$Sex, var.equal=TRUE)
+
+## Your Answer here ##
+
 ```
 
 - This function can be tuned in various ways (`?t.test`):
-    - Assumed equal variances, or not (and use Welch's correction)
+    - Assumed equal variances, or not
     - Deal with paired samples
-    - Two-sided, or one-sided p-value
+    - Two-sided, or one-sided test
+
+Look at the help page for `t.test`, which parameter do you think you would change if you wanted to assume equal variances?
+    + usually you would decide based on the plots
+    + the `var.test` function can also be used, but is not completely reliable
+    
+    
+```{r}
+
+
+```
+
+Let's try and use a non-parametric test instead
+
+```{r}
+
+
+```
+
 
 ##Linear regression: Basic data analysis
 
@@ -243,62 +225,78 @@ t.test(patients$Weight~patients$Sex, var.equal=TRUE)
     + The output assumes you know a fair bit about the subject
 
 - `lm` is really useful for plotting lines of best fit to XY data, in order to determine intercept, gradient and Pearson's correlation coefficient
-    + This is very easy in R
 
-- Three steps to plotting with a best fit line:
+
+## Example:
+
+- There are suggestions that Ozone level could be influenced by Temperature:
+- Three steps fitting a model and plotting with a best fit line:
     1. Plot XY scatter-plot data
     2. Fit a linear model
     3. Add bestfit line data to plot with `abline()` function
-  
-##Typical linear regression analysis: Basic data analysis
 
--  The ~ (***tilde***) is used to define a ***formula***; i.e. "y is given by x"
+1. Produce the scatter plot
+  - make sure you put the variables on the correct axes
 
- 
-```{r fig.height=5}
-x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
-y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
-plot(x,y, xlim=c(0,10), ylim=c(0,10))
+```{r }
+weather <- read.csv("ozone.csv")
+plot(weather$Temp, weather$Ozone)
 ```
 
+2. Fit the linear model
 
-##Typical linear regression analysis: Basic data analysis
-
- The ~ is used to define a formula; i.e. "y is given by x"
-- Take care about the order of x and y in the plot and lm expressions
-
-```{r,fig.height=5}
-plot(x,y, xlim=c(0,10), ylim=c(0,10))
-myModel <- lm(y~x)
-abline(myModel, col="red")
-```
-
-## In-depth summary
+- The `~` (tilde) is used to define a formula; i.e. “y is given by x”
+- `summary` will give a summary of the model (assuming you know something about linear models)
 
 ```{r}
+
+myModel <- lm(weather$Ozone~weather$Temp)
 summary(myModel)
 ```
 
+- It is important to visualize the fit, which can be done using the `abline` function
+    + we have already seen `abline` for adding horizontal and vertical lines, here it is being used to plot a line with a particular gradient and intercept
 
-##Typical linear regression analysis: Basic data analysis
-- Get the coefficients of the fit from:
-```{r, eval=FALSE}
+```{r}
+plot(weather$Temp,weather$Ozone)
+abline(myModel)
+```
+
+Some helpful functions can be used to access particular information from the model
+    
+```{r}
+
 coef(myModel)   # Coefficients
 resid(myModel)  # Residuals
 fitted(myModel) # Fitted values
-names(myModel)  # Names of the objects within myModel
 residuals(myModel) + fitted(myModel) # what values does this give?
+
 ```
 
-## Diagnostic plots of the fit
+If you want, you can also dig into the details of how well the model fits the data
 
-- Get QC of fit from:
-    + Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
-    
-```{r,fig.height=5}
+- Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
+
+```{r}
 par(mfrow=c(2,2)) 
 plot(myModel)
 ```
+
+We can also calculate the correlation between two variables using the function `cor`
+
+
+```{r}
+cor(weather$Temp, weather$Ozone)
+```
+
+
+```{r}
+r.squared <- cor(weather$Temp, weather$Ozone,method = "p",use="c")^2
+plot(weather$Temp,weather$Ozone)
+abline(myModel)
+text(90,150, label=paste("r^2=", round(r.squared,3)))
+```
+
 
 ##Modelling formulae
 - R has a very powerful formula syntax for describing statistical models
@@ -318,24 +316,12 @@ y~x*z     # * is a shorthand for x+z+x:z
 ```
 
 
-## Exercise: Exercise 6
-
-- There are suggestions that Ozone level could be influenced by Temperature:
-
-```{r echo=FALSE,fig.height=4}
-plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
-```
-
-- Perform a linear regression analysis to assess this:
-    + Fit the linear model and print a summary of the output
-    + Plot the two variables and overlay a best-fit line
-    + What is the equation of the best-fit line in the form
-        + $$ y = mx + c$$
-    + Calculate the correlation between the two variables using the function `cor` (`?cor`)
-        + can you annotate the plot with the correlation coefficient?
-    
 
 ## Word of caution
+
+R will do whatever you ask it, it will never check the assumptions or help you to interpret the result
+
+![](images/clippy.jpg)
 
 ***Correlation != Causation***
 
@@ -345,7 +331,7 @@ http://tylervigen.com/spurious-correlations
 
 ## Word of caution
 
-![](images/screen shot 2014-04-20 at 11.06.28 am.png.jpeg)
+![](images/nobel-prize.jpeg)
 
 [So if I want to win a nobel prize, I should eat even more chocolate?!?!?](http://www.businessinsider.com/chocolate-consumption-vs-nobel-prizes-2014-4?IR=T)
 

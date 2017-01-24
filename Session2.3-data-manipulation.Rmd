@@ -40,34 +40,33 @@ output: html_notebook
 ## Peek at the data
 
 ```{r}
-evals <- read.delim("gene.expression.txt")
-evals[1:2,1:5]
+normalizedValues <- read.delim("gene.expression.txt")
+normalizedValues[1:2,1:5]
 ```
 
 
-- `r nrow(evals)` rows and `r ncol(evals)` columns
+- `r nrow(normalizedValues)` rows and `r ncol(normalizedValues)` columns
 + One row for each gene:
     + Rows are named according to particular technology used to make measurement
-    + The names of each row can be returned by `rownames(evals)`; giving a vector
+    + The names of each row can be returned by `rownames(normalizedValues)`; giving a vector
 + One column for each patient:
-    + The names of each column can be returned by `colnames(evals)`; giving a vector
+    + The names of each column can be returned by `colnames(normalizedValues)`; giving a vector
     
-## Peek at the data
 
 ```{r}
-genes <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
-head(genes)
+geneAnnotation <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+head(geneAnnotation)
 ```
 
 
-- `r nrow(genes)` rows and `r ncol(genes)` columns
+- `r nrow(geneAnnotation)` rows and `r ncol(geneAnnotation)` columns
 - One for each gene
 - Includes mapping between manufacturer ID and Gene name
 
-## Peek at the data
+
 ```{r}
-subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
-head(subjects)
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+head(patientMetadata)
 ```
 
 - One for each patient in the study
@@ -75,7 +74,7 @@ head(subjects)
     + e.g. whether a patient is ER positive (value of 1) or negative (value of 0)
 
 ```{r}
-table(subjects$er)
+table(patientMetadata$er)
 ```
 
 
@@ -89,12 +88,8 @@ To get a feel for these data, we will look at how we can subset and order
     + these are indicated by an entry of ***0*** in the `er` column
 
 ```{r}
-subjects$er == 0
+patientMetadata$er == 0
 ```
-
-
-
-## Ordering and sorting
 
 We can do the comparison within the square brackets
 
@@ -102,7 +97,7 @@ We can do the comparison within the square brackets
 - Best practice to create a new variable and leave the original data frame untouched
 
 ```{r}
-erNegPatients <- subjects[subjects$er == 0,]
+erNegPatients <- patientMetadata[patientMetadata$er == 0,]
 head(erNegPatients)
 ```
 
@@ -165,8 +160,6 @@ head(erNegPatientsByAge)
 ```
 
 
-## Ordering and sorting
-
 - can change the behaviour of `order` to be Largest --> Smallest
 ```{r}
 erNegPatientsByAge <- erNegPatients[order(erNegPatients$age,decreasing = TRUE),]
@@ -188,7 +181,7 @@ write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
 
 ```{r}
 
-
+## Your Answer Here ###
 
 ```
 
@@ -203,7 +196,7 @@ write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
     + you'll find out about this on our intermediate course
     
 ```{r}
-chr8Genes <- subset(genes, Chromosome=="chr8")
+chr8Genes <- subset(geneAnnotation, Chromosome=="chr8")
 head(chr8Genes)
 ```
 
@@ -226,8 +219,6 @@ match("D", LETTERS)
 grep("F", rep(LETTERS,2))
 match("F", rep(LETTERS,2))
 ```
-
-## Character matching in R
 
 - `grep` can also do partial matching
     + can also do complex matching using "regular expressions"
@@ -253,10 +244,10 @@ month.name %in% c("May", "June")
 - Save this ID as a variable
 
 ```{r}
-ind <- match("ESR1", genes$HUGO.gene.symbol)
-genes[ind,]
-probe <- genes[ind,1]
-probe
+rowInd <- match("ESR1", geneAnnotation$HUGO.gene.symbol)
+geneAnnotation[rowInd,]
+myProbe <- geneAnnotation$probe[rowInd]
+myProbe
 ```
 
 Now, find which row in our expression matrix is indexed by this ID
@@ -265,10 +256,10 @@ Now, find which row in our expression matrix is indexed by this ID
 - save the expression values as a variable
 
 ```{r}
-match(probe, rownames(evals))
-evals[match(probe, rownames(evals)), 1:10]
-genevals <- evals[match(probe,rownames(evals)),]
-class(genevals)
+match(myProbe, rownames(normalizedValues))
+normalizedValues[match(myProbe, rownames(normalizedValues)), 1:10]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+class(myGeneExpression)
 ```
 
 
@@ -284,17 +275,16 @@ We have expression values and want to visualise them against our categorical dat
 
 
 ```{r}
-boxplot(as.numeric(genevals) ~ subjects$er)
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
 ```
 
-## Relating to patient characteristics
 
 - In this case there is a clear difference, so we probably don't even need a p-value to convince ourselves of the difference
     + in real-life, we would probably test lots of genes and implement some kind of multiple-testing
     + e.g. `p.adjust` (`?p.adjust`)
 
 ```{r}
-t.test(as.numeric(genevals) ~ subjects$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
 
 ```
 
@@ -303,16 +293,16 @@ t.test(as.numeric(genevals) ~ subjects$er)
 ## Complete script
 
 ```{r}
-genes    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
-subjects <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
-evals    <- read.delim("gene.expression.txt")
+geneAnnotation    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+normalizedValues    <- read.delim("gene.expression.txt")
 
-ind      <- match("ESR1", genes[,2])
-probe    <- genes[ind,1]
-genevals <- evals[match(probe,rownames(evals)),]
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
 
-boxplot(as.numeric(genevals) ~ subjects$er)
-t.test(as.numeric(genevals) ~ subjects$er)
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
 ```
 
 ## Exercise: Exercise 8
@@ -325,7 +315,77 @@ Repeat the same steps we performed for the gene ESR1, but for GATA3:
 
 ```{r}
 
+### Your Answer Here ###
+
 ```
 
+## Extra Discussion
 
+This example has been simplified by the fact that the columns in the expression matrix are in the same order as the patient metadata. This would normally be the case for data obtained in a public repository such as Gene Expression Omnibus
+
+```{r}
+colnames(normalizedValues)
+patientMetadata$samplename
+
+```
+
+There is a quick shortcut to check that these names are the same using the `all` function
+
+```{r}
+colnames(normalizedValues) == patientMetadata$samplename
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+Let's say that our metadata have been re-ordered by ER status and age, and not by patient ID
+
+
+```{r}
+patientMetadata <- patientMetadata[order(patientMetadata$er,patientMetadata$age),]
+patientMetadata
+```
+
+- If we run the same code as before to produce the boxplot and perform the t-test we would get a very different result.
+- This should make use immediately suspicious, as the ESR1 gene is known to be highly differentially-expressed in the contrast we are making
+- Such sanity checks are important to check to your code
+
+```{r}
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
+
+If we run the same check as before on the column names and patient IDs, we see that it fails:-
+
+```{r}
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+A solution is to use `match` again. Specifically, we want to know where each column in the expression matrix can be found in the patient metadata. The result is a vector, each item of which is an index for a particular row in the patient metadata
+
+```{r}
+match(colnames(normalizedValues),patientMetadata$samplename)
+
+```
+
+The vector we have just generated can then by used to re-order the rows in the patient metadata
+
+```{r}
+patientMetadata <- patientMetadata[match(colnames(normalizedValues),patientMetadata$samplename),]
+patientMetadata
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+And we can now proceed to perform the analysis and can the result we expect
+
+```{r}
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
 

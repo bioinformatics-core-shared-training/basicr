@@ -99,7 +99,7 @@ patients$Age[males]
 patients$Weight[males]
 ```
 
-## Adding points to differentiate gender
+
 
 - The points we add have to be within the `x` and `y` limits of the original plot axes, otherwise they won't be displayed
 
@@ -220,8 +220,6 @@ abline(h=c(65,70,75), col="blue")
         + e.g. a plot with one row and two columns `par(mfrow=c(1,2))`
         + don't need the same kind of plot in each cell
         
-## Plot layouts    
-    
 ```{r}
 par(mfrow=c(1,2))
 plot(patients$Age, patients$Weight, pch=16,
@@ -235,8 +233,7 @@ boxplot(patients$Weight ~ patients$Sex)
     
 ## Exporting graphs from RStudio
 
-- When using Rstudio interactively, the easiest option is to use the *Export* button from the *Plots* panel
-- Otherwise, in an R script you can use the `pdf()` function:
+- You can use the `pdf()` function to export one or more plots to a pdf file:
     + You will see that the plot does not appear in RStudio
 - You need to use the `dev.off()` to stop printing graphs to the pdf and 'close' the file
     + It allows you to create a pdf document with multiple pages
@@ -254,12 +251,17 @@ dev.off()
 
 - To save any graph you have created to a pdf, repeat the code you used to create the plot with `pdf()` before and `dev.off()` afterwards
     + you can have as many lines of code in-between as you like
+    + each new plot will be written to a different page
     
 ```{r}
 pdf("mygraph.pdf")
 plot(patients$Age, patients$Weight, pch=16)
 abline(v=40, col="red")
 abline(h=c(65,70,75), col="blue")
+boxplot(patients$Weight ~ patients$Sex)
+x <- 1:10
+y <- x^2 + 4*x
+plot(x,y)
 dev.off()
 ```
 
@@ -325,7 +327,7 @@ HINT: You can break down the problem into the following steps
     + plot the corresponding Temperature and Ozone values for these in red
 - Identify observations with ozone < 100
     + plot the corresponding Temperature and Ozone values for these in orange
-
+- Can you modify your code so that 
 
 ```{r}
 
@@ -334,3 +336,28 @@ HINT: You can break down the problem into the following steps
 
 ```
 
+## Other plotting features
+
+We can choose not to show the x- and y-axis in the initial plot
+
+```{r}
+plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
+```
+
+They can be added afterwards with the `axis` function
+    - first argument is whether the axis appears on the bottom (1), left (2), top (3) or right (4)
+    - can also define where the tick marks are located, and the labels to display
+    
+```{r}
+plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
+axis(1)
+axis(4, at = c(60,65,70,75),labels = c("60kg","65kg","70kg","75kg"))
+
+```
+
+
+
+
+## Need inspiration?
+
+The [R Graph Gallery](http://www.r-graph-gallery.com/) has lots of examples (and code) showing what can be achieved with R graphics

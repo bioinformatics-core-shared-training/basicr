@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Solving Biological Problems Using R - Day 2"
+title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
@@ -202,8 +202,6 @@ amp <- which(prop > 0.33)
 amp
 ```
 
-
-##2. Analysis (reshaping data and maths)
 
 - We can plot a simple chart of the % NB amplification
     + Note that two samples are amplified
