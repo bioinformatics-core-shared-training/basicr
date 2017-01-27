@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 
@@ -87,7 +90,7 @@ To get a feel for these data, we will look at how we can subset and order
 - For example, if we want to get information about patients that are ER negative
     + these are indicated by an entry of ***0*** in the `er` column
 
-```{r}
+```{r eval=FALSE}
 patientMetadata$er == 0
 ```
 
@@ -186,7 +189,7 @@ write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
 ```
 
 
-## Alternative: 
+### Alternative: 
 
 - you might find the function `subset` a bit easier to use
     + no messing around with square brackets

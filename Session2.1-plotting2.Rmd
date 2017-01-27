@@ -3,10 +3,13 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
-## Day 2 Schedule
+# Day 2 Schedule
 
 1. Further customisation of plots
 2. Statistics
@@ -40,17 +43,12 @@ output: html_notebook
 
 [http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/](http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/)
 
-## Example data
 
 - We will re-use the patients data from yesterday:
 
 ```{r}
 source("create-patients-data.R")
 ```
-
-
-
-##Initial plot
 
 - Recall our patients dataset from yesterday
     + we might want to display other characteristics on the plot, e.g. gender of individual:
@@ -72,9 +70,6 @@ points(40,68, pch="X")
 ```
 
 - Note that axis limits of the existing plot are not altered
-
-## Creating a blank plot
-
 - Often it is useful to create a blank 'canvas' with the correct labels and limits
 
 ```{r}
@@ -185,9 +180,6 @@ text(patients$Age-1, patients$Weight-0.5,
 ```
 
 - Alternatively, you can use the argument `adj`
-
-## Adding lines
-
 - To aid our interpretation, it is often helpful to add guidelines
     + `grid()` is one easy way of doing this:
     
@@ -354,8 +346,6 @@ axis(1)
 axis(4, at = c(60,65,70,75),labels = c("60kg","65kg","70kg","75kg"))
 
 ```
-
-
 
 
 ## Need inspiration?
