@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 
@@ -87,7 +90,7 @@ To get a feel for these data, we will look at how we can subset and order
 - For example, if we want to get information about patients that are ER negative
     + these are indicated by an entry of ***0*** in the `er` column
 
-```{r}
+```{r eval=FALSE}
 patientMetadata$er == 0
 ```
 
@@ -186,7 +189,7 @@ write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
 ```
 
 
-## Alternative: 
+### Alternative: 
 
 - you might find the function `subset` a bit easier to use
     + no messing around with square brackets
@@ -244,7 +247,7 @@ month.name %in% c("May", "June")
 - Save this ID as a variable
 
 ```{r}
-rowInd <- match("ESR1", genes$HUGO.gene.symbol)
+rowInd <- match("ESR1", geneAnnotation$HUGO.gene.symbol)
 geneAnnotation[rowInd,]
 myProbe <- geneAnnotation$probe[rowInd]
 myProbe
@@ -319,5 +322,73 @@ Repeat the same steps we performed for the gene ESR1, but for GATA3:
 
 ```
 
+## Extra Discussion
 
+This example has been simplified by the fact that the columns in the expression matrix are in the same order as the patient metadata. This would normally be the case for data obtained in a public repository such as Gene Expression Omnibus
+
+```{r}
+colnames(normalizedValues)
+patientMetadata$samplename
+
+```
+
+There is a quick shortcut to check that these names are the same using the `all` function
+
+```{r}
+colnames(normalizedValues) == patientMetadata$samplename
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+Let's say that our metadata have been re-ordered by ER status and age, and not by patient ID
+
+
+```{r}
+patientMetadata <- patientMetadata[order(patientMetadata$er,patientMetadata$age),]
+patientMetadata
+```
+
+- If we run the same code as before to produce the boxplot and perform the t-test we would get a very different result.
+- This should make use immediately suspicious, as the ESR1 gene is known to be highly differentially-expressed in the contrast we are making
+- Such sanity checks are important to check to your code
+
+```{r}
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
+
+If we run the same check as before on the column names and patient IDs, we see that it fails:-
+
+```{r}
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+A solution is to use `match` again. Specifically, we want to know where each column in the expression matrix can be found in the patient metadata. The result is a vector, each item of which is an index for a particular row in the patient metadata
+
+```{r}
+match(colnames(normalizedValues),patientMetadata$samplename)
+
+```
+
+The vector we have just generated can then by used to re-order the rows in the patient metadata
+
+```{r}
+patientMetadata <- patientMetadata[match(colnames(normalizedValues),patientMetadata$samplename),]
+patientMetadata
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+And we can now proceed to perform the analysis and can the result we expect
+
+```{r}
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
 

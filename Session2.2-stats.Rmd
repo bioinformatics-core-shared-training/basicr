@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 
@@ -26,7 +29,7 @@ output: html_notebook
   
 - Available for variety of distributions: `punif` (uniform), `pbinom` (binomial), `pnbinom` (negative binomial), `ppois` (poisson), `pgeom` (geometric), `phyper` (hyper-geometric), `pt` (T distribution), pf (F distribution) 
 
-##Distribution functions 
+
 - 10 random values from the Normal distribution with mean 10 and standard deviation 5:
 ```{r}
 rnorm(10, mean=10, sd=5)
@@ -40,7 +43,6 @@ dnorm(10, mean=10, sd=5)
 dnorm(100, mean=10, sd=5)
 ```
 
-##Distribution functions (continued)
 
 - The probability of drawing a value smaller than 10:
 ```{r}
@@ -103,7 +105,7 @@ lines(xs, ys, col="red")
 ```
 
 
-## Create a normal distribution curve
+
 
 - For a smoother curve, use a longer vector:
     + we can generate x values using the `seq()` function
@@ -167,6 +169,9 @@ t.test(weather$Wind, mu=2)
         + [R wiki](https://en.wikibooks.org/wiki/R_Programming/Descriptive_Statistics)
         + [R tutor](http://www.r-tutor.com/elementary-statistics)
         + [Statistical Cheatsheet](https://rawgit.com/bioinformatics-core-shared-training/intermediate-stats/master/cheatsheet.pdf)
+   - R will do whatever you ask it, it will never check the assumptions or help you to interpret the result
+
+![](images/clippy.jpg)
 
 ## Example analysis
 
@@ -180,133 +185,75 @@ We need to run this if we don't have the patients data in our R environment
 source("create-patients-data.R")
 ```
 
-
-The `t.test` can also be used to test for the difference between two groups
-
-## Exercise: Exercise 6
-
-- Use the `t.test` function to assess whether there is significant difference between the weights of males and females
-    + you will need to create two vectors; one for the weight of females and one for the weight of males
-    + use the help page `?t.test` to decide how to tell `t.test` to use these values as input
-
 ```{r}
-
-## Your Answer here ##
-
-```
-
-- This function can be tuned in various ways (`?t.test`):
-    - Assumed equal variances, or not
-    - Deal with paired samples
-    - Two-sided, or one-sided test
-
-Look at the help page for `t.test`, which parameter do you think you would change if you wanted to assume equal variances?
-    + usually you would decide based on the plots
-    + the `var.test` function can also be used, but is not completely reliable
-    
-    
-```{r}
-
-
-```
-
-Let's try and use a non-parametric test instead
-
-```{r}
-
-
+var.test(patients$Weight~patients$Sex)
 ```
 
 
-##Linear regression: Basic data analysis
+```{r}
+t.test(patients$Weight~patients$Sex, var.equal=TRUE)
+```
 
-- Linear modeling is supported by the function **`lm()`**:
-    + `example(lm)` 
-    + The output assumes you know a fair bit about the subject
+## Linear Regression
 
+- Linear modeling is supported by the function `lm()`:
+    + `example(lm)`
+- The output assumes you know a fair bit about the subject
 - `lm` is really useful for plotting lines of best fit to XY data, in order to determine intercept, gradient and Pearson's correlation coefficient
+    + This is very easy in R
+- Three steps to plotting with a best fit line:
 
-
-## Example:
-
-- There are suggestions that Ozone level could be influenced by Temperature:
-- Three steps fitting a model and plotting with a best fit line:
-    1. Plot XY scatter-plot data
-    2. Fit a linear model
-    3. Add bestfit line data to plot with `abline()` function
-
-1. Produce the scatter plot
-  - make sure you put the variables on the correct axes
-
-```{r }
-weather <- read.csv("ozone.csv")
-plot(weather$Temp, weather$Ozone)
-```
-
-2. Fit the linear model
-
-- The `~` (tilde) is used to define a formula; i.e. “y is given by x”
-- `summary` will give a summary of the model (assuming you know something about linear models)
+    + Plot XY scatter-plot data
+    + Fit a linear model
+    + Add bestfit line data to plot with `abline()` function
+- Let's see a toy example:-
 
 ```{r}
+x <- c(1, 2.3, 3.1, 4.8, 5.6, 6.3)
+y <- c(2.6, 2.8, 3.1, 4.7, 5.1, 5.3)
+plot(x,y, xlim=c(0,10), ylim=c(0,10))
+```
 
-myModel <- lm(weather$Ozone~weather$Temp)
+- The `~` is used to define a formula; i.e. "y is given by x"
+    + Take care about the order of `x` and `y` in the `plot` and `lm` expressions
+
+```{r}
+plot(x,y, xlim=c(0,10), ylim=c(0,10))
+myModel <- lm(y~x)
+abline(myModel, col="red")
+```
+
+
+```{r}
 summary(myModel)
 ```
 
-- It is important to visualize the fit, which can be done using the `abline` function
-    + we have already seen `abline` for adding horizontal and vertical lines, here it is being used to plot a line with a particular gradient and intercept
+There are various ways to access different aspects of the model
 
 ```{r}
-plot(weather$Temp,weather$Ozone)
-abline(myModel)
-```
-
-Some helpful functions can be used to access particular information from the model
-    
-```{r}
-
 coef(myModel)   # Coefficients
 resid(myModel)  # Residuals
 fitted(myModel) # Fitted values
+names(myModel)  # Names of the objects within myModel
 residuals(myModel) + fitted(myModel) # what values does this give?
-
 ```
 
-If you want, you can also dig into the details of how well the model fits the data
+You can also get some diagnostic information on the model.
 
-- Some explanation is given [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
+- Some explanation can be found [here](http://data.library.virginia.edu/diagnostic-plots/) and [here](http://strata.uga.edu/6370/rtips/regressionPlots.html)
 
 ```{r}
 par(mfrow=c(2,2)) 
 plot(myModel)
 ```
 
-We can also calculate the correlation between two variables using the function `cor`
-
-
-```{r}
-cor(weather$Temp, weather$Ozone)
-```
-
-
-```{r}
-r.squared <- cor(weather$Temp, weather$Ozone,method = "p",use="c")^2
-plot(weather$Temp,weather$Ozone)
-abline(myModel)
-text(90,150, label=paste("r^2=", round(r.squared,3)))
-```
-
-
-##Modelling formulae
 - R has a very powerful formula syntax for describing statistical models
-- Suppose we had two explanatory variables `x` and `z`, and one response
-variable `y`
-- We can describe a relationship between, say, `y` and `x` using a tilde `~`,
-placing the response variable on the left of the tilde and the explanatory variables on the right:
-    + `y~x`
+- Suppose we had two explanatory variables `x` and `z`, and one response variable `y`
+- We can describe a relationship between, say, `y` and `x` using a tilde `~`, placing the response variable on the left of the tilde and the explanatory variables on the right:
+    + y~x
 - It is very easy to extend this syntax to do multiple regressions, ANOVAs, to include interactions, and to do many other common modelling tasks. For example
-```{r eval=FALSE}
+
+```{r}
 y~x       #If x is continuous, this is linear regression
 y~x       #If x is categorical, ANOVA
 y~x+z     #If x and z are continuous, multiple regression
@@ -315,13 +262,29 @@ y~x+z+x:z # : is the symbol for the interaction term
 y~x*z     # * is a shorthand for x+z+x:z
 ```
 
+## Exercise: Exercise 6
+
+- There are suggestions that Ozone level could be influenced by Temperature:
+```{r}
+plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
+```
+
+- Perform a linear regression analysis to assess this:
+    + Fit the linear model and print a summary of the output
+    + Plot the two variables and overlay a best-fit line
+    + What is the equation of the best-fit line in the form
+      $$ y = ax + b$$
+- Calculate the correlation between the two variables using the function cor (?cor)
+    + can you annotate the plot with the correlation coefficient?
+
+```{r}
+
+## Your Answer Here ##
+
+```
 
 
-## Word of caution
-
-R will do whatever you ask it, it will never check the assumptions or help you to interpret the result
-
-![](images/clippy.jpg)
+## More words of caution
 
 ***Correlation != Causation***
 
@@ -329,7 +292,6 @@ R will do whatever you ask it, it will never check the assumptions or help you t
 
 http://tylervigen.com/spurious-correlations
 
-## Word of caution
 
 ![](images/nobel-prize.jpeg)
 

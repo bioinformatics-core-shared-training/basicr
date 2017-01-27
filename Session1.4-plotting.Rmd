@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 
@@ -121,7 +124,7 @@ boxplot(patients$Weight ~ patients$Sex)
     - `example(vioplot)  # From vioplot library`
     - `example(beeswarm) # From beeswarm library`
 
-## Exercise:
+## Exercise: Exercise 4a
 
 - In the course folder you will find the file `ozone.csv`:
     + Data describing weather conditions in New York City in 1973, obtained from the [supplementary data](http://faculty.washington.edu/heagerty/Books/Biostatistics/index-chapter.html) to *Biostatistics: A Methodology for the Health Sciences*
@@ -279,7 +282,7 @@ boxplot(patients$Weight~patients$Sex,
 ```
 
 
-##Exercise: exercise4b.Rmd
+##Exercise: exercise4b
 
 - Can you re-create the following plots? Hint:
     + See the `breaks` and `freq` arguments to hist (`?hist`) to create 20 bins and display density rather than frequency
@@ -315,7 +318,8 @@ display.brewer.all(colorblindFriendly = TRUE)
 ```
 
 ```{r}
-boxplot(ozone$Temp ~ ozone$Month,col=brewer.pal(5,"Set1"))
+weather <- read.csv("ozone.csv")
+boxplot(weather$Temp ~ weather$Month,col=brewer.pal(5,"Set1"))
 ```
 
 

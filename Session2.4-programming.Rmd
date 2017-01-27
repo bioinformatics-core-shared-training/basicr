@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 2"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 #4. Programming in R
@@ -75,7 +78,7 @@ while(i <= 10 ) {
   }
 ```
 
-##Loops: Commands and flow control
+
 
 - Here's how we might use a `for` loop to test the first 10 genes
 
@@ -134,7 +137,7 @@ Previously we have identified probes on chromosome 8
 
 - Lets say that we want to do a t-test for each gene on chromosome 8
 ```{r}
-chr8Genes <- genes[genes$Chromosome=="chr8",]
+chr8Genes <- geneAnnotation[geneAnnotation$Chromosome=="chr8",]
 head(chr8Genes)
 chr8GenesOrd <- chr8Genes[order(chr8Genes$Start),]
 head(chr8GenesOrd)
@@ -160,7 +163,9 @@ We are now ready to write the for loop
     + if the data change, the code should still run
 
 ```{r}
-
+chr8Genes <- geneAnnotation[geneAnnotation$Chromosome=="chr8",]
+chr8GenesOrd <- chr8Genes[order(chr8Genes$Start),]
+chr8Expression <- normalizedValues[match(chr8GenesOrd$probe, rownames(normalizedValues)),]
 ### Your Answer Here ###
 
 ```
@@ -203,8 +208,8 @@ is.character(10)
     + cannot use `== NA`!
 
 ```{r}
-match("foo", genes[,2])
-is.na(match("foo", genes[,2]))
+match("foo", geneAnnotation$HUGO.gene.symbol)
+is.na(match("foo", geneAnnotation$HUGO.gene.symbol))
 ```
 
 
@@ -264,7 +269,7 @@ while(f != 0 ){
     
 ```{r}
 genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
-probes   <- na.omit(genes[match(genelist, genes$probe), 1])
+probes   <- na.omit(geneAnnotation$probe[match(genelist, geneAnnotation$HUGO.gene.symbol)])
 exprows  <- match(probes, rownames(normalizedValues))
 
 heatmap(as.matrix(normalizedValues[exprows,]))
