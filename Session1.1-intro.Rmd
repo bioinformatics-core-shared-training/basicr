@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 css: mystyle.css
 ---
 ```{r include = FALSE}
@@ -11,7 +14,9 @@ library(knitr)
 opts_chunk$set(comment = NA,eval=FALSE) # eliminates hashtag from R outputs
 ```
 
-## Course Aims
+
+
+# Course Aims
 
 - To introduce you to the basics of R
     + Reading data
@@ -21,7 +26,7 @@ opts_chunk$set(comment = NA,eval=FALSE) # eliminates hashtag from R outputs
 - Give you all the background you need to ***practice*** by yourselves
 - Introduce tools that will help you to work in a ***reproducible*** manner
 
-## Day 1 Schedule
+# Day 1 Schedule
 
 1. Introduction to R and its environment
 2. Data Structures
@@ -43,22 +48,21 @@ opts_chunk$set(comment = NA,eval=FALSE) # eliminates hashtag from R outputs
 * Thorough documentation
 
 
-## The R-project page
 
 http://www.r-project.org/
 
 ![R screenshot](images/R-project.png)
 
-##R in the New York Times
-
-
 ![New York Times, Jan 2009](images/NYTimes_R_Article.png)
 
+
 ##R plotting capabilities
+
 https://www.facebook.com/notes/facebook-engineering/visualizing-friendships/469716398919
 ![R facebook](images/facebook-network.png)
 
 ##Who uses R? Not just academics!
+
 http://www.revolutionanalytics.com/companies-using-r
 
 - Facebook
@@ -81,20 +85,19 @@ http://www.revolutionanalytics.com/companies-using-r
 
 
 
-##It is a hot topic at the moment
 
 - Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
     + as reported in the ***New York Times***
     
 ![New York Times, July 2011](images/rep-research-nyt.png)
 
-##Hear the full account
+
 
 - Very entertaining talk from Keith Baggerly in Cambridge, December 2010
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
 
-## Nature editorial - May 2016
+According to recent editorials, the reproducibility crisis is still on-going
 
 ![Nature, May 2016](images/rep-crisis.png)
 
@@ -104,9 +107,7 @@ http://www.revolutionanalytics.com/companies-using-r
 [1,500 scientists lift the lid on reproducibility](http://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)
 
 
-
-##Various platforms supported
-
+##Getting started
 - Latest release 3.3.2 (October 2016)
     + Base package and Contributed packages (general purpose extras)
     + `r length(XML:::readHTMLTable("http://cran.r-project.org/web/packages/available_packages_by_date.html")[[1]][[2]])` available packages as of `r date()`
@@ -115,29 +116,15 @@ http://www.revolutionanalytics.com/companies-using-r
 - Executed using command line, or a graphical user interface (GUI)
 - On this course, we use the RStudio GUI (www.rstudio.com)
 
-
-
-
-##Getting started
-
-- R is a program which, once installed on your system, can be
-launched and is immediately ready to take input directly from the
-user
-- There are two ways to launch R:
-    + From the command line (particularly useful if you're quite
-familiar with Linux; in the console at the prompt simply type `R`)
-    + As an application called RStudio
-    
 ![rstudio](http://www.rstudio.com/wp-content/uploads/2014/03/blue-125.png) 
     
-##Launching R Using RStudio
 
 To launch RStudio, find the RStudio icon and click
 
 ![RStudio screenshot](images/rstudio-windows.png)
 
 
-## Entering commands in R
+
 
 - The traditional way to enter R commands is via the Terminal, or using the console in RStudio (bottom-left)
 - However, for this course we will use a relatively new feature called *R-notebooks*.
@@ -498,8 +485,6 @@ names(gene.expression)
 
 - Create *weight* and *height* vectors to hold the data in each column using the `c` function. Create a *person* vector and use this vector to name the values in the other two vectors.
 
-##Exercise: Body-Mass Index
-
 1. The body-mass index is given by the formula:- $BMI = (Weight)/(Height^2)$; where Height is given in ***metres***
     + Create a new vector to record this, called `bmi`.
 2. Create a new vector `bmi.sorted` where the bmi values are put in increasing numeric order (HINT: look up the help on the `sort` function)
@@ -569,28 +554,26 @@ install.packages(name.of.my.package)
 
 
 - Set the *Bioconductor* package download tool by typing:
-```{r}
+```{r eval=FALSE}
 source("http://bioconductor.org/biocLite.R")
 ```
 
 - *Bioconductor* packages are then installed with the `biocLite()` function:
-```{r}
+```{r eval=FALSE}
 biocLite("PackageName")
 ```
-
-##Example: Install packages ggplot2 and DESeq
 
 - ggplot2 is a commonly used graphics package:
     + in RStudio, go to **Tools** → **Install Packages**... and type the package name
     + or use `install.packages()` function to install it:
   
-```{r}
+```{r eval=FALSE}
 install.packages("ggplot2")
 ```
    
 - `DESeq2` is a Bioconductor package (http://www.bioconductor.org) for the analysis of RNA-seq data:
 
-```{r}
+```{r eval=FALSE}
 source("http://www.bioconductor.org/biocLite.R")
 biocLite("DESeq2")
 ```
@@ -599,8 +582,8 @@ biocLite("DESeq2")
 
 - R needs to be told to use the new functions from the installed packages. Use **`library(...)`** function to load the newly installed features:
 
-```{r}
-
+```{r eval=FALSE}
+ 
 library(ggplot2) # loads ggplot functions
 library(DESeq2)   # loads DESeq functions
 library()        # Lists all the packages 

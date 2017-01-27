@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 # 3. R for data analysis
@@ -75,7 +78,7 @@ rawData <- read.delim("countData.txt")
 In the latest RStudio, there is the option to import data directly from the File menu. ***File*** -> ***Import Dataset*** -> ***From Csv***
 
 - If the data are comma-separated, then use either the argument `sep=","` or the function `read.csv()`:
-```{r}
+```{r eval=FALSE}
 read.csv("countData.csv")
 ```
 - For full list of arguments:
@@ -121,8 +124,6 @@ dim(rawData)
 str(rawData)
 ```
 
-##1c. Understanding the object
-
 - The names of the columns are automatically assigned:
 
 ```{r}
@@ -149,8 +150,6 @@ rawData$Nuclei
 
 > Like families, tidy datasets are all alike but every messy dataset is messy in its own way - (Hadley Wickham - RStudio chief scientist and author of dplyr, ggplot2 and others)
 
-##Word of caution
-
 You will make your life a lot easier if you keep your data **tidy** and ***organised***. Before blaming R, consider if your data are in a suitable form for analysis. The more manual manipulation you have done on the data (highlighting, formulas, copy-and-pasting), the less happy R is going to be to read it. Here are some useful links on some common pitfalls and how to avoid them
 
 - http://www.datacarpentry.org/spreadsheet-ecology-lesson/01-format-data.html
@@ -169,8 +168,6 @@ You will make your life a lot easier if you keep your data **tidy** and ***organ
 x <- c(1, NA, 3)
 length(x)
 ```
-
-##Handling missing values
 
 - However, sometimes we have to tell the functions what to do with them. 
 - R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them:
@@ -231,7 +228,7 @@ write.csv(rawData[amp,], file="selectedSamples.csv")
 - The output file is directly-readable by Excel
 - It's often helpful to double check where the data has been saved. Use the *get working directory* function:
 
-```{r}
+```{r eval=FALSE}
 getwd()      # print working directory
 list.files() # list files in working directory
 

@@ -3,7 +3,10 @@ title: "Introduction to Solving Biological Problems Using R - Day 1"
 author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
   Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
-output: html_notebook
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
 # 2. Data structures
@@ -14,9 +17,6 @@ output: html_notebook
 - A data frame is a set of observations of a set of variables -- in other words, the outcome of an experiment.
 - For example, we might want to analyse information about a set of patients. 
 - To start with, let's say we have ten patients and for each one we know their name, sex, age, weight and whether they give consent for their data to be made public.
-
-
-##The patients data frame
 - We are going to create a data frame called 'patients', which will have ten rows (observations) and seven columns (variables). The columns must all be equal lengths. 
 - We will explore how to construct these data from scratch.
     + (in practice, we would usually import such data from a file)
@@ -34,7 +34,7 @@ output: html_notebook
 |9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
 |10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
 
-##Character, numeric and logical data types
+## Character, numeric and logical data types
 
 - Each column is a vector, like previous vectors we have seen, for 
 example: 
@@ -332,7 +332,7 @@ s[a < 3]
 ```
 
 
-##Operators
+## Logical Operators
 
 - Operators allow us to combine multiple logical tests
 - comparison operators
