@@ -10,17 +10,34 @@ This course provides an introduction to the R programming language and software 
 
 ### Day 1
 
-- [Introduction](Session1.1-intro.nb.html): [Solution](solution-exercise1.pdf)
-- [Data Structures](Session1.2-data-structures.nb.html) : [Solution](solution-exercise2.pdf)
-- [Analysis Walkthrough](Session1.3-walkthrough.nb.html): [Solution](solution-exercise3.pdf)
-- [Introduction to Plotting](Session1.4-plotting.nb.html) : [Solution](solution-exercise4a.pdf) : [Solution](solution-exercise4b.pdf)
+- [Introduction](Session1.1-intro.nb.html): 
+    + [Source](Session1.1-intro.Rmd)
+    + [Solution](solution-exercise1.pdf)
+- [Data Structures](Session1.2-data-structures.nb.html) : 
+    + [Source](Session1.2-data-structures.Rmd)
+    + [Solution](solution-exercise2.pdf)
+- [Analysis Walkthrough](Session1.3-walkthrough.nb.html): 
+    + [Source](Session1.3-walkthrough.Rmd)
+    + [Solution](solution-exercise3.pdf)
+- [Introduction to Plotting](Session1.4-plotting.nb.html) : 
+    + [Source](Session1.4-plotting.Rmd)
+    + [Solution a](solution-exercise4a.pdf) : 
+    + [Solution b](solution-exercise4b.pdf)
 
 ### Day 2
 
-- [Plotting continued](Session2.1-plotting2.nb.html): [Solution](solution-exercise5.pdf)
-- [Statistics](Session2.2-stats.nb.html) : [Solution](solution-exercise6.pdf)
-- [Data Manipulation](Session2.3-data-manipulation.nb.html) : [Solution](solution-exercise7.pdf)
-- [Introduction to Programming in R](Session2.4-programming.nb.html) : [Solution](solution-exercise8.pdf)
+- [Plotting continued](Session2.1-plotting2.nb.html): 
+    + [Source](Session2.1-plotting2.Rmd)
+    + [Solution](solution-exercise5.pdf)
+- [Statistics](Session2.2-stats.nb.html) : 
+    + [Source](Session2.2-stats.Rmd)
+    + [Solution](solution-exercise6.pdf)
+- [Data Manipulation](Session2.3-data-manipulation.nb.html) :
+    + [Source](Session2.3-data-manipulation.Rmd)
+    + [Solution](solution-exercise7.pdf)
+- [Introduction to Programming in R](Session2.4-programming.nb.html) : 
+    + [Source](Session2.4-programming.Rmd)
+    + [Solution](solution-exercise8.pdf)
 - [Wrap-up](Session2.5-reports-and-wrap-up.nb.html)
 
 ## Data files
