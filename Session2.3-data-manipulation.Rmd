@@ -1,0 +1,394 @@
+---
+title: "Introduction to Solving Biological Problems Using R - Day 2"
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
+  Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+
+
+# 3. Data Manipulation Techniques
+
+## Motivation
+
+- So far we have been lucky that all our data have been in the same file:
+    + This is not usually the case
+    + Dataset may be spread over several files
+        + This takes longer, and is harder, than many people realise
+    + We need to combine before doing an analysis
+
+
+
+## Combining data from multiple sources: Gene Clustering Example
+
+- R has powerful functions to combine heterogeneous data sources into a single data set
+- Gene clustering example data:
+    + Gene expression values in ***gene.expression.txt***
+    + Gene information in ***gene.description.txt***
+    + Patient information in ***cancer.patients.txt***
+- A breast cancer dataset with numerous patient characteristics:
+    + We will concentrate on ***ER status*** (positive / negative)
+    + What genes show a statistically-significant different change between ER groups?
+
+## Analysis goals
+
+- We will show how to lookup a particular gene in the dataset
+- Also, how to look-up genes in a given genomic region
+- Assess if a given gene is differentially-expressed
+- Create a heatmap to cluster the samples and reveal any subgroups in the data
+
+## Peek at the data
+
+```{r}
+normalizedValues <- read.delim("gene.expression.txt")
+normalizedValues[1:2,1:5]
+```
+
+
+- `r nrow(normalizedValues)` rows and `r ncol(normalizedValues)` columns
++ One row for each gene:
+    + Rows are named according to particular technology used to make measurement
+    + The names of each row can be returned by `rownames(normalizedValues)`; giving a vector
++ One column for each patient:
+    + The names of each column can be returned by `colnames(normalizedValues)`; giving a vector
+    
+
+```{r}
+geneAnnotation <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+head(geneAnnotation)
+```
+
+
+- `r nrow(geneAnnotation)` rows and `r ncol(geneAnnotation)` columns
+- One for each gene
+- Includes mapping between manufacturer ID and Gene name
+
+
+```{r}
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+head(patientMetadata)
+```
+
+- One for each patient in the study
+- Each column is a different characteristic of that patient
+    + e.g. whether a patient is ER positive (value of 1) or negative (value of 0)
+
+```{r}
+table(patientMetadata$er)
+```
+
+
+
+## Ordering and sorting
+
+To get a feel for these data, we will look at how we can subset and order
+
+- R allows us to do the kinds of filtering, sorting and ordering operations you might be familiar with in Excel
+- For example, if we want to get information about patients that are ER negative
+    + these are indicated by an entry of ***0*** in the `er` column
+
+```{r eval=FALSE}
+patientMetadata$er == 0
+```
+
+We can do the comparison within the square brackets
+
+- Remembering to include a `,` to index the columns as well
+- Best practice to create a new variable and leave the original data frame untouched
+
+```{r}
+erNegPatients <- patientMetadata[patientMetadata$er == 0,]
+head(erNegPatients)
+```
+
+or
+
+```{r}
+View(erNegPatients)
+```
+
+Sorting is supported by the **`sort()`** function
+
+- Given a vector, it will return a sorted version of the same length
+
+```{r}
+sort(erNegPatients$grade)
+```
+
+- But this is not useful in all cases
+    + We have lost the extra information that we have about the patients
+    
+- Instead, we can use **`order()`**
+- Given a vector, `order()` will give a set of numeric values which will give an ordered version of the vector
+    + default is smallest --> largest
+
+```{r}
+myvec <- c(90,100,40,30,80,50,60,20,10,70)
+myvec
+order(myvec)
+```
+
+- i.e. number in position 9 is the smallest, number in position 8 is the second smallest:
+
+```{r}
+myvec[9]
+myvec[8]
+```
+
+N.B. `order` will also work on character vectors 
+
+```{r}
+firstName  <- c("Adam", "Eve", "John", "Mary", "Peter", "Paul", "Joanna", "Matthew", "David", "Sally")
+order(firstName)
+```
+
+- We can use the result of `order()` to perform a subset of our original vector
+- The result is an ordered vector
+```{r}
+myvec.ord <- myvec[order(myvec)]
+myvec.ord
+```
+
+- Implication: We can use `order` on a particular column of a data frame, and use the result to sort all the rows
+
+- We might want to select the youngest ER negative patients for a follow-up study
+- Here we order the `age` column and use the result to re-order the rows in the data frame
+
+```{r}
+erNegPatientsByAge <- erNegPatients[order(erNegPatients$age),]
+head(erNegPatientsByAge)
+```
+
+
+- can change the behaviour of `order` to be Largest --> Smallest
+```{r}
+erNegPatientsByAge <- erNegPatients[order(erNegPatients$age,decreasing = TRUE),]
+head(erNegPatientsByAge)
+```
+
+- we can write the result to a file if we wish
+
+```{r eval=FALSE}
+write.table(erNegPatientsByAge, file="erNegativeSubjectsByAge.txt", sep="\t")
+```
+
+
+## Exercise: Exercise7 
+
+- Imagine we want to know information about chromosome 8 genes that have been measured.
+1. Create a new data frame containing information on genes on Chromosome 8
+2. Order the rows in this data frame according to start position, and write the results to a file
+
+```{r}
+
+## Your Answer Here ###
+
+```
+
+
+### Alternative: 
+
+- you might find the function `subset` a bit easier to use
+    + no messing around with square brackets
+    + no need to remember row and column indices
+    + no need for `$` operator to access columns
+- more advanced packages like dplyr use a similar approach
+    + you'll find out about this on our intermediate course
+    
+```{r}
+chr8Genes <- subset(geneAnnotation, Chromosome=="chr8")
+head(chr8Genes)
+```
+
+
+## Retrieving data for a particular gene
+
+ - Gene `ESR1` is known to be hugely-different between ER positive and negative patient
+    + let's check that this is evident in our dataset
+    + if not, something has gone wrong!
+- First step is to locate this gene in our dataset
+- We can use `==` to do this, but there are some alternatives that are worth knowing about
+
+## Character matching in R
+
+- `match()` and `grep()` are often used to find particular matches
+    + CAUTION: by default, match will only return the ***first*** match!
+
+```{r}
+match("D", LETTERS)
+grep("F", rep(LETTERS,2))
+match("F", rep(LETTERS,2))
+```
+
+- `grep` can also do partial matching
+    + can also do complex matching using "regular expressions"
+    
+```{r}
+month.name
+grep("ary",month.name)
+grep("ber",month.name)
+```
+
+- `%in%` will return a logical if each element is contained in a shortened list
+
+```{r}
+month.name %in% c("May", "June")
+```
+
+
+## Retrieving data for a particular gene
+
+- Find the name of the ID that corresponds to gene ***ESR1*** using `match`
+    + mapping between IDs and genes is in the ***genes*** data frame
+        + ID in first column, gene name in the second
+- Save this ID as a variable
+
+```{r}
+rowInd <- match("ESR1", geneAnnotation$HUGO.gene.symbol)
+geneAnnotation[rowInd,]
+myProbe <- geneAnnotation$probe[rowInd]
+myProbe
+```
+
+Now, find which row in our expression matrix is indexed by this ID
+
+- recall that the rownames of the expression matrix are the probe IDs
+- save the expression values as a variable
+
+```{r}
+match(myProbe, rownames(normalizedValues))
+normalizedValues[match(myProbe, rownames(normalizedValues)), 1:10]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+class(myGeneExpression)
+```
+
+
+    
+## Relating to patient characteristics
+
+We have expression values and want to visualise them against our categorical data
+
+- use a boxplot, for example
+- however, we have to first make sure our values are treat as numeric data
+- as we created the subset of a data frame, the result was also a data frame
+    + use `as.numeric`
+
+
+```{r}
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
+
+
+- In this case there is a clear difference, so we probably don't even need a p-value to convince ourselves of the difference
+    + in real-life, we would probably test lots of genes and implement some kind of multiple-testing
+    + e.g. `p.adjust` (`?p.adjust`)
+
+```{r}
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+
+```
+
+
+
+## Complete script
+
+```{r}
+geneAnnotation    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
+patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
+normalizedValues    <- read.delim("gene.expression.txt")
+
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
+
+## Exercise: Exercise 8
+
+Repeat the same steps we performed for the gene ESR1, but for GATA3:
+
+- Try and make as few changes as possible from the ESR1 script
+- Can you see why making a markdown document is useful for analysis?
+
+
+```{r}
+
+### Your Answer Here ###
+
+```
+
+## Extra Discussion
+
+This example has been simplified by the fact that the columns in the expression matrix are in the same order as the patient metadata. This would normally be the case for data obtained in a public repository such as Gene Expression Omnibus
+
+```{r}
+colnames(normalizedValues)
+patientMetadata$samplename
+
+```
+
+There is a quick shortcut to check that these names are the same using the `all` function
+
+```{r}
+colnames(normalizedValues) == patientMetadata$samplename
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+Let's say that our metadata have been re-ordered by ER status and age, and not by patient ID
+
+
+```{r}
+patientMetadata <- patientMetadata[order(patientMetadata$er,patientMetadata$age),]
+patientMetadata
+```
+
+- If we run the same code as before to produce the boxplot and perform the t-test we would get a very different result.
+- This should make use immediately suspicious, as the ESR1 gene is known to be highly differentially-expressed in the contrast we are making
+- Such sanity checks are important to check to your code
+
+```{r}
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
+
+If we run the same check as before on the column names and patient IDs, we see that it fails:-
+
+```{r}
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+A solution is to use `match` again. Specifically, we want to know where each column in the expression matrix can be found in the patient metadata. The result is a vector, each item of which is an index for a particular row in the patient metadata
+
+```{r}
+match(colnames(normalizedValues),patientMetadata$samplename)
+
+```
+
+The vector we have just generated can then by used to re-order the rows in the patient metadata
+
+```{r}
+patientMetadata <- patientMetadata[match(colnames(normalizedValues),patientMetadata$samplename),]
+patientMetadata
+all(colnames(normalizedValues) == patientMetadata$samplename)
+```
+
+And we can now proceed to perform the analysis and can the result we expect
+
+```{r}
+rowInd      <- match("ESR1", geneAnnotation[,2])
+myProbe    <- geneAnnotation$probe[rowInd]
+myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
+
+boxplot(as.numeric(myGeneExpression) ~ patientMetadata$er)
+t.test(as.numeric(myGeneExpression) ~ patientMetadata$er)
+```
+

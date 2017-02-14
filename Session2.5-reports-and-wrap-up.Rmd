@@ -1,0 +1,160 @@
+---
+title: "Introduction to Solving Biological Problems Using R - Day 2"
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
+  Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output: html_notebook
+---
+
+# 5. Report Writing and Wrap-Up
+
+
+## Creating a markdown file from scratch
+
+So far you have been working with the R notebooks supplied with the course, but for your own analyses you'll want to start from scratch.
+
+***File → New File → R Markdown***
+
+- Choose 'Document' and the default output type (HTML)
+- A new tab is created in RStudio
+- The header allows you to specify a Page title, author and output type
+```
+---
+title: "Untitled"
+author: "Mark Dunning"
+date: "22/12/2016"
+output: html_document
+---
+```
+##Text formatting
+See ***Help*** → ***Markdown Quick Reference*** in RStudio:
+
+- Enclose text in \* to format in *italics*
+- Enclose text in \*\* to format in **bold**
+- \*\*\* for ***bold italics***
+- \` to format like `code`
+- \$ to include equations: $e =mc^2$
+- \> quoted text: 
+
+>To be or not to be
+
+- See **Help -> Markdown Quick Reference** for more:
+    + Adding images
+    + Adding web links
+    + Tables
+
+
+## Not quite enough for a reproducible document
+
+- Minimally, you should record what version of R, and the packages you used.
+- Use the `sessionInfo()` function
+    + e.g. for the version of R I used to make the slides
+
+```{r}
+sessionInfo()
+```
+    
+
+## Defining chunks
+
+- It is not great practice to have one long, continuous R script
+- Better to break-up into smaller pieces; '*chunks*'
+- You can document each chunk separately
+- Easier to catch errors
+- The characteristics of each chunk can be modified:
+    + You might not want to print the R code for each chunk
+    + ...or the output
+
+
+
+## Chunk options
+
+
+- It's a good idea to name each chunk
+    + Easier to track-down errors
+- We can display R code, but not run it
+    + `eval=FALSE`
+- We can run R code, but not display it
+    + `echo=FALSE`
+    + e.g. setting display options
+- Suppress warning messages
+    + `warning=FALSE`
+
+    
+## Chunk options: eval
+
+- Sometimes we want to format code for display, but not execute; we want to show the code for how we read our data, but want our report to compile quickly
+
+e.g.
+
+```{r, eval=FALSE}
+data <- read.delim("path.to.my.file")
+```
+
+## Chunk options: echo
+
+- Might want to load some data, silently, from disk
+    + e.g. the R object from reading the data in the previous slide
+    + or your P.I. wants to see your results, but doesn't really want to know about the R code that you used
+    
+```{r echo=FALSE}
+plot(rnorm(100))
+```
+
+
+## Chunk options: results
+
+- Some code or functions might produce lots of output to the screen that we don't need
+    + `results='hide'`
+```{r results='hide'}
+for(i in 1:100) {
+  print(i)
+  }
+```
+
+
+##Chunk options: message and warning
+
+- Loading an R package will sometimes print messages and / or warnings to the screen
+- This is not always helpful in a report:
+- Using `message=FALSE` and `warning=FALSE`
+
+
+```{r message=FALSE, warning=FALSE}
+library(DESeq)
+
+```
+- Could also need `suppressPackageStartupMessages`
+
+##Chunk options: cache
+
+- The argument `cache=TRUE` will stop certain chunks from being evaluate if their code does not change
+- It speeds-up the compilation of the document
+    + we don't want to reload our dataset if we've only made a tiny change downstream
+
+```{r echo=FALSE, cache=TRUE}
+evals <- read.delim("gene.expression.txt")
+```
+
+## Running R code from the main text
+
+- We can add R code to our main text, which gets evaluated
+    + make sure we always have the latest figures, p-values etc
+- See example `gene-expression-analysis.Rmd`
+
+# End of Course
+
+## Wrap-up
+
+- **Thanks for your attention**
+- Practice, practice, practice
+    + ... & persevere
+- Need inspiration? R code is freely-available, so read other people's code!
+    + Read [blogs](http://www.r-bloggers.com/)
+    + Follow the [forums](http://stackoverflow.com/questions/tagged/r)
+    + Download [datasets](http://vincentarelbundock.github.io/Rdatasets/datasets.html) to practice with
+    + Bookmark some [reference](https://en.wikibooks.org/wiki/R_Programming) guides
+    + on twitter @rstudio, @Rbloggers, @RLangTip
+    + Attend the [follow-on course](http://training.csx.cam.ac.uk/bioinformatics/event/1800066) on data manipulation and graphics
+- Please fill in the feedback form for us to improve the course
+    

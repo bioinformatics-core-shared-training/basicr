@@ -1,0 +1,592 @@
+---
+title: "Introduction to Solving Biological Problems Using R - Day 1"
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
+  Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+css: mystyle.css
+---
+```{r include = FALSE}
+library(knitr)
+opts_chunk$set(comment = NA,eval=FALSE) # eliminates hashtag from R outputs
+```
+
+
+
+# Course Aims
+
+- To introduce you to the basics of R
+    + Reading data
+    + Perform simple analyses
+    + Producing graphs
+    + ***How to get help!***
+- Give you all the background you need to ***practice*** by yourselves
+- Introduce tools that will help you to work in a ***reproducible*** manner
+
+# Day 1 Schedule
+
+1. Introduction to R and its environment
+2. Data Structures
+3. Data Analysis Walkthrough
+4. Plotting in R
+
+#1. Introduction to R and its environment
+
+##What's R?
+
+* A statistical programming environment
+    + based on 'S'
+    + suited to high-level data analysis
+* But offers much more than just statistics
+* Open source and cross platform
+* Extensive graphics capabilities
+* Diverse range of add-on packages
+* Active community of developers
+* Thorough documentation
+
+
+
+http://www.r-project.org/
+
+![R screenshot](images/R-project.png)
+
+![New York Times, Jan 2009](images/NYTimes_R_Article.png)
+
+
+##R plotting capabilities
+
+https://www.facebook.com/notes/facebook-engineering/visualizing-friendships/469716398919
+![R facebook](images/facebook-network.png)
+
+##Who uses R? Not just academics!
+
+http://www.revolutionanalytics.com/companies-using-r
+
+- Facebook
+    + http://blog.revolutionanalytics.com/2010/12/analysis-of-facebook-status-updates.html
+- Google
+    + http://blog.revolutionanalytics.com/2009/05/google-using-r-to-analyze-effectiveness-of-tv-ads.html
+- Microsoft
+    + http://blog.revolutionanalytics.com/2014/05/microsoft-uses-r-for-xbox-matchmaking.html
+- New York Times
+    + http://blog.revolutionanalytics.com/2011/03/how-the-new-york-times-uses-r-for-data-visualization.html
+- Buzzfeed
+    + http://blog.revolutionanalytics.com/2015/12/buzzfeed-uses-r-for-data-journalism.html
+- New Zealand Tourist Board
+    + https://mbienz.shinyapps.io/tourism_dashboard_prod/
+
+    
+## R can facilitate Reproducible Research
+
+![Sidney Harris - New York Times](images/SidneyHarris_MiracleWeb.jpg)
+
+
+
+
+- Statisticians at MD Anderson tried to reproduce results from a Duke paper and unintentionally unravelled a web of incompetence and skullduggery
+    + as reported in the ***New York Times***
+    
+![New York Times, July 2011](images/rep-research-nyt.png)
+
+
+
+- Very entertaining talk from Keith Baggerly in Cambridge, December 2010
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7gYIs7uYbMo" frameborder="0" allowfullscreen></iframe>
+
+According to recent editorials, the reproducibility crisis is still on-going
+
+![Nature, May 2016](images/rep-crisis.png)
+
+
+[Reality check on reproducibility](http://www.nature.com/news/reality-check-on-reproducibility-1.19961)
+
+[1,500 scientists lift the lid on reproducibility](http://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)
+
+
+##Getting started
+- Latest release 3.3.2 (October 2016)
+    + Base package and Contributed packages (general purpose extras)
+    + `r length(XML:::readHTMLTable("http://cran.r-project.org/web/packages/available_packages_by_date.html")[[1]][[2]])` available packages as of `r date()`
+- Download from http://mirrors.ebi.ac.uk/CRAN/
+- Windows, Mac and Linux versions available
+- Executed using command line, or a graphical user interface (GUI)
+- On this course, we use the RStudio GUI (www.rstudio.com)
+
+![rstudio](http://www.rstudio.com/wp-content/uploads/2014/03/blue-125.png) 
+    
+
+To launch RStudio, find the RStudio icon and click
+
+![RStudio screenshot](images/rstudio-windows.png)
+
+
+
+
+- The traditional way to enter R commands is via the Terminal, or using the console in RStudio (bottom-left)
+- However, for this course we will use a relatively new feature called *R-notebooks*.
+- An R-notebook mixes plain text with R code
+    + The R code can be run from inside the document and the results are displayed directly underneath
+- Each *chunk* of R code looks something like this. 
+- Each line of R can be executed by clicking on the line and pressing CTRL and ENTER
+- Or you can press the green triangle on the right-hand side to run everything in the chunk
+- Try this now!
+
+```{r}
+print("Hello World")
+
+```
+
+- The R notebook can be rendered into a format such as PDF or HTML so they can be shared with your collaborators
+- On the course website you will see compiled versions of each session
+
+##Basic concepts in R - simple arithmetic
+
+- The command line can be used as a calculator and understands the usual arithmetic operators +, -, *, / 
+- Try adding a few more calculations here
+
+```{r}
+2 + 2
+2 - 2
+4 * 3
+10 / 2
+
+
+```
+
+Note: The number in the square brackets is an indicator of the
+position in the output. In this case the output is a 'vector' of length 1
+(i.e. a single number). More on vectors coming up...
+
+
+In the case of expressions involving multiple operations, R respects the [BODMAS](https://en.wikipedia.org/wiki/Order_of_operations#Mnemonics) system to decide the order in which operations should be performed.
+
+```{r}
+2 + 2 *3
+2 + (2 * 3)
+(2 + 2) * 3
+```
+
+R is capable of more complicated arithmetic such as trigonometry and logarithms; like you would find on a fancy scientific calculator. Of course, R also has a plethora of statistical operations as we will see.
+
+
+```{r}
+pi
+sin (pi/2)
+cos(pi)
+tan(2)
+log(1)
+
+
+```
+
+We can only go so far with performing simple calculations like this. Eventually we will need to store our results for later use. For this, we need to make use of *variables*.
+
+
+##Basic concepts in R - variables
+
+- A variable is a letter or word which takes (or contains) a value. We use the **assignment operator: `<-`**
+```{r}
+x <- 10
+x
+myNumber <- 25
+myNumber
+```
+
+- We can perform arithmetic on variables:
+```{r}
+sqrt(myNumber)
+```
+
+
+- We can add variables together:
+```{r}
+x + myNumber
+```
+
+- We can change the value of an existing variable:
+
+```{r}
+x <- 21
+x
+```
+
+
+- We can set one variable to equal the value of another variable:
+```{r}
+x <- myNumber
+x
+```
+
+- We can modify the contents of a variable:
+
+```{r}
+myNumber <- myNumber + sqrt(16)
+myNumber
+```
+
+When we are feeling lazy we might give our variables short names (`x`, `y`, `i`...etc), but a better practice would be to give them meaningful names. There are some restrictions on creating variable names. They cannot start with a number or contain characters such as `.`, `_`, '-'. Naming variables the same as in-built functions in R, such as `c`, `T`, `mean` should also be avoided.
+
+Naming variables is a matter of taste. Some [conventions](http://adv-r.had.co.nz/Style.html) exist such as a separating words with `-` or using *C*amel*C*aps. Whatever convention you decided, stick with it!
+
+##Basic concepts in R - functions
+
+- **Functions** in R perform operations on **arguments** (the inputs(s) to the function). We have already used:
+```{r}
+sin(x)
+```
+
+- This returns the sine of x
+     + In this case the function has one argument: **x**. 
+     + Arguments are always contained in parentheses -- curved brackets, **()** -- separated by commas.
+     
+     
+Arguments can be named or unnamed, but if they are unnamed they must be ordered (we will see later how to find the right order). The names of the arguments are determined by the author of the function and can be found in the help page for the function. When testing code, it is easier and safer to name the arguments. 
+
+`seq` is a function for generating a numeric sequence *from* and *to* particular numbers. 
+
+- Type `?seq` to get the help page for this function.
+- When testing code, it is easier and safer to name the arguments
+
+```{r}
+seq(from = 2, to = 20, by = 4)
+seq(2, 20, 4)
+```
+
+Arguments can have *default* values, meaning we do not need to specify values for these in order to run the function.
+
+`rnorm` is a function that will generate a series of values from a *normal distribution*. In order to use the function, we need to tell R how many values we want
+
+```{r}
+rnorm(n=10)
+```
+
+The normal distribution is defined by a *mean* (average) and *standard deviation* (spread). However, in the above example we didn't tell R what mean and standard deviation we wanted. So how does R know what to do? All arguments to a function and their default values are listed in the help page
+
+(*N.B sometimes help pages can describe more than one function*)
+
+```{r}
+?rnorm
+```
+
+In this case, we see that the defaults for mean and standard deviation are 0 and 1. We can change the function to generate values from a distribution with a different mean and standard deviation using the `mean` and `sd` *arguments*. It is important that we get the spelling of these arguments exactly right, otherwise R will an error message, or (worse?) do something unexpected.
+
+```{r}
+rnorm(n=10, mean=2,sd=3)
+rnorm(10, 2, 3)
+```
+
+In the examples above, `seq` and `rnorm` were both outputting a series of numbers, which is called a *vector* in R and is the most-fundamental data-type.
+
+
+
+##Basic concepts in R - vectors
+
+- The basic data structure in R is a **vector** -- an ordered collection of values. 
+- R treats even single values as 1-element vectors. 
+- The function **`c`** *combines* its arguments into a vector:
+
+```{r}
+x <- c(3,4,5,6)
+x
+```
+- The square brackets `[]` indicate the position within the vector (the ***index***).
+- We can extract individual elements by using the `[]` notation:
+
+```{r}
+x[1]
+x[4]
+
+```
+
+- We can even put a vector inside the square brackets (*vector indexing*):
+- **Before executing this line of code, what do you think it will produce?**
+
+```{r}
+y <- c(2,3)
+x[y]
+```
+
+- There are a number of shortcuts to create a vector. 
+- Instead of:
+
+```{r}
+x <- c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+x
+```
+- we can write:
+
+```{r}
+x <- 3:12
+x
+```
+
+- or we can use the **`seq()`** function, which returns a vector:
+
+```{r}
+x <- seq(2, 20, 4)
+x
+```
+
+```{r}
+x <- seq(2, 20, length.out=5)
+x
+```
+
+- or we can use the **`rep()`** function:
+
+
+```{r}
+y <- rep(3, 5)
+y
+```
+
+```{r}
+y <- rep(1:3, 5)
+y
+```
+
+
+- We have seen some ways of extracting elements of a vector. We can use these shortcuts to make things easier (or more complex!)
+
+```{r}
+x <- 3:12
+# Extract elements from x:
+
+x[3:7]
+x[seq(2, 6, 2)]
+x[rep(3, 2)]
+```
+
+
+- We can add an element to a vector:
+
+```{r}
+y <- c(x, 1)
+y
+```
+
+- We can glue vectors together:
+
+```{r}
+z <- c(x, y)
+z
+```
+
+- We can "remove" element(s) from a vector:
+    + NOTE: the vector x doesn't get modified
+    + we're just displaying what the vector looks like without particular elements
+    
+```{r}
+x <- 3:12
+
+x[-3]
+x[-(5:7)]
+x[-seq(2, 6, 2)]
+x
+```
+
+- Finally, we can modify the contents of a vector:
+
+```{r}
+x[6] <- 4
+x
+
+x[3:5] <- 1
+x
+```
+
+**Remember!**
+
+ - **Square** brackets [ ] for ***indexing***
+ - **Parentheses** () for function ***arguments***
+
+##Basic concepts in R - vector arithmetic
+
+- When applying all standard arithmetic operations to vectors,
+application is element-wise
+
+```{r}
+x <- 1:10
+y <- x*2
+```
+
+```{}
+y
+```
+
+```{r}
+z <- x^2
+```
+
+```{r}
+z
+```
+
+- Adding two vectors:
+
+```{r}
+y + z
+```
+
+- If vectors are not the same length, the shorter one will be recycled:
+
+```{r}
+x + 1:2
+```
+
+- But be careful if the vector lengths aren't factors of each other:
+
+```{r}
+x + 1:3
+```
+
+- Sometimes R will give a *warning* message. It has performed the calculation you asked it to, but the results may be unexpected. You need to check the output carefully to make sure it is what you really wanted.
+
+##Basic concepts in R - Character vectors and naming
+
+- All the vectors we have seen so far have contained numbers, but we can also store text (/"strings") in vector
+    + this is called a **character** vector.
+
+```{r}
+gene.names <- c("Pax6", "Beta-actin", "FoxP2", "Hox9")
+gene.names
+```
+
+- We can name elements of vectors using the `names()` function, which can be useful to keep track of the meaning of our data:
+
+```{r}
+gene.expression <- c(0, 3.2, 1.2, -2)
+names(gene.expression) <- gene.names
+gene.expression
+
+```
+
+- We can also use the `names()` function to get a vector of the names of an object:
+```{r}
+names(gene.expression)
+```
+
+
+##Exercise: Body-Mass Index
+- Let's try some vector arithmetic. Here are the weights and heights of five individuals
+
+|Person | Weight (kg) | Height (cm)|
+|-------|------------------:|-------------------:|
+|*Jo*     |    65.8           |     192          |
+|*Sam*    |    67.9           |     179          |
+|*Charlie*|    75.3           |     169          |
+|*Frankie*|    61.9           |     175          |
+|*Alex*   |    92.4           |     171          |
+
+
+- Create *weight* and *height* vectors to hold the data in each column using the `c` function. Create a *person* vector and use this vector to name the values in the other two vectors.
+
+1. The body-mass index is given by the formula:- $BMI = (Weight)/(Height^2)$; where Height is given in ***metres***
+    + Create a new vector to record this, called `bmi`.
+2. Create a new vector `bmi.sorted` where the bmi values are put in increasing numeric order (HINT: look up the help on the `sort` function)
+3. The interquartile range (IQR) of a vector is defined as the 75% percentile of the data minus the 25% percentile. Calculate the IQR for our bmi values 
+    + check your answer using the `IQR` function
+    
+    
+```{r}
+### YOUR ANSWER HERE (please) ###
+
+```
+
+
+
+
+##Getting help
+
+- **This is possibly the most important slide in the whole course!?!**
+- To get help on any R function, type **`?`** followed by the function name. For example:
+```{r}
+?seq
+```
+- This retrieves the syntax and arguments for the function. The help page shows the default order of arguments. It also tells you which *package* it belongs to.
+- There is typically a usage example, which you can test using the
+`example` function:
+
+```{r}
+example(seq)
+```
+
+- If you can't remember the exact name, type **`??`** followed by your guess.
+R will return a list of possibilities:
+
+```{r}
+??mean
+```
+
+- The **Packages** tab in the lower-right panel of RStudio will help you locate the help pages for a particular package and its functions
+    + Often there will be a user-guide or '*vignette*' too
+
+## R packages
+
+- R comes ready loaded with various libraries of functions called
+**packages**. For example: the function **`sum()`** is in the **base** package and
+**`sd()`**, which calculates the standard deviation of a vector, is in the
+**`stats`** package
+- There are 1000s of additional packages provided by third parties,
+and the packages can be found in numerous server locations on the
+web called **repositories**
+- The two repositories you will come across the most are:
+    + **The Comprehensive R Archive Network (CRAN)**
+        + Use metacran search to find functionality you need: http://www.r-pkg.org/
+        + Or look for packages by theme: http://cran.r-project.org/web/views/
+    + **Bioconductor** specialised in genomics: http://www.bioconductor.org/packages/release/bioc/
+    + **https//github.com** can also host R packages, and hosts the development version of many packages
+- Bottomline: ***always*** first look if there is already an R package that does what you want before trying to implement it yourself
+    
+## Installing packages    
+    
+- CRAN packages can be installed using **`install.packages()`**
+
+    + or clicking on the *Packages* tab in RStudio
+
+```{r eval=FALSE}
+install.packages(name.of.my.package)
+```
+
+
+- Set the *Bioconductor* package download tool by typing:
+```{r eval=FALSE}
+source("http://bioconductor.org/biocLite.R")
+```
+
+- *Bioconductor* packages are then installed with the `biocLite()` function:
+```{r eval=FALSE}
+biocLite("PackageName")
+```
+
+- ggplot2 is a commonly used graphics package:
+    + in RStudio, go to **Tools** → **Install Packages**... and type the package name
+    + or use `install.packages()` function to install it:
+  
+```{r eval=FALSE}
+install.packages("ggplot2")
+```
+   
+- `DESeq2` is a Bioconductor package (http://www.bioconductor.org) for the analysis of RNA-seq data:
+
+```{r eval=FALSE}
+source("http://www.bioconductor.org/biocLite.R")
+biocLite("DESeq2")
+```
+
+##Example: Load packages ggplot2 and DESeq2
+
+- R needs to be told to use the new functions from the installed packages. Use **`library(...)`** function to load the newly installed features:
+
+```{r eval=FALSE}
+ 
+library(ggplot2) # loads ggplot functions
+library(DESeq2)   # loads DESeq functions
+library()        # Lists all the packages 
+                 # you've got installed 
+```
+

@@ -1,0 +1,429 @@
+---
+title: "Introduction to Solving Biological Problems Using R - Day 1"
+author: Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić,
+  Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+
+# 2. Data structures
+
+## R is designed to handle experimental data
+
+- Although the basic unit of R is a vector, we usually handle data in **data frames**.
+- A data frame is a set of observations of a set of variables -- in other words, the outcome of an experiment.
+- For example, we might want to analyse information about a set of patients. 
+- To start with, let's say we have ten patients and for each one we know their name, sex, age, weight and whether they give consent for their data to be made public.
+- We are going to create a data frame called 'patients', which will have ten rows (observations) and seven columns (variables). The columns must all be equal lengths. 
+- We will explore how to construct these data from scratch.
+    + (in practice, we would usually import such data from a file)
+    
+|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
+|--|-------|-------|--------------|:----:|--:|------:|:-----:|
+|1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE|
+|2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
+|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
+|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
+|5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
+|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
+|7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
+|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
+|9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
+|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
+
+## Character, numeric and logical data types
+
+- Each column is a vector, like previous vectors we have seen, for 
+example: 
+
+```{r}
+age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
+weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 
+            63.5, 71.5, 73.2, 64.8)
+
+```
+
+- We can define the names using character vectors:
+
+```{r}
+firstName  <- c("Adam", "Eve", "John", "Mary",
+                "Peter", "Paul", "Joanna", "Matthew",
+                "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis",
+                "Baker","Daniels", "Edwards", "Smith", 
+                "Roberts", "Wilson")
+```
+
+Notice how a particular line of R code can be typed over multiple lines. R won't execute the code until it sees the closing bracket `)` that matches the initial bracket `(`)
+- We often use this trick to make our code easier to read
+
+- We also have a new type of vector, the ***logical*** vector, which only 
+contains the values `TRUE` and `FALSE`:
+
+```{r}
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, 
+             FALSE, FALSE, TRUE, FALSE, TRUE)
+```
+
+
+- Vectors can only contain one type of data; we cannot mix numbers, characters and logical values in the same vector. 
+    + If we try this, R will convert everything to characters:
+
+```{r}
+c(20, "a string", TRUE)
+
+```
+
+- We can see the type of a particular vector using the **`class()`** function:
+
+```{r}
+ class(firstName)
+ class(age)
+ class(weight)
+ class(consent)
+```
+
+##Factors
+
+- Character vectors are fine for some variables, like names. But sometimes we have categorical data and we want R to 
+recognize this
+- A factor is R's data structure for categorical data:
+
+```{r}
+sex <- c("Male", "Female", "Male", "Female", "Male",
+         "Male", "Female", "Male", "Male", "Female")
+sex
+```
+
+
+
+```{r}
+factor(sex)
+```
+
+- R has converted the strings of the sex character vector into two **levels**, which are the categories in the data
+- Note the values of this factor are not character strings, but levels
+- We can use this factor later-on to compare data for males and females
+
+## Creating a data frame (first attempt)
+
+- We can construct a data frame from other objects (N.B. The **`paste()`** function joins character vectors together)
+
+```{r}
+patients <- data.frame(firstName, secondName, 
+                       paste(firstName, secondName),  
+                       sex, age, weight, consent)
+```
+
+
+```{r}
+patients
+
+```
+
+
+
+##Naming data frame variables
+
+- We can access particular variables using the **'`$`'** *operator*:
+- TIP: you can use TAB-complete to select the variable you want
+
+```{r}
+patients$age
+
+
+```
+
+- R has inferred the names of our data frame variables from the names of the vectors or the commands (e.g. the `paste()` command)
+- We can name the variables after we have created a data frame using the **`names()`** function, and we can use the same function to see the names:
+
+```{r}
+names(patients) <- c("First_Name", "Second_Name",
+                     "Full_Name", "Sex", "Age", 
+                     "Weight", "Consent")
+```
+
+```{r}
+names(patients)
+```
+
+
+- Or we can name the variables when we define the data frame
+
+```{r}
+patients <- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName,
+                                         secondName), 
+                       Sex = sex,
+                       Age = age,
+                       Weight = weight, 
+                       Consent = consent)
+
+```
+
+```{r}
+names(patients)
+```
+
+##Factors in data frames
+
+- When creating a data frame, R assumes all character vectors should be categorical variables and converts them to factors. This is not 
+always what we want:
+    + e.g. we are unlikely to be interested in the hypothesis that people called Adam are taller, so it seems a bit silly to represent this as a factor
+
+```{r}
+patients$First_Name
+```
+
+
+- We can avoid this by asking R not to treat strings as factors, and 
+then explicitly stating when we want a factor by using **`factor()`**:
+
+```{r}
+patients <- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName,
+                                         secondName), 
+                       Sex = factor(sex),
+                       Age = age,
+                       Weight = weight,
+                       Consent = consent,
+                       stringsAsFactors = FALSE)
+patients
+```
+
+```{r}
+patients$Sex
+patients$First_Name
+```
+
+
+## Adding additional columns
+
+Recall that we can create a new variable using an assignment operator and specifying a name that R isn't currently using as a variable name
+
+```{r}
+myNewVariable <- 42
+myNewVariable
+```
+
+We use a similar trick to define new columns in the data frame
+- The value you assign must be the same length as the number of rows in the data frame.
+
+```{r}
+patients$ID
+patients$ID <- paste("Patient", 1:10)
+patients
+```
+
+
+
+##Matrices
+
+- Data frames are R's speciality, but R also handles matrices:
+    + All columns are assumed to contain the same data type, e.g. numerical
+    + Matrices can be manipulated in the same fashion as data frame
+        + We can easily convert between the two object types
+        
+```{r}
+e <- matrix(1:10, nrow=5, ncol=2)
+e
+```
+
+- Some calculations are more efficient to do on matrices, e.g.:
+
+```{r}
+rowMeans(e)
+```
+
+Matrices (and indeed data frames) can be joined together using the functions `cbind` and `rbind`
+
+Let's first create some example data
+```{r}
+
+mat1 <- matrix(11:20, nrow=5,ncol=2)
+mat1
+mat2 <- matrix(21:30, nrow=5, ncol=2)
+mat2
+mat3 <- matrix(31:40,nrow=5,ncol=2)
+mat3
+
+```
+
+and now try out these functions:-
+
+```{r}
+cbind(mat1,mat2)
+rbind(mat1,mat3)
+```
+
+
+##Indexing data frames and matrices
+
+- You can index multidimensional data structures like matrices and data 
+frames using commas:
+- **`object[rows, colums]`**
+- Try and predict what each of the following commands will do:-
+
+```{r}
+e[1,2]
+
+```
+
+```{r}
+patients[1,2]
+
+```
+
+```{r}
+patients[1,1:3]
+
+```
+
+- If you don't provide an index for either rows or columns, all of the rows or columns will be returned.
+
+```{r}
+e[1,]
+
+```
+
+
+```{r}
+patients[,-1]
+```
+
+##Advanced indexing
+
+- Indices are actually vectors, and can be ***numeric*** or ***logical***:
+- We won't always know in advance which indices we want to return
+    + we might want all values that exceed a particular value or satisfy some other criteria
+- In this example, `letters` is a vector containing all letters in the English alphabet
+
+```{r}
+letters
+s <- letters[1:5]
+s
+```
+
+So far we have seen how to extract the first and third values in the vector
+
+```{r}
+s[c(1,3)]
+```
+
+R can perform the same operation using a vector of logical values. Only indices with a `TRUE` value will get returned
+
+```{r}
+s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]
+```
+
+
+- We can do the logical test and indexing in the same line of R code
+    + R will do the test first, and then use the vector of `TRUE` and `FALSE` values to subset the vector
+```{r}
+a <- 1:5
+
+a < 3
+s[a < 3]
+```
+
+
+## Logical Operators
+
+- Operators allow us to combine multiple logical tests
+- comparison operators
+**`<, >, <=, >=, ==, !=`**
+- logical operators 
+**`!, &, |, xor`**
+    + The operators for 'comparison' and 'logical' always return logical values! i.e.  (`TRUE`, `FALSE`)
+
+
+```{r}
+
+s[a > 1 & a <3]
+s[a == 2]
+```
+
+
+##Exercise: Exercise 2
+
+- Write R code to print the following subsets of the patients data frame
+- The first and second rows, and the first and second colums
+
+|  |First_Name|Second_Name
+|--|-------|-------|
+|1 |Adam   |Jones 
+|2 |Eve    |Parker 
+
+- All rows, but in the order 10 to 1.
+
+|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
+|--|-------|-------|--------------|:----:|--:|------:|:-----:|
+|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
+|9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
+|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
+|7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
+|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
+|5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
+|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
+|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALS
+|2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
+|1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE|
+
+- All rows except the first row, all columns
+
+|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
+|--|-------|-------|--------------|:----:|--:|------:|:-----:|
+|2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
+|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
+|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
+|5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
+|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
+|7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
+|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
+|9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
+|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
+
+- Use logical indexing to select the following patients from the data frame:
+    1. Patients under 40
+    2. Patients who give consent to share their data
+    3. Men who weigh as much or more than the average European male (70.8 kg)
+    
+  
+```{r}
+age    <- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
+weight <- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 
+            63.5, 71.5, 73.2, 64.8)
+
+firstName  <- c("Adam", "Eve", "John", "Mary",
+                "Peter", "Paul", "Joanna", "Matthew",
+                "David", "Sally")
+secondName <- c("Jones", "Parker", "Evans", "Davis",
+                "Baker","Daniels", "Edwards", "Smith", 
+                "Roberts", "Wilson")
+
+consent <- c(TRUE, TRUE, FALSE, TRUE, FALSE, 
+             FALSE, FALSE, TRUE, FALSE, TRUE)
+
+sex <- c("Male", "Female", "Male", "Female", "Male",
+         "Male", "Female", "Male", "Male", "Female")
+patients <- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName,
+                                         secondName), 
+                       Sex = factor(sex),
+                       Age = age,
+                       Weight = weight,
+                       Consent = consent,
+                       stringsAsFactors = FALSE)
+patients
+
+### Your Answer ###
+
+
+```
+
