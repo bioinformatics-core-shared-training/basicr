@@ -319,7 +319,9 @@ HINT: You can break down the problem into the following steps
     + plot the corresponding Temperature and Ozone values for these in red
 - Identify observations with ozone < 100
     + plot the corresponding Temperature and Ozone values for these in orange
-- Can you modify your code so that 
+- Can you modify your code so that the cut-off is not hard-coded (fixed) to 100
+    + e.g. Ozone > 80, Ozone, 90 etc...
+    + can you re-generate the plots the minimal changes to the code
 
 ```{r}
 
