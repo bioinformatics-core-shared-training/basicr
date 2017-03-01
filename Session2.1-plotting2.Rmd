@@ -97,6 +97,7 @@ patients$Weight[males]
 
 
 - The points we add have to be within the `x` and `y` limits of the original plot axes, otherwise they won't be displayed
+    + R won't give a warning or error if you attempt to plot points outside the axis limits
 
 ```{r}
 plot(patients$Age, patients$Weight, type="n")
@@ -129,15 +130,17 @@ points(patients$Age[females], patients$Weight[females],
 - Each set of points can have a different colour and shape
 - Axis labels and title and limits are defined by the plot
 - Once you've added points to a plot, they cannot be removed
-- A call to `plot` will start a new graphics window
-    - or typing `dev.off()`
+
 
 ```{r }
 plot(patients$Age, patients$Weight, type="n")
 points(patients$Age[males], patients$Weight[males],
        pch=16, col="steelblue")
-points(patients$Age[females], patients$Weight[females], 
-       pch=17, col="orangered1")
+points(patients$Age[females], patients$Weight[females],
+       pch=17, col="orangered1",
+        xlab="Age of Patient",
+       ylab="Weight",
+       main="Relationship between Age and Weights")
 ```
 
 
@@ -169,6 +172,17 @@ legend("topleft", legend=c("M","F"),
 plot(patients$Age, patients$Weight, pch=16)
 text(patients$Age, patients$Weight, labels=patients$Full_Name)
 ```
+
+- In the above we used to same co-ordinates from the original plot to place the text
+- Can also add text at arbitrary positions
+    + again, we need to take care as the axis limits are defined in the original plot
+    
+```{r}
+plot(patients$Age, patients$Weight, pch=16)
+text(40,70, labels = "X",col="red")
+text(60,80, labels = "Y",col="blue")
+```
+
 
 - Can alter the positions so they don't interfere with the points of the graph
     
@@ -307,6 +321,7 @@ weather <- read.csv("ozone.csv")
 - However, there are some observations that do not seem to fit the trend
     + those with Ozone level > 100
 - Modify the plot so that these outlier observations are in a different colour
+- Add a legend to help interpret the plot
 
 
 ![](images/exercise5b.png)
@@ -341,12 +356,33 @@ plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
 They can be added afterwards with the `axis` function
     - first argument is whether the axis appears on the bottom (1), left (2), top (3) or right (4)
     - can also define where the tick marks are located, and the labels to display
-    
+    - the `box` function can be used to enclose the plot in a box
 ```{r}
 plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
 axis(1)
 axis(4, at = c(60,65,70,75),labels = c("60kg","65kg","70kg","75kg"))
+box()
 
+```
+
+
+
+## Ordering the boxes in a set of boxplots
+
+N.B. The order in which the boxes are displayed on a boxplot isn't something that can be controlled by graphical paramaters
+
+- the order is derived from the order of the categories
+    + in this case `Female` comes first alphabetically
+
+```{r}
+boxplot(patients$Weight~patients$Sex)
+```
+
+- a different order can be achieved by defining a new factor where the `levels` are in the order you want
+
+```{r}
+patients$Sex <- factor(patients$Sex,levels = c("Male","Female"))
+boxplot(patients$Weight~patients$Sex)
 ```
 
 

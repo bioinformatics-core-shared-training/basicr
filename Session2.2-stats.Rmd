@@ -77,9 +77,9 @@ hist(weather$Wind, col="purple", xlab="Wind Speed",
       + e.g. a Wind Speed of 10
 
 ```{r}
-tempMean <- mean(weather$Wind)
-tempSD <- sd(weather$Wind)
-dnorm(10, mean=tempMean, sd=tempSD)
+windMean <- mean(weather$Wind)
+windSD <- sd(weather$Wind)
+dnorm(10, mean=windMean, sd=windSD)
 ```
 
 - We can overlay this on the histogram using `points` as we just saw:
@@ -87,7 +87,7 @@ dnorm(10, mean=tempMean, sd=tempSD)
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
-points(10, dnorm(10, mean=tempMean, sd=tempSD),
+points(10, dnorm(10, mean=windMean, sd=windSD),
        col="red", pch=16)
 ```
 
@@ -97,7 +97,7 @@ points(10, dnorm(10, mean=tempMean, sd=tempSD),
     
 ```{r}
 xs <- c(0,5,10,15,20)
-ys <- dnorm(xs, mean=tempMean, sd=tempSD)
+ys <- dnorm(xs, mean=windMean, sd=windSD)
 hist(weather$Wind, col="purple", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
@@ -118,7 +118,7 @@ lines(xs, ys, col="red")
 hist(weather$Wind,col="purple",xlab="Wind Speed",
      main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
 xs <- seq(0,20, length.out = 10000)
-ys <- dnorm(xs, mean=tempMean,sd=tempSD)
+ys <- dnorm(xs, mean=windMean,sd=windSD)
 lines(xs,ys,col="red")
 ```
 
@@ -131,7 +131,7 @@ $$t = \frac{\bar{x} -\mu_0}{s / \sqrt(n)}$$
 - Say a Wind Speed of 2; which from the histogram seems to be unlikely
 
 ```{r}
-t <- (tempMean - 2) / (tempSD/sqrt(length(weather$Wind)))
+t <- (windMean - 2) / (windSD/sqrt(length(weather$Wind)))
 t
 ```
 
@@ -177,7 +177,8 @@ t.test(weather$Wind, mu=2)
 
 - We have already seen that men in our `patients` dataset tend to be heavier than women
 - We can **test this formally** in R
-
+    + N.B. the weight of people in a population tends to be normally distributed, so we can probably be safe to use a parametric test
+    
 ![](images/males-versus-females.png)
 
 We need to run this if we don't have the patients data in our R environment
@@ -192,6 +193,12 @@ var.test(patients$Weight~patients$Sex)
 
 ```{r}
 t.test(patients$Weight~patients$Sex, var.equal=TRUE)
+```
+
+If were unwilling to make a assumption of normality, a non-parametric test could be used.
+
+```{r}
+wilcox.test(patients$Weight~patients$Sex)
 ```
 
 ## Linear Regression
@@ -223,18 +230,21 @@ myModel <- lm(y~x)
 abline(myModel, col="red")
 ```
 
+The generic `summary` function give an overview of the model
+
+- particular components are accessible if we know their names
 
 ```{r}
 summary(myModel)
+names(myModel)  # Names of the objects within myModel
 ```
 
-There are various ways to access different aspects of the model
+- alternatively, various helper functions are provided.
 
 ```{r}
 coef(myModel)   # Coefficients
 resid(myModel)  # Residuals
 fitted(myModel) # Fitted values
-names(myModel)  # Names of the objects within myModel
 residuals(myModel) + fitted(myModel) # what values does this give?
 ```
 
@@ -275,13 +285,16 @@ plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
     + What is the equation of the best-fit line in the form
       $$ y = ax + b$$
 - Calculate the correlation between the two variables using the function cor (?cor)
-    + can you annotate the plot with the correlation coefficient?
+    + can you add text to the plot to show the correlation coefficient?
 
 ```{r}
 
 ## Your Answer Here ##
 
 ```
+
+![](images/exercise6.png)
+![](images/exercise6b.png)
 
 
 ## More words of caution

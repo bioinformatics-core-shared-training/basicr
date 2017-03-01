@@ -93,6 +93,24 @@ legend("topleft", legend=c("M","F"),
        col=c("steelblue","orangered1"), pch=c(16,17))
 boxplot(patients$Weight~patients$Sex)
 dev.off()
+
+png("images/exercise6.png")
+plot(weather$Temp, weather$Ozone, pch=16)
+mod1 <- lm(weather$Ozone~weather$Temp)
+abline(mod1, col="red", lty=2)
+c = coef(mod1)
+text(60,150, paste("y = ", round(c[2],2), "x",round(c[1],2),sep=""))
+dev.off()
+
+png("images/exercise6b.png")
+plot(weather$Temp, weather$Ozone, pch=16)
+abline(mod1, col="red", lty=2)
+cor = cor(weather$Temp,weather$Ozone,use="c")
+cor
+text(95,150, paste("r^2 = ", round(cor^2,2)))
+dev.off()
+
+
 ## Gene Expression dataset
 
 

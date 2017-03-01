@@ -44,6 +44,7 @@ points(weather$Temp[highO],weather$Ozone[highO],
 points(weather$Temp[lowO],weather$Ozone[lowO],
        col="orange",pch=17)
 abline(h=100,lty=2)
+legend("topleft", legend = c("Ozone > 100","Normal Ozone"),col=c("red","orange"),pch=17)
 ```
 
 ```{r}
@@ -56,15 +57,22 @@ plot(weather$Temp,weather$Ozone,
      col=mycol, pch=mypch,ylab="Ozone level",
      xlab="Temperature")
 abline(h=100,lty=2)
+legend("topleft", legend = c("Ozone > 100","Normal Ozone"),col=c("red","orange"),pch=17)
 ```
 
-```{r}
-mycol <- ifelse(weather$Ozone > 100, "red","orange")
-mypch <- ifelse(weather$Ozone > 100, 18,17)
+Defining a variable for the cut-off makes our code a bit more flexible
 
+```{r}
+mycol <-rep("orange",nrow(weather))
+cutoff <- 100
+highO <- which(weather$Ozone > cutoff)
+mycol[highO] <- "red"
+mypch <- rep(17, nrow(weather))
+mypch[highO] <- 18
 plot(weather$Temp,weather$Ozone, 
      col=mycol, pch=mypch,ylab="Ozone level",
      xlab="Temperature")
-abline(h=100,lty=2)
+abline(h=cutoff,lty=2)
+legend("topleft", legend = c("Ozone > 100","Normal Ozone"),col=c("red","orange"),pch=17)
 ```
 
