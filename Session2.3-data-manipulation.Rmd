@@ -37,14 +37,16 @@ output:
 
 - We will show how to lookup a particular gene in the dataset
 - Also, how to look-up genes in a given genomic region
-- Assess if a given gene is differentially-expressed
+- Perform a "sanity-check" to see if a previously-known gene exhibits a difference in our dataset
+- How many genes on chromosome 8 are differentially-expressed?
 - Create a heatmap to cluster the samples and reveal any subgroups in the data
+    + do the subgroups agree with our prior knowledge about the samples
 
 ## Peek at the data
 
 ```{r}
 normalizedValues <- read.delim("gene.expression.txt")
-normalizedValues[1:2,1:5]
+head(normalizedValues)
 ```
 
 

@@ -286,6 +286,14 @@ plot(weather$Temp, weather$Ozone,xlab="Temperature",ylab="Ozone level",pch=16)
       $$ y = ax + b$$
 - Calculate the correlation between the two variables using the function cor (?cor)
     + can you add text to the plot to show the correlation coefficient?
+    + HINT: The `paste` can be used to join strings of text together, or variables
+
+```{r}
+paste("Hello","World")
+age <- 35
+paste("My age is", age)
+```
+
 
 ```{r}
 

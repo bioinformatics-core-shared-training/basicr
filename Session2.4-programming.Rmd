@@ -42,9 +42,8 @@ patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
 normalizedValues    <- read.delim("gene.expression.txt")
 ```
 
-##Introducing loops
 
-- We could do this to perform t-tests on the first two genes
+- We could run the following code to perform t-tests on the first two genes
 
 ```{r eval=FALSE}
 t.test(as.numeric(normalizedValues[1,]) ~ factor(patientMetadata$er))
@@ -52,7 +51,7 @@ t.test(as.numeric(normalizedValues[2,]) ~ factor(patientMetadata$er))
 
 ```
 
-- But this will be boring to type, difficult to change, and prone to error
+- But for many genes this will be boring to type, difficult to change, and prone to error
 - As we are doing the same thing multiple times, but with a different index each time, we can use a **loop** instead
 
 ##Loops: Commands and flow control
@@ -260,36 +259,76 @@ while(f != 0 ){
 - Use white spaces to divide the horizontal space between units of your code, e.g. around assignments, comparisons
 
 
-## Making a heatmap
+# Making a heatmap
 
 - A heatmap is often used to visualise how the expression level of a set of genes vary between conditions
 - Making the plot is actually quite straightforward
     + providing you have processed the data appropriately!
-    + here, we use `na.omit()` to ensure we have no `NA` values
+- Let's take a list of "most-variable genes"
+    + see below for how we identified such genes
     
 ```{r}
-genelist <- c("ESR1", "NAT1", "SUSD3","SLC7A2" ,"SCUBE2")
-probes   <- na.omit(geneAnnotation$probe[match(genelist, geneAnnotation$HUGO.gene.symbol)])
+genelist <- c("CLIC6","TFF3","PDZK1","SCUBE2","CYP2B6","HOXB13","NAT1","LY6D","SLC7A2")
+probes   <- geneAnnotation$probe[match(genelist, geneAnnotation$HUGO.gene.symbol)]
+probes
 exprows  <- match(probes, rownames(normalizedValues))
 
 heatmap(as.matrix(normalizedValues[exprows,]))
-  
 
 ```
+
 
 ## Heatmap adjustments
 
 - We can provide a colour legend for the samples
 - Adjust colour of cells
+- Label the rows according to gene name
 
 ```{r}
 library(RColorBrewer)
 sampcol <- rep("blue", ncol(normalizedValues))
 sampcol[patientMetadata$er == 1 ] <- "yellow"
 rbPal <- brewer.pal(10, "RdBu")
-heatmap(as.matrix(normalizedValues[exprows,]), ColSideColors = sampcol, col=rbPal)
+heatmap(as.matrix(normalizedValues[exprows,]), 
+        ColSideColors = sampcol, 
+        col=rbPal,
+        labRow = genelist)
 ```
 
 - see also
     + `heatmap.2` from `library(gplots)`; `example(heatmap.2)`
     + `heatmap.plus` from `library(heatmap.plus)`; `example(heatmap.plus)`
+    
+## (Supplementary) Choosing the genes for the heatmap
+    
+Often when using R you will come across a convenient shortcut function that can save you many hours of coding and frustration.
+
+- the `genefilter` package in Bioconductor contains many useful methods for filtering genomic datasets
+- you can install this package with the following commands
+
+```{r eval=FALSE}
+source("http://www.bioconductor.org/biocLite.R")
+biocLite("genefilter")
+```
+
+- the `rowSds` function will calculate the standard deviation for each row in a numeric matrix
+- the output will be vector, with each element being the standard deviation for a corresponding gene
+    
+```{r}
+library(genefilter)
+geneVar <- rowSds(normalizedValues)
+geneVar[1]
+sd(normalizedValues[1,])
+```
+
+- we can now `order` this matrix to get the subset with `[]` to get the indices of the most-variable genes (10 in this case).
+- the same indices can be used to subset the gene annotation data frame
+    + we can do this because the annotation data frame and expression matrix are in the same order
+
+```{r}
+topVar <- order(geneVar,decreasing = TRUE)[1:10]
+topVar
+geneAnnotation[topVar,]
+
+```
+
