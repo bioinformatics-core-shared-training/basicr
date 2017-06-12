@@ -9,39 +9,43 @@ output: pdf_document
 # Reading the data
 
 ```{r}
-rawData <- read.delim("countData.txt")
-rawData[1:10,]
+patients <- read.delim("patient-info.txt")
+
+
+
 ```
 
 # Analysis
 
 ```{r}
-prop <- rawData$NB_Amp / rawData$Nuclei
-amp <- which(prop > 0.33)
+BMI <- (patients$Weight)/((patients$Height/100)^2)
+upper.limit <- mean(BMI,na.rm = TRUE) + 2*sd(BMI,na.rm = TRUE)
 ```
 
 # Plotting
 
 ```{r}
-plot(prop, ylim=c(0,1.2)) # plot a simple chart of NB amplifications
-abline(h=0.33, lwd=1.5, lty=2) # Add a dotted line at 33%
+plot(BMI)
+# Add a horizonal line:
+abline(h=upper.limit) 
 ```
 
 ## Write out the results
 
 ```{r}
-# Write out results table as comma separated values file
-write.csv(rawData[amp,],file="selectedSamples.csv")
+patients$BMI <- round(BMI,1)
+candidates <- which(BMI > upper.limit)
+write.csv(patients[candidates,], file="selectedSamples.csv")
 ```
 
 # Exercise
 
 ```{r}
-norm <- which(prop < 0.33 & rawData$NB_Del == 0)
-norm
+lower.limit <- mean(BMI,na.rm = TRUE) - 2*sd(BMI,na.rm = TRUE)
+underweight.candidates <- which(BMI < lower.limit & patients$Smokes == "Smoker") 
 ```
 
 ```{r}
-write.csv(rawData[norm,], "My_NB_output.csv")
+write.csv(patients[underweight.candidates,], "underweight_candidates.csv")
 ```
 
