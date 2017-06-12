@@ -181,10 +181,17 @@ t.test(weather$Wind, mu=2)
     
 ![](images/males-versus-females.png)
 
+
+
+
 We need to run this if we don't have the patients data in our R environment
 ```{r}
-source("create-patients-data.R")
+patients <- read.delim("patient-info.txt")
 ```
+
+We can test if the variance of the two groups is the same
+
++ this will influence what flavour of t-test we use
 
 ```{r}
 var.test(patients$Weight~patients$Sex)
@@ -192,7 +199,7 @@ var.test(patients$Weight~patients$Sex)
 
 
 ```{r}
-t.test(patients$Weight~patients$Sex, var.equal=TRUE)
+t.test(patients$Weight~patients$Sex, var.equal=FALSE)
 ```
 
 If were unwilling to make a assumption of normality, a non-parametric test could be used.
@@ -305,7 +312,7 @@ paste("My age is", age)
 ![](images/exercise6b.png)
 
 
-## More words of caution
+## More words of warning
 
 ***Correlation != Causation***
 
@@ -320,7 +327,6 @@ http://tylervigen.com/spurious-correlations
 
 But no-one would ever take such trends seriously....would they?
 
-## Wrong!
 
 ![Cutting-down on Ice Cream was recommended as a safeguard against polio!](images/icecreamvspolio.jpg)
 

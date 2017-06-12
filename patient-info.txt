@@ -1,0 +1,101 @@
+ID	Race	Sex	Smokes	Height	Weight	State	Pet	Grade	Age
+AC/AH/001	White	Male	Non-Smoker	182.87	76.57	Georgia	Dog	2	85
+AC/AH/017	White	Male	Non-Smoker	179.12	80.43	Missouri	Dog	2	85
+AC/AH/020	Black	Male	Non-Smoker	169.15	75.48	Pennsylvania	None	2	47
+AC/AH/022	White	Male	Non-Smoker	175.66	94.54	Florida	Cat	1	72
+AC/AH/029	White	Female	Non-Smoker	164.47	71.78	Iowa	NA	2	70
+AC/AH/033	NA	Female	Smoker	158.27	69.9	Maryland	Dog	2	66
+AC/AH/037	White	Female	Non-Smoker	161.69	68.85	Pennsylvania	None	1	24
+AC/AH/044	White	Female	Non-Smoker	165.84	70.44	North Carolina	None	1	68
+AC/AH/045	White	Male	Non-Smoker	181.32	76.9	Louisiana	Dog	1	86
+AC/AH/048	Hispanic	Male	Non-Smoker	167.37	79.06	North Carolina	None	2	63
+AC/AH/049	White	Female	Non-Smoker	160.06	72.37	California	Horse	2	82
+AC/AH/050	White	Female	Non-Smoker	166.48	NA	Michigan	None	1	31
+AC/AH/052	White	Male	Smoker	175.39	92.22	Indiana	Bird	3	32
+AC/AH/053	White	Female	Smoker	164.7	75.69	Virginia	Dog	1	41
+AC/AH/057	White	Female	Smoker	163.79	65.76	Illinois	Cat	3	43
+AC/AH/061	Black	Male	Non-Smoker	181.13	72.33	Wisconsin	Dog	NA	87
+AC/AH/063	Hispanic	Male	Non-Smoker	169.24	73.3	Illinois	None	3	63
+AC/AH/076	White	Male	Non-Smoker	176.22	97.67	Louisiana	Cat	2	26
+AC/AH/077	Black	Male	Non-Smoker	174.09	72.2	Washington	Cat	3	54
+AC/AH/086	Black	Male	Smoker	NA	75.72	Georgia	Cat	3	62
+AC/AH/089	White	Male	Non-Smoker	179.24	75.54	California	None	2	87
+AC/AH/100	White	Female	Non-Smoker	161.92	69.92	Georgia	Dog	1	32
+AC/AH/104	White	Male	Smoker	169.85	90.63	Kentucky	None	1	87
+AC/AH/112	Black	Female	Non-Smoker	NA	63.54	California	NA	NA	29
+AC/AH/113	White	Female	Non-Smoker	168.24	69.57	Massachusetts	NA	2	57
+AC/AH/114	Hispanic	Male	Non-Smoker	NA	74.84	Pennsylvania	Bird	3	29
+AC/AH/115	Bi-Racial	Male	Smoker	183.21	83.36	California	Dog	2	72
+AC/AH/127	White	Male	Non-Smoker	167.75	82.06	Texas	Dog	1	44
+AC/AH/133	Hispanic	Male	Non-Smoker	NA	83.93	Washington	Cat	3	68
+AC/AH/150	White	Male	Smoker	181.56	79.54	Kentucky	Dog	1	65
+AC/AH/154	White	Female	Non-Smoker	160.03	64.3	California	Dog	1	23
+AC/AH/156	White	Male	Non-Smoker	165.62	76.72	California	Dog	1	67
+AC/AH/159	White	Male	Non-Smoker	181.64	96.91	Connecticut	Cat	2	35
+AC/AH/160	Asian	Female	Non-Smoker	159.67	71.88	Florida	Cat	2	80
+AC/AH/164	Hispanic	Male	Smoker	177.03	74.04	Florida	None	2	32
+AC/AH/171	White	Female	Non-Smoker	163.35	70.46	California	Bird	3	60
+AC/AH/176	Asian	Male	Non-Smoker	NA	83.65	Virginia	Dog	3	51
+AC/AH/180	White	Female	Non-Smoker	160.8	64.77	Oregon	Cat	1	88
+AC/AH/185	White	Male	Non-Smoker	166.46	76.83	Colorado	None	NA	40
+AC/AH/186	White	Female	Non-Smoker	157.95	67.41	New Jersey	Dog	3	31
+AC/AH/192	White	Male	Non-Smoker	180.61	83.59	Michigan	None	3	50
+AC/AH/198	White	Female	Non-Smoker	159.52	67.99	Missouri	Cat	2	60
+AC/AH/207	White	Female	Non-Smoker	163.01	65.19	Florida	Dog	2	54
+AC/AH/208	Hispanic	Female	Non-Smoker	165.8	71.77	Louisiana	None	1	26
+AC/AH/210	Hispanic	Female	Smoker	170.03	66.68	New York	Dog	NA	86
+AC/AH/211	White	Female	Non-Smoker	157.16	69.64	California	Cat	2	79
+AC/AH/213	White	Female	Smoker	164.58	72.99	Louisiana	Dog	1	27
+AC/AH/219	White	Female	Non-Smoker	163.47	NA	North Caroline	Bird	1	46
+AC/AH/220	White	Male	Non-Smoker	185.43	87.23	Florida	Cat	1	31
+AC/AH/221	White	Female	Non-Smoker	165.34	70.84	Michigan	Dog	NA	46
+AC/AH/225	White	Female	Non-Smoker	163.45	NA	Michigan	Cat	2	32
+AC/AH/233	White	Female	Non-Smoker	163.97	66.71	Ohio	Cat	3	58
+AC/AH/241	White	Female	Non-Smoker	161.38	73.55	Florida	Cat	3	71
+AC/AH/244	White	Female	Non-Smoker	160.09	NA	Maryland	None	NA	77
+AC/AH/248	White	Male	Non-Smoker	178.64	97.05	Indiana	Cat	1	82
+AC/AH/249	Hispanic	Female	Smoker	159.78	68.31	Alabama	Cat	2	34
+AC/SG/002	White	Female	Smoker	161.57	67.92	Arizona	Dog	3	25
+AC/SG/003	White	Female	Non-Smoker	161.83	66.03	Oregon	None	2	86
+AC/SG/008	White	Male	Smoker	169.66	77.3	Nevada	Dog	1	80
+AC/SG/009	White	Male	Non-Smoker	166.84	88.25	Vermont	Dog	1	43
+AC/SG/010	Asian	Female	Non-Smoker	159.32	64.92	New York	Cat	2	26
+AC/SG/015	White	Male	Smoker	NA	84.35	New Jersey	Dog	3	56
+AC/SG/016	Black	Female	Non-Smoker	161.84	69.97	Arizona	Cat	3	29
+AC/SG/046	Hispanic	Male	Non-Smoker	171.41	81.7	Mississippi	Bird	2	40
+AC/SG/055	White	Male	Non-Smoker	166.75	79.06	Illinois	Bird	3	62
+AC/SG/056	Asian	Female	Smoker	NA	67.46	Indiana	NA	3	53
+AC/SG/064	White	Male	Non-Smoker	169.16	90.08	Illinois	Cat	2	44
+AC/SG/065	White	Female	Non-Smoker	157.01	66.56	California	Dog	3	40
+AC/SG/067	White	Male	Non-Smoker	167.51	84.15	Pennsylvania	Bird	2	23
+AC/SG/068	Hispanic	Female	Non-Smoker	160.47	68.2	Tennessee	Cat	3	75
+AC/SG/072	Black	Female	Smoker	162.33	66.47	Californa	NA	3	70
+AC/SG/074	Hispanic	Male	Non-Smoker	NA	88.82	Georgia	None	NA	33
+AC/SG/084	Hispanic	Male	Non-Smoker	174.25	80.93	Virginia	Dog	2	64
+AC/SG/095	White	Female	Non-Smoker	158.94	65.14	Hawaii	Dog	1	25
+AC/SG/099	Asian	Male	Non-Smoker	NA	67.62	Ohio	Cat	1	77
+AC/SG/101	White	Female	Non-Smoker	159.23	69.96	Michigan	Dog	2	34
+AC/SG/107	White	Male	Non-Smoker	176.54	90.76	Hawaii	None	3	76
+AC/SG/116	Black	Male	Non-Smoker	184.34	90.41	Florida	None	3	89
+AC/SG/121	White	Female	Non-Smoker	163.94	71.47	Michigan	Cat	3	68
+AC/SG/122	Hispanic	Female	Non-Smoker	160.09	68.94	South Carolina	Dog	1	76
+AC/SG/123	White	Female	Smoker	162.32	72.72	North Caroline	Bird	1	58
+AC/SG/134	White	Female	Smoker	162.59	69.76	Texas	Cat	2	79
+AC/SG/139	White	Male	Non-Smoker	171.94	82.11	Michigan	None	1	76
+AC/SG/142	White	Female	Non-Smoker	NA	69.8	Kansas	Dog	3	48
+AC/SG/155	White	Female	Non-Smoker	158.35	69.72	California	Cat	3	64
+AC/SG/165	White	Female	Non-Smoker	162.18	67.81	Washington	Bird	1	51
+AC/SG/167	White	Female	Non-Smoker	159.38	70.37	Washington	None	2	84
+AC/SG/172	White	Male	Non-Smoker	171.45	84.29	Florida	Dog	2	50
+AC/SG/173	White	Female	Smoker	163.17	64.47	Californa	None	2	66
+AC/SG/179	White	Male	Non-Smoker	183.1	82.47	Ohio	Dog	3	52
+AC/SG/181	Hispanic	Male	Non-Smoker	177.14	88.7	Indiana	Cat	3	27
+AC/SG/182	Hispanic	Male	Smoker	171.08	72.51	Louisiana	None	3	81
+AC/SG/191	Hispanic	Female	Non-Smoker	159.33	70.68	Texas	None	3	33
+AC/SG/193	White	Male	Smoker	185.43	73.63	Iowa	Dog	3	67
+AC/SG/194	White	Female	Non-Smoker	162.65	73.99	Maryland	Cat	3	37
+AC/SG/197	White	Female	Non-Smoker	159.44	66.21	New York	Cat	1	89
+AC/SG/204	White	Female	Non-Smoker	164.11	70.66	California	Dog	3	65
+AC/SG/216	White	Female	Non-Smoker	159.13	66.96	Alabama	None	1	74
+AC/SG/217	White	Female	Non-Smoker	160.58	71.49	Ohio	None	1	31
+AC/SG/234	Hispanic	Female	Non-Smoker	164.88	NA	Pennsylvania	Cat	3	34

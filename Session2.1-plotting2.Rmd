@@ -37,8 +37,9 @@ output:
 - Elements of the graph are added to the canvas one layer at a time, and the picture built up in levels.
 - Lower levels are obscured by higher levels, 
     + allowing for blending, masking and overlaying of objects.
-- Caution: You can't undo the changes you make to the plot
-
+- You can't undo the changes you make to the plot
+    + you have to re-run the code from scratch
+    
 ![](http://cdn.inquisitr.com/wp-content/uploads/2012/08/jesus-christ-fresco.gif)
 
 [http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/](http://www.inquisitr.com/309687/jesus-painting-restoration-goes-wrong-well-intentioned-old-lady-destroys-100-year-old-fresco/)
@@ -47,14 +48,14 @@ output:
 - We will re-use the patients data from yesterday:
 
 ```{r}
-source("create-patients-data.R")
+patients <- read.delim("patient-info.txt")
 ```
 
 - Recall our patients dataset from yesterday
     + we might want to display other characteristics on the plot, e.g. gender of individual:
 
 ```{r}
-plot(patients$Age, patients$Weight, pch=16)
+plot(patients$Height, patients$Weight, pch=16)
 ```
 
 ##The points function
@@ -65,15 +66,15 @@ plot(patients$Age, patients$Weight, pch=16)
         + Hence we can use `points()` to highlight observations
         + ...or add a set of new observations
 ```{r }
-plot(patients$Age, patients$Weight, pch=16)
-points(40,68, pch="X")
+plot(patients$Height, patients$Weight, pch=16)
+points(160,90, pch="X")
 ```
 
 - Note that axis limits of the existing plot are not altered
 - Often it is useful to create a blank 'canvas' with the correct labels and limits
 
 ```{r}
-plot(patients$Age, patients$Weight, type="n")
+plot(patients$Height, patients$Weight, type="n")
 ```
 
 ## Adding points to differentiate gender
@@ -100,8 +101,8 @@ patients$Weight[males]
     + R won't give a warning or error if you attempt to plot points outside the axis limits
 
 ```{r}
-plot(patients$Age, patients$Weight, type="n")
-points(patients$Age[males], patients$Weight[males], 
+plot(patients$Height, patients$Weight, type="n")
+points(patients$Height[males], patients$Weight[males], 
        pch=16, col="steelblue")
 
 ```
@@ -119,10 +120,10 @@ patients[females,]
     + this is why creating the blank plot containing the limits of the data is useful
 
 ```{r}
-plot(patients$Age, patients$Weight, type="n")
-points(patients$Age[males], patients$Weight[males],
+plot(patients$Height, patients$Weight, type="n")
+points(patients$Height[males], patients$Weight[males],
        pch=16, col="steelblue")
-points(patients$Age[females], patients$Weight[females],
+points(patients$Height[females], patients$Weight[females],
        pch=16, col="orangered1")
 
 ```
@@ -133,10 +134,10 @@ points(patients$Age[females], patients$Weight[females],
 
 
 ```{r }
-plot(patients$Age, patients$Weight, type="n")
-points(patients$Age[males], patients$Weight[males],
+plot(patients$Height, patients$Weight, type="n")
+points(patients$Height[males], patients$Weight[males],
        pch=16, col="steelblue")
-points(patients$Age[females], patients$Weight[females],
+points(patients$Height[females], patients$Weight[females],
        pch=17, col="orangered1",
         xlab="Age of Patient",
        ylab="Weight",
@@ -154,10 +155,10 @@ points(patients$Age[females], patients$Weight[females],
     + also recognises shortcuts such as ***topleft*** and ***bottomright***...
 
 ```{r}
-plot(patients$Age, patients$Weight, type="n")
-points(patients$Age[males], patients$Weight[males], 
+plot(patients$Height, patients$Weight, type="n")
+points(patients$Height[males], patients$Weight[males], 
        pch=16, col="steelblue")
-points(patients$Age[females], patients$Weight[females],
+points(patients$Height[females], patients$Weight[females],
        pch=17, col="orangered1")
 legend("topleft", legend=c("M","F"), 
        col=c("steelblue","orangered1"), pch=c(16,17))
@@ -166,11 +167,11 @@ legend("topleft", legend=c("M","F"),
 ##Adding text
 
 - Text can also be added to a plot in a similar manner
-    + The `labels` argument specifies the text we want to add
+    + the `labels` argument specifies the text we want to add
     
 ```{r}
-plot(patients$Age, patients$Weight, pch=16)
-text(patients$Age, patients$Weight, labels=patients$Full_Name)
+plot(patients$Height, patients$Weight, pch=16)
+  text(patients$Height, patients$Weight, labels=patients$Race)
 ```
 
 - In the above we used to same co-ordinates from the original plot to place the text
@@ -178,27 +179,17 @@ text(patients$Age, patients$Weight, labels=patients$Full_Name)
     + again, we need to take care as the axis limits are defined in the original plot
     
 ```{r}
-plot(patients$Age, patients$Weight, pch=16)
-text(40,70, labels = "X",col="red")
-text(60,80, labels = "Y",col="blue")
+plot(patients$Height, patients$Weight, pch=16)
+text(160,95, labels = "X",col="red")
+text(90,100, labels = "Y",col="blue")
 ```
 
 
-- Can alter the positions so they don't interfere with the points of the graph
-    
-```{r }
-plot(patients$Age, patients$Weight, pch=16,
-     xlim=c(10,70), ylim=c(60,75))
-text(patients$Age-1, patients$Weight-0.5, 
-     labels=patients$Full_Name)
-```
-
-- Alternatively, you can use the argument `adj`
 - To aid our interpretation, it is often helpful to add guidelines
     + `grid()` is one easy way of doing this:
     
 ```{r}
-plot(patients$Age, patients$Weight, pch=16)
+plot(patients$Height, patients$Weight, pch=16)
 grid(col="steelblue")
 ```
 
@@ -209,8 +200,8 @@ grid(col="steelblue")
     + can specify multiple lines in a vector
     
 ```{r}
-plot(patients$Age, patients$Weight, pch=16)
-abline(v=40, col="red")
+plot(patients$Height, patients$Weight, pch=16)
+abline(v=160, col="red")
 abline(h=c(65,70,75), col="blue")
 ```
 
@@ -228,8 +219,7 @@ abline(h=c(65,70,75), col="blue")
         
 ```{r}
 par(mfrow=c(1,2))
-plot(patients$Age, patients$Weight, pch=16,
-     xlim=c(10,70), ylim=c(60,75))
+plot(patients$Height, patients$Weight, pch=16)
 boxplot(patients$Weight ~ patients$Sex)
 
 ```
@@ -246,7 +236,7 @@ boxplot(patients$Weight ~ patients$Sex)
     
 ```{r}
 pdf("ExampleGraph.pdf")
-plot(rnorm(1:10))
+boxplot(patients$Weight ~ patients$Sex)
 dev.off()
 ```
 
@@ -261,7 +251,7 @@ dev.off()
     
 ```{r}
 pdf("mygraph.pdf")
-plot(patients$Age, patients$Weight, pch=16)
+plot(patients$Height, patients$Weight, pch=16)
 abline(v=40, col="red")
 abline(h=c(65,70,75), col="blue")
 boxplot(patients$Weight ~ patients$Sex)
@@ -278,8 +268,8 @@ dev.off()
 - We can specify the dimensions of the plot, and other properties of the file (`?pdf`)
 
 ```{r}
-pdf("ExampleGraph.pdf", width=10, height=10)
-plot(rnorm(1:10))
+pdf("ExampleGraph.pdf", width=10, height=5)
+boxplot(patients$Weight ~ patients$Sex)
 dev.off()
 ```
 
@@ -289,7 +279,7 @@ dev.off()
     
 ```{r}
 png("ExampleGraph.png")
-plot(rnorm(1:10))
+boxplot(patients$Weight ~ patients$Sex)
 dev.off()
 ```
 

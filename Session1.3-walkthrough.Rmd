@@ -20,21 +20,18 @@ output:
     + `read.csv(), read.delim()`
 2. Analysis
     + Manipulating & reshaping the data
+        + perhaps dealing with "missing data"
     + Any maths you like
-    + Plotting the outcome
+    + Diagnostic Plots
 3. Writing out results
     + `write.table()`
     + `write.csv()`
   
-##A simple walkthrough
+## A simple walkthrough
 
-- 50 neuroblastoma patients were tested for NMYC gene copy number by interphase nuclei FISH:
-      + Amplification of NMYC correlates with worse prognosis
-      + We have count data
-      + Numbers of cells per patient assayed
-          + For each we have NMYC copy number relative to base ploidy
-- We need to determine which patients have amplifications
-    + (i.e > 33% of cells show NMYC amplification)
+- We have data from 100 patients that given consent for their data to use in future studies
+- A researcher wants to undertake a study involving people that are overweight
+- We will walkthrough how to filter the data and write a new file with the candidates for the study    
     
 ##The Working Directory (wd)
 
@@ -59,27 +56,42 @@ getwd()
 ```
 
 - If the file you want to read is in your working directory, you can just use the file name
-```{r}
+
+```{r eval=FALSE}
 list.files()
+```
+
+- The `file.exists` function does exactly what it says on the tin!
+    + a good sanity check for your code
+
+```{r}
+file.exists("patient-info.txt")
 ```
 
 - Otherwise you need the *path* to the file
     + you can get this using **`file.choose()`**
     
+- If you unsure about specifying a file path at the command line, this [online tutorial](http://rik.smith-unna.com/command_line_bootcamp/?id=vczhybjhtyt) will give you hands-on practice
+    
 ##1. Read in the data
 
 - The data are a tab-delimited file. Each row is a record, each column is a field. Columns are separated by tabs in the text
-- We need to read in the results and assign it to an object (`rawdata`)
+- We need to read in the results and assign it to an object (`patients`)
 
 ```{r}
-rawData <- read.delim("countData.txt")
+patients <- read.delim("patient-info.txt")
+
 ```
 
 In the latest RStudio, there is the option to import data directly from the File menu. ***File*** -> ***Import Dataset*** -> ***From Csv***
 
 - If the data are comma-separated, then use either the argument `sep=","` or the function `read.csv()`:
-```{r eval=FALSE}
-read.csv("countData.csv")
+- You need to make sure you use the correct function
+    + can you explain the output of the following lines of code?
+
+```{r }
+tmp <- read.csv("patient-info.txt")
+head(tmp)
 ```
 - For full list of arguments:
 ```{r}
@@ -93,13 +105,13 @@ read.csv("countData.csv")
     
 ```{r}
 # View the first 10 rows to ensure import is OK
-rawData[1:10,]  
+patients[1:10,]  
 ```
 
 
 - or use the `View()` function to get a display of the data in RStudio:
 ```{r}
-View(rawData)
+View(patients)
 ```
 
 ##1c. Understanding the object
@@ -107,39 +119,33 @@ View(rawData)
 - Once we have read the data successfully, we can start to interact with it
 - The object we have created is a *data frame*:
 ```{r}
-class(rawData)
+class(patients)
 ```
 
 - We can query the dimensions:
 
 ```{r}
-ncol(rawData)
-nrow(rawData)
-dim(rawData)
+ncol(patients)
+nrow(patients)
+dim(patients)
 ```
 
-- Or the structure of an object:
-     + TIP: In RStudio, window *Environment*, click the blue arrow in the left of an object's name, in order to see the object structure
-```{r}
-str(rawData)
-```
 
 - The names of the columns are automatically assigned:
 
 ```{r}
-colnames(rawData)
+colnames(patients)
 ```
 
 - We can use any of these names to access a particular column:
     + and create a vector
     + TOP TIP: type the name of the object and hit TAB: you can select the column from the drop-down list!
 ```{r}
-rawData$Nuclei
-
+patients$ID
 
 ```
 
-##Word of caution
+## Word of warning
 
 
 ![](images/tolstoy.jpg)
@@ -165,66 +171,86 @@ You will make your life a lot easier if you keep your data **tidy** and ***organ
 - Often R functions will handle `NA`s gracefully:
 
 ```{r}
-x <- c(1, NA, 3)
-length(x)
+length(patients$Height)
+mean(patients$Height)
 ```
 
 - However, sometimes we have to tell the functions what to do with them. 
 - R has some built-in functions for dealing with `NA`s, and functions often have their own arguments (like `na.rm`) for handling them:
-
+    + annoyingly, different functions have different argument names to change their behaviour with regards to `NA` values. *Always check the documentation*
 
 ```{r}
-mean(x, na.rm = TRUE)
+mean(patients$Height, na.rm = TRUE)
 
-mean(na.omit(x))
+mean(na.omit(patients$Height))
 ```
 
 ##2. Analysis (reshaping data and maths)
 
-- Our analysis involves identifying patients with > 33% NB amplification
-    + we can use the **`which()`** function to select indices from a logical vector that are `TRUE`
-    
+- Our analysis involves identifying patients with extreme BMI
+    + we will define this as being two standard deviations from the mean
+
 ```{r}
 # Create an index of results:
-prop <- rawData$NB_Amp / rawData$Nuclei
-
-```
-
-```{r}
-prop > 0.33
-```
-
-```{r}
-amp <- which(prop > 0.33) 
-amp
+BMI <- (patients$Weight)/((patients$Height/100)^2)
+upper.limit <- mean(BMI,na.rm = TRUE) + 2*sd(BMI,na.rm = TRUE)
+upper.limit
 ```
 
 
-- We can plot a simple chart of the % NB amplification
-    + Note that two samples are amplified
-    + Plotting will be covered in detail shortly
+- We can plot a simple chart of the BMI values 
+    + add a vertical line to indicate the cut-off
+    + plotting will be covered in detail shortly..
 
 ```{r}
-plot(prop, ylim=c(0,1))
+plot(BMI)
 # Add a horizonal line:
-abline(h=0.33) 
+abline(h=upper.limit) 
 ```
 
 - It is also useful to save the variable we have computed as a new column in the data frame
 
 ```{r}
-round(prop,2)
-rawData$Proportion <- round(prop,2)
-head(rawData)
+round(BMI,1)
+patients$BMI <- round(BMI,1)
+head(patients)
 ```
 
-
-##3. Outputting the results
-
-- We write out a data frame of results (patients > 33% NB amplification) as a 'comma separated values' text file (CSV):
+- To actually select the candidates we can use a logical expression to test the values of the BMI vector being greater than the upper limit
+    + if the second line looks a bit weird, remember that `<-` is doing an assignment. The the value we are assigning to our new variable is the logical (`TRUE` or `FALSE`) vector giving by testing each item in `BMI` against the `upper.limit`
+    
 ```{r}
-write.csv(rawData[amp,], file="selectedSamples.csv")
+BMI > upper.limit
+candidates <- BMI > upper.limit
 ```
+
+We have seen that a logical vector can be used to subset a data frame
+
+- However, in our case the result looks a bit funny
+- Can you think why this might be?
+
+```{r}
+patients[candidates,]
+```
+
+The `which` function will take a logical vector and return the indices of the `TRUE` values
+
+- This can then be used to subset the data frame
+
+```{r}
+which(BMI > upper.limit)
+candidates <- which(BMI > upper.limit)
+```
+
+
+## 3. Outputting the results
+
+- We write out a data frame of candidates (patients with BMI more than standard deviations from the mean) as a 'comma separated values' text file (CSV):
+
+```{r}
+write.csv(patients[candidates,], file="selectedSamples.csv")
+```
+
 - The output file is directly-readable by Excel
 - It's often helpful to double check where the data has been saved. Use the *get working directory* function:
 
@@ -234,16 +260,33 @@ list.files() # list files in working directory
 
 ```
 
+
+To recap, the set of R commands we have used is:-
+
+```{r}
+patients <- read.delim("patient-info.txt")
+BMI <- (patients$Weight)/((patients$Height/100)^2)
+upper.limit <- mean(BMI,na.rm = TRUE) + 2*sd(BMI,na.rm = TRUE)
+plot(BMI)
+# Add a horizonal line:
+abline(h=upper.limit) 
+patients$BMI <- round(BMI,1)
+candidates <- which(BMI > upper.limit)
+write.csv(patients[candidates,], file="selectedSamples.csv")
+
+```
+
 ##Exercise: Exercise 3
 
-- Patients are *near normal* if:
-`(NB_Amp / Nuclei < 0.33 & NB_Del == 0)`
-- Modify the condition in our previous code to find these patients
-- Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
+- A separate study is looking for patients that are underweight and also smoke; 
+  + Modify the condition in our previous code to find these patients
+  + e.g. having BMI that is 2 standard deviations *less* than the mean BMI
+  + Write out a results file of the samples that match these criteria, and open it in a spreadsheet program
 
 
 ```{r}
 ### Your Answer Here ### 
+
 
 
 ```

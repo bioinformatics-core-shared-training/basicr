@@ -35,12 +35,13 @@ output:
     + e.g. it puts a point at:
         + x = 1, y = 70.8
         + x = 2, y = 67.9 etc...
-- We are going to be using the patients data frame, which we can re-create by running the following R script
+- We are going to be using the patients data frame, read using the following command
 
 ```{r}
-source("create-patients-data.R")
+patients <- read.delim("patient-info.txt")
 ```
 
+Remember that `$` can be used to access a particular column. The result is a vector, which is the most-basic type of data used in plotting
         
 ```{r}
 patients$Weight
@@ -264,8 +265,7 @@ plot(patients$Age, patients$Weight, cex = 0.2)
 
 ```{r}
 plot(patients$Age, patients$Weight, 
-     pch = 1:10, cex = 1:5,
-     col = c("red", "orange", "green", "blue"))
+     col = c("red","blue"))
 ```
 
 ##Other plots use the same arguments
@@ -309,7 +309,14 @@ boxplot(patients$Weight~patients$Sex,
 
 
 - More aesthetically-pleasing palettes are provided by the **`RColorBrewer`** package:
-    + Can also check for palettes that are accepted for those with colour-blindness
+    + can also check for palettes that are accepted for those with colour-blindness
+-  You may need to *install* `RColorBrewer` with the following line of code
+    + remember, you only need to do this once 
+    
+```{r eval=FALSE}
+install.packages("RColorBrewer")
+```
+
 
 ```{r}
 library(RColorBrewer)
