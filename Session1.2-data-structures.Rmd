@@ -222,7 +222,7 @@ patients
 
 
 
-##Matrices
+## Matrices
 
 - Data frames are R's speciality, but R also handles matrices:
     + All columns are assumed to contain the same data type, e.g. numerical
@@ -361,6 +361,8 @@ s[a == 2]
 
 - All rows, but in the order 10 to 1.
 
+HINT: create a sequence using the `:` shortcut we saw earlier, to index the rows
+
 |  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
 |--|-------|-------|--------------|:----:|--:|------:|:-----:|
 |10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
@@ -370,7 +372,7 @@ s[a == 2]
 |6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
 |5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
 |4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
-|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALS
+|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
 |2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
 |1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE|
 
