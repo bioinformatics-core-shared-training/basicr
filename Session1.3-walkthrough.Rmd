@@ -217,7 +217,7 @@ head(patients)
 ```
 
 - To actually select the candidates we can use a logical expression to test the values of the BMI vector being greater than the upper limit
-    + if the second line looks a bit weird, remember that `<-` is doing an assignment. The the value we are assigning to our new variable is the logical (`TRUE` or `FALSE`) vector giving by testing each item in `BMI` against the `upper.limit`
+    + if the second line looks a bit weird, remember that `<-` is doing an assignment. Thevalue we are assigning to our new variable is the logical (`TRUE` or `FALSE`) vector given by testing each item in `BMI` against the `upper.limit`
     
 ```{r}
 BMI > upper.limit
