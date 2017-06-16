@@ -142,6 +142,10 @@ points(patients$Height[females], patients$Weight[females],
         xlab="Age of Patient",
        ylab="Weight",
        main="Relationship between Age and Weights")
+
+## The arguments xlab, ylab, main in the points functions are not used
+## Need to specify these labels when you create the plot initially
+
 ```
 
 
@@ -175,13 +179,19 @@ plot(patients$Height, patients$Weight, pch=16)
 ```
 
 - In the above we used to same co-ordinates from the original plot to place the text
-- Can also add text at arbitrary positions
-    + again, we need to take care as the axis limits are defined in the original plot
-    
+- We can use arguments `pos` or `adj` to offset the positions of the labels
+    + `pos` can be 1, 2, 3, 4 for below, left, above, right
+    + `adj` is an adjustment in the range 0 to 1
+
 ```{r}
 plot(patients$Height, patients$Weight, pch=16)
-text(160,95, labels = "X",col="red")
-text(90,100, labels = "Y",col="blue")
+  text(patients$Height, patients$Weight, labels=patients$Race,pos = 3)
+```
+
+
+```{r}
+plot(patients$Height, patients$Weight, pch=16)
+  text(patients$Height, patients$Weight, labels=patients$Race,adj =0.1)
 ```
 
 
