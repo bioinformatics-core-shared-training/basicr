@@ -390,7 +390,7 @@ They can be added afterwards with the `axis` function
 ```{r}
 plot(patients$Age, patients$Weight, pch=16,axes=FALSE)
 axis(1)
-axis(4, at = c(60,65,70,75),labels = c("60kg","65kg","70kg","75kg"))
+axis(4, at = c(65,75,85,95),labels = c("65kg","75kg","85kg","95kg"))
 box()
 
 ```
