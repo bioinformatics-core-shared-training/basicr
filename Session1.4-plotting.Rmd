@@ -289,6 +289,7 @@ boxplot(patients$Weight~patients$Sex,
     + For third plot, see the rainbow function (`?rainbow`)
     + Don't worry too much about getting the colours exactly correct
     + The `las` argument changes the label orientation. See `?par`.
+    + look at the arguments to `boxplot` to see how to change the names printed under each box
     
 ![](images/exercise4b.png)
 
