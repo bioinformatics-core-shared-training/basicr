@@ -252,9 +252,9 @@ frames using commas:
 - Try and predict what each of the following commands will do:-
 
 ```{r}
-e[1,2]
-
+patients[2,1]
 ```
+
 
 ```{r}
 patients[1,2]
