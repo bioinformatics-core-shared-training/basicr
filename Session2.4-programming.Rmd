@@ -112,9 +112,9 @@ However, this for loop is doing the calculations but not storing the results
 
 
 ```{r}
-t <- t.test(as.numeric(normalizedValues[1,]) ~ factor(patientMetadata$er))
-names(t)
-t$statistic
+testResult <- t.test(as.numeric(normalizedValues[1,]) ~ factor(patientMetadata$er))
+names(testResult)
+testResult$statistic
 ```
 
 
@@ -124,8 +124,8 @@ t$statistic
 ```{r}
 stats <- NULL
 for(i in 1:10) {
-  tmp <- t.test(as.numeric(normalizedValues[i,]) ~ factor(patientMetadata$er))
-  stats[i] <- tmp$statistic
+  testResult <- t.test(as.numeric(normalizedValues[i,]) ~ factor(patientMetadata$er))
+  stats[i] <- testResult$statistic
   }
 stats
 ```
@@ -205,6 +205,7 @@ is.character(10)
 
 - `is.na()` is useful for seeing if an `NA` value is found
     + cannot use `== NA`!
+- could be used to check if a gene symbol is found in the data before proceeding with statistical test
 
 ```{r}
 match("foo", geneAnnotation$HUGO.gene.symbol)
@@ -225,13 +226,13 @@ is.na(match("foo", geneAnnotation$HUGO.gene.symbol))
 pdf("Chromosome8Genes.pdf")
 pvals <- NULL
 for (i in 1:18) {
-  tmp <- t.test(as.numeric(chr8Expression[i,]) ~ factor(patientMetadata$er))
-  pvals[i] <- tmp$p.value
-  if(tmp$p.value < 0.05){
+  testResult <- t.test(as.numeric(chr8Expression[i,]) ~ factor(patientMetadata$er))
+  pvals[i] <- testResult$p.value
+  if(testResult$p.value < 0.05){
     boxplot(as.numeric(chr8Expression[i,]) ~ factor(patientMetadata$er),
             main=chr8Genes$HUGO.gene.symbol[i])
-    }
-  } 
+  }
+} 
 pvals
 dev.off()
 
@@ -266,7 +267,8 @@ while(f != 0 ){
     + providing you have processed the data appropriately!
 - Let's take a list of "most-variable genes"
     + see below for how we identified such genes
-    
+- `heatmap` requires a matrix object rather than a data frame
+
 ```{r}
 genelist <- c("CLIC6","TFF3","PDZK1","SCUBE2","CYP2B6","HOXB13","NAT1","LY6D","SLC7A2")
 probes   <- geneAnnotation$probe[match(genelist, geneAnnotation$HUGO.gene.symbol)]
@@ -283,16 +285,21 @@ heatmap(as.matrix(normalizedValues[exprows,]))
 - We can provide a colour legend for the samples
 - Adjust colour of cells
 - Label the rows according to gene name
+- Don't print the sample names as they are too cluttered
 
 ```{r}
 library(RColorBrewer)
+
 sampcol <- rep("blue", ncol(normalizedValues))
+
 sampcol[patientMetadata$er == 1 ] <- "yellow"
+
 rbPal <- brewer.pal(10, "RdBu")
+
 heatmap(as.matrix(normalizedValues[exprows,]), 
         ColSideColors = sampcol, 
         col=rbPal,
-        labRow = genelist)
+        labRow = genelist,labCol="")
 ```
 
 - see also

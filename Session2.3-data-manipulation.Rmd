@@ -44,6 +44,9 @@ output:
 
 ## Peek at the data
 
+- `gene.expression.txt` is a tab-delimited file, so we can use `read.delim` to import it
+- here the `head` function is used as a convenient way to see the first six rows of the resulting data frame
+
 ```{r}
 normalizedValues <- read.delim("gene.expression.txt")
 head(normalizedValues)
@@ -276,7 +279,8 @@ We have expression values and want to visualise them against our categorical dat
 - use a boxplot, for example
 - however, we have to first make sure our values are treat as numeric data
 - as we created the subset of a data frame, the result was also a data frame
-    + use `as.numeric`
+    + use `as.numeric` to create a vector that we can plot
+    + various `as.` functions exist to convert between various data types
 
 
 ```{r}
@@ -302,7 +306,7 @@ geneAnnotation    <- read.delim("gene.description.txt",stringsAsFactors = FALSE)
 patientMetadata <- read.delim("cancer.patients.txt",stringsAsFactors = FALSE)
 normalizedValues    <- read.delim("gene.expression.txt")
 
-rowInd      <- match("ESR1", geneAnnotation[,2])
+rowInd      <- match("ESR1", geneAnnotation$HUGO.gene.symbol)
 myProbe    <- geneAnnotation$probe[rowInd]
 myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
 
@@ -354,7 +358,7 @@ patientMetadata
 - Such sanity checks are important to check to your code
 
 ```{r}
-rowInd      <- match("ESR1", geneAnnotation[,2])
+rowInd      <- match("ESR1", geneAnnotation$HUGO.gene.symbol)
 myProbe    <- geneAnnotation$probe[rowInd]
 myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
 
@@ -386,7 +390,7 @@ all(colnames(normalizedValues) == patientMetadata$samplename)
 And we can now proceed to perform the analysis and can the result we expect
 
 ```{r}
-rowInd      <- match("ESR1", geneAnnotation[,2])
+rowInd      <- match("ESR1", geneAnnotation$HUGO.gene.symbol)
 myProbe    <- geneAnnotation$probe[rowInd]
 myGeneExpression <- normalizedValues[match(myProbe,rownames(normalizedValues)),]
 
