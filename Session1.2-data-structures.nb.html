@@ -267,7 +267,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Introduction to Solving Biological Problems Using R - Day 1</h1>
 <h4 class="author"><em>Mark Dunning, Suraj Menon and Aiora Zabala. Original material by Robert Stojnić, Laurent Gatto, Rob Foy, John Davey, Dávid Molnár and Ian Roberts</em></h4>
-<h4 class="date"><em>Last modified: 15 Jun 2017</em></h4>
+<h4 class="date"><em>Last modified: 16 Jun 2017</em></h4>
 
 </div>
 
@@ -507,9 +507,8 @@ secondName &lt;- c(&quot;Jones&quot;, &quot;Parker&quot;, &quot;Evans&quot;, &qu
          &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;)
 sex</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIk1hbGVcIiAgIFwiRmVtYWxlXCIgXCJNYWxlXCIgICBcIkZlbWFsZVwiIFwiTWFsZVwiICAgXCJNYWxlXCIgICBcIkZlbWFsZVwiIFwiTWFsZVwiICAgXCJNYWxlXCIgIFxuWzEwXSBcIkZlbWFsZVwiXG4ifQ== -->
-<pre><code> [1] &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;  
-[10] &quot;Female&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIk1hbGVcIiAgIFwiRmVtYWxlXCIgXCJNYWxlXCIgICBcIkZlbWFsZVwiIFwiTWFsZVwiICAgXCJNYWxlXCIgICBcIkZlbWFsZVwiIFwiTWFsZVwiICAgXCJNYWxlXCIgICBcIkZlbWFsZVwiXG4ifQ== -->
+<pre><code> [1] &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -685,10 +684,40 @@ Levels: Female Male</code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHMkRmlyc3RfTmFtZVxuYGBgIn0= -->
 <pre class="r"><code>patients$First_Name</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIkFkYW1cIiAgICBcIkV2ZVwiICAgICBcIkpvaG5cIiAgICBcIk1hcnlcIiAgICBcIlBldGVyXCIgICBcIlBhdWxcIiAgICBcIkpvYW5uYVwiICBcIk1hdHRoZXdcIlxuIFs5XSBcIkRhdmlkXCIgICBcIlNhbGx5XCIgIFxuIn0= -->
-<pre><code> [1] &quot;Adam&quot;    &quot;Eve&quot;     &quot;John&quot;    &quot;Mary&quot;    &quot;Peter&quot;   &quot;Paul&quot;    &quot;Joanna&quot;  &quot;Matthew&quot;
- [9] &quot;David&quot;   &quot;Sally&quot;  </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIkFkYW1cIiAgICBcIkV2ZVwiICAgICBcIkpvaG5cIiAgICBcIk1hcnlcIiAgICBcIlBldGVyXCIgICBcIlBhdWxcIiAgICBcIkpvYW5uYVwiICBcIk1hdHRoZXdcIiBcIkRhdmlkXCIgIFxuWzEwXSBcIlNhbGx5XCIgIFxuIn0= -->
+<pre><code> [1] &quot;Adam&quot;    &quot;Eve&quot;     &quot;John&quot;    &quot;Mary&quot;    &quot;Peter&quot;   &quot;Paul&quot;    &quot;Joanna&quot;  &quot;Matthew&quot; &quot;David&quot;  
+[10] &quot;Sally&quot;  </code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="removing-variables" class="section level2">
+<h2>Removing variables</h2>
+<p>Now that we are happy with our data frame, we no longer have any use for the vectors that were used to create it</p>
+<ul>
+<li>R has a function called <code>rm</code> that will allow us to remove variables</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoicm0oYWdlKSJ9 -->
+<pre class="r"><code>rm(age)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Once something has been removed, we can no longer use it</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYWdlIn0= -->
+<pre class="r"><code>age</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Multiple objects can be removed at the same time</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdCA9IGMoXCJhZ2VcIixcImZpcnN0TmFtZVwiLFwic2Vjb25kTmFtZVwiLFwic2V4XCIsXCJ3ZWlnaHRcIixcImNvbnNlbnRcIikpXG5gYGAifQ== -->
+<pre class="r"><code>rm(list = c(&quot;age&quot;,&quot;firstName&quot;,&quot;secondName&quot;,&quot;sex&quot;,&quot;weight&quot;,&quot;consent&quot;))</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -719,7 +748,7 @@ myNewVariable</code></pre>
 <pre class="r"><code>patients$ID &lt;- paste(&quot;Patient&quot;, 1:10)
 patients</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFVM1c3VE1CUjJrMlp0d3pwTjRvcTd2TUFxdGpKZ0VoSXB0SlZXN1NkdEw5Z2Q4aHF2amViYVUrSzI2eDJ2QWEvQkMvQUFjTVVMOEE1Y2NUT3dZNThzc2JDVW5PUHYyTWZmK1h5U1NmL3F5TC95RVVJT2NsMFhPYTUwNjQ1ODFWQWR0WlM5UjhoOUtwMm1mUGJsNDV0QXZSZmpwZkhkd1pvQVBPSUxCdjQ1VHJmRzl5SWlTQXFCQ0srbzhYZEdIRE9HemF4eGpvVllrQTNzNnVOMUVzTmtpaW5kV2pTOEVXY2tnMXdSVG0rTFU3ekJHck9zbkttWXZNT1B5eHA5ekJKQ0lkWVl4QnVjeHNYUzZUSVJDNGhOK0RWSlJYSGNoNFJtbkZtTWZDVk1VS2JsUzNtQ0NqVmZxUlNVK2ZsS3E2Qk04a211V0ZDbXVxdDBDNnA4OTdSK1FaVjIyK2dZbE9tM2N6V0RhaEc3dWFvQmxPSzI4MUpVUTZnbXFOci8rSlZtMmFGa3JaaHBRUnhBaDJTSktYbHNDdWxYOTNremlqUFlWaVM3d1RQQlUrazlxRElWcmZBVTVTTThOcmIzU2R1aHNXOE0vdGJZZ2JHaGlaOFplNGxnNkx6anIxMDF3dWpQWnptK2hKT2Zlbjd4Vzl2Sk00MlB0OXBlZnRONXhyKzBuWng5bCtOSEdPWEx1MFpDMzhoVk0yZlZVSFdVOFhJSHRTSXNFc0pFY0dnRFJ6YlF0WUVYTm5Cc0F5OXQ0SlVOdkxhQkUyalNndGh6K3dZWlhoSzR3U1lzSHlacEpqNWV5QkQwOUpUTU9JdkxVR3U0b3JRTXVGTnlEMjV2VG9wdmpTVHpoWUFQOFQxbm1TUmlwczVwMytMVFN2bW1BNXhVU3p2NjV0V2RxSVh1WDZ2Yi9CZ0wzTGxKRlkrODR5cnBHdnhPSlBKSW1VZjlDejFyY3kyMWdQMFZVNGZIQjdQRml0MGVISjZVdWdFWlJqV0RnZC9VWjlhQm1RZVZFelpQR09qZ1VYeE40Tis1SjZ2TWkremNwVW1oaGkvUnJDTzR3TERPbjNFS2lQNmNIdjRCOFNwdUF2b0ZBQUE9In0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFVUzI3Yk1CQ2xKU3UyMVRnSTBGVjN1a0NNMUc3NkFRSlVibTBETWZLUjdVV3pLeGlMaVlYUVpDRFJkcnpyTmRwcjlBSTlRTHZxQlhxSHJycEpTNG9jUlNKS1FKcmhHM0w0NW5HazZlQ3k2MS82Q0NFSHVhNkxIRmU2ZFVlK2FxaU9Xc3JlSStRK2xVNVRQdnZ5OFUyZzNvL3gwdmp1Y0UwQUh2TUZBLzhNcDF2amV4RVJKSVZBaEZmVStEdGpqaG5EWnRZNHcwSXN5QVoyRGZBNmlXRXl3NVJ1TFJyZW1ET1NRYTRJcDdmRktkNXdqVmxXemxSTTN1SEhaWTBCWmdtaEVHc000dzFPNDJMcGJKbUlCY1NtL0lxa29qanVRMEl6eml4R3ZoSW1LTlB5cFR4QmhacXZWQXJLL0h5bFZWQW0rU1JYTENoVDNWVzZCVlcrZTFxL29FcTdiWFFNeXZUYnVacEJ0WWpkWE5VQVNuSGJlU21xSVZRVFZPMS8vRXF6N0ZDeVZzeTBJQTZnSTdMRWxEdzJoZlNyKzd3NXhSbHNLNUpkNDduZ3FmUWVWSm1LVm5pQzhoRWVHZHYvcE8zSTJHT0R2elYyYUd4bzRxZkdYaUFZT3Uva2EwK05NUHJ6V1k0djRmU25ucC8vMW5iNlRPT1RyYllYMzNTZXlTOXRwNmZmNWZnUlJ2bnlucEhRTjNMVnpGazFWQjFsdk54QnJRaUxoREFSUExlQnJnMzBiT0NGRFJ6WndFc2JlR1VEcjIzZ0RUUnBRZXpRdmtHR2x3UnVzQW5MUjBtYWlZL25NZ1E5UFNOenp1SXkxQnF0S0MwRDdvemNnOXUvSWNXM1JwS2JoWUFQOFQxbm1TUmlwczdKd09MVFN2bW1BNXhVU3p2NjV0V2RxSVh1WDZ2Yi9CZ0wzTGxPRlkrODR5cnBHdnhPSlBKSW1VZjlDejFyY3kyMWdQMFZVNGZIQi9QRml0MGVkQTlMM1lBTW81ckJ3Ry9xTSt2QXpJUEtDYnRKR09qZ1VYeEY0Tis1SjZ2TWkremNwVW1oaGkvUnJDTzR3TERPbjNNS2lQNmNIdjRCU2pOWGFmb0ZBQUE9In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[7],"type":["lgl"],"align":["right"]},{"label":["ID"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","4":"Male","5":"50","6":"70.8","7":"TRUE","8":"Patient 1"},{"1":"Eve","2":"Parker","3":"Eve Parker","4":"Female","5":"21","6":"67.9","7":"TRUE","8":"Patient 2"},{"1":"John","2":"Evans","3":"John Evans","4":"Male","5":"35","6":"75.3","7":"FALSE","8":"Patient 3"},{"1":"Mary","2":"Davis","3":"Mary Davis","4":"Female","5":"45","6":"61.9","7":"TRUE","8":"Patient 4"},{"1":"Peter","2":"Baker","3":"Peter Baker","4":"Male","5":"28","6":"72.4","7":"FALSE","8":"Patient 5"},{"1":"Paul","2":"Daniels","3":"Paul Daniels","4":"Male","5":"31","6":"69.9","7":"FALSE","8":"Patient 6"},{"1":"Joanna","2":"Edwards","3":"Joanna Edwards","4":"Female","5":"42","6":"63.5","7":"FALSE","8":"Patient 7"},{"1":"Matthew","2":"Smith","3":"Matthew Smith","4":"Male","5":"33","6":"71.5","7":"TRUE","8":"Patient 8"},{"1":"David","2":"Roberts","3":"David Roberts","4":"Male","5":"57","6":"73.2","7":"FALSE","8":"Patient 9"},{"1":"Sally","2":"Wilson","3":"Sally Wilson","4":"Female","5":"62","6":"64.8","7":"TRUE","8":"Patient 10"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
@@ -729,8 +758,456 @@ patients</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="matrices" class="section level2">
-<h2>Matrices</h2>
+<div id="indexing-data-frames-and-matrices" class="section level2">
+<h2>Indexing data frames and matrices</h2>
+<ul>
+<li>You can index multidimensional data structures like matrices and data frames using commas:</li>
+<li><strong><code>object[rows, colums]</code></strong></li>
+<li>Try and predict what each of the following commands will do:-</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZVsxLDJdXG5gYGAifQ== -->
+<pre class="r"><code>e[1,2]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcbiJ9 -->
+<pre><code>[1] 6</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbMSwyXVxuYGBgIn0= -->
+<pre class="r"><code>patients[1,2]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSm9uZXNcIlxuIn0= -->
+<pre><code>[1] &quot;Jones&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbMSwxOjNdXG5gYGAifQ== -->
+<pre class="r"><code>patients[1,1:3]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MywibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyVlFRVzdDTUJCYzdKZ3FxVUJJZklBUEpBZjZna29WaHg0NHdJVWJNa25hUmpWcjVEaHFYdy9ZeG9iRUhPS3NaMlpuZDd6NTJDMnpYUVlBQkNpbFFLZ3BFMktPRVNTUTJ2OC9BSjJid2pLekhwRzhWL3dZWWV4VFl0MUdZR2FGQzg4TXZCbnk0MTFPZzN6VnFGYnYxNGJ5eU91MkxpVldmU2hkZFVMY2dLRmxxdVJmRVd3bmpuRGZjRzRwZVB1MFpzVTFMNzZVODRSejFQSWlUN3FSYUpxSWZRd1dOWTlVQk13NnRGdFVlZm5UNFcrK2ZMTVRIdXYwVjd2WDlEYVRYTHdYODE3akdyOGJETkdaNElkYStNdlV4SFZwaTVOcVVJY29CbTBMTFRVUHVxeVVJaUF1SEp5dk40bFZTZnNCQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>If you don’t provide an index for either rows or columns, all of the rows or columns will be returned.</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbMSxdXG5gYGAifQ== -->
+<pre class="r"><code>patients[1,]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyMVI0VTZETUJBdUZEYkFzQ3p4QmZZQ0kzSDZBQzR1SkRQUnFQdmgvcGtLSFNPV2RvR2lleS9mYjlvQ042R3hTZUh1dTd0KzM5MjlyTGFMWUJzZ2hHeUVNVVkyVnFaanE0K0ZIT1RyL3hFaGZLa01UOTFwTCtBc1UxSVltSHN2T0swTU1OQ0pzeTZDd3lhaStZWThJMFkvS1lOYUc5Q1lGb1JSb0h6UTlyRE9UUmlwVE1yUmppUlNsTW82cVR2UmtkczFndFA2ejkvWCttaUJuU1RMZU1WL0lqS25YTTZ1VEU1T2luT2JIclFaNTJVbDN4NVZxRU11TmpRUlBPMURmbHd6MWdmd2hoN0JYR2FBamw1cG51MWw1NDN2QksrVWpzNjExeXREajErS3J3ZzBoWC9kNkNUOFk2NGpKWkpFdTFKcmFPWXplR29zRGpKWGRJcEdMOTAxaXEzU0FLWTExOFRwUE5uWC9HTyt1REhtR2Y1amV5Mm5BOHBjNkpyeUxPY3dBNWVSZDhvNlo2STZiQnFNRG1WK25rU2cwQ3FTUWhMSUN4TEJBR21YZi9vRlQyS2V0K01DQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[7],"type":["lgl"],"align":["right"]},{"label":["ID"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","4":"Male","5":"50","6":"70.8","7":"TRUE","8":"Patient 1","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Rows or columns can be omitted by putting a <code>-</code> in front of the index</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbLC0xXVxuYGBgIn0= -->
+<pre class="r"><code>patients[,-1]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFVelc0VE1SQjJkck5keFRTb0VpZHVmb0ZHa0JCK0pDUTJrRVJxMUxTYjVFQnZ5TTI2emFxT1hUbE8wdHg0RFhnTlhvQUhnQk12d0R0dzRsS3dZM3ZadFJocE0rTnY3Smx2UE9OTSt4ZHRlQUVCQUFFSXd4QUVvVExyZ2ZxcGdUcG9hSDBIUVBoSUdiSDZqdFFIclNNYWNVWldkbkdRWW5GRGhITU5OcGc1VjlUSG03eFl2TVgvdHNWOXpISkNuUzhlWkZzc3NtTHJiSm5MaGZOTitTVVJza2ozUHFjcnpqeEdzSmZoSlNyVGdvTU5RUlZxY01RWERKWDV3VEVXTzFRbStTQWxrZ2hVcG5xWTRqVkZWYjRQUnh3emhsR1Zkbk9NcFZ5UUxTclRiK3J3R2FvV2NUakRsTzZRS3lWczdrdlJuZEMzWDlYL3NTdGRPcUJrbzVtWkN3a2NPaVJMVElsZDFjZmFycDZMNWhTdjNMRWkyQldlU3k2VWRhL0wxTFNTRTdDWHBHdDE3NlBSUTZ0ZlcveU4xUU9yRStzL3Rmb2NPREZ4SjE4NldwTDA5eWNsbjVQcEQ3TSsrMlgwOUxIQkp6dWp6NythT0pPZlJrOVB2eW41bnFUNzdSMTdoZEJlVjgzbXFvR3FsUEh5QkRWU0xIUENKSHJxQTIwZjZQakFNeC9vK3NCekgzamhBeTk5NEpVYjBvTFlFNytEREMrSjYyRHNKbmhHNXB4bEg4NlV6NFVjcmlrdEErR00zRG16ZDAyS2wwWHk2NFYweis0ZFp5dVYxaTZEazc2WHZTSDR0dVVZNkFFT1RKOTFCL1RHOEk4M1d6RERFcmV1aE9heG42OUt1SmpmeWx5bFZISDBYMDdrSGE0SkR6aGFNNTA4TzU0djF1em11TjB0OVI1WVJqV0xPVHMyT2V1T1dlUXFKK3c2Wis0ZUlvb3ZDWFV2WFZXNUw3SjFLL0xpTnFCQ1Z5M0pKWGI3NEp4VGg1akhjLzhYV092UzYyRUZBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Second_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["ID"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Jones","2":"Adam Jones","3":"Male","4":"50","5":"70.8","6":"TRUE","7":"Patient 1"},{"1":"Parker","2":"Eve Parker","3":"Female","4":"21","5":"67.9","6":"TRUE","7":"Patient 2"},{"1":"Evans","2":"John Evans","3":"Male","4":"35","5":"75.3","6":"FALSE","7":"Patient 3"},{"1":"Davis","2":"Mary Davis","3":"Female","4":"45","5":"61.9","6":"TRUE","7":"Patient 4"},{"1":"Baker","2":"Peter Baker","3":"Male","4":"28","5":"72.4","6":"FALSE","7":"Patient 5"},{"1":"Daniels","2":"Paul Daniels","3":"Male","4":"31","5":"69.9","6":"FALSE","7":"Patient 6"},{"1":"Edwards","2":"Joanna Edwards","3":"Female","4":"42","5":"63.5","6":"FALSE","7":"Patient 7"},{"1":"Smith","2":"Matthew Smith","3":"Male","4":"33","5":"71.5","6":"TRUE","7":"Patient 8"},{"1":"Roberts","2":"David Roberts","3":"Male","4":"57","5":"73.2","6":"FALSE","7":"Patient 9"},{"1":"Wilson","2":"Sally Wilson","3":"Female","4":"62","5":"64.8","6":"TRUE","7":"Patient 10"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbLWMoNSw3KSxdXG5gYGAifQ== -->
+<pre class="r"><code>patients[-c(5,7),]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6OCwibnJvdyI6OH0sInJkZiI6Ikg0c0lBQUFBQUFBQUEzVlV3VzdiTUF4VjdMaXB2YVlvc0Ivd0R6VFlrblhZVG5Pd05FQ0x0bk9TdzNvYlZGdU5qU3BTWVN0cGM5dHZyTC9SMzloTys0SDl3MDY3ZEpNczBiVUZUSUJDOGpFaUgwbFo4OG5sTUxnTUVFSU9jbDBYT2E1VXU0Nzg2YUF1OHBXOFI4aDlLWlZkdVE4cXFSM2RjWXBYUm5lUE53VGdVNTR4ME05eHNRVTl4bXRxOU40NUZpSWpkOGIwSm5pVHAyQXNNS1ZiSzVkM3loa3BqYkVUNCtLR0ZPQTYzbUJXTmlPQjBadGdsaE5hK3hhclhHVGdtL01yVW9nNjVPZWNscHhaV1FOVllkaE1IY2c2dzFiNlFKVWJOamtFcXVpd1NXUlBsUjYyMmZSTkM4SW1xMzdWaUxETmJhOXFTQWdNM2I2WmhSNVNXenJQZG11SU81UnNWRzVkbndQb2xLd3dKYy9Ea25yN25KZFFYTUt4T3RnMVRnUXZwUFlrOTc2aUU1Mmdha1ZIUm82L2FqazE4b1BCSTJPZkdma0p3ZEp4Wm84anRhTDR6emU1SHFMNVQyMWYvTlp5dHRYNDdKYytQei83THRlUEtLN2NJOVYrMDU2TzJlZy9zamxvUDhZaUoweUVyMjFnYUFNakczaGpBMjl0NEowTnZJZWJVcWQ5WmZlZDRSVXBMWmJCTkM5SzhlVkN1Z3p5WWtFU3p0SW01RS9YbERZQmQwSHVRUjB2U1gzaFNiN01CSHdOSHprckpSRmpPaWNUaTQ5ZjhMc0JjSUlMQ0pldWVqSlVUSVA3ZWdvcWdQdlh1anRCaWdVZVhCZUtYM1YvV21sNi9GYmtrb3FNcTE0Y3p6cmNLU3pnWU0wVXFmUXd5ZGJzNW5CNFpPWVBzKzhidWR2V1ZjNHVNUE9nSTRRdGN3Yjk4U2krSXZCYzdjdnFxK0lIdDBWZWR5bVFhRGtRWEdENFg1QndDb2orT0o3K0FTWjlPQXRnQlFBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[7],"type":["lgl"],"align":["right"]},{"label":["ID"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","4":"Male","5":"50","6":"70.8","7":"TRUE","8":"Patient 1","_rn_":"1"},{"1":"Eve","2":"Parker","3":"Eve Parker","4":"Female","5":"21","6":"67.9","7":"TRUE","8":"Patient 2","_rn_":"2"},{"1":"John","2":"Evans","3":"John Evans","4":"Male","5":"35","6":"75.3","7":"FALSE","8":"Patient 3","_rn_":"3"},{"1":"Mary","2":"Davis","3":"Mary Davis","4":"Female","5":"45","6":"61.9","7":"TRUE","8":"Patient 4","_rn_":"4"},{"1":"Paul","2":"Daniels","3":"Paul Daniels","4":"Male","5":"31","6":"69.9","7":"FALSE","8":"Patient 6","_rn_":"6"},{"1":"Matthew","2":"Smith","3":"Matthew Smith","4":"Male","5":"33","6":"71.5","7":"TRUE","8":"Patient 8","_rn_":"8"},{"1":"David","2":"Roberts","3":"David Roberts","4":"Male","5":"57","6":"73.2","7":"FALSE","8":"Patient 9","_rn_":"9"},{"1":"Sally","2":"Wilson","3":"Sally Wilson","4":"Female","5":"62","6":"64.8","7":"TRUE","8":"Patient 10","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[8]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="advanced-indexing" class="section level2">
+<h2>Advanced indexing</h2>
+<ul>
+<li>Indices are actually vectors, and can be <strong><em>numeric</em></strong> or <strong><em>logical</em></strong>:</li>
+<li>We won’t always know in advance which indices we want to return
+<ul>
+<li>we might want all values that exceed a particular value or satisfy some other criteria</li>
+</ul></li>
+<li>In this example, <code>letters</code> is a vector containing all letters in the English alphabet</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGV0dGVyc1xuYGBgIn0= -->
+<pre class="r"><code>letters</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImFcIiBcImJcIiBcImNcIiBcImRcIiBcImVcIiBcImZcIiBcImdcIiBcImhcIiBcImlcIiBcImpcIiBcImtcIiBcImxcIiBcIm1cIiBcIm5cIiBcIm9cIiBcInBcIiBcInFcIiBcInJcIiBcInNcIiBcInRcIiBcInVcIiBcInZcIlxuWzIzXSBcIndcIiBcInhcIiBcInlcIiBcInpcIlxuIn0= -->
+<pre><code> [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot;
+[23] &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucyA8LSBsZXR0ZXJzWzE6NV1cbnNcbmBgYCJ9 -->
+<pre class="r"><code>s &lt;- letters[1:5]
+s</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiYlwiIFwiY1wiIFwiZFwiIFwiZVwiXG4ifQ== -->
+<pre><code>[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>So far we have seen how to extract the first and third values in the vector</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1tjKDEsMyldXG5gYGAifQ== -->
+<pre class="r"><code>s[c(1,3)]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiY1wiXG4ifQ== -->
+<pre><code>[1] &quot;a&quot; &quot;c&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>R can perform the same operation using a vector of logical values. Only indices with a <code>TRUE</code> value will get returned</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1tjKFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgRkFMU0UpXVxuYGBgIn0= -->
+<pre class="r"><code>s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiY1wiXG4ifQ== -->
+<pre><code>[1] &quot;a&quot; &quot;c&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>We can do the logical test and indexing in the same line of R code
+<ul>
+<li>R will do the test first, and then use the vector of <code>TRUE</code> and <code>FALSE</code> values to subset the vector</li>
+</ul></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSA8LSAxOjVcbmEgPCAzXG5gYGAifQ== -->
+<pre class="r"><code>a &lt;- 1:5
+a &lt; 3</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICBUUlVFICBUUlVFIEZBTFNFIEZBTFNFIEZBTFNFXG4ifQ== -->
+<pre><code>[1]  TRUE  TRUE FALSE FALSE FALSE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1thIDwgM11cbmBgYCJ9 -->
+<pre class="r"><code>s[a &lt; 3]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiYlwiXG4ifQ== -->
+<pre><code>[1] &quot;a&quot; &quot;b&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="logical-operators" class="section level2">
+<h2>Logical Operators</h2>
+<ul>
+<li>Operators allow us to combine multiple logical tests</li>
+<li>comparison operators <strong><code>&lt;, &gt;, &lt;=, &gt;=, ==, !=</code></strong></li>
+<li>logical operators <strong><code>!, &amp;, |, xor</code></strong>
+<ul>
+<li>The operators for ‘comparison’ and ‘logical’ always return logical values! i.e. (<code>TRUE</code>, <code>FALSE</code>)</li>
+</ul></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zW2EgPiAxICYgYSA8M11cbnNbYSA9PSAyXVxuYGBgIn0= -->
+<pre class="r"><code>
+s[a &gt; 1 &amp; a &lt;3]
+s[a == 2]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The vector that you use to perform the logical test could be extracted from a data frame</p>
+<ul>
+<li>which could then be used to subset the data frame</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHMkRmlyc3RfTmFtZSA9PSBcIlBldGVyXCJcbnBhdGllbnRzW3BhdGllbnRzJEZpcnN0X05hbWUgPT0gXCJQZXRlclwiLF1cbmBgYCJ9 -->
+<pre class="r"><code>patients$First_Name == &quot;Peter&quot;
+patients[patients$First_Name == &quot;Peter&quot;,]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="exercise-exercise-2" class="section level2">
+<h2>Exercise: Exercise 2</h2>
+<ul>
+<li>Write R code to print the following subsets of the patients data frame</li>
+<li>The first and second rows, and the first and second colums</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>First_Name</th>
+<th>Second_Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Adam</td>
+<td>Jones</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Eve</td>
+<td>Parker</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Only even-numbered rows</li>
+</ul>
+<p>HINT: you can use the <code>seq</code> function that we saw earlier to define a vector of even numbers</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>First_Name</th>
+<th>Second_Name</th>
+<th>Full_Name</th>
+<th align="center">Sex</th>
+<th align="right">Age</th>
+<th align="right">Weight</th>
+<th align="center">Consent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>Eve</td>
+<td>Parker</td>
+<td>Eve Parker</td>
+<td align="center">Female</td>
+<td align="right">21</td>
+<td align="right">67.9</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Mary</td>
+<td>Davis</td>
+<td>Mary Davis</td>
+<td align="center">Female</td>
+<td align="right">45</td>
+<td align="right">61.9</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Paul</td>
+<td>Daniels</td>
+<td>Paul Daniels</td>
+<td align="center">Male</td>
+<td align="right">31</td>
+<td align="right">69.9</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Matthew</td>
+<td>Smith</td>
+<td>Matthew Smith</td>
+<td align="center">Male</td>
+<td align="right">33</td>
+<td align="right">71.5</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Sally</td>
+<td>Wilson</td>
+<td>Sally Wilson</td>
+<td align="center">Female</td>
+<td align="right">62</td>
+<td align="right">64.8</td>
+<td align="center">TRUE</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>All rows except the last one, all columns</li>
+</ul>
+<p>HINT: the <code>nrow</code> function will give the number of rows in the data frame</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>First_Name</th>
+<th>Second_Name</th>
+<th>Full_Name</th>
+<th align="center">Sex</th>
+<th align="right">Age</th>
+<th align="right">Weight</th>
+<th align="center">Consent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Adam</td>
+<td>Jones</td>
+<td>Adam Jones</td>
+<td align="center">Male</td>
+<td align="right">50</td>
+<td align="right">70.8</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Eve</td>
+<td>Parker</td>
+<td>Eve Parker</td>
+<td align="center">Female</td>
+<td align="right">21</td>
+<td align="right">67.9</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>John</td>
+<td>Evans</td>
+<td>John Evans</td>
+<td align="center">Male</td>
+<td align="right">35</td>
+<td align="right">75.3</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Mary</td>
+<td>Davis</td>
+<td>Mary Davis</td>
+<td align="center">Female</td>
+<td align="right">45</td>
+<td align="right">61.9</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Peter</td>
+<td>Baker</td>
+<td>Peter Baker</td>
+<td align="center">Male</td>
+<td align="right">28</td>
+<td align="right">72.4</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Paul</td>
+<td>Daniels</td>
+<td>Paul Daniels</td>
+<td align="center">Male</td>
+<td align="right">31</td>
+<td align="right">69.9</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Joanna</td>
+<td>Edwards</td>
+<td>Joanna Edwards</td>
+<td align="center">Female</td>
+<td align="right">42</td>
+<td align="right">63.5</td>
+<td align="center">FALSE</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Matthew</td>
+<td>Smith</td>
+<td>Matthew Smith</td>
+<td align="center">Male</td>
+<td align="right">33</td>
+<td align="right">71.5</td>
+<td align="center">TRUE</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>David</td>
+<td>Roberts</td>
+<td>David Roberts</td>
+<td align="center">Male</td>
+<td align="right">57</td>
+<td align="right">73.2</td>
+<td align="center">FALSE</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Use logical indexing to select the following patients from the data frame:
+<ol style="list-style-type: decimal">
+<li>Patients under 40</li>
+<li>Patients who give consent to share their data</li>
+<li>Men who weigh as much or more than the average European male (70.8 kg)</li>
+</ol></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdlICAgIDwtIGMoNTAsIDIxLCAzNSwgNDUsIDI4LCAzMSwgNDIsIDMzLCA1NywgNjIpXG53ZWlnaHQgPC0gYyg3MC44LCA2Ny45LCA3NS4zLCA2MS45LCA3Mi40LCA2OS45LCBcbiAgICAgICAgICAgIDYzLjUsIDcxLjUsIDczLjIsIDY0LjgpXG5maXJzdE5hbWUgIDwtIGMoXCJBZGFtXCIsIFwiRXZlXCIsIFwiSm9oblwiLCBcIk1hcnlcIixcbiAgICAgICAgICAgICAgICBcIlBldGVyXCIsIFwiUGF1bFwiLCBcIkpvYW5uYVwiLCBcIk1hdHRoZXdcIixcbiAgICAgICAgICAgICAgICBcIkRhdmlkXCIsIFwiU2FsbHlcIilcbnNlY29uZE5hbWUgPC0gYyhcIkpvbmVzXCIsIFwiUGFya2VyXCIsIFwiRXZhbnNcIiwgXCJEYXZpc1wiLFxuICAgICAgICAgICAgICAgIFwiQmFrZXJcIixcIkRhbmllbHNcIiwgXCJFZHdhcmRzXCIsIFwiU21pdGhcIiwgXG4gICAgICAgICAgICAgICAgXCJSb2JlcnRzXCIsIFwiV2lsc29uXCIpXG5jb25zZW50IDwtIGMoVFJVRSwgVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBcbiAgICAgICAgICAgICBGQUxTRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBUUlVFKVxuc2V4IDwtIGMoXCJNYWxlXCIsIFwiRmVtYWxlXCIsIFwiTWFsZVwiLCBcIkZlbWFsZVwiLCBcIk1hbGVcIixcbiAgICAgICAgIFwiTWFsZVwiLCBcIkZlbWFsZVwiLCBcIk1hbGVcIiwgXCJNYWxlXCIsIFwiRmVtYWxlXCIpXG5wYXRpZW50cyA8LSBkYXRhLmZyYW1lKEZpcnN0X05hbWUgPSBmaXJzdE5hbWUsIFxuICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIFxuICAgICAgICAgICAgICAgICAgICAgICBGdWxsX05hbWUgPSBwYXN0ZShmaXJzdE5hbWUsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlY29uZE5hbWUpLCBcbiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gZmFjdG9yKHNleCksXG4gICAgICAgICAgICAgICAgICAgICAgIEFnZSA9IGFnZSxcbiAgICAgICAgICAgICAgICAgICAgICAgV2VpZ2h0ID0gd2VpZ2h0LFxuICAgICAgICAgICAgICAgICAgICAgICBDb25zZW50ID0gY29uc2VudCxcbiAgICAgICAgICAgICAgICAgICAgICAgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKVxucm0obGlzdCA9IGMoXCJmaXJzdE5hbWVcIixcInNlY29uZE5hbWVcIixcInNleFwiLFwid2VpZ2h0XCIsXCJjb25zZW50XCIpKVxucGF0aWVudHNcbmBgYCJ9 -->
+<pre class="r"><code>age    &lt;- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
+weight &lt;- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 
+            63.5, 71.5, 73.2, 64.8)
+firstName  &lt;- c(&quot;Adam&quot;, &quot;Eve&quot;, &quot;John&quot;, &quot;Mary&quot;,
+                &quot;Peter&quot;, &quot;Paul&quot;, &quot;Joanna&quot;, &quot;Matthew&quot;,
+                &quot;David&quot;, &quot;Sally&quot;)
+secondName &lt;- c(&quot;Jones&quot;, &quot;Parker&quot;, &quot;Evans&quot;, &quot;Davis&quot;,
+                &quot;Baker&quot;,&quot;Daniels&quot;, &quot;Edwards&quot;, &quot;Smith&quot;, 
+                &quot;Roberts&quot;, &quot;Wilson&quot;)
+consent &lt;- c(TRUE, TRUE, FALSE, TRUE, FALSE, 
+             FALSE, FALSE, TRUE, FALSE, TRUE)
+sex &lt;- c(&quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;,
+         &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;)
+patients &lt;- data.frame(First_Name = firstName, 
+                       Second_Name = secondName, 
+                       Full_Name = paste(firstName,
+                                         secondName), 
+                       Sex = factor(sex),
+                       Age = age,
+                       Weight = weight,
+                       Consent = consent,
+                       stringsAsFactors = FALSE)
+rm(list = c(&quot;firstName&quot;,&quot;secondName&quot;,&quot;sex&quot;,&quot;weight&quot;,&quot;consent&quot;))
+patients</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFVelc3Yk1BeFc0cmhHdEtZbzBOTnVmb0VHMklMZEJzelprZ0FMK3VNa2gvVTJxTGFhR0ZXa1FsYVM1cmJYV0Yrakw3QUgyRTU3Z2IzRFRydDBreXpSdFkwUnNFbVJGUG54TStINTZPbzF2c0lJb1RieVBBKzFQVzEyMnZyVlFoM1VOZm9lSWU5RUc0RitqdldEWGFBelRNbmEyZDU0UzhFOUZTc085am1SZTJmN01WVlVRaUFtRytic2c2a2duQk4zQ3M2SlVpdTZnMXNqc3MxU09Dd0lZL3NHREg4cU9NMmhWa3prYmRuRkgyOEp6NnVWeXNONzhwd1dqQWpQS0lOWU1FNTNSS1psNm1LZHFSWEU1dUthU2xXMis1U3hYUEFHSW15SUNhdXdzS1luckVIRGhxV3dpZzhicnNJcXlCY0ZZMkVWNnFIaExhempQYkw4aFhYWVBjZGpXSVhmSzlnTTYwTWNGcXlHTUlyWEswWXhDMkdXb0s3L1k5ZVc1WURSclVGbUNXbURkMExYaE5IbnBkQjIvWjZmTUpMRHRiTFlEVW1Va05wNk1tTWFXTkZIVkVqMHh1bmhGNnNuVHI5MS9uZE9qNTJPWFB6TTZVc0VZdXZPSGdkR292alBWeTBQMGZ5blBWLzh0bnIrMHZwbmU2c3Z2OWs2czE5V3o4KythL2tSeFVYNndGR0lIVjB0MTZ1RjZsTHgxK25nWkUyQmpnQVdaSkxKWEgyKzBDRllrQVZOQkUrcnJ1NWt3MWpWNFMzb1BaakRKUzBYbDJiTGxZS3QvaUI0VHJscW9PaEtzZXNERXJNVmJVdWVHY3NrZW44Ykh3eW5SSkgralRUZGk0OVdLeGVJTzVYcFJycU8rWjM0amNzdDJYQWNiN2hwbnA0bXF3Mi9QUjI4cWhDS0hLS1c4NEVkMko0ZFFPYkR2SlF2TXc3VCs0eGNVL2o5SE9rcGl5SDdkekxqUUFuVzNyeXZoQ0tRaHhQQndHTTM4dWtmZ1lYcU1UMEZBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[7],"type":["lgl"],"align":["right"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","4":"Male","5":"50","6":"70.8","7":"TRUE"},{"1":"Eve","2":"Parker","3":"Eve Parker","4":"Female","5":"21","6":"67.9","7":"TRUE"},{"1":"John","2":"Evans","3":"John Evans","4":"Male","5":"35","6":"75.3","7":"FALSE"},{"1":"Mary","2":"Davis","3":"Mary Davis","4":"Female","5":"45","6":"61.9","7":"TRUE"},{"1":"Peter","2":"Baker","3":"Peter Baker","4":"Male","5":"28","6":"72.4","7":"FALSE"},{"1":"Paul","2":"Daniels","3":"Paul Daniels","4":"Male","5":"31","6":"69.9","7":"FALSE"},{"1":"Joanna","2":"Edwards","3":"Joanna Edwards","4":"Female","5":"42","6":"63.5","7":"FALSE"},{"1":"Matthew","2":"Smith","3":"Matthew Smith","4":"Male","5":"33","6":"71.5","7":"TRUE"},{"1":"David","2":"Roberts","3":"David Roberts","4":"Male","5":"57","6":"73.2","7":"FALSE"},{"1":"Sally","2":"Wilson","3":"Sally Wilson","4":"Female","5":"62","6":"64.8","7":"TRUE"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIFlvdXIgQW5zd2VyICMjI1xuYGBgIn0= -->
+<pre class="r"><code>### Your Answer ###</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="supplementary-matrices" class="section level2">
+<h2>(Supplementary) Matrices</h2>
 <ul>
 <li>Data frames are R’s speciality, but R also handles matrices:
 <ul>
@@ -843,486 +1320,10 @@ mat3</code></pre>
 [10,]   35   40</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="indexing-data-frames-and-matrices" class="section level2">
-<h2>Indexing data frames and matrices</h2>
-<ul>
-<li>You can index multidimensional data structures like matrices and data frames using commas:</li>
-<li><strong><code>object[rows, colums]</code></strong></li>
-<li>Try and predict what each of the following commands will do:-</li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZVsxLDJdXG5gYGAifQ== -->
-<pre class="r"><code>e[1,2]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcbiJ9 -->
-<pre><code>[1] 6</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbMSwyXVxuYGBgIn0= -->
-<pre class="r"><code>patients[1,2]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSm9uZXNcIlxuIn0= -->
-<pre><code>[1] &quot;Jones&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbMSwxOjNdXG5gYGAifQ== -->
-<pre class="r"><code>patients[1,1:3]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MywibnJvdyI6MX0sInJkZiI6Ikg0c0lBQUFBQUFBQUEyVlFzVzdDTUJBOTdKZ3FxVUJJL0FBL2tBd00zU3RWREIwWVlHRkRKa25icU9hTUhFZnQxd08yc1NFeFE1enplKy9lM2ZQbVk3Zk1kaGtBRUtDVUFxR21USWc1UnBCQWF2Ly9BSFJ1Q3N2TWVrVHlYdkZqaExGUGlYVWJnWmtWTGp3ejhHYklqM2M1RGZKVm8xcTlYeHZLSTYvYnVwUlk5YUYwMVFseEE0YVdxWkovUmJDZE9NSjl3N21sNE8zVG1oWFh2UGhTemhQT1VjdUxQT2xHb21raTlqRlkxRHhTRVREcjBHNVI1ZVZQaDcvNThzMU9lS3pUWCsxZTA5dE1jdkZlekh1TmEveHVNRVJuZ2g5cTRTOVRFOWVsTFU2cVFSMmlHTFF0dE5RODZMSlNpb0M0Y0hDK0F0d2xBbno3QVFBQSJ9 -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<ul>
-<li>If you don’t provide an index for either rows or columns, all of the rows or columns will be returned.</li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZVsxLF1cbmBgYCJ9 -->
-<pre class="r"><code>e[1,]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEgNlxuIn0= -->
-<pre><code>[1] 1 6</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGF0aWVudHNbLC0xXVxuYGBgIn0= -->
-<pre class="r"><code>patients[,-1]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFVelc0VE1SQjJkck5keFRTb0VpZHVmb0ZHa0ZBb0VsSTNrRVJxMUo5TmNxQTM1R2JkWkZYSHJod25hVzY4QnJ3R0w4QUR3SWtYNEIwNGNTbllzYjNzV295MG1mRTM5c3czbm5IR3ZhczJ2SUlBZ0FDRVlRaUNVSm4xUVAzVVFCMDB0TDRISUh5aWpGaDlCK3FEMWhFTk9TTkx1OWhMc2JnbHdybjZhOHljSytyaGRWNHMzdUovMitJZVpqbWh6aGYzc3cwV1diRjFzc2psM1BuRy9Kb0lXYVI3bjlNbFp4NGoyTTN3QXBWcHdmNmFvQW8xT09Semhzcjg0RGtXVzFRbStTZ2xrZ2hVcHJxZjRoVkZWYjZQaHh3emhsR1Zkdk1jU3prbkcxU20zOVRoTTFRdFluK0NLZDBpVjByWTNKV2lPNkZ2djZyL1kxZTZ0RWZKV2pNekZ4STRkRUFXbUJLN3FwOXJ1M291bWxLOGRNZUtZRGQ0S3JsUTFvTXVVOU5LVHNGT2tpT3J1eCtOSGxqOXh1SW5WdmV0VHF6L3pPcEw0TVRFSFgzcGFFblMzNStVZkU3R1A4ejY0cGZSNDZjR0gyMk52dnhxNG94K0dqMCsrNmJrZTVMdXRuZnNGVUo3WFRXYnF3YXFVc2JMRTlSSXNjd0prK2k1RDdSOW9PTURMM3pneUFkZStzQXJIemoyZ2RkdVNBdGl6L3dPTXJ3Z3JvT3htK0FKbVhLV2ZiaFFQaGR5c0tLMERJUVRjdS9NN293VUw0dmtzN2wweis0ZFowdVYxaTZEMDU2WHZTSDRwdVVZNkFFT1RKOTFCL1RHOEk4M1d6RERFcmR1aE9heG02OUt1SmpmeVZ5bFZISDBYMDdrSGE0SkR6aFlNWjA4TzV6T1YrejJzSDFjNmoyd2pHb1djM1pzY3RZZHM4aFZUdGdzWis0ZUlvcXZDWFV2WFZXNUs3SjFKL0xpTnFCQ2x5M0pKWGI3NEpSVGg1akg4L0FYSVZxV2NtRUZBQUE9In0= -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Second_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["ID"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Jones","2":"Adam Jones","3":"Male","4":"50","5":"70.8","6":"TRUE","7":"Patient 1"},{"1":"Parker","2":"Eve Parker","3":"Female","4":"21","5":"67.9","6":"TRUE","7":"Patient 2"},{"1":"Evans","2":"John Evans","3":"Male","4":"35","5":"75.3","6":"FALSE","7":"Patient 3"},{"1":"Davis","2":"Mary Davis","3":"Female","4":"45","5":"61.9","6":"TRUE","7":"Patient 4"},{"1":"Baker","2":"Peter Baker","3":"Male","4":"28","5":"72.4","6":"FALSE","7":"Patient 5"},{"1":"Daniels","2":"Paul Daniels","3":"Male","4":"31","5":"69.9","6":"FALSE","7":"Patient 6"},{"1":"Edwards","2":"Joanna Edwards","3":"Female","4":"42","5":"63.5","6":"FALSE","7":"Patient 7"},{"1":"Smith","2":"Matthew Smith","3":"Male","4":"33","5":"71.5","6":"TRUE","7":"Patient 8"},{"1":"Roberts","2":"David Roberts","3":"Male","4":"57","5":"73.2","6":"FALSE","7":"Patient 9"},{"1":"Wilson","2":"Sally Wilson","3":"Female","4":"62","5":"64.8","6":"TRUE","7":"Patient 10"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="advanced-indexing" class="section level2">
-<h2>Advanced indexing</h2>
-<ul>
-<li>Indices are actually vectors, and can be <strong><em>numeric</em></strong> or <strong><em>logical</em></strong>:</li>
-<li>We won’t always know in advance which indices we want to return
-<ul>
-<li>we might want all values that exceed a particular value or satisfy some other criteria</li>
-</ul></li>
-<li>In this example, <code>letters</code> is a vector containing all letters in the English alphabet</li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGV0dGVyc1xuYGBgIn0= -->
-<pre class="r"><code>letters</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImFcIiBcImJcIiBcImNcIiBcImRcIiBcImVcIiBcImZcIiBcImdcIiBcImhcIiBcImlcIiBcImpcIiBcImtcIiBcImxcIiBcIm1cIiBcIm5cIiBcIm9cIiBcInBcIiBcInFcIiBcInJcIiBcInNcIiBcInRcIiBcInVcIlxuWzIyXSBcInZcIiBcIndcIiBcInhcIiBcInlcIiBcInpcIlxuIn0= -->
-<pre><code> [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot;
-[22] &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucyA8LSBsZXR0ZXJzWzE6NV1cbnNcbmBgYCJ9 -->
-<pre class="r"><code>s &lt;- letters[1:5]
-s</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiYlwiIFwiY1wiIFwiZFwiIFwiZVwiXG4ifQ== -->
-<pre><code>[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>So far we have seen how to extract the first and third values in the vector</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1tjKDEsMyldXG5gYGAifQ== -->
-<pre class="r"><code>s[c(1,3)]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiY1wiXG4ifQ== -->
-<pre><code>[1] &quot;a&quot; &quot;c&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>R can perform the same operation using a vector of logical values. Only indices with a <code>TRUE</code> value will get returned</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1tjKFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgRkFMU0UpXVxuYGBgIn0= -->
-<pre class="r"><code>s[c(TRUE, FALSE, TRUE, FALSE, FALSE)]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiY1wiXG4ifQ== -->
-<pre><code>[1] &quot;a&quot; &quot;c&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<ul>
-<li>We can do the logical test and indexing in the same line of R code
-<ul>
-<li>R will do the test first, and then use the vector of <code>TRUE</code> and <code>FALSE</code> values to subset the vector</li>
-</ul></li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSA8LSAxOjVcbmEgPCAzXG5gYGAifQ== -->
-<pre class="r"><code>a &lt;- 1:5
-a &lt; 3</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdICBUUlVFICBUUlVFIEZBTFNFIEZBTFNFIEZBTFNFXG4ifQ== -->
-<pre><code>[1]  TRUE  TRUE FALSE FALSE FALSE</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1thIDwgM11cbmBgYCJ9 -->
-<pre class="r"><code>s[a &lt; 3]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYVwiIFwiYlwiXG4ifQ== -->
-<pre><code>[1] &quot;a&quot; &quot;b&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="logical-operators" class="section level2">
-<h2>Logical Operators</h2>
-<ul>
-<li>Operators allow us to combine multiple logical tests</li>
-<li>comparison operators <strong><code>&lt;, &gt;, &lt;=, &gt;=, ==, !=</code></strong></li>
-<li>logical operators <strong><code>!, &amp;, |, xor</code></strong>
-<ul>
-<li>The operators for ‘comparison’ and ‘logical’ always return logical values! i.e. (<code>TRUE</code>, <code>FALSE</code>)</li>
-</ul></li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1thID4gMSAmIGEgPDNdXG5gYGAifQ== -->
-<pre class="r"><code>s[a &gt; 1 &amp; a &lt;3]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiXG4ifQ== -->
-<pre><code>[1] &quot;b&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc1thID09IDJdXG5gYGAifQ== -->
-<pre class="r"><code>s[a == 2]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiYlwiXG4ifQ== -->
-<pre><code>[1] &quot;b&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="exercise-exercise-2" class="section level2">
-<h2>Exercise: Exercise 2</h2>
-<ul>
-<li>Write R code to print the following subsets of the patients data frame</li>
-<li>The first and second rows, and the first and second colums</li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>First_Name</th>
-<th>Second_Name</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Adam</td>
-<td>Jones</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Eve</td>
-<td>Parker</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>All rows, but in the order 10 to 1.</li>
-</ul>
-<p>HINT: create a sequence using the <code>:</code> shortcut we saw earlier, to index the rows</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>First_Name</th>
-<th>Second_Name</th>
-<th>Full_Name</th>
-<th align="center">Sex</th>
-<th align="right">Age</th>
-<th align="right">Weight</th>
-<th align="center">Consent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>10</td>
-<td>Sally</td>
-<td>Wilson</td>
-<td>Sally Wilson</td>
-<td align="center">Female</td>
-<td align="right">62</td>
-<td align="right">64.8</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>9</td>
-<td>David</td>
-<td>Roberts</td>
-<td>David Roberts</td>
-<td align="center">Male</td>
-<td align="right">57</td>
-<td align="right">73.2</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>Matthew</td>
-<td>Smith</td>
-<td>Matthew Smith</td>
-<td align="center">Male</td>
-<td align="right">33</td>
-<td align="right">71.5</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>7</td>
-<td>Joanna</td>
-<td>Edwards</td>
-<td>Joanna Edwards</td>
-<td align="center">Female</td>
-<td align="right">42</td>
-<td align="right">63.5</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>6</td>
-<td>Paul</td>
-<td>Daniels</td>
-<td>Paul Daniels</td>
-<td align="center">Male</td>
-<td align="right">31</td>
-<td align="right">69.9</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="even">
-<td>5</td>
-<td>Peter</td>
-<td>Baker</td>
-<td>Peter Baker</td>
-<td align="center">Male</td>
-<td align="right">28</td>
-<td align="right">72.4</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>4</td>
-<td>Mary</td>
-<td>Davis</td>
-<td>Mary Davis</td>
-<td align="center">Female</td>
-<td align="right">45</td>
-<td align="right">61.9</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>John</td>
-<td>Evans</td>
-<td>John Evans</td>
-<td align="center">Male</td>
-<td align="right">35</td>
-<td align="right">75.3</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>Eve</td>
-<td>Parker</td>
-<td>Eve Parker</td>
-<td align="center">Female</td>
-<td align="right">21</td>
-<td align="right">67.9</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Adam</td>
-<td>Jones</td>
-<td>Adam Jones</td>
-<td align="center">Male</td>
-<td align="right">50</td>
-<td align="right">70.8</td>
-<td align="center">TRUE</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>All rows except the first row, all columns</li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>First_Name</th>
-<th>Second_Name</th>
-<th>Full_Name</th>
-<th align="center">Sex</th>
-<th align="right">Age</th>
-<th align="right">Weight</th>
-<th align="center">Consent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>2</td>
-<td>Eve</td>
-<td>Parker</td>
-<td>Eve Parker</td>
-<td align="center">Female</td>
-<td align="right">21</td>
-<td align="right">67.9</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>John</td>
-<td>Evans</td>
-<td>John Evans</td>
-<td align="center">Male</td>
-<td align="right">35</td>
-<td align="right">75.3</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>4</td>
-<td>Mary</td>
-<td>Davis</td>
-<td>Mary Davis</td>
-<td align="center">Female</td>
-<td align="right">45</td>
-<td align="right">61.9</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>5</td>
-<td>Peter</td>
-<td>Baker</td>
-<td>Peter Baker</td>
-<td align="center">Male</td>
-<td align="right">28</td>
-<td align="right">72.4</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>6</td>
-<td>Paul</td>
-<td>Daniels</td>
-<td>Paul Daniels</td>
-<td align="center">Male</td>
-<td align="right">31</td>
-<td align="right">69.9</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="even">
-<td>7</td>
-<td>Joanna</td>
-<td>Edwards</td>
-<td>Joanna Edwards</td>
-<td align="center">Female</td>
-<td align="right">42</td>
-<td align="right">63.5</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>Matthew</td>
-<td>Smith</td>
-<td>Matthew Smith</td>
-<td align="center">Male</td>
-<td align="right">33</td>
-<td align="right">71.5</td>
-<td align="center">TRUE</td>
-</tr>
-<tr class="even">
-<td>9</td>
-<td>David</td>
-<td>Roberts</td>
-<td>David Roberts</td>
-<td align="center">Male</td>
-<td align="right">57</td>
-<td align="right">73.2</td>
-<td align="center">FALSE</td>
-</tr>
-<tr class="odd">
-<td>10</td>
-<td>Sally</td>
-<td>Wilson</td>
-<td>Sally Wilson</td>
-<td align="center">Female</td>
-<td align="right">62</td>
-<td align="right">64.8</td>
-<td align="center">TRUE</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Use logical indexing to select the following patients from the data frame:
-<ol style="list-style-type: decimal">
-<li>Patients under 40</li>
-<li>Patients who give consent to share their data</li>
-<li>Men who weigh as much or more than the average European male (70.8 kg)</li>
-</ol></li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWdlICAgIDwtIGMoNTAsIDIxLCAzNSwgNDUsIDI4LCAzMSwgNDIsIDMzLCA1NywgNjIpXG53ZWlnaHQgPC0gYyg3MC44LCA2Ny45LCA3NS4zLCA2MS45LCA3Mi40LCA2OS45LCBcbiAgICAgICAgICAgIDYzLjUsIDcxLjUsIDczLjIsIDY0LjgpXG5maXJzdE5hbWUgIDwtIGMoXCJBZGFtXCIsIFwiRXZlXCIsIFwiSm9oblwiLCBcIk1hcnlcIixcbiAgICAgICAgICAgICAgICBcIlBldGVyXCIsIFwiUGF1bFwiLCBcIkpvYW5uYVwiLCBcIk1hdHRoZXdcIixcbiAgICAgICAgICAgICAgICBcIkRhdmlkXCIsIFwiU2FsbHlcIilcbnNlY29uZE5hbWUgPC0gYyhcIkpvbmVzXCIsIFwiUGFya2VyXCIsIFwiRXZhbnNcIiwgXCJEYXZpc1wiLFxuICAgICAgICAgICAgICAgIFwiQmFrZXJcIixcIkRhbmllbHNcIiwgXCJFZHdhcmRzXCIsIFwiU21pdGhcIiwgXG4gICAgICAgICAgICAgICAgXCJSb2JlcnRzXCIsIFwiV2lsc29uXCIpXG5jb25zZW50IDwtIGMoVFJVRSwgVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBcbiAgICAgICAgICAgICBGQUxTRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBUUlVFKVxuc2V4IDwtIGMoXCJNYWxlXCIsIFwiRmVtYWxlXCIsIFwiTWFsZVwiLCBcIkZlbWFsZVwiLCBcIk1hbGVcIixcbiAgICAgICAgIFwiTWFsZVwiLCBcIkZlbWFsZVwiLCBcIk1hbGVcIiwgXCJNYWxlXCIsIFwiRmVtYWxlXCIpXG5wYXRpZW50cyA8LSBkYXRhLmZyYW1lKEZpcnN0X05hbWUgPSBmaXJzdE5hbWUsIFxuICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIFxuICAgICAgICAgICAgICAgICAgICAgICBGdWxsX05hbWUgPSBwYXN0ZShmaXJzdE5hbWUsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlY29uZE5hbWUpLCBcbiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gZmFjdG9yKHNleCksXG4gICAgICAgICAgICAgICAgICAgICAgIEFnZSA9IGFnZSxcbiAgICAgICAgICAgICAgICAgICAgICAgV2VpZ2h0ID0gd2VpZ2h0LFxuICAgICAgICAgICAgICAgICAgICAgICBDb25zZW50ID0gY29uc2VudCxcbiAgICAgICAgICAgICAgICAgICAgICAgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKVxucGF0aWVudHNcbmBgYCJ9 -->
-<pre class="r"><code>age    &lt;- c(50, 21, 35, 45, 28, 31, 42, 33, 57, 62)
-weight &lt;- c(70.8, 67.9, 75.3, 61.9, 72.4, 69.9, 
-            63.5, 71.5, 73.2, 64.8)
-firstName  &lt;- c(&quot;Adam&quot;, &quot;Eve&quot;, &quot;John&quot;, &quot;Mary&quot;,
-                &quot;Peter&quot;, &quot;Paul&quot;, &quot;Joanna&quot;, &quot;Matthew&quot;,
-                &quot;David&quot;, &quot;Sally&quot;)
-secondName &lt;- c(&quot;Jones&quot;, &quot;Parker&quot;, &quot;Evans&quot;, &quot;Davis&quot;,
-                &quot;Baker&quot;,&quot;Daniels&quot;, &quot;Edwards&quot;, &quot;Smith&quot;, 
-                &quot;Roberts&quot;, &quot;Wilson&quot;)
-consent &lt;- c(TRUE, TRUE, FALSE, TRUE, FALSE, 
-             FALSE, FALSE, TRUE, FALSE, TRUE)
-sex &lt;- c(&quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;,
-         &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;)
-patients &lt;- data.frame(First_Name = firstName, 
-                       Second_Name = secondName, 
-                       Full_Name = paste(firstName,
-                                         secondName), 
-                       Sex = factor(sex),
-                       Age = age,
-                       Weight = weight,
-                       Consent = consent,
-                       stringsAsFactors = FALSE)
-patients</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NywibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjFVelc3Yk1BeFc0cmhHdEtZbzBOTnVmb0htc0d5M0FYTzJKTUNDL2pqSlliME5xcTBtUmhXcGtKV2t1ZTAxMXRmb0Mrd0J0dE5lWU8rdzB5N2RKRXQwYldNRWJGSWtSWDc4VEhnK3VucUZyekJDcUkwOHowTnRUNXVkdG42MVVBZDFqYjVIeUR2UlJxQ2ZZLzFnRitnTVU3SjJ0amZlVW5CUHhZcURmVTdrM3RsK1RCV1ZFSWpKaGpuN1lDb0k1OFNkZ25PaTFJcnU0TmFJYkxNVURndkMyTDRCdzU4S1RuT29GUk41VzNieHgxdkM4MnFsOHZDZVBLY0ZJOEl6eWlBV2pOTWRrV21adWxobmFnV3h1YmltVXBYdFBtVXNGN3lCQ0J0aXdpb3NyT2tKYTlDd1lTbXM0c09HcTdBSzhrWEJXRmlGZW1oNEMrdDRqeXgvWVIxMnovRVlWdUgzQ2piRCtoQ0hCYXNoak9MMWlsSE1RcGdscU92LzJMVmxPV0IwYTVCWlF0cmduZEExWWZSNUtiUmR2K2Nuak9Sd3JTeDJReElscExhZXpKZ0dWdlFSRlJLOWNYcjR4ZXFKMDIrZC81M1RZNmNqRno5eitoS0IyTHF6eDRHUktQN3pWY3RETlA5cHp4ZS9yWjYvdFA3WjN1ckxiN2JPN0pmVjg3UHZXbjVFY1pFK2NCUmlSMWZMOVdxaHVsVDhkVG80V1ZPZ0k0QUZtV1F5VjU4dmRBZ1daRUVUd2RPcXF6dlpNRloxZUF0NkQrWndTY3ZGcGRseXBXQ3JQd2llVTY0YUtMcFM3UHFBeEd4RjI1Sm54aktKM3QvR0I4TXBVYVIvSTAzMzRxUFZ5Z1hpVG1XNmthNWpmaWQrNDNKTE5oekhHMjZhcDZmSmFzTnZUd2V2SzRRaWg2amxmR0FIdG1jSGtQa3dMK1hMak1QMFBpUFhGSDQvUjNyS1lzaituY3c0VUlLMU4rOHJvUWprNFVRdzhOaU5mUG9IYWltOUJEMEZBQUE9In0= -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["First_Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Second_Name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Full_Name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Weight"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Consent"],"name":[7],"type":["lgl"],"align":["right"]}],"data":[{"1":"Adam","2":"Jones","3":"Adam Jones","4":"Male","5":"50","6":"70.8","7":"TRUE"},{"1":"Eve","2":"Parker","3":"Eve Parker","4":"Female","5":"21","6":"67.9","7":"TRUE"},{"1":"John","2":"Evans","3":"John Evans","4":"Male","5":"35","6":"75.3","7":"FALSE"},{"1":"Mary","2":"Davis","3":"Mary Davis","4":"Female","5":"45","6":"61.9","7":"TRUE"},{"1":"Peter","2":"Baker","3":"Peter Baker","4":"Male","5":"28","6":"72.4","7":"FALSE"},{"1":"Paul","2":"Daniels","3":"Paul Daniels","4":"Male","5":"31","6":"69.9","7":"FALSE"},{"1":"Joanna","2":"Edwards","3":"Joanna Edwards","4":"Female","5":"42","6":"63.5","7":"FALSE"},{"1":"Matthew","2":"Smith","3":"Matthew Smith","4":"Male","5":"33","6":"71.5","7":"TRUE"},{"1":"David","2":"Roberts","3":"David Roberts","4":"Male","5":"57","6":"73.2","7":"FALSE"},{"1":"Sally","2":"Wilson","3":"Sally Wilson","4":"Female","5":"62","6":"64.8","7":"TRUE"}],"options":{"columns":{"min":{},"max":[10],"total":[7]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIFlvdXIgQW5zd2VyICMjI1xuYGBgIn0= -->
-<pre class="r"><code>### Your Answer ###</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWN0aW9uIHRvIFNvbHZpbmcgQmlvbG9naWNhbCBQcm9ibGVtcyBVc2luZyBSIC0gRGF5IDEiCmF1dGhvcjogTWFyayBEdW5uaW5nLCBTdXJhaiBNZW5vbiBhbmQgQWlvcmEgWmFiYWxhLiBPcmlnaW5hbCBtYXRlcmlhbCBieSBSb2JlcnQgU3Rvam5pxIcsCiAgTGF1cmVudCBHYXR0bywgUm9iIEZveSwgSm9obiBEYXZleSwgRMOhdmlkIE1vbG7DoXIgYW5kIElhbiBSb2JlcnRzCmRhdGU6ICdgciBmb3JtYXQoU3lzLnRpbWUoKSwgIkxhc3QgbW9kaWZpZWQ6ICVkICViICVZIilgJwpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazoKICAgIHRvYzogeWVzCiAgICB0b2NfZmxvYXQ6IHllcwotLS0KCiMgMi4gRGF0YSBzdHJ1Y3R1cmVzCgojIyBSIGlzIGRlc2lnbmVkIHRvIGhhbmRsZSBleHBlcmltZW50YWwgZGF0YQoKLSBBbHRob3VnaCB0aGUgYmFzaWMgdW5pdCBvZiBSIGlzIGEgdmVjdG9yLCB3ZSB1c3VhbGx5IGhhbmRsZSBkYXRhIGluICoqZGF0YSBmcmFtZXMqKi4KLSBBIGRhdGEgZnJhbWUgaXMgYSBzZXQgb2Ygb2JzZXJ2YXRpb25zIG9mIGEgc2V0IG9mIHZhcmlhYmxlcyAtLSBpbiBvdGhlciB3b3JkcywgdGhlIG91dGNvbWUgb2YgYW4gZXhwZXJpbWVudC4KLSBGb3IgZXhhbXBsZSwgd2UgbWlnaHQgd2FudCB0byBhbmFseXNlIGluZm9ybWF0aW9uIGFib3V0IGEgc2V0IG9mIHBhdGllbnRzLiAKLSBUbyBzdGFydCB3aXRoLCBsZXQncyBzYXkgd2UgaGF2ZSB0ZW4gcGF0aWVudHMgYW5kIGZvciBlYWNoIG9uZSB3ZSBrbm93IHRoZWlyIG5hbWUsIHNleCwgYWdlLCB3ZWlnaHQgYW5kIHdoZXRoZXIgdGhleSBnaXZlIGNvbnNlbnQgZm9yIHRoZWlyIGRhdGEgdG8gYmUgbWFkZSBwdWJsaWMuCi0gV2UgYXJlIGdvaW5nIHRvIGNyZWF0ZSBhIGRhdGEgZnJhbWUgY2FsbGVkICdwYXRpZW50cycsIHdoaWNoIHdpbGwgaGF2ZSB0ZW4gcm93cyAob2JzZXJ2YXRpb25zKSBhbmQgc2V2ZW4gY29sdW1ucyAodmFyaWFibGVzKS4gVGhlIGNvbHVtbnMgbXVzdCBhbGwgYmUgZXF1YWwgbGVuZ3Rocy4gCi0gV2Ugd2lsbCBleHBsb3JlIGhvdyB0byBjb25zdHJ1Y3QgdGhlc2UgZGF0YSBmcm9tIHNjcmF0Y2guCiAgICArIChpbiBwcmFjdGljZSwgd2Ugd291bGQgdXN1YWxseSBpbXBvcnQgc3VjaCBkYXRhIGZyb20gYSBmaWxlKQogICAgCnwgIHxGaXJzdF9OYW1lfFNlY29uZF9OYW1lfEZ1bGxfTmFtZXxTZXggfEFnZXxXZWlnaHQgfENvbnNlbnR8CnwtLXwtLS0tLS0tfC0tLS0tLS18LS0tLS0tLS0tLS0tLS18Oi0tLS06fC0tOnwtLS0tLS06fDotLS0tLTp8CnwxIHxBZGFtICAgfEpvbmVzICB8QWRhbSBKb25lcyAgICB8ICBNYWxlfDUwIHwgIDcwLjggfCAgIFRSVUV8CnwyIHxFdmUgICAgfFBhcmtlciB8RXZlIFBhcmtlciAgICB8RmVtYWxlfDIxIHwgIDY3LjkgfCAgIFRSVUV8CnwzIHxKb2huICAgfEV2YW5zICB8Sm9obiBFdmFucyAgICB8ICBNYWxlfDM1IHwgIDc1LjMgfCAgRkFMU0V8Cnw0IHxNYXJ5ICAgfERhdmlzICB8TWFyeSBEYXZpcyAgICB8RmVtYWxlfDQ1IHwgIDYxLjkgfCAgIFRSVUV8Cnw1IHxQZXRlciAgfEJha2VyICB8UGV0ZXIgQmFrZXIgICB8ICBNYWxlfDI4IHwgIDcyLjQgfCAgRkFMU0V8Cnw2IHxQYXVsICAgfERhbmllbHN8UGF1bCBEYW5pZWxzICB8ICBNYWxlfDMxIHwgIDY5LjkgfCAgRkFMU0V8Cnw3IHxKb2FubmEgfEVkd2FyZHN8Sm9hbm5hIEVkd2FyZHN8RmVtYWxlfDQyIHwgIDYzLjUgfCAgRkFMU0V8Cnw4IHxNYXR0aGV3fFNtaXRoICB8TWF0dGhldyBTbWl0aCB8ICBNYWxlfDMzIHwgIDcxLjUgfCAgIFRSVUV8Cnw5IHxEYXZpZCAgfFJvYmVydHN8RGF2aWQgUm9iZXJ0cyB8ICBNYWxlfDU3IHwgIDczLjIgfCAgRkFMU0V8CnwxMHxTYWxseSAgfFdpbHNvbiB8U2FsbHkgV2lsc29uICB8RmVtYWxlfDYyIHwgIDY0LjggfCAgIFRSVUV8CgojIyBDaGFyYWN0ZXIsIG51bWVyaWMgYW5kIGxvZ2ljYWwgZGF0YSB0eXBlcwoKLSBFYWNoIGNvbHVtbiBpcyBhIHZlY3RvciwgbGlrZSBwcmV2aW91cyB2ZWN0b3JzIHdlIGhhdmUgc2VlbiwgZm9yIApleGFtcGxlOiAKCmBgYHtyfQphZ2UgICAgPC0gYyg1MCwgMjEsIDM1LCA0NSwgMjgsIDMxLCA0MiwgMzMsIDU3LCA2MikKd2VpZ2h0IDwtIGMoNzAuOCwgNjcuOSwgNzUuMywgNjEuOSwgNzIuNCwgNjkuOSwgCiAgICAgICAgICAgIDYzLjUsIDcxLjUsIDczLjIsIDY0LjgpCgpgYGAKCi0gV2UgY2FuIGRlZmluZSB0aGUgbmFtZXMgdXNpbmcgY2hhcmFjdGVyIHZlY3RvcnM6CgpgYGB7cn0KZmlyc3ROYW1lICA8LSBjKCJBZGFtIiwgIkV2ZSIsICJKb2huIiwgIk1hcnkiLAogICAgICAgICAgICAgICAgIlBldGVyIiwgIlBhdWwiLCAiSm9hbm5hIiwgIk1hdHRoZXciLAogICAgICAgICAgICAgICAgIkRhdmlkIiwgIlNhbGx5IikKc2Vjb25kTmFtZSA8LSBjKCJKb25lcyIsICJQYXJrZXIiLCAiRXZhbnMiLCAiRGF2aXMiLAogICAgICAgICAgICAgICAgIkJha2VyIiwiRGFuaWVscyIsICJFZHdhcmRzIiwgIlNtaXRoIiwgCiAgICAgICAgICAgICAgICAiUm9iZXJ0cyIsICJXaWxzb24iKQpgYGAKCk5vdGljZSBob3cgYSBwYXJ0aWN1bGFyIGxpbmUgb2YgUiBjb2RlIGNhbiBiZSB0eXBlZCBvdmVyIG11bHRpcGxlIGxpbmVzLiBSIHdvbid0IGV4ZWN1dGUgdGhlIGNvZGUgdW50aWwgaXQgc2VlcyB0aGUgY2xvc2luZyBicmFja2V0IGApYCB0aGF0IG1hdGNoZXMgdGhlIGluaXRpYWwgYnJhY2tldCBgKGApCi0gV2Ugb2Z0ZW4gdXNlIHRoaXMgdHJpY2sgdG8gbWFrZSBvdXIgY29kZSBlYXNpZXIgdG8gcmVhZAoKLSBXZSBhbHNvIGhhdmUgYSBuZXcgdHlwZSBvZiB2ZWN0b3IsIHRoZSAqKipsb2dpY2FsKioqIHZlY3Rvciwgd2hpY2ggb25seSAKY29udGFpbnMgdGhlIHZhbHVlcyBgVFJVRWAgYW5kIGBGQUxTRWA6CgpgYGB7cn0KY29uc2VudCA8LSBjKFRSVUUsIFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgCiAgICAgICAgICAgICBGQUxTRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBUUlVFKQpgYGAKCgotIFZlY3RvcnMgY2FuIG9ubHkgY29udGFpbiBvbmUgdHlwZSBvZiBkYXRhOyB3ZSBjYW5ub3QgbWl4IG51bWJlcnMsIGNoYXJhY3RlcnMgYW5kIGxvZ2ljYWwgdmFsdWVzIGluIHRoZSBzYW1lIHZlY3Rvci4gCiAgICArIElmIHdlIHRyeSB0aGlzLCBSIHdpbGwgY29udmVydCBldmVyeXRoaW5nIHRvIGNoYXJhY3RlcnM6CgpgYGB7cn0KYygyMCwgImEgc3RyaW5nIiwgVFJVRSkKCmBgYAoKLSBXZSBjYW4gc2VlIHRoZSB0eXBlIG9mIGEgcGFydGljdWxhciB2ZWN0b3IgdXNpbmcgdGhlICoqYGNsYXNzKClgKiogZnVuY3Rpb246CgpgYGB7cn0KIGNsYXNzKGZpcnN0TmFtZSkKIGNsYXNzKGFnZSkKIGNsYXNzKHdlaWdodCkKIGNsYXNzKGNvbnNlbnQpCmBgYAoKIyNGYWN0b3JzCgotIENoYXJhY3RlciB2ZWN0b3JzIGFyZSBmaW5lIGZvciBzb21lIHZhcmlhYmxlcywgbGlrZSBuYW1lcy4gQnV0IHNvbWV0aW1lcyB3ZSBoYXZlIGNhdGVnb3JpY2FsIGRhdGEgYW5kIHdlIHdhbnQgUiB0byAKcmVjb2duaXplIHRoaXMKLSBBIGZhY3RvciBpcyBSJ3MgZGF0YSBzdHJ1Y3R1cmUgZm9yIGNhdGVnb3JpY2FsIGRhdGE6CgpgYGB7cn0Kc2V4IDwtIGMoIk1hbGUiLCAiRmVtYWxlIiwgIk1hbGUiLCAiRmVtYWxlIiwgIk1hbGUiLAogICAgICAgICAiTWFsZSIsICJGZW1hbGUiLCAiTWFsZSIsICJNYWxlIiwgIkZlbWFsZSIpCnNleApgYGAKCgoKYGBge3J9CmZhY3RvcihzZXgpCmBgYAoKLSBSIGhhcyBjb252ZXJ0ZWQgdGhlIHN0cmluZ3Mgb2YgdGhlIHNleCBjaGFyYWN0ZXIgdmVjdG9yIGludG8gdHdvICoqbGV2ZWxzKiosIHdoaWNoIGFyZSB0aGUgY2F0ZWdvcmllcyBpbiB0aGUgZGF0YQotIE5vdGUgdGhlIHZhbHVlcyBvZiB0aGlzIGZhY3RvciBhcmUgbm90IGNoYXJhY3RlciBzdHJpbmdzLCBidXQgbGV2ZWxzCi0gV2UgY2FuIHVzZSB0aGlzIGZhY3RvciBsYXRlci1vbiB0byBjb21wYXJlIGRhdGEgZm9yIG1hbGVzIGFuZCBmZW1hbGVzCgojIyBDcmVhdGluZyBhIGRhdGEgZnJhbWUgKGZpcnN0IGF0dGVtcHQpCgotIFdlIGNhbiBjb25zdHJ1Y3QgYSBkYXRhIGZyYW1lIGZyb20gb3RoZXIgb2JqZWN0cyAoTi5CLiBUaGUgKipgcGFzdGUoKWAqKiBmdW5jdGlvbiBqb2lucyBjaGFyYWN0ZXIgdmVjdG9ycyB0b2dldGhlcikKCmBgYHtyfQpwYXRpZW50cyA8LSBkYXRhLmZyYW1lKGZpcnN0TmFtZSwgc2Vjb25kTmFtZSwgCiAgICAgICAgICAgICAgICAgICAgICAgcGFzdGUoZmlyc3ROYW1lLCBzZWNvbmROYW1lKSwgIAogICAgICAgICAgICAgICAgICAgICAgIHNleCwgYWdlLCB3ZWlnaHQsIGNvbnNlbnQpCmBgYAoKCmBgYHtyfQpwYXRpZW50cwoKYGBgCgoKCiMjTmFtaW5nIGRhdGEgZnJhbWUgdmFyaWFibGVzCgotIFdlIGNhbiBhY2Nlc3MgcGFydGljdWxhciB2YXJpYWJsZXMgdXNpbmcgdGhlICoqJ2AkYCcqKiAqb3BlcmF0b3IqOgotIFRJUDogeW91IGNhbiB1c2UgVEFCLWNvbXBsZXRlIHRvIHNlbGVjdCB0aGUgdmFyaWFibGUgeW91IHdhbnQKCmBgYHtyfQpwYXRpZW50cyRhZ2UKCgpgYGAKCi0gUiBoYXMgaW5mZXJyZWQgdGhlIG5hbWVzIG9mIG91ciBkYXRhIGZyYW1lIHZhcmlhYmxlcyBmcm9tIHRoZSBuYW1lcyBvZiB0aGUgdmVjdG9ycyBvciB0aGUgY29tbWFuZHMgKGUuZy4gdGhlIGBwYXN0ZSgpYCBjb21tYW5kKQotIFdlIGNhbiBuYW1lIHRoZSB2YXJpYWJsZXMgYWZ0ZXIgd2UgaGF2ZSBjcmVhdGVkIGEgZGF0YSBmcmFtZSB1c2luZyB0aGUgKipgbmFtZXMoKWAqKiBmdW5jdGlvbiwgYW5kIHdlIGNhbiB1c2UgdGhlIHNhbWUgZnVuY3Rpb24gdG8gc2VlIHRoZSBuYW1lczoKCmBgYHtyfQpuYW1lcyhwYXRpZW50cykgPC0gYygiRmlyc3RfTmFtZSIsICJTZWNvbmRfTmFtZSIsCiAgICAgICAgICAgICAgICAgICAgICJGdWxsX05hbWUiLCAiU2V4IiwgIkFnZSIsIAogICAgICAgICAgICAgICAgICAgICAiV2VpZ2h0IiwgIkNvbnNlbnQiKQpgYGAKCmBgYHtyfQpuYW1lcyhwYXRpZW50cykKYGBgCgoKLSBPciB3ZSBjYW4gbmFtZSB0aGUgdmFyaWFibGVzIHdoZW4gd2UgZGVmaW5lIHRoZSBkYXRhIGZyYW1lCgpgYGB7cn0KcGF0aWVudHMgPC0gZGF0YS5mcmFtZShGaXJzdF9OYW1lID0gZmlyc3ROYW1lLCAKICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIAogICAgICAgICAgICAgICAgICAgICAgIEZ1bGxfTmFtZSA9IHBhc3RlKGZpcnN0TmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZWNvbmROYW1lKSwgCiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gc2V4LAogICAgICAgICAgICAgICAgICAgICAgIEFnZSA9IGFnZSwKICAgICAgICAgICAgICAgICAgICAgICBXZWlnaHQgPSB3ZWlnaHQsIAogICAgICAgICAgICAgICAgICAgICAgIENvbnNlbnQgPSBjb25zZW50KQoKYGBgCgpgYGB7cn0KbmFtZXMocGF0aWVudHMpCmBgYAoKIyNGYWN0b3JzIGluIGRhdGEgZnJhbWVzCgotIFdoZW4gY3JlYXRpbmcgYSBkYXRhIGZyYW1lLCBSIGFzc3VtZXMgYWxsIGNoYXJhY3RlciB2ZWN0b3JzIHNob3VsZCBiZSBjYXRlZ29yaWNhbCB2YXJpYWJsZXMgYW5kIGNvbnZlcnRzIHRoZW0gdG8gZmFjdG9ycy4gVGhpcyBpcyBub3QgCmFsd2F5cyB3aGF0IHdlIHdhbnQ6CiAgICArIGUuZy4gd2UgYXJlIHVubGlrZWx5IHRvIGJlIGludGVyZXN0ZWQgaW4gdGhlIGh5cG90aGVzaXMgdGhhdCBwZW9wbGUgY2FsbGVkIEFkYW0gYXJlIHRhbGxlciwgc28gaXQgc2VlbXMgYSBiaXQgc2lsbHkgdG8gcmVwcmVzZW50IHRoaXMgYXMgYSBmYWN0b3IKCmBgYHtyfQpwYXRpZW50cyRGaXJzdF9OYW1lCmBgYAoKCi0gV2UgY2FuIGF2b2lkIHRoaXMgYnkgYXNraW5nIFIgbm90IHRvIHRyZWF0IHN0cmluZ3MgYXMgZmFjdG9ycywgYW5kIAp0aGVuIGV4cGxpY2l0bHkgc3RhdGluZyB3aGVuIHdlIHdhbnQgYSBmYWN0b3IgYnkgdXNpbmcgKipgZmFjdG9yKClgKio6CgpgYGB7cn0KcGF0aWVudHMgPC0gZGF0YS5mcmFtZShGaXJzdF9OYW1lID0gZmlyc3ROYW1lLCAKICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIAogICAgICAgICAgICAgICAgICAgICAgIEZ1bGxfTmFtZSA9IHBhc3RlKGZpcnN0TmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZWNvbmROYW1lKSwgCiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gZmFjdG9yKHNleCksCiAgICAgICAgICAgICAgICAgICAgICAgQWdlID0gYWdlLAogICAgICAgICAgICAgICAgICAgICAgIFdlaWdodCA9IHdlaWdodCwKICAgICAgICAgICAgICAgICAgICAgICBDb25zZW50ID0gY29uc2VudCwKICAgICAgICAgICAgICAgICAgICAgICBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCnBhdGllbnRzCmBgYAoKYGBge3J9CnBhdGllbnRzJFNleApwYXRpZW50cyRGaXJzdF9OYW1lCmBgYAoKCiMjIEFkZGluZyBhZGRpdGlvbmFsIGNvbHVtbnMKClJlY2FsbCB0aGF0IHdlIGNhbiBjcmVhdGUgYSBuZXcgdmFyaWFibGUgdXNpbmcgYW4gYXNzaWdubWVudCBvcGVyYXRvciBhbmQgc3BlY2lmeWluZyBhIG5hbWUgdGhhdCBSIGlzbid0IGN1cnJlbnRseSB1c2luZyBhcyBhIHZhcmlhYmxlIG5hbWUKCmBgYHtyfQpteU5ld1ZhcmlhYmxlIDwtIDQyCm15TmV3VmFyaWFibGUKYGBgCgpXZSB1c2UgYSBzaW1pbGFyIHRyaWNrIHRvIGRlZmluZSBuZXcgY29sdW1ucyBpbiB0aGUgZGF0YSBmcmFtZQotIFRoZSB2YWx1ZSB5b3UgYXNzaWduIG11c3QgYmUgdGhlIHNhbWUgbGVuZ3RoIGFzIHRoZSBudW1iZXIgb2Ygcm93cyBpbiB0aGUgZGF0YSBmcmFtZS4KCmBgYHtyfQpwYXRpZW50cyRJRApwYXRpZW50cyRJRCA8LSBwYXN0ZSgiUGF0aWVudCIsIDE6MTApCnBhdGllbnRzCmBgYAoKCgojIyBNYXRyaWNlcwoKLSBEYXRhIGZyYW1lcyBhcmUgUidzIHNwZWNpYWxpdHksIGJ1dCBSIGFsc28gaGFuZGxlcyBtYXRyaWNlczoKICAgICsgQWxsIGNvbHVtbnMgYXJlIGFzc3VtZWQgdG8gY29udGFpbiB0aGUgc2FtZSBkYXRhIHR5cGUsIGUuZy4gbnVtZXJpY2FsCiAgICArIE1hdHJpY2VzIGNhbiBiZSBtYW5pcHVsYXRlZCBpbiB0aGUgc2FtZSBmYXNoaW9uIGFzIGRhdGEgZnJhbWUKICAgICAgICArIFdlIGNhbiBlYXNpbHkgY29udmVydCBiZXR3ZWVuIHRoZSB0d28gb2JqZWN0IHR5cGVzCiAgICAgICAgCmBgYHtyfQplIDwtIG1hdHJpeCgxOjEwLCBucm93PTUsIG5jb2w9MikKZQpgYGAKCi0gU29tZSBjYWxjdWxhdGlvbnMgYXJlIG1vcmUgZWZmaWNpZW50IHRvIGRvIG9uIG1hdHJpY2VzLCBlLmcuOgoKYGBge3J9CnJvd01lYW5zKGUpCmBgYAoKTWF0cmljZXMgKGFuZCBpbmRlZWQgZGF0YSBmcmFtZXMpIGNhbiBiZSBqb2luZWQgdG9nZXRoZXIgdXNpbmcgdGhlIGZ1bmN0aW9ucyBgY2JpbmRgIGFuZCBgcmJpbmRgCgpMZXQncyBmaXJzdCBjcmVhdGUgc29tZSBleGFtcGxlIGRhdGEKYGBge3J9CgptYXQxIDwtIG1hdHJpeCgxMToyMCwgbnJvdz01LG5jb2w9MikKbWF0MQptYXQyIDwtIG1hdHJpeCgyMTozMCwgbnJvdz01LCBuY29sPTIpCm1hdDIKbWF0MyA8LSBtYXRyaXgoMzE6NDAsbnJvdz01LG5jb2w9MikKbWF0MwoKYGBgCgphbmQgbm93IHRyeSBvdXQgdGhlc2UgZnVuY3Rpb25zOi0KCmBgYHtyfQpjYmluZChtYXQxLG1hdDIpCnJiaW5kKG1hdDEsbWF0MykKYGBgCgoKIyNJbmRleGluZyBkYXRhIGZyYW1lcyBhbmQgbWF0cmljZXMKCi0gWW91IGNhbiBpbmRleCBtdWx0aWRpbWVuc2lvbmFsIGRhdGEgc3RydWN0dXJlcyBsaWtlIG1hdHJpY2VzIGFuZCBkYXRhIApmcmFtZXMgdXNpbmcgY29tbWFzOgotICoqYG9iamVjdFtyb3dzLCBjb2x1bXNdYCoqCi0gVHJ5IGFuZCBwcmVkaWN0IHdoYXQgZWFjaCBvZiB0aGUgZm9sbG93aW5nIGNvbW1hbmRzIHdpbGwgZG86LQoKYGBge3J9CmVbMSwyXQoKYGBgCgpgYGB7cn0KcGF0aWVudHNbMSwyXQoKYGBgCgpgYGB7cn0KcGF0aWVudHNbMSwxOjNdCgpgYGAKCi0gSWYgeW91IGRvbid0IHByb3ZpZGUgYW4gaW5kZXggZm9yIGVpdGhlciByb3dzIG9yIGNvbHVtbnMsIGFsbCBvZiB0aGUgcm93cyBvciBjb2x1bW5zIHdpbGwgYmUgcmV0dXJuZWQuCgpgYGB7cn0KZVsxLF0KCmBgYAoKCmBgYHtyfQpwYXRpZW50c1ssLTFdCmBgYAoKIyNBZHZhbmNlZCBpbmRleGluZwoKLSBJbmRpY2VzIGFyZSBhY3R1YWxseSB2ZWN0b3JzLCBhbmQgY2FuIGJlICoqKm51bWVyaWMqKiogb3IgKioqbG9naWNhbCoqKjoKLSBXZSB3b24ndCBhbHdheXMga25vdyBpbiBhZHZhbmNlIHdoaWNoIGluZGljZXMgd2Ugd2FudCB0byByZXR1cm4KICAgICsgd2UgbWlnaHQgd2FudCBhbGwgdmFsdWVzIHRoYXQgZXhjZWVkIGEgcGFydGljdWxhciB2YWx1ZSBvciBzYXRpc2Z5IHNvbWUgb3RoZXIgY3JpdGVyaWEKLSBJbiB0aGlzIGV4YW1wbGUsIGBsZXR0ZXJzYCBpcyBhIHZlY3RvciBjb250YWluaW5nIGFsbCBsZXR0ZXJzIGluIHRoZSBFbmdsaXNoIGFscGhhYmV0CgpgYGB7cn0KbGV0dGVycwpzIDwtIGxldHRlcnNbMTo1XQpzCmBgYAoKU28gZmFyIHdlIGhhdmUgc2VlbiBob3cgdG8gZXh0cmFjdCB0aGUgZmlyc3QgYW5kIHRoaXJkIHZhbHVlcyBpbiB0aGUgdmVjdG9yCgpgYGB7cn0Kc1tjKDEsMyldCmBgYAoKUiBjYW4gcGVyZm9ybSB0aGUgc2FtZSBvcGVyYXRpb24gdXNpbmcgYSB2ZWN0b3Igb2YgbG9naWNhbCB2YWx1ZXMuIE9ubHkgaW5kaWNlcyB3aXRoIGEgYFRSVUVgIHZhbHVlIHdpbGwgZ2V0IHJldHVybmVkCgpgYGB7cn0Kc1tjKFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgRkFMU0UpXQpgYGAKCgotIFdlIGNhbiBkbyB0aGUgbG9naWNhbCB0ZXN0IGFuZCBpbmRleGluZyBpbiB0aGUgc2FtZSBsaW5lIG9mIFIgY29kZQogICAgKyBSIHdpbGwgZG8gdGhlIHRlc3QgZmlyc3QsIGFuZCB0aGVuIHVzZSB0aGUgdmVjdG9yIG9mIGBUUlVFYCBhbmQgYEZBTFNFYCB2YWx1ZXMgdG8gc3Vic2V0IHRoZSB2ZWN0b3IKYGBge3J9CmEgPC0gMTo1CgphIDwgMwpzW2EgPCAzXQpgYGAKCgojIyBMb2dpY2FsIE9wZXJhdG9ycwoKLSBPcGVyYXRvcnMgYWxsb3cgdXMgdG8gY29tYmluZSBtdWx0aXBsZSBsb2dpY2FsIHRlc3RzCi0gY29tcGFyaXNvbiBvcGVyYXRvcnMKKipgPCwgPiwgPD0sID49LCA9PSwgIT1gKioKLSBsb2dpY2FsIG9wZXJhdG9ycyAKKipgISwgJiwgfCwgeG9yYCoqCiAgICArIFRoZSBvcGVyYXRvcnMgZm9yICdjb21wYXJpc29uJyBhbmQgJ2xvZ2ljYWwnIGFsd2F5cyByZXR1cm4gbG9naWNhbCB2YWx1ZXMhIGkuZS4gIChgVFJVRWAsIGBGQUxTRWApCgoKYGBge3J9CgpzW2EgPiAxICYgYSA8M10Kc1thID09IDJdCmBgYAoKCiMjRXhlcmNpc2U6IEV4ZXJjaXNlIDIKCi0gV3JpdGUgUiBjb2RlIHRvIHByaW50IHRoZSBmb2xsb3dpbmcgc3Vic2V0cyBvZiB0aGUgcGF0aWVudHMgZGF0YSBmcmFtZQotIFRoZSBmaXJzdCBhbmQgc2Vjb25kIHJvd3MsIGFuZCB0aGUgZmlyc3QgYW5kIHNlY29uZCBjb2x1bXMKCnwgIHxGaXJzdF9OYW1lfFNlY29uZF9OYW1lCnwtLXwtLS0tLS0tfC0tLS0tLS18CnwxIHxBZGFtICAgfEpvbmVzIAp8MiB8RXZlICAgIHxQYXJrZXIgCgotIEFsbCByb3dzLCBidXQgaW4gdGhlIG9yZGVyIDEwIHRvIDEuCgpISU5UOiBjcmVhdGUgYSBzZXF1ZW5jZSB1c2luZyB0aGUgYDpgIHNob3J0Y3V0IHdlIHNhdyBlYXJsaWVyLCB0byBpbmRleCB0aGUgcm93cwoKfCAgfEZpcnN0X05hbWV8U2Vjb25kX05hbWV8RnVsbF9OYW1lfFNleCB8QWdlfFdlaWdodCB8Q29uc2VudHwKfC0tfC0tLS0tLS18LS0tLS0tLXwtLS0tLS0tLS0tLS0tLXw6LS0tLTp8LS06fC0tLS0tLTp8Oi0tLS0tOnwKfDEwfFNhbGx5ICB8V2lsc29uIHxTYWxseSBXaWxzb24gIHxGZW1hbGV8NjIgfCAgNjQuOCB8ICAgVFJVRXwKfDkgfERhdmlkICB8Um9iZXJ0c3xEYXZpZCBSb2JlcnRzIHwgIE1hbGV8NTcgfCAgNzMuMiB8ICBGQUxTRXwKfDggfE1hdHRoZXd8U21pdGggIHxNYXR0aGV3IFNtaXRoIHwgIE1hbGV8MzMgfCAgNzEuNSB8ICAgVFJVRXwKfDcgfEpvYW5uYSB8RWR3YXJkc3xKb2FubmEgRWR3YXJkc3xGZW1hbGV8NDIgfCAgNjMuNSB8ICBGQUxTRXwKfDYgfFBhdWwgICB8RGFuaWVsc3xQYXVsIERhbmllbHMgIHwgIE1hbGV8MzEgfCAgNjkuOSB8ICBGQUxTRXwKfDUgfFBldGVyICB8QmFrZXIgIHxQZXRlciBCYWtlciAgIHwgIE1hbGV8MjggfCAgNzIuNCB8ICBGQUxTRXwKfDQgfE1hcnkgICB8RGF2aXMgIHxNYXJ5IERhdmlzICAgIHxGZW1hbGV8NDUgfCAgNjEuOSB8ICAgVFJVRXwKfDMgfEpvaG4gICB8RXZhbnMgIHxKb2huIEV2YW5zICAgIHwgIE1hbGV8MzUgfCAgNzUuMyB8ICBGQUxTRXwKfDIgfEV2ZSAgICB8UGFya2VyIHxFdmUgUGFya2VyICAgIHxGZW1hbGV8MjEgfCAgNjcuOSB8ICAgVFJVRXwKfDEgfEFkYW0gICB8Sm9uZXMgIHxBZGFtIEpvbmVzICAgIHwgIE1hbGV8NTAgfCAgNzAuOCB8ICAgVFJVRXwKCi0gQWxsIHJvd3MgZXhjZXB0IHRoZSBmaXJzdCByb3csIGFsbCBjb2x1bW5zCgp8ICB8Rmlyc3RfTmFtZXxTZWNvbmRfTmFtZXxGdWxsX05hbWV8U2V4IHxBZ2V8V2VpZ2h0IHxDb25zZW50fAp8LS18LS0tLS0tLXwtLS0tLS0tfC0tLS0tLS0tLS0tLS0tfDotLS0tOnwtLTp8LS0tLS0tOnw6LS0tLS06fAp8MiB8RXZlICAgIHxQYXJrZXIgfEV2ZSBQYXJrZXIgICAgfEZlbWFsZXwyMSB8ICA2Ny45IHwgICBUUlVFfAp8MyB8Sm9obiAgIHxFdmFucyAgfEpvaG4gRXZhbnMgICAgfCAgTWFsZXwzNSB8ICA3NS4zIHwgIEZBTFNFfAp8NCB8TWFyeSAgIHxEYXZpcyAgfE1hcnkgRGF2aXMgICAgfEZlbWFsZXw0NSB8ICA2MS45IHwgICBUUlVFfAp8NSB8UGV0ZXIgIHxCYWtlciAgfFBldGVyIEJha2VyICAgfCAgTWFsZXwyOCB8ICA3Mi40IHwgIEZBTFNFfAp8NiB8UGF1bCAgIHxEYW5pZWxzfFBhdWwgRGFuaWVscyAgfCAgTWFsZXwzMSB8ICA2OS45IHwgIEZBTFNFfAp8NyB8Sm9hbm5hIHxFZHdhcmRzfEpvYW5uYSBFZHdhcmRzfEZlbWFsZXw0MiB8ICA2My41IHwgIEZBTFNFfAp8OCB8TWF0dGhld3xTbWl0aCAgfE1hdHRoZXcgU21pdGggfCAgTWFsZXwzMyB8ICA3MS41IHwgICBUUlVFfAp8OSB8RGF2aWQgIHxSb2JlcnRzfERhdmlkIFJvYmVydHMgfCAgTWFsZXw1NyB8ICA3My4yIHwgIEZBTFNFfAp8MTB8U2FsbHkgIHxXaWxzb24gfFNhbGx5IFdpbHNvbiAgfEZlbWFsZXw2MiB8ICA2NC44IHwgICBUUlVFfAoKLSBVc2UgbG9naWNhbCBpbmRleGluZyB0byBzZWxlY3QgdGhlIGZvbGxvd2luZyBwYXRpZW50cyBmcm9tIHRoZSBkYXRhIGZyYW1lOgogICAgMS4gUGF0aWVudHMgdW5kZXIgNDAKICAgIDIuIFBhdGllbnRzIHdobyBnaXZlIGNvbnNlbnQgdG8gc2hhcmUgdGhlaXIgZGF0YQogICAgMy4gTWVuIHdobyB3ZWlnaCBhcyBtdWNoIG9yIG1vcmUgdGhhbiB0aGUgYXZlcmFnZSBFdXJvcGVhbiBtYWxlICg3MC44IGtnKQogICAgCiAgCmBgYHtyfQphZ2UgICAgPC0gYyg1MCwgMjEsIDM1LCA0NSwgMjgsIDMxLCA0MiwgMzMsIDU3LCA2MikKd2VpZ2h0IDwtIGMoNzAuOCwgNjcuOSwgNzUuMywgNjEuOSwgNzIuNCwgNjkuOSwgCiAgICAgICAgICAgIDYzLjUsIDcxLjUsIDczLjIsIDY0LjgpCgpmaXJzdE5hbWUgIDwtIGMoIkFkYW0iLCAiRXZlIiwgIkpvaG4iLCAiTWFyeSIsCiAgICAgICAgICAgICAgICAiUGV0ZXIiLCAiUGF1bCIsICJKb2FubmEiLCAiTWF0dGhldyIsCiAgICAgICAgICAgICAgICAiRGF2aWQiLCAiU2FsbHkiKQpzZWNvbmROYW1lIDwtIGMoIkpvbmVzIiwgIlBhcmtlciIsICJFdmFucyIsICJEYXZpcyIsCiAgICAgICAgICAgICAgICAiQmFrZXIiLCJEYW5pZWxzIiwgIkVkd2FyZHMiLCAiU21pdGgiLCAKICAgICAgICAgICAgICAgICJSb2JlcnRzIiwgIldpbHNvbiIpCgpjb25zZW50IDwtIGMoVFJVRSwgVFJVRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCAKICAgICAgICAgICAgIEZBTFNFLCBGQUxTRSwgVFJVRSwgRkFMU0UsIFRSVUUpCgpzZXggPC0gYygiTWFsZSIsICJGZW1hbGUiLCAiTWFsZSIsICJGZW1hbGUiLCAiTWFsZSIsCiAgICAgICAgICJNYWxlIiwgIkZlbWFsZSIsICJNYWxlIiwgIk1hbGUiLCAiRmVtYWxlIikKcGF0aWVudHMgPC0gZGF0YS5mcmFtZShGaXJzdF9OYW1lID0gZmlyc3ROYW1lLCAKICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIAogICAgICAgICAgICAgICAgICAgICAgIEZ1bGxfTmFtZSA9IHBhc3RlKGZpcnN0TmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZWNvbmROYW1lKSwgCiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gZmFjdG9yKHNleCksCiAgICAgICAgICAgICAgICAgICAgICAgQWdlID0gYWdlLAogICAgICAgICAgICAgICAgICAgICAgIFdlaWdodCA9IHdlaWdodCwKICAgICAgICAgICAgICAgICAgICAgICBDb25zZW50ID0gY29uc2VudCwKICAgICAgICAgICAgICAgICAgICAgICBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCnBhdGllbnRzCgojIyMgWW91ciBBbnN3ZXIgIyMjCgoKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWN0aW9uIHRvIFNvbHZpbmcgQmlvbG9naWNhbCBQcm9ibGVtcyBVc2luZyBSIC0gRGF5IDEiCmF1dGhvcjogTWFyayBEdW5uaW5nLCBTdXJhaiBNZW5vbiBhbmQgQWlvcmEgWmFiYWxhLiBPcmlnaW5hbCBtYXRlcmlhbCBieSBSb2JlcnQgU3Rvam5pxIcsCiAgTGF1cmVudCBHYXR0bywgUm9iIEZveSwgSm9obiBEYXZleSwgRMOhdmlkIE1vbG7DoXIgYW5kIElhbiBSb2JlcnRzCmRhdGU6ICdgciBmb3JtYXQoU3lzLnRpbWUoKSwgIkxhc3QgbW9kaWZpZWQ6ICVkICViICVZIilgJwpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazoKICAgIHRvYzogeWVzCiAgICB0b2NfZmxvYXQ6IHllcwotLS0KCiMgMi4gRGF0YSBzdHJ1Y3R1cmVzCgojIyBSIGlzIGRlc2lnbmVkIHRvIGhhbmRsZSBleHBlcmltZW50YWwgZGF0YQoKLSBBbHRob3VnaCB0aGUgYmFzaWMgdW5pdCBvZiBSIGlzIGEgdmVjdG9yLCB3ZSB1c3VhbGx5IGhhbmRsZSBkYXRhIGluICoqZGF0YSBmcmFtZXMqKi4KLSBBIGRhdGEgZnJhbWUgaXMgYSBzZXQgb2Ygb2JzZXJ2YXRpb25zIG9mIGEgc2V0IG9mIHZhcmlhYmxlcyAtLSBpbiBvdGhlciB3b3JkcywgdGhlIG91dGNvbWUgb2YgYW4gZXhwZXJpbWVudC4KLSBGb3IgZXhhbXBsZSwgd2UgbWlnaHQgd2FudCB0byBhbmFseXNlIGluZm9ybWF0aW9uIGFib3V0IGEgc2V0IG9mIHBhdGllbnRzLiAKLSBUbyBzdGFydCB3aXRoLCBsZXQncyBzYXkgd2UgaGF2ZSB0ZW4gcGF0aWVudHMgYW5kIGZvciBlYWNoIG9uZSB3ZSBrbm93IHRoZWlyIG5hbWUsIHNleCwgYWdlLCB3ZWlnaHQgYW5kIHdoZXRoZXIgdGhleSBnaXZlIGNvbnNlbnQgZm9yIHRoZWlyIGRhdGEgdG8gYmUgbWFkZSBwdWJsaWMuCi0gV2UgYXJlIGdvaW5nIHRvIGNyZWF0ZSBhIGRhdGEgZnJhbWUgY2FsbGVkICdwYXRpZW50cycsIHdoaWNoIHdpbGwgaGF2ZSB0ZW4gcm93cyAob2JzZXJ2YXRpb25zKSBhbmQgc2V2ZW4gY29sdW1ucyAodmFyaWFibGVzKS4gVGhlIGNvbHVtbnMgbXVzdCBhbGwgYmUgZXF1YWwgbGVuZ3Rocy4gCi0gV2Ugd2lsbCBleHBsb3JlIGhvdyB0byBjb25zdHJ1Y3QgdGhlc2UgZGF0YSBmcm9tIHNjcmF0Y2guCiAgICArIChpbiBwcmFjdGljZSwgd2Ugd291bGQgdXN1YWxseSBpbXBvcnQgc3VjaCBkYXRhIGZyb20gYSBmaWxlKQogICAgCnwgIHxGaXJzdF9OYW1lfFNlY29uZF9OYW1lfEZ1bGxfTmFtZXxTZXggfEFnZXxXZWlnaHQgfENvbnNlbnR8CnwtLXwtLS0tLS0tfC0tLS0tLS18LS0tLS0tLS0tLS0tLS18Oi0tLS06fC0tOnwtLS0tLS06fDotLS0tLTp8CnwxIHxBZGFtICAgfEpvbmVzICB8QWRhbSBKb25lcyAgICB8ICBNYWxlfDUwIHwgIDcwLjggfCAgIFRSVUV8CnwyIHxFdmUgICAgfFBhcmtlciB8RXZlIFBhcmtlciAgICB8RmVtYWxlfDIxIHwgIDY3LjkgfCAgIFRSVUV8CnwzIHxKb2huICAgfEV2YW5zICB8Sm9obiBFdmFucyAgICB8ICBNYWxlfDM1IHwgIDc1LjMgfCAgRkFMU0V8Cnw0IHxNYXJ5ICAgfERhdmlzICB8TWFyeSBEYXZpcyAgICB8RmVtYWxlfDQ1IHwgIDYxLjkgfCAgIFRSVUV8Cnw1IHxQZXRlciAgfEJha2VyICB8UGV0ZXIgQmFrZXIgICB8ICBNYWxlfDI4IHwgIDcyLjQgfCAgRkFMU0V8Cnw2IHxQYXVsICAgfERhbmllbHN8UGF1bCBEYW5pZWxzICB8ICBNYWxlfDMxIHwgIDY5LjkgfCAgRkFMU0V8Cnw3IHxKb2FubmEgfEVkd2FyZHN8Sm9hbm5hIEVkd2FyZHN8RmVtYWxlfDQyIHwgIDYzLjUgfCAgRkFMU0V8Cnw4IHxNYXR0aGV3fFNtaXRoICB8TWF0dGhldyBTbWl0aCB8ICBNYWxlfDMzIHwgIDcxLjUgfCAgIFRSVUV8Cnw5IHxEYXZpZCAgfFJvYmVydHN8RGF2aWQgUm9iZXJ0cyB8ICBNYWxlfDU3IHwgIDczLjIgfCAgRkFMU0V8CnwxMHxTYWxseSAgfFdpbHNvbiB8U2FsbHkgV2lsc29uICB8RmVtYWxlfDYyIHwgIDY0LjggfCAgIFRSVUV8CgojIyBDaGFyYWN0ZXIsIG51bWVyaWMgYW5kIGxvZ2ljYWwgZGF0YSB0eXBlcwoKLSBFYWNoIGNvbHVtbiBpcyBhIHZlY3RvciwgbGlrZSBwcmV2aW91cyB2ZWN0b3JzIHdlIGhhdmUgc2VlbiwgZm9yIApleGFtcGxlOiAKCmBgYHtyfQphZ2UgICAgPC0gYyg1MCwgMjEsIDM1LCA0NSwgMjgsIDMxLCA0MiwgMzMsIDU3LCA2MikKd2VpZ2h0IDwtIGMoNzAuOCwgNjcuOSwgNzUuMywgNjEuOSwgNzIuNCwgNjkuOSwgCiAgICAgICAgICAgIDYzLjUsIDcxLjUsIDczLjIsIDY0LjgpCgpgYGAKCi0gV2UgY2FuIGRlZmluZSB0aGUgbmFtZXMgdXNpbmcgY2hhcmFjdGVyIHZlY3RvcnM6CgpgYGB7cn0KZmlyc3ROYW1lICA8LSBjKCJBZGFtIiwgIkV2ZSIsICJKb2huIiwgIk1hcnkiLAogICAgICAgICAgICAgICAgIlBldGVyIiwgIlBhdWwiLCAiSm9hbm5hIiwgIk1hdHRoZXciLAogICAgICAgICAgICAgICAgIkRhdmlkIiwgIlNhbGx5IikKc2Vjb25kTmFtZSA8LSBjKCJKb25lcyIsICJQYXJrZXIiLCAiRXZhbnMiLCAiRGF2aXMiLAogICAgICAgICAgICAgICAgIkJha2VyIiwiRGFuaWVscyIsICJFZHdhcmRzIiwgIlNtaXRoIiwgCiAgICAgICAgICAgICAgICAiUm9iZXJ0cyIsICJXaWxzb24iKQpgYGAKCk5vdGljZSBob3cgYSBwYXJ0aWN1bGFyIGxpbmUgb2YgUiBjb2RlIGNhbiBiZSB0eXBlZCBvdmVyIG11bHRpcGxlIGxpbmVzLiBSIHdvbid0IGV4ZWN1dGUgdGhlIGNvZGUgdW50aWwgaXQgc2VlcyB0aGUgY2xvc2luZyBicmFja2V0IGApYCB0aGF0IG1hdGNoZXMgdGhlIGluaXRpYWwgYnJhY2tldCBgKGApCi0gV2Ugb2Z0ZW4gdXNlIHRoaXMgdHJpY2sgdG8gbWFrZSBvdXIgY29kZSBlYXNpZXIgdG8gcmVhZAoKLSBXZSBhbHNvIGhhdmUgYSBuZXcgdHlwZSBvZiB2ZWN0b3IsIHRoZSAqKipsb2dpY2FsKioqIHZlY3Rvciwgd2hpY2ggb25seSAKY29udGFpbnMgdGhlIHZhbHVlcyBgVFJVRWAgYW5kIGBGQUxTRWA6CgpgYGB7cn0KY29uc2VudCA8LSBjKFRSVUUsIFRSVUUsIEZBTFNFLCBUUlVFLCBGQUxTRSwgCiAgICAgICAgICAgICBGQUxTRSwgRkFMU0UsIFRSVUUsIEZBTFNFLCBUUlVFKQpgYGAKCgotIFZlY3RvcnMgY2FuIG9ubHkgY29udGFpbiBvbmUgdHlwZSBvZiBkYXRhOyB3ZSBjYW5ub3QgbWl4IG51bWJlcnMsIGNoYXJhY3RlcnMgYW5kIGxvZ2ljYWwgdmFsdWVzIGluIHRoZSBzYW1lIHZlY3Rvci4gCiAgICArIElmIHdlIHRyeSB0aGlzLCBSIHdpbGwgY29udmVydCBldmVyeXRoaW5nIHRvIGNoYXJhY3RlcnM6CgpgYGB7cn0KYygyMCwgImEgc3RyaW5nIiwgVFJVRSkKCmBgYAoKLSBXZSBjYW4gc2VlIHRoZSB0eXBlIG9mIGEgcGFydGljdWxhciB2ZWN0b3IgdXNpbmcgdGhlICoqYGNsYXNzKClgKiogZnVuY3Rpb246CgpgYGB7cn0KIGNsYXNzKGZpcnN0TmFtZSkKIGNsYXNzKGFnZSkKIGNsYXNzKHdlaWdodCkKIGNsYXNzKGNvbnNlbnQpCmBgYAoKIyNGYWN0b3JzCgotIENoYXJhY3RlciB2ZWN0b3JzIGFyZSBmaW5lIGZvciBzb21lIHZhcmlhYmxlcywgbGlrZSBuYW1lcy4gQnV0IHNvbWV0aW1lcyB3ZSBoYXZlIGNhdGVnb3JpY2FsIGRhdGEgYW5kIHdlIHdhbnQgUiB0byAKcmVjb2duaXplIHRoaXMKLSBBIGZhY3RvciBpcyBSJ3MgZGF0YSBzdHJ1Y3R1cmUgZm9yIGNhdGVnb3JpY2FsIGRhdGE6CgpgYGB7cn0Kc2V4IDwtIGMoIk1hbGUiLCAiRmVtYWxlIiwgIk1hbGUiLCAiRmVtYWxlIiwgIk1hbGUiLAogICAgICAgICAiTWFsZSIsICJGZW1hbGUiLCAiTWFsZSIsICJNYWxlIiwgIkZlbWFsZSIpCnNleApgYGAKCgoKYGBge3J9CmZhY3RvcihzZXgpCmBgYAoKLSBSIGhhcyBjb252ZXJ0ZWQgdGhlIHN0cmluZ3Mgb2YgdGhlIHNleCBjaGFyYWN0ZXIgdmVjdG9yIGludG8gdHdvICoqbGV2ZWxzKiosIHdoaWNoIGFyZSB0aGUgY2F0ZWdvcmllcyBpbiB0aGUgZGF0YQotIE5vdGUgdGhlIHZhbHVlcyBvZiB0aGlzIGZhY3RvciBhcmUgbm90IGNoYXJhY3RlciBzdHJpbmdzLCBidXQgbGV2ZWxzCi0gV2UgY2FuIHVzZSB0aGlzIGZhY3RvciBsYXRlci1vbiB0byBjb21wYXJlIGRhdGEgZm9yIG1hbGVzIGFuZCBmZW1hbGVzCgojIyBDcmVhdGluZyBhIGRhdGEgZnJhbWUgKGZpcnN0IGF0dGVtcHQpCgotIFdlIGNhbiBjb25zdHJ1Y3QgYSBkYXRhIGZyYW1lIGZyb20gb3RoZXIgb2JqZWN0cyAoTi5CLiBUaGUgKipgcGFzdGUoKWAqKiBmdW5jdGlvbiBqb2lucyBjaGFyYWN0ZXIgdmVjdG9ycyB0b2dldGhlcikKCmBgYHtyfQpwYXRpZW50cyA8LSBkYXRhLmZyYW1lKGZpcnN0TmFtZSwgc2Vjb25kTmFtZSwgCiAgICAgICAgICAgICAgICAgICAgICAgcGFzdGUoZmlyc3ROYW1lLCBzZWNvbmROYW1lKSwgIAogICAgICAgICAgICAgICAgICAgICAgIHNleCwgYWdlLCB3ZWlnaHQsIGNvbnNlbnQpCmBgYAoKCmBgYHtyfQpwYXRpZW50cwoKYGBgCgoKCiMjTmFtaW5nIGRhdGEgZnJhbWUgdmFyaWFibGVzCgotIFdlIGNhbiBhY2Nlc3MgcGFydGljdWxhciB2YXJpYWJsZXMgdXNpbmcgdGhlICoqJ2AkYCcqKiAqb3BlcmF0b3IqOgotIFRJUDogeW91IGNhbiB1c2UgVEFCLWNvbXBsZXRlIHRvIHNlbGVjdCB0aGUgdmFyaWFibGUgeW91IHdhbnQKCmBgYHtyfQpwYXRpZW50cyRhZ2UKCgpgYGAKCi0gUiBoYXMgaW5mZXJyZWQgdGhlIG5hbWVzIG9mIG91ciBkYXRhIGZyYW1lIHZhcmlhYmxlcyBmcm9tIHRoZSBuYW1lcyBvZiB0aGUgdmVjdG9ycyBvciB0aGUgY29tbWFuZHMgKGUuZy4gdGhlIGBwYXN0ZSgpYCBjb21tYW5kKQotIFdlIGNhbiBuYW1lIHRoZSB2YXJpYWJsZXMgYWZ0ZXIgd2UgaGF2ZSBjcmVhdGVkIGEgZGF0YSBmcmFtZSB1c2luZyB0aGUgKipgbmFtZXMoKWAqKiBmdW5jdGlvbiwgYW5kIHdlIGNhbiB1c2UgdGhlIHNhbWUgZnVuY3Rpb24gdG8gc2VlIHRoZSBuYW1lczoKCmBgYHtyfQpuYW1lcyhwYXRpZW50cykgPC0gYygiRmlyc3RfTmFtZSIsICJTZWNvbmRfTmFtZSIsCiAgICAgICAgICAgICAgICAgICAgICJGdWxsX05hbWUiLCAiU2V4IiwgIkFnZSIsIAogICAgICAgICAgICAgICAgICAgICAiV2VpZ2h0IiwgIkNvbnNlbnQiKQpgYGAKCmBgYHtyfQpuYW1lcyhwYXRpZW50cykKYGBgCgoKLSBPciB3ZSBjYW4gbmFtZSB0aGUgdmFyaWFibGVzIHdoZW4gd2UgZGVmaW5lIHRoZSBkYXRhIGZyYW1lCgpgYGB7cn0KcGF0aWVudHMgPC0gZGF0YS5mcmFtZShGaXJzdF9OYW1lID0gZmlyc3ROYW1lLCAKICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIAogICAgICAgICAgICAgICAgICAgICAgIEZ1bGxfTmFtZSA9IHBhc3RlKGZpcnN0TmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZWNvbmROYW1lKSwgCiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gc2V4LAogICAgICAgICAgICAgICAgICAgICAgIEFnZSA9IGFnZSwKICAgICAgICAgICAgICAgICAgICAgICBXZWlnaHQgPSB3ZWlnaHQsIAogICAgICAgICAgICAgICAgICAgICAgIENvbnNlbnQgPSBjb25zZW50KQoKYGBgCgpgYGB7cn0KbmFtZXMocGF0aWVudHMpCmBgYAoKIyNGYWN0b3JzIGluIGRhdGEgZnJhbWVzCgotIFdoZW4gY3JlYXRpbmcgYSBkYXRhIGZyYW1lLCBSIGFzc3VtZXMgYWxsIGNoYXJhY3RlciB2ZWN0b3JzIHNob3VsZCBiZSBjYXRlZ29yaWNhbCB2YXJpYWJsZXMgYW5kIGNvbnZlcnRzIHRoZW0gdG8gZmFjdG9ycy4gVGhpcyBpcyBub3QgCmFsd2F5cyB3aGF0IHdlIHdhbnQ6CiAgICArIGUuZy4gd2UgYXJlIHVubGlrZWx5IHRvIGJlIGludGVyZXN0ZWQgaW4gdGhlIGh5cG90aGVzaXMgdGhhdCBwZW9wbGUgY2FsbGVkIEFkYW0gYXJlIHRhbGxlciwgc28gaXQgc2VlbXMgYSBiaXQgc2lsbHkgdG8gcmVwcmVzZW50IHRoaXMgYXMgYSBmYWN0b3IKCmBgYHtyfQpwYXRpZW50cyRGaXJzdF9OYW1lCmBgYAoKCi0gV2UgY2FuIGF2b2lkIHRoaXMgYnkgYXNraW5nIFIgbm90IHRvIHRyZWF0IHN0cmluZ3MgYXMgZmFjdG9ycywgYW5kIAp0aGVuIGV4cGxpY2l0bHkgc3RhdGluZyB3aGVuIHdlIHdhbnQgYSBmYWN0b3IgYnkgdXNpbmcgKipgZmFjdG9yKClgKio6CgpgYGB7cn0KcGF0aWVudHMgPC0gZGF0YS5mcmFtZShGaXJzdF9OYW1lID0gZmlyc3ROYW1lLCAKICAgICAgICAgICAgICAgICAgICAgICBTZWNvbmRfTmFtZSA9IHNlY29uZE5hbWUsIAogICAgICAgICAgICAgICAgICAgICAgIEZ1bGxfTmFtZSA9IHBhc3RlKGZpcnN0TmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZWNvbmROYW1lKSwgCiAgICAgICAgICAgICAgICAgICAgICAgU2V4ID0gZmFjdG9yKHNleCksCiAgICAgICAgICAgICAgICAgICAgICAgQWdlID0gYWdlLAogICAgICAgICAgICAgICAgICAgICAgIFdlaWdodCA9IHdlaWdodCwKICAgICAgICAgICAgICAgICAgICAgICBDb25zZW50ID0gY29uc2VudCwKICAgICAgICAgICAgICAgICAgICAgICBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCnBhdGllbnRzCmBgYAoKYGBge3J9CnBhdGllbnRzJFNleApwYXRpZW50cyRGaXJzdF9OYW1lCmBgYAoKIyMgUmVtb3ZpbmcgdmFyaWFibGVzCgpOb3cgdGhhdCB3ZSBhcmUgaGFwcHkgd2l0aCBvdXIgZGF0YSBmcmFtZSwgd2Ugbm8gbG9uZ2VyIGhhdmUgYW55IHVzZSBmb3IgdGhlIHZlY3RvcnMgdGhhdCB3ZXJlIHVzZWQgdG8gY3JlYXRlIGl0CgotIFIgaGFzIGEgZnVuY3Rpb24gY2FsbGVkIGBybWAgdGhhdCB3aWxsIGFsbG93IHVzIHRvIHJlbW92ZSB2YXJpYWJsZXMKCgpgYGB7ciBldmFsPUZBTFNFfQpybShhZ2UpCmBgYAoKT25jZSBzb21ldGhpbmcgaGFzIGJlZW4gcmVtb3ZlZCwgd2UgY2FuIG5vIGxvbmdlciB1c2UgaXQKCmBgYHtyIGV2YWw9RkFMU0V9CmFnZQpgYGAKCk11bHRpcGxlIG9iamVjdHMgY2FuIGJlIHJlbW92ZWQgYXQgdGhlIHNhbWUgdGltZQoKYGBge3J9CnJtKGxpc3QgPSBjKCJhZ2UiLCJmaXJzdE5hbWUiLCJzZWNvbmROYW1lIiwic2V4Iiwid2VpZ2h0IiwiY29uc2VudCIpKQoKYGBgCgojIyBBZGRpbmcgYWRkaXRpb25hbCBjb2x1bW5zCgpSZWNhbGwgdGhhdCB3ZSBjYW4gY3JlYXRlIGEgbmV3IHZhcmlhYmxlIHVzaW5nIGFuIGFzc2lnbm1lbnQgb3BlcmF0b3IgYW5kIHNwZWNpZnlpbmcgYSBuYW1lIHRoYXQgUiBpc24ndCBjdXJyZW50bHkgdXNpbmcgYXMgYSB2YXJpYWJsZSBuYW1lCgpgYGB7cn0KbXlOZXdWYXJpYWJsZSA8LSA0MgpteU5ld1ZhcmlhYmxlCmBgYAoKV2UgdXNlIGEgc2ltaWxhciB0cmljayB0byBkZWZpbmUgbmV3IGNvbHVtbnMgaW4gdGhlIGRhdGEgZnJhbWUKLSBUaGUgdmFsdWUgeW91IGFzc2lnbiBtdXN0IGJlIHRoZSBzYW1lIGxlbmd0aCBhcyB0aGUgbnVtYmVyIG9mIHJvd3MgaW4gdGhlIGRhdGEgZnJhbWUuCgpgYGB7cn0KcGF0aWVudHMkSUQKcGF0aWVudHMkSUQgPC0gcGFzdGUoIlBhdGllbnQiLCAxOjEwKQpwYXRpZW50cwpgYGAKCgojI0luZGV4aW5nIGRhdGEgZnJhbWVzIGFuZCBtYXRyaWNlcwoKLSBZb3UgY2FuIGluZGV4IG11bHRpZGltZW5zaW9uYWwgZGF0YSBzdHJ1Y3R1cmVzIGxpa2UgbWF0cmljZXMgYW5kIGRhdGEgCmZyYW1lcyB1c2luZyBjb21tYXM6Ci0gKipgb2JqZWN0W3Jvd3MsIGNvbHVtc11gKioKLSBUcnkgYW5kIHByZWRpY3Qgd2hhdCBlYWNoIG9mIHRoZSBmb2xsb3dpbmcgY29tbWFuZHMgd2lsbCBkbzotCgpgYGB7cn0KZVsxLDJdCgpgYGAKCmBgYHtyfQpwYXRpZW50c1sxLDJdCgpgYGAKCmBgYHtyfQpwYXRpZW50c1sxLDE6M10KCmBgYAoKLSBJZiB5b3UgZG9uJ3QgcHJvdmlkZSBhbiBpbmRleCBmb3IgZWl0aGVyIHJvd3Mgb3IgY29sdW1ucywgYWxsIG9mIHRoZSByb3dzIG9yIGNvbHVtbnMgd2lsbCBiZSByZXR1cm5lZC4KCmBgYHtyfQpwYXRpZW50c1sxLF0KCmBgYAoKLSBSb3dzIG9yIGNvbHVtbnMgY2FuIGJlIG9taXR0ZWQgYnkgcHV0dGluZyBhIGAtYCBpbiBmcm9udCBvZiB0aGUgaW5kZXgKCmBgYHtyfQpwYXRpZW50c1ssLTFdCnBhdGllbnRzWy1jKDUsNyksXQpgYGAKCiMjQWR2YW5jZWQgaW5kZXhpbmcKCi0gSW5kaWNlcyBhcmUgYWN0dWFsbHkgdmVjdG9ycywgYW5kIGNhbiBiZSAqKipudW1lcmljKioqIG9yICoqKmxvZ2ljYWwqKio6Ci0gV2Ugd29uJ3QgYWx3YXlzIGtub3cgaW4gYWR2YW5jZSB3aGljaCBpbmRpY2VzIHdlIHdhbnQgdG8gcmV0dXJuCiAgICArIHdlIG1pZ2h0IHdhbnQgYWxsIHZhbHVlcyB0aGF0IGV4Y2VlZCBhIHBhcnRpY3VsYXIgdmFsdWUgb3Igc2F0aXNmeSBzb21lIG90aGVyIGNyaXRlcmlhCi0gSW4gdGhpcyBleGFtcGxlLCBgbGV0dGVyc2AgaXMgYSB2ZWN0b3IgY29udGFpbmluZyBhbGwgbGV0dGVycyBpbiB0aGUgRW5nbGlzaCBhbHBoYWJldAoKYGBge3J9CmxldHRlcnMKcyA8LSBsZXR0ZXJzWzE6NV0KcwpgYGAKClNvIGZhciB3ZSBoYXZlIHNlZW4gaG93IHRvIGV4dHJhY3QgdGhlIGZpcnN0IGFuZCB0aGlyZCB2YWx1ZXMgaW4gdGhlIHZlY3RvcgoKYGBge3J9CnNbYygxLDMpXQpgYGAKClIgY2FuIHBlcmZvcm0gdGhlIHNhbWUgb3BlcmF0aW9uIHVzaW5nIGEgdmVjdG9yIG9mIGxvZ2ljYWwgdmFsdWVzLiBPbmx5IGluZGljZXMgd2l0aCBhIGBUUlVFYCB2YWx1ZSB3aWxsIGdldCByZXR1cm5lZAoKYGBge3J9CnNbYyhUUlVFLCBGQUxTRSwgVFJVRSwgRkFMU0UsIEZBTFNFKV0KYGBgCgoKLSBXZSBjYW4gZG8gdGhlIGxvZ2ljYWwgdGVzdCBhbmQgaW5kZXhpbmcgaW4gdGhlIHNhbWUgbGluZSBvZiBSIGNvZGUKICAgICsgUiB3aWxsIGRvIHRoZSB0ZXN0IGZpcnN0LCBhbmQgdGhlbiB1c2UgdGhlIHZlY3RvciBvZiBgVFJVRWAgYW5kIGBGQUxTRWAgdmFsdWVzIHRvIHN1YnNldCB0aGUgdmVjdG9yCmBgYHtyfQphIDwtIDE6NQoKYSA8IDMKc1thIDwgM10KYGBgCgoKIyMgTG9naWNhbCBPcGVyYXRvcnMKCi0gT3BlcmF0b3JzIGFsbG93IHVzIHRvIGNvbWJpbmUgbXVsdGlwbGUgbG9naWNhbCB0ZXN0cwotIGNvbXBhcmlzb24gb3BlcmF0b3JzCioqYDwsID4sIDw9LCA+PSwgPT0sICE9YCoqCi0gbG9naWNhbCBvcGVyYXRvcnMgCioqYCEsICYsIHwsIHhvcmAqKgogICAgKyBUaGUgb3BlcmF0b3JzIGZvciAnY29tcGFyaXNvbicgYW5kICdsb2dpY2FsJyBhbHdheXMgcmV0dXJuIGxvZ2ljYWwgdmFsdWVzISBpLmUuICAoYFRSVUVgLCBgRkFMU0VgKQoKCmBgYHtyfQoKc1thID4gMSAmIGEgPDNdCnNbYSA9PSAyXQpgYGAKClRoZSB2ZWN0b3IgdGhhdCB5b3UgdXNlIHRvIHBlcmZvcm0gdGhlIGxvZ2ljYWwgdGVzdCBjb3VsZCBiZSBleHRyYWN0ZWQgZnJvbSBhIGRhdGEgZnJhbWUKCi0gd2hpY2ggY291bGQgdGhlbiBiZSB1c2VkIHRvIHN1YnNldCB0aGUgZGF0YSBmcmFtZQoKYGBge3J9CnBhdGllbnRzJEZpcnN0X05hbWUgPT0gIlBldGVyIgpwYXRpZW50c1twYXRpZW50cyRGaXJzdF9OYW1lID09ICJQZXRlciIsXQpgYGAKCgoKIyNFeGVyY2lzZTogRXhlcmNpc2UgMgoKLSBXcml0ZSBSIGNvZGUgdG8gcHJpbnQgdGhlIGZvbGxvd2luZyBzdWJzZXRzIG9mIHRoZSBwYXRpZW50cyBkYXRhIGZyYW1lCi0gVGhlIGZpcnN0IGFuZCBzZWNvbmQgcm93cywgYW5kIHRoZSBmaXJzdCBhbmQgc2Vjb25kIGNvbHVtcwoKfCAgfEZpcnN0X05hbWV8U2Vjb25kX05hbWUKfC0tfC0tLS0tLS18LS0tLS0tLXwKfDEgfEFkYW0gICB8Sm9uZXMgCnwyIHxFdmUgICAgfFBhcmtlciAKCi0gT25seSBldmVuLW51bWJlcmVkIHJvd3MKCkhJTlQ6IHlvdSBjYW4gdXNlIHRoZSBgc2VxYCBmdW5jdGlvbiB0aGF0IHdlIHNhdyBlYXJsaWVyIHRvIGRlZmluZSBhIHZlY3RvciBvZiBldmVuIG51bWJlcnMKCnwgIHxGaXJzdF9OYW1lfFNlY29uZF9OYW1lfEZ1bGxfTmFtZXxTZXggfEFnZXxXZWlnaHQgfENvbnNlbnR8CnwtLXwtLS0tLS0tfC0tLS0tLS18LS0tLS0tLS0tLS0tLS18Oi0tLS06fC0tOnwtLS0tLS06fDotLS0tLTp8CnwyIHxFdmUgICAgfFBhcmtlciB8RXZlIFBhcmtlciAgICB8RmVtYWxlfDIxIHwgIDY3LjkgfCAgIFRSVUV8Cnw0IHxNYXJ5ICAgfERhdmlzICB8TWFyeSBEYXZpcyAgICB8RmVtYWxlfDQ1IHwgIDYxLjkgfCAgIFRSVUV8Cnw2IHxQYXVsICAgfERhbmllbHN8UGF1bCBEYW5pZWxzICB8ICBNYWxlfDMxIHwgIDY5LjkgfCAgRkFMU0V8Cnw4IHxNYXR0aGV3fFNtaXRoICB8TWF0dGhldyBTbWl0aCB8ICBNYWxlfDMzIHwgIDcxLjUgfCAgIFRSVUV8CnwxMHxTYWxseSAgfFdpbHNvbiB8U2FsbHkgV2lsc29uICB8RmVtYWxlfDYyIHwgIDY0LjggfCAgIFRSVUV8CgotIEFsbCByb3dzIGV4Y2VwdCB0aGUgbGFzdCBvbmUsIGFsbCBjb2x1bW5zCgpISU5UOiB0aGUgYG5yb3dgIGZ1bmN0aW9uIHdpbGwgZ2l2ZSB0aGUgbnVtYmVyIG9mIHJvd3MgaW4gdGhlIGRhdGEgZnJhbWUKCnwgIHxGaXJzdF9OYW1lfFNlY29uZF9OYW1lfEZ1bGxfTmFtZXxTZXggfEFnZXxXZWlnaHQgfENvbnNlbnR8CnwtLXwtLS0tLS0tfC0tLS0tLS18LS0tLS0tLS0tLS0tLS18Oi0tLS06fC0tOnwtLS0tLS06fDotLS0tLTp8CnwxIHxBZGFtICAgfEpvbmVzICB8QWRhbSBKb25lcyAgICB8ICBNYWxlfDUwIHwgIDcwLjggfCAgIFRSVUV8CnwyIHxFdmUgICAgfFBhcmtlciB8RXZlIFBhcmtlciAgICB8RmVtYWxlfDIxIHwgIDY3LjkgfCAgIFRSVUV8CnwzIHxKb2huICAgfEV2YW5zICB8Sm9obiBFdmFucyAgICB8ICBNYWxlfDM1IHwgIDc1LjMgfCAgRkFMU0V8Cnw0IHxNYXJ5ICAgfERhdmlzICB8TWFyeSBEYXZpcyAgICB8RmVtYWxlfDQ1IHwgIDYxLjkgfCAgIFRSVUV8Cnw1IHxQZXRlciAgfEJha2VyICB8UGV0ZXIgQmFrZXIgICB8ICBNYWxlfDI4IHwgIDcyLjQgfCAgRkFMU0V8Cnw2IHxQYXVsICAgfERhbmllbHN8UGF1bCBEYW5pZWxzICB8ICBNYWxlfDMxIHwgIDY5LjkgfCAgRkFMU0V8Cnw3IHxKb2FubmEgfEVkd2FyZHN8Sm9hbm5hIEVkd2FyZHN8RmVtYWxlfDQyIHwgIDYzLjUgfCAgRkFMU0V8Cnw4IHxNYXR0aGV3fFNtaXRoICB8TWF0dGhldyBTbWl0aCB8ICBNYWxlfDMzIHwgIDcxLjUgfCAgIFRSVUV8Cnw5IHxEYXZpZCAgfFJvYmVydHN8RGF2aWQgUm9iZXJ0cyB8ICBNYWxlfDU3IHwgIDczLjIgfCAgRkFMU0V8CgotIFVzZSBsb2dpY2FsIGluZGV4aW5nIHRvIHNlbGVjdCB0aGUgZm9sbG93aW5nIHBhdGllbnRzIGZyb20gdGhlIGRhdGEgZnJhbWU6CiAgICAxLiBQYXRpZW50cyB1bmRlciA0MAogICAgMi4gUGF0aWVudHMgd2hvIGdpdmUgY29uc2VudCB0byBzaGFyZSB0aGVpciBkYXRhCiAgICAzLiBNZW4gd2hvIHdlaWdoIGFzIG11Y2ggb3IgbW9yZSB0aGFuIHRoZSBhdmVyYWdlIEV1cm9wZWFuIG1hbGUgKDcwLjgga2cpCiAgICAKICAKYGBge3J9CmFnZSAgICA8LSBjKDUwLCAyMSwgMzUsIDQ1LCAyOCwgMzEsIDQyLCAzMywgNTcsIDYyKQp3ZWlnaHQgPC0gYyg3MC44LCA2Ny45LCA3NS4zLCA2MS45LCA3Mi40LCA2OS45LCAKICAgICAgICAgICAgNjMuNSwgNzEuNSwgNzMuMiwgNjQuOCkKCmZpcnN0TmFtZSAgPC0gYygiQWRhbSIsICJFdmUiLCAiSm9obiIsICJNYXJ5IiwKICAgICAgICAgICAgICAgICJQZXRlciIsICJQYXVsIiwgIkpvYW5uYSIsICJNYXR0aGV3IiwKICAgICAgICAgICAgICAgICJEYXZpZCIsICJTYWxseSIpCnNlY29uZE5hbWUgPC0gYygiSm9uZXMiLCAiUGFya2VyIiwgIkV2YW5zIiwgIkRhdmlzIiwKICAgICAgICAgICAgICAgICJCYWtlciIsIkRhbmllbHMiLCAiRWR3YXJkcyIsICJTbWl0aCIsIAogICAgICAgICAgICAgICAgIlJvYmVydHMiLCAiV2lsc29uIikKCmNvbnNlbnQgPC0gYyhUUlVFLCBUUlVFLCBGQUxTRSwgVFJVRSwgRkFMU0UsIAogICAgICAgICAgICAgRkFMU0UsIEZBTFNFLCBUUlVFLCBGQUxTRSwgVFJVRSkKCnNleCA8LSBjKCJNYWxlIiwgIkZlbWFsZSIsICJNYWxlIiwgIkZlbWFsZSIsICJNYWxlIiwKICAgICAgICAgIk1hbGUiLCAiRmVtYWxlIiwgIk1hbGUiLCAiTWFsZSIsICJGZW1hbGUiKQpwYXRpZW50cyA8LSBkYXRhLmZyYW1lKEZpcnN0X05hbWUgPSBmaXJzdE5hbWUsIAogICAgICAgICAgICAgICAgICAgICAgIFNlY29uZF9OYW1lID0gc2Vjb25kTmFtZSwgCiAgICAgICAgICAgICAgICAgICAgICAgRnVsbF9OYW1lID0gcGFzdGUoZmlyc3ROYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlY29uZE5hbWUpLCAKICAgICAgICAgICAgICAgICAgICAgICBTZXggPSBmYWN0b3Ioc2V4KSwKICAgICAgICAgICAgICAgICAgICAgICBBZ2UgPSBhZ2UsCiAgICAgICAgICAgICAgICAgICAgICAgV2VpZ2h0ID0gd2VpZ2h0LAogICAgICAgICAgICAgICAgICAgICAgIENvbnNlbnQgPSBjb25zZW50LAogICAgICAgICAgICAgICAgICAgICAgIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkKcm0obGlzdCA9IGMoImZpcnN0TmFtZSIsInNlY29uZE5hbWUiLCJzZXgiLCJ3ZWlnaHQiLCJjb25zZW50IikpCnBhdGllbnRzCgojIyMgWW91ciBBbnN3ZXIgIyMjCgoKYGBgCgoKCiMjIChTdXBwbGVtZW50YXJ5KSBNYXRyaWNlcwoKLSBEYXRhIGZyYW1lcyBhcmUgUidzIHNwZWNpYWxpdHksIGJ1dCBSIGFsc28gaGFuZGxlcyBtYXRyaWNlczoKICAgICsgQWxsIGNvbHVtbnMgYXJlIGFzc3VtZWQgdG8gY29udGFpbiB0aGUgc2FtZSBkYXRhIHR5cGUsIGUuZy4gbnVtZXJpY2FsCiAgICArIE1hdHJpY2VzIGNhbiBiZSBtYW5pcHVsYXRlZCBpbiB0aGUgc2FtZSBmYXNoaW9uIGFzIGRhdGEgZnJhbWUKICAgICAgICArIFdlIGNhbiBlYXNpbHkgY29udmVydCBiZXR3ZWVuIHRoZSB0d28gb2JqZWN0IHR5cGVzCiAgICAgICAgCmBgYHtyfQplIDwtIG1hdHJpeCgxOjEwLCBucm93PTUsIG5jb2w9MikKZQpgYGAKCi0gU29tZSBjYWxjdWxhdGlvbnMgYXJlIG1vcmUgZWZmaWNpZW50IHRvIGRvIG9uIG1hdHJpY2VzLCBlLmcuOgoKYGBge3J9CnJvd01lYW5zKGUpCmBgYAoKTWF0cmljZXMgKGFuZCBpbmRlZWQgZGF0YSBmcmFtZXMpIGNhbiBiZSBqb2luZWQgdG9nZXRoZXIgdXNpbmcgdGhlIGZ1bmN0aW9ucyBgY2JpbmRgIGFuZCBgcmJpbmRgCgpMZXQncyBmaXJzdCBjcmVhdGUgc29tZSBleGFtcGxlIGRhdGEKYGBge3J9CgptYXQxIDwtIG1hdHJpeCgxMToyMCwgbnJvdz01LG5jb2w9MikKbWF0MQptYXQyIDwtIG1hdHJpeCgyMTozMCwgbnJvdz01LCBuY29sPTIpCm1hdDIKbWF0MyA8LSBtYXRyaXgoMzE6NDAsbnJvdz01LG5jb2w9MikKbWF0MwoKYGBgCgphbmQgbm93IHRyeSBvdXQgdGhlc2UgZnVuY3Rpb25zOi0KCmBgYHtyfQpjYmluZChtYXQxLG1hdDIpCnJiaW5kKG1hdDEsbWF0MykKYGBgCg==</div>
 
 
 </div>

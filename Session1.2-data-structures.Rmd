@@ -201,6 +201,29 @@ patients$Sex
 patients$First_Name
 ```
 
+## Removing variables
+
+Now that we are happy with our data frame, we no longer have any use for the vectors that were used to create it
+
+- R has a function called `rm` that will allow us to remove variables
+
+
+```{r eval=FALSE}
+rm(age)
+```
+
+Once something has been removed, we can no longer use it
+
+```{r eval=FALSE}
+age
+```
+
+Multiple objects can be removed at the same time
+
+```{r}
+rm(list = c("age","firstName","secondName","sex","weight","consent"))
+
+```
 
 ## Adding additional columns
 
@@ -218,47 +241,6 @@ We use a similar trick to define new columns in the data frame
 patients$ID
 patients$ID <- paste("Patient", 1:10)
 patients
-```
-
-
-
-## Matrices
-
-- Data frames are R's speciality, but R also handles matrices:
-    + All columns are assumed to contain the same data type, e.g. numerical
-    + Matrices can be manipulated in the same fashion as data frame
-        + We can easily convert between the two object types
-        
-```{r}
-e <- matrix(1:10, nrow=5, ncol=2)
-e
-```
-
-- Some calculations are more efficient to do on matrices, e.g.:
-
-```{r}
-rowMeans(e)
-```
-
-Matrices (and indeed data frames) can be joined together using the functions `cbind` and `rbind`
-
-Let's first create some example data
-```{r}
-
-mat1 <- matrix(11:20, nrow=5,ncol=2)
-mat1
-mat2 <- matrix(21:30, nrow=5, ncol=2)
-mat2
-mat3 <- matrix(31:40,nrow=5,ncol=2)
-mat3
-
-```
-
-and now try out these functions:-
-
-```{r}
-cbind(mat1,mat2)
-rbind(mat1,mat3)
 ```
 
 
@@ -287,13 +269,15 @@ patients[1,1:3]
 - If you don't provide an index for either rows or columns, all of the rows or columns will be returned.
 
 ```{r}
-e[1,]
+patients[1,]
 
 ```
 
+- Rows or columns can be omitted by putting a `-` in front of the index
 
 ```{r}
 patients[,-1]
+patients[-c(5,7),]
 ```
 
 ##Advanced indexing
@@ -348,6 +332,16 @@ s[a > 1 & a <3]
 s[a == 2]
 ```
 
+The vector that you use to perform the logical test could be extracted from a data frame
+
+- which could then be used to subset the data frame
+
+```{r}
+patients$First_Name == "Peter"
+patients[patients$First_Name == "Peter",]
+```
+
+
 
 ##Exercise: Exercise 2
 
@@ -359,27 +353,25 @@ s[a == 2]
 |1 |Adam   |Jones 
 |2 |Eve    |Parker 
 
-- All rows, but in the order 10 to 1.
+- Only even-numbered rows
 
-HINT: create a sequence using the `:` shortcut we saw earlier, to index the rows
+HINT: you can use the `seq` function that we saw earlier to define a vector of even numbers
 
 |  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
 |--|-------|-------|--------------|:----:|--:|------:|:-----:|
-|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
-|9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
-|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
-|7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
-|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
-|5 |Peter  |Baker  |Peter Baker   |  Male|28 |  72.4 |  FALSE|
-|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
-|3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
 |2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
+|4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
+|6 |Paul   |Daniels|Paul Daniels  |  Male|31 |  69.9 |  FALSE|
+|8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
+|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
+
+- All rows except the last one, all columns
+
+HINT: the `nrow` function will give the number of rows in the data frame
+
+|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
+|--|-------|-------|--------------|:----:|--:|------:|:-----:|
 |1 |Adam   |Jones  |Adam Jones    |  Male|50 |  70.8 |   TRUE|
-
-- All rows except the first row, all columns
-
-|  |First_Name|Second_Name|Full_Name|Sex |Age|Weight |Consent|
-|--|-------|-------|--------------|:----:|--:|------:|:-----:|
 |2 |Eve    |Parker |Eve Parker    |Female|21 |  67.9 |   TRUE|
 |3 |John   |Evans  |John Evans    |  Male|35 |  75.3 |  FALSE|
 |4 |Mary   |Davis  |Mary Davis    |Female|45 |  61.9 |   TRUE|
@@ -388,7 +380,6 @@ HINT: create a sequence using the `:` shortcut we saw earlier, to index the rows
 |7 |Joanna |Edwards|Joanna Edwards|Female|42 |  63.5 |  FALSE|
 |8 |Matthew|Smith  |Matthew Smith |  Male|33 |  71.5 |   TRUE|
 |9 |David  |Roberts|David Roberts |  Male|57 |  73.2 |  FALSE|
-|10|Sally  |Wilson |Sally Wilson  |Female|62 |  64.8 |   TRUE|
 
 - Use logical indexing to select the following patients from the data frame:
     1. Patients under 40
@@ -422,6 +413,7 @@ patients <- data.frame(First_Name = firstName,
                        Weight = weight,
                        Consent = consent,
                        stringsAsFactors = FALSE)
+rm(list = c("firstName","secondName","sex","weight","consent"))
 patients
 
 ### Your Answer ###
@@ -429,3 +421,43 @@ patients
 
 ```
 
+
+
+## (Supplementary) Matrices
+
+- Data frames are R's speciality, but R also handles matrices:
+    + All columns are assumed to contain the same data type, e.g. numerical
+    + Matrices can be manipulated in the same fashion as data frame
+        + We can easily convert between the two object types
+        
+```{r}
+e <- matrix(1:10, nrow=5, ncol=2)
+e
+```
+
+- Some calculations are more efficient to do on matrices, e.g.:
+
+```{r}
+rowMeans(e)
+```
+
+Matrices (and indeed data frames) can be joined together using the functions `cbind` and `rbind`
+
+Let's first create some example data
+```{r}
+
+mat1 <- matrix(11:20, nrow=5,ncol=2)
+mat1
+mat2 <- matrix(21:30, nrow=5, ncol=2)
+mat2
+mat3 <- matrix(31:40,nrow=5,ncol=2)
+mat3
+
+```
+
+and now try out these functions:-
+
+```{r}
+cbind(mat1,mat2)
+rbind(mat1,mat3)
+```
