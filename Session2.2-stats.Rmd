@@ -66,7 +66,7 @@ Recall our histogram of Wind Speed from yesterday:
 
 ```{r}
 weather <- read.csv("ozone.csv")
-hist(weather$Wind, col="purple", xlab="Wind Speed",
+hist(weather$Wind, col="steelblue", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
 ```
@@ -84,7 +84,7 @@ dnorm(10, mean=windMean, sd=windSD)
 
 - We can overlay this on the histogram using `points` as we just saw:
 ```{r}
-hist(weather$Wind, col="purple", xlab="Wind Speed",
+hist(weather$Wind, col="steelblue", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
 points(10, dnorm(10, mean=windMean, sd=windSD),
@@ -98,7 +98,7 @@ points(10, dnorm(10, mean=windMean, sd=windSD),
 ```{r}
 xs <- c(0,5,10,15,20)
 ys <- dnorm(xs, mean=windMean, sd=windSD)
-hist(weather$Wind, col="purple", xlab="Wind Speed",
+hist(weather$Wind, col="steelblue", xlab="Wind Speed",
      main="Distribution of Wind Speed",
      breaks = 20, freq=FALSE)
 lines(xs, ys, col="red")
@@ -115,7 +115,7 @@ lines(xs, ys, col="red")
 
 
 ```{r}
-hist(weather$Wind,col="purple",xlab="Wind Speed",
+hist(weather$Wind,col="steelblue",xlab="Wind Speed",
      main="Distribution of Wind Speed",breaks = 20,freq=FALSE)
 xs <- seq(0,20, length.out = 10000)
 ys <- dnorm(xs, mean=windMean,sd=windSD)
