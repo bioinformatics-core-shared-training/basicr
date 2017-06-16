@@ -345,6 +345,36 @@ HINT: You can break down the problem into the following steps
 
 ```
 
+An alternative, and equally-valid, solution involves creating a vector of colours which will either be `red` or `orange` depending whether on the particular value of ozone is an outlier
+
+- we can use the `rep` function to create a vector of the required length for the entire dataset
+    + one vector for plotting colours, and another vector for plotting characters
+    
+```{r}
+weather <- read.csv("ozone.csv")
+mycol <-rep("orange",nrow(weather))
+mypch <- rep(17, nrow(weather))
+
+```
+
+- now use a logical expression to identify the high ozone level, and replace the corresponding entries in the colour and plotting character vectors
+
+```{r}
+highO <- which(weather$Ozone > 100)
+mycol[highO] <- "red"
+mypch[highO] <- 18
+```
+
+- creating the plot can now be done with a single `plot` command
+
+```{r}
+plot(weather$Temp,weather$Ozone, 
+     col=mycol, pch=mypch,ylab="Ozone level",
+     xlab="Temperature")
+abline(h=100,lty=2)
+legend("topleft", legend = c("Ozone > 100","Normal Ozone"),col=c("red","orange"),pch=17)
+```
+
 ## Other plotting features
 
 We can choose not to show the x- and y-axis in the initial plot
