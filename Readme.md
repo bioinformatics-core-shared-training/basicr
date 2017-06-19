@@ -1,1 +1,1 @@
-# This Repository is now deprecated. Please see https://github.com/bioinformatics-core-shared-training/basicr.git
+# This Repository is now deprecated to avoid confusion. Please see https://github.com/cambiotraining/r-intro
