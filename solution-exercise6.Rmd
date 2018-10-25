@@ -39,7 +39,7 @@ Calculating the correlation using the `cor` function and putting the r-squared v
 ```{r}
 plot(weather$Temp, weather$Ozone, pch=16)
 abline(mod1, col="red", lty=2)
-cor = cor(weather$Temp,weather$Ozone,use="c")
+cor = cor(weather$Temp,weather$Ozone,use="complete.obs")
 cor
 text(95,150, paste("r^2 = ", round(cor^2,2)))
 ```
